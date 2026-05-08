@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PWA vs Mobile App — CSAH Partner App Decision</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f7fa;
+      color: #1a1a2e;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #1a1a2e;
+      color: white;
+      padding: 2.5rem 2rem;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    header p {
+      color: #9ca3af;
+      font-size: 0.95rem;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .intro {
+      background: white;
+      border-radius: 10px;
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+      border-left: 4px solid #4f46e5;
+    }
+
+    .intro h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #4f46e5;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.8rem;
+    }
+
+    .intro p {
+      font-size: 0.97rem;
+      color: #374151;
+    }
+
+    h2.section-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin: 2rem 0 1rem;
+      color: #1a1a2e;
+    }
+
+    .factor-card {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .factor-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .factor-card h3 .icon {
+      font-size: 1.2rem;
+    }
+
+    .comparison-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .col {
+      padding: 0.9rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .col-pwa {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+    }
+
+    .col-native {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+    }
+
+    .col-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.4rem;
+    }
+
+    .col-pwa .col-label { color: #2563eb; }
+    .col-native .col-label { color: #16a34a; }
+
+    .col-expo {
+      background: #faf5ff;
+      border: 1px solid #d8b4fe;
+    }
+
+    .col-expo .col-label { color: #7c3aed; }
+
+    .csah-context {
+      background: #fefce8;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      font-size: 0.88rem;
+      color: #78350f;
+    }
+
+    .csah-context strong {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.3rem;
+      color: #92400e;
+    }
+
+    .verdict-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      margin-left: 0.5rem;
+    }
+
+    .badge-pwa { background: #dbeafe; color: #1d4ed8; }
+    .badge-native { background: #dcfce7; color: #15803d; }
+    .badge-tie { background: #f3f4f6; color: #4b5563; }
+    .badge-critical { background: #fee2e2; color: #b91c1c; }
+
+    .summary-card {
+      border-radius: 10px;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .summary-pwa {
+      background: #eff6ff;
+      border: 2px solid #93c5fd;
+    }
+
+    .summary-native {
+      background: #f0fdf4;
+      border: 2px solid #86efac;
+    }
+
+    .summary-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .summary-pwa h3 { color: #1d4ed8; }
+    .summary-native h3 { color: #15803d; }
+
+    .summary-expo {
+      background: #faf5ff;
+      border: 2px solid #d8b4fe;
+    }
+
+    .summary-expo h3 { color: #7c3aed; }
+    .summary-expo ul li::before { content: "✓"; color: #7c3aed; font-weight: 700; }
+
+    .summary-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .summary-card ul li {
+      padding: 0.3rem 0;
+      font-size: 0.9rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .summary-card ul li::before {
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+
+    .summary-pwa ul li::before { content: "✓"; color: #2563eb; font-weight: 700; }
+    .summary-native ul li::before { content: "✓"; color: #16a34a; font-weight: 700; }
+
+    .recommendation {
+      background: #1a1a2e;
+      color: white;
+      border-radius: 10px;
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+
+    .recommendation h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #a5b4fc;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.8rem;
+    }
+
+    .recommendation p {
+      font-size: 0.97rem;
+      color: #e5e7eb;
+      margin-bottom: 0.75rem;
+    }
+
+    .recommendation .open-question {
+      background: rgba(255,255,255,0.07);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .recommendation .open-question p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: #d1d5db;
+    }
+
+    .recommendation .open-question strong {
+      color: #fde68a;
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.4rem;
+    }
+
+    .open-questions-list {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .open-questions-list h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #1a1a2e;
+    }
+
+    .open-questions-list ol {
+      padding-left: 1.25rem;
+      font-size: 0.92rem;
+      color: #374151;
+    }
+
+    .open-questions-list li {
+      margin-bottom: 0.6rem;
+    }
+
+    .sms-callout {
+      background: white;
+      border-radius: 10px;
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+      border-left: 4px solid #f59e0b;
+    }
+
+    .sms-callout h2 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #b45309;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .sms-callout p {
+      font-size: 0.97rem;
+      color: #374151;
+      margin-bottom: 0.6rem;
+    }
+
+    .sms-callout p:last-child {
+      margin-bottom: 0;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #9ca3af;
+      padding: 2rem;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 700px) {
+      .comparison-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>PWA vs. Native Mobile App</h1>
+  <p>CSAH Partner App — Internal Decision Document &nbsp;·&nbsp; May 2026</p>
+</header>
+
+<div class="container">
+
+  <div class="intro">
+    <h2>Context</h2>
+    <p>
+      The CSAH partner app serves ~50 users: CSAH outreach staff, SPD HOPE unit officers, CCPD behavioral health units,
+      city/county code enforcement, and community paramedicine. These are boots-on-the-ground field workers across
+      multiple agencies — including government agencies that may have restrictions on what software their devices can run.
+      The core function of this app is <strong>real-time crisis coordination via push notifications.</strong>
+    </p>
+  </div>
+
+  <div class="sms-callout">
+    <h2>Key Context: SMS is Already Part of the Solution</h2>
+    <p>
+      The app will include SMS capability regardless of which platform is chosen — outreach workers need to be able
+      to text resource links and information directly to individuals experiencing homelessness from within the app.
+      Since approximately 90% of that population has a smartphone, SMS is the primary bridge between the partner
+      app and the people it serves.
+    </p>
+    <p>
+      This has an important implication for the PWA vs. native decision: <strong>an SMS fallback for push
+      notifications is essentially free to build once Twilio is in place.</strong> The pattern works like this —
+      when a critical alert is triggered, the system fires a push notification AND sends an SMS to the recipient.
+      If the push fails to deliver (the main PWA risk on iOS), the SMS ensures the message gets through anyway.
+    </p>
+    <p>
+      At an estimated volume of ~250 messages/month, Twilio costs roughly $20–50/month. Adding push notification
+      fallback adds negligible volume on top of that. <strong>The recommendation is to build both</strong> — push
+      for speed and in-app experience, SMS as the safety net. This significantly reduces the risk of choosing a
+      PWA, since the hardest knock against it (iOS push reliability) is effectively neutralized.
+    </p>
+  </div>
+
+  <h2 class="section-title">Factor-by-Factor Comparison</h2>
+
+  <!-- Push Notifications -->
+  <div class="factor-card">
+    <h3>
+      <span class="icon">🔔</span> Push Notifications
+      <span class="verdict-badge badge-critical">Critical Factor — Mitigated by SMS</span>
+    </h3>
+    <div class="comparison-row">
+      <div class="col col-pwa">
+        <div class="col-label">PWA</div>
+        Possible but friction-heavy on iOS. Users must manually add the PWA to their home screen before you can
+        even ask for notification permission — easy to skip, hard to enforce. Subscriptions can drop if the app
+        hasn't been opened in a while. Android via Chrome is reliable; iOS is the weak link.
+        <br><br>
+        <strong>However:</strong> with SMS as a fallback, a missed push still reaches the user via text.
+        This significantly reduces the practical risk of choosing PWA.
+      </div>
+      <div class="col col-expo">
+        <div class="col-label">React Native + Expo</div>
+        Fully reliable on both iOS and Android via Expo Push Notifications or Firebase (FCM). Same infrastructure
+        as full native. Subscriptions are stable. This is the primary reason to choose Expo over a PWA for this app.
+      </div>
+      <div class="col col-native">
+        <div class="col-label">Full Native (Swift + Kotlin)</div>
+        Identical reliability to Expo for push notifications. No meaningful advantage over Expo here —
+        both use FCM/APNs under the hood.
+      </div>
+    </div>
+    <div class="csah-context">
+      <strong>CSAH Impact</strong>
+      Push notifications are the core coordination mechanism — SPD HOPE alerting CSAH outreach, CCPD dispatching,
+      real-time crisis response. This is not a "nice to have" alert; it's the primary reason the app exists.
+      PWA push reliability on iOS was the primary concern with that option — but since SMS is already planned
+      as a separate feature (sending resources to individuals), using it as a push fallback costs almost nothing
+      extra and neutralizes that risk. A missed push still reaches the worker via text. Open question: is
+      receiving both a push and an SMS for every alert too invasive? Should this be a user preference?
+    </div>
+  </div>
+
+  <!-- Government Device Restrictions -->
+  <div class="factor-card">
+    <h3>
+      <span class="icon">🏛️</span> Government Device Restrictions
+      <span class="verdict-badge badge-critical">Critical Factor</span>
+    </h3>
+    <div class="comparison-row">
+      <div class="col col-pwa">
+        <div class="col-label">PWA</div>
+        Runs in a browser — no app store, no MDM policy needed. Any device with Chrome or Safari can access it.
+        Government-issued devices that block third-party app installs can still use a PWA with zero IT involvement.
+      </div>
+      <div class="col col-expo">
+        <div class="col-label">React Native + Expo</div>
+        Requires app store installation or MDM distribution — same challenge as full native. Officers on locked-down
+        government devices would need their agency's IT to approve and push the app. This is a real hurdle and the
+        biggest unknown for this option.
+      </div>
+      <div class="col col-native">
+        <div class="col-label">Full Native (Swift + Kotlin)</div>
+        Same situation as Expo — requires app store or MDM. No advantage or disadvantage here relative to Expo.
+      </div>
+    </div>
+    <div class="csah-context">
+      <strong>CSAH Impact</strong>
+      SPD and CCPD officers use agency-issued devices with IT-controlled policies. If those policies block
+      non-approved app installs, a native app may never reach the people who need it most — without lengthy IT
+      approval processes at each agency. This is still an open question and may be the single most important
+      factor in the decision.
+    </div>
+  </div>
+
+  <!-- Development Cost & Speed -->
+  <div class="factor-card">
+    <h3>
+      <span class="icon">💰</span> Development Cost &amp; Speed
+      <span class="verdict-badge badge-pwa">PWA Advantage</span>
+    </h3>
+    <div class="comparison-row">
+      <div class="col col-pwa">
+        <div class="col-label">PWA</div>
+        One codebase, all platforms. Fastest to build and deploy. No app store accounts or review process.
+        Updates go live instantly — push a fix and users see it on next load.
+      </div>
+      <div class="col col-expo">
+        <div class="col-label">React Native + Expo</div>
+        One TypeScript/React codebase for iOS + Android — familiar stack, not "build twice." Expo's
+        Over-the-Air (OTA) system pushes most updates instantly without app store review. Only native code
+        changes (rare) require a full store submission. Requires Apple Developer account ($99/yr) and Google
+        Play account ($25 one-time).
+      </div>
+      <div class="col col-native">
+        <div class="col-label">Full Native (Swift + Kotlin)</div>
+        Two separate codebases — every feature built twice in different languages. All updates go through
+        app store review. Highest development cost and longest timeline. Not practical for this scope.
+      </div>
+    </div>
+    <div class="csah-context">
+      <strong>CSAH Impact</strong>
+      Budget is finite and the December 2026 deadline is firm. A PWA is faster and cheaper to ship initially.
+      React Native with Expo bridges much of the gap if native is chosen — it's not "build twice."
+    </div>
+  </div>
+
+  <!-- Offline Access -->
+  <div class="factor-card">
+    <h3>
+      <span class="icon">📶</span> Offline Access
+      <span class="verdict-badge badge-native">Native Advantage</span>
+    </h3>
+    <div class="comparison-row">
+      <div class="col col-pwa">
+        <div class="col-label">PWA</div>
+        Limited offline capability via service workers. Can cache static content (e.g., resource directory),
+        but real-time features like messaging and case updates require connectivity regardless.
+      </div>
+      <div class="col col-expo">
+        <div class="col-label">React Native + Expo</div>
+        Better offline-first architecture. Can queue logged actions locally and sync when connectivity
+        is restored. Meaningful advantage for field workers in low-signal areas.
+      </div>
+      <div class="col col-native">
+        <div class="col-label">Full Native (Swift + Kotlin)</div>
+        Same offline capability as Expo — can queue and sync. No practical advantage over Expo for
+        this use case.
+      </div>
+    </div>
+    <div class="csah-context">
+      <strong>CSAH Impact</strong>
+      Field workers may be in areas with spotty connectivity. The resource directory could be cached either way.
+      Case logging and push notifications require connectivity regardless of platform — so this is a moderate
+      factor, not a decisive one.
+    </div>
+  </div>
+
+  <!-- Geolocation -->
+  <div class="factor-card">
+    <h3>
+      <span class="icon">📍</span> Geolocation (One-Time Pin Drop)
+      <span class="verdict-badge badge-tie">Tie</span>
+    </h3>
+    <div class="comparison-row">
+      <div class="col col-pwa">
+        <div class="col-label">PWA</div>
+        Browser Geolocation API is fully supported. Prompts for permission on first use.
+        Works fine for a one-time coordinate capture.
+      </div>
+      <div class="col col-expo">
+        <div class="col-label">React Native + Expo</div>
+        Native geolocation with a cleaner, more familiar permission flow for users. Functionally equivalent
+        to PWA for a one-time pin drop — no meaningful advantage in this use case.
+      </div>
+      <div class="col col-native">
+        <div class="col-label">Full Native (Swift + Kotlin)</div>
+        Same as Expo. All three options handle a one-time pin drop equally well.
+      </div>
+    </div>
+    <div class="csah-context">
+      <strong>CSAH Impact</strong>
+      The use case is simple: officer drops a pin when making contact with an individual. This does not require
+      continuous background location. All three options handle it equally well.
+    </div>
+  </div>
+
+  <!-- Distribution & Updates -->
+  <div class="factor-card">
+    <h3>
+      <span class="icon">🚀</span> Distribution &amp; Updates
+      <span class="verdict-badge badge-pwa">PWA Advantage</span>
+    </h3>
+    <div class="comparison-row">
+      <div class="col col-pwa">
+        <div class="col-label">PWA</div>
+        Share a URL — anyone can access it immediately. No app store accounts, no approval process,
+        no IT coordination. Updates deploy instantly; users always have the latest version on next load.
+      </div>
+      <div class="col col-expo">
+        <div class="col-label">React Native + Expo</div>
+        Requires Apple Developer ($99/yr) and Google Play ($25 one-time) accounts. Initial install goes
+        through the app store or MDM. However, most updates ship via Expo OTA — users get them
+        automatically without doing anything, and without waiting for store review.
+      </div>
+      <div class="col col-native">
+        <div class="col-label">Full Native (Swift + Kotlin)</div>
+        Same store accounts required. Every update — including minor bug fixes — goes through app store
+        review. Two separate release pipelines to manage. Most operationally burdensome option.
+      </div>
+    </div>
+    <div class="csah-context">
+      <strong>CSAH Impact</strong>
+      Onboarding 50 users across 5 agencies is operationally easier with a URL than coordinating installs
+      across multiple IT departments. App store accounts are a minor cost but the review and approval
+      process adds lead time.
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <h2 class="section-title">Summary — Three Options</h2>
+
+  <div class="summary-card summary-pwa">
+    <h3>PWA — Recommended default</h3>
+    <ul>
+      <li>No install required — works in any browser, zero IT coordination needed</li>
+      <li>Fastest and cheapest to build and deploy — important given budget and December deadline</li>
+      <li>iOS push friction is real but acceptable: SMS fallback ensures critical alerts always land</li>
+      <li>Avoids the government device distribution problem entirely</li>
+      <li>Push + SMS duplication should be a user preference — not forced on everyone by default</li>
+    </ul>
+  </div>
+
+  <div class="summary-card summary-expo">
+    <h3>React Native + Expo — Upgrade path if MDM allows it</h3>
+    <ul>
+      <li>Cleaner push notification experience — no home screen setup friction for users</li>
+      <li>Better offline support — can queue case logs locally when connectivity is spotty</li>
+      <li>OTA updates for most changes without app store review</li>
+      <li>Worth pursuing only if device policy confirms officers can install third-party apps</li>
+      <li>Adds cost and setup complexity that isn't justified unless the PWA path is blocked</li>
+    </ul>
+  </div>
+
+  <div class="summary-card summary-native">
+    <h3>Full Native (Swift + Kotlin) — Likely Overkill</h3>
+    <ul>
+      <li>Maximum performance and full access to every platform API</li>
+      <li>Two separate codebases — iOS in Swift, Android in Kotlin — doubles development effort</li>
+      <li>No shared code with a potential future web or kiosk interface</li>
+      <li>Realistic for large teams with platform specialists; not practical for this scope or budget</li>
+    </ul>
+  </div>
+
+  <!-- Recommendation -->
+  <div class="recommendation">
+    <h2>Our Current Lean</h2>
+    <p>
+      With SMS fallback in the plan, the strongest argument against PWA is gone. A missed push notification still
+      reaches the worker via text — message delivery is covered either way. That shifts the default recommendation
+      to PWA: it's faster to build, cheaper to run, and sidesteps the government device distribution problem entirely.
+    </p>
+    <p>
+      Expo's remaining advantages — cleaner push UX, better offline queuing — are real but not decisive for a
+      50-user internal coordination tool with a hard December deadline. The offline gap matters only if field
+      workers regularly lose connectivity long enough that they need to queue multiple case logs; worth asking,
+      but not a safe assumption either way.
+    </p>
+    <p>
+      <strong style="color: white;">Recommendation: build PWA + SMS. If device policy confirms Expo is distributable to all agencies, revisit — but don't wait on that answer to start building.</strong>
+    </p>
+    <div class="open-question">
+      <strong>Before Deciding</strong>
+      <p>
+        1. Confirm device policies with SPD HOPE and CCPD IT — this is a 1–2 question conversation that should happen early.<br><br>
+        2. Decide on notification preferences: should users be able to choose push only, SMS only, or both?
+        Receiving a push and an SMS for every alert could feel invasive without opt-in control.
+        This may be a worthwhile feature regardless of platform choice.
+      </p>
+    </div>
+  </div>
+
+  <!-- Open Questions -->
+  <div class="open-questions-list">
+    <h2>Open Questions to Resolve</h2>
+    <ol>
+      <li><strong>Government device policies:</strong> Can SPD HOPE and CCPD officers install third-party apps on their issued devices, or are those devices MDM-locked? This is the single most important question — it determines whether Expo is even on the table.</li>
+      <li><strong>SMS cost at scale:</strong> Confirm Twilio pricing is not cost-prohibitive when push notification fallback volume is added on top of resource-sharing SMS volume. Estimated combined volume is still low (&lt;500 msg/month), but worth verifying before assuming it's negligible.</li>
+      <li><strong>Notification invasiveness:</strong> Is it acceptable to send both a push notification and an SMS for every critical alert? For a high-frequency coordination tool, receiving duplicate alerts on two channels could feel intrusive. Should workers be able to set a preference (push only / SMS only / both)?</li>
+      <li><strong>User preference feature:</strong> If we build notification preferences, what are the right defaults? Push-only seems reasonable for Expo users; SMS-only as a fallback default for PWA users who haven't set up home screen notifications.</li>
+      <li><strong>Distribution ownership:</strong> If Expo is chosen, will CSAH manage app distribution centrally, or does each partner agency handle installs for their own staff?</li>
+    </ol>
+  </div>
+
+</div>
+
+<footer>CSAH Partner App — Internal Use Only &nbsp;·&nbsp; Allyson Short + Alan Robinson &nbsp;·&nbsp; May 2026</footer>
+
+</body>
+</html>

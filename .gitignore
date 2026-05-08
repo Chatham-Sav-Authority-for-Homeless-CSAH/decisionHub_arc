@@ -1,0 +1,8 @@
+# Local dev
+TODO.md
+.env
+.env.local
+.env*.local
+
+# VS Code local tasks (credential swap infrastructure)
+.vscode/tasks.json
