@@ -80,7 +80,7 @@ Alan is not a software developer. He is a visual/UI person. Decision documents a
 - All decision/research docs live in `docs/` as `.html` files
 - When creating a new decision doc, follow the visual style established in `docs/pwa-vs-mobile.html` (dark header, card-based layout, color-coded columns, CSAH Impact callout rows)
 - Netlify publish directory is set to `docs/` — every push to main auto-deploys
-- Netlify URL pattern: `csah-decisions.netlify.app/[filename].html` (or similar, once slug is set)
+- Netlify URL: `csahcompassapp.netlify.app` — e.g. `csahcompassapp.netlify.app/kiosk_comparison.html`
 - A `docs/index.html` landing page listing all docs is the intended navigation surface for Alan
 - Repo is **private** on GitHub — Netlify free tier handles deployment from private repos
 
