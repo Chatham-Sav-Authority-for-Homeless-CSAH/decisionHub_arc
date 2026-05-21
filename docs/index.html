@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compass Project — Decision Hub</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f3;
+      color: #1a1a18;
+      line-height: 1.6;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: #0e2a5c;
+      color: white;
+      padding: 3.5rem 2rem 3rem;
+      text-align: center;
+    }
+
+    .hero-logo {
+      display: inline-block;
+      background: white;
+      border-radius: 12px;
+      padding: 0.7rem 1.25rem;
+      margin-bottom: 2rem;
+    }
+
+    .hero-logo img {
+      height: 52px;
+      display: block;
+    }
+
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #f2c030;
+      background: rgba(242, 192, 48, 0.12);
+      border: 1px solid rgba(242, 192, 48, 0.3);
+      border-radius: 999px;
+      padding: 0.3rem 0.9rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .hero h1 span {
+      color: #f2c030;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: #93afd4;
+      max-width: 540px;
+      margin: 0 auto 2rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.75rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.82rem;
+      color: #6b89b0;
+    }
+
+    .hero-meta-item .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #f2c030;
+      flex-shrink: 0;
+    }
+
+    .hero-meta-item.pulse .dot {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* ── INTRO BAND ── */
+    .intro-band {
+      background: white;
+      border-bottom: 1px solid #e8e6df;
+    }
+
+    .intro-band-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 600px) {
+      .intro-band-inner { grid-template-columns: 1fr; }
+    }
+
+    .intro-block h2 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #888780;
+      margin-bottom: 0.5rem;
+    }
+
+    .intro-block p {
+      font-size: 0.9rem;
+      color: #374151;
+      line-height: 1.65;
+    }
+
+    /* ── MAIN CONTENT ── */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888780;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── DOC CARDS ── */
+    .doc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 3rem;
+    }
+
+    .doc-card {
+      background: white;
+      border: 1px solid #e8e6df;
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .doc-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #f2c030;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .doc-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      border-color: #c7c5bc;
+      transform: translateY(-2px);
+    }
+
+    .doc-card:hover::before {
+      opacity: 1;
+    }
+
+    .doc-card-leading {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #1a4d8f;
+      letter-spacing: -0.02em;
+    }
+
+    .doc-card-title {
+      font-size: 0.82rem;
+      color: #5f5e5a;
+      line-height: 1.45;
+    }
+
+    .doc-card-arrow {
+      margin-top: auto;
+      padding-top: 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #1a4d8f;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .doc-card-arrow svg {
+      transition: transform 0.15s;
+    }
+
+    .doc-card:hover .doc-card-arrow svg {
+      transform: translateX(3px);
+    }
+
+    /* ── PHASE STATUS ── */
+    .phase-card {
+      background: white;
+      border: 1px solid #e8e6df;
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 3rem;
+    }
+
+    .phase-track {
+      display: flex;
+      gap: 0;
+      margin-top: 1rem;
+    }
+
+    .phase-step {
+      flex: 1;
+      position: relative;
+    }
+
+    .phase-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 12px;
+      left: calc(50% + 12px);
+      right: calc(-50% + 12px);
+      height: 2px;
+      background: #e8e6df;
+    }
+
+    .phase-step.done:not(:last-child)::after {
+      background: #1a4d8f;
+    }
+
+    .phase-circle {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #e8e6df;
+      border: 2px solid #e8e6df;
+      margin: 0 auto 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: #888780;
+    }
+
+    .phase-step.done .phase-circle {
+      background: #1a4d8f;
+      border-color: #1a4d8f;
+      color: white;
+    }
+
+    .phase-step.active .phase-circle {
+      background: white;
+      border-color: #1a4d8f;
+      color: #1a4d8f;
+      box-shadow: 0 0 0 3px rgba(26, 77, 143, 0.12);
+    }
+
+    .phase-name {
+      font-size: 0.68rem;
+      text-align: center;
+      color: #888780;
+      line-height: 1.3;
+    }
+
+    .phase-step.active .phase-name {
+      color: #1a1a18;
+      font-weight: 600;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0e2a5c;
+      color: #6b89b0;
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+    }
+
+    footer strong {
+      color: #93afd4;
+    }
+
+    footer .arc {
+      color: #f2c030;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-logo">
+      <img src="CSAH-logo-transparent-2.png" alt="CSAH — Chatham Savannah Authority for the Homeless" />
+    </div>
+    <div class="hero-eyebrow">Compass Project · Decision Hub</div>
+    <h1>Building the Tools<br>Savannah <span>Needs</span></h1>
+    <p class="hero-sub">
+      Research, architecture decisions, and technical recommendations —
+      prepared by ARC for the CSAH team in a format that's clear, digestible, and easy to act on.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item pulse">
+        <div class="dot"></div>
+        Phase 1 — Discovery &amp; Strategy in Progress
+      </div>
+      <div class="hero-meta-item">
+        <div class="dot" style="background:#3d6aa0;"></div>
+        Prepared by ARC — Alan Robinson &amp; Allyson Short
+      </div>
+    </div>
+  </div>
+
+  <!-- INTRO BAND -->
+  <div class="intro-band">
+    <div class="intro-band-inner">
+      <div class="intro-block">
+        <h2>What this is</h2>
+        <p>Every architectural decision, vendor evaluation, and technical recommendation we produce is published here — formatted for clarity, not code. No raw documents, no spreadsheets. Just the information CSAH needs, in a format designed to make decisions easy.</p>
+      </div>
+      <div class="intro-block">
+        <h2>How to use it</h2>
+        <p>Each card below links to a decision document. Documents are updated as we move through Phase 1. When a decision is finalized and signed off, it becomes part of the Strategy &amp; Architecture Document that closes Phase 1.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="container">
+
+    <!-- Phase tracker -->
+    <div class="phase-card">
+      <div class="section-label">Project Phase</div>
+      <div class="phase-track">
+        <div class="phase-step active">
+          <div class="phase-circle">1</div>
+          <div class="phase-name">Discovery &amp;<br>Strategy</div>
+        </div>
+        <div class="phase-step">
+          <div class="phase-circle">2</div>
+          <div class="phase-name">Design &amp;<br>Architecture</div>
+        </div>
+        <div class="phase-step">
+          <div class="phase-circle">3</div>
+          <div class="phase-name">Build &amp;<br>Delivery</div>
+        </div>
+        <div class="phase-step">
+          <div class="phase-circle">4</div>
+          <div class="phase-name">Launch &amp;<br>Handoff</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decision docs -->
+    <div class="section-label">Decision Documents</div>
+    <div class="doc-grid">
+
+      <a class="doc-card" href="pwa-vs-mobile.html">
+        <div class="doc-card-leading">PWA</div>
+        <div class="doc-card-title">vs. Native Mobile App — Partner App platform decision</div>
+        <div class="doc-card-arrow">
+          Open document
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a class="doc-card" href="kiosk_comparison.html">
+        <div class="doc-card-leading">Kiosk</div>
+        <div class="doc-card-title">Software Comparison — KioWare vs. alternatives</div>
+        <div class="doc-card-arrow">
+          Open document
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      <span class="arc">ARC</span> &nbsp;—&nbsp;
+      <strong>Alan Robinson &amp; Allyson Short</strong>
+      &nbsp;&nbsp;·&nbsp;&nbsp;
+      Prepared for <strong>Chatham Savannah Authority for the Homeless</strong>
+      &nbsp;&nbsp;·&nbsp;&nbsp;
+      Compass Project · 2026
+    </p>
+  </footer>
+
+</body>
+</html>
