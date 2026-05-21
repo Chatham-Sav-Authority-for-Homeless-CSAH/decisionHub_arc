@@ -84,6 +84,11 @@ Alan is not a software developer. He is a visual/UI person. Decision documents a
 - A `docs/index.html` landing page listing all docs is the intended navigation surface for Alan
 - Repo is **private** on GitHub — Netlify free tier handles deployment from private repos
 
+### Honesty & Confidence Levels
+- **Never hallucinate.** If the answer isn't known, say so directly.
+- **Flag partial answers.** If a response includes guesses, assumptions, or things that should be verified, call them out explicitly — don't bury them in otherwise confident-sounding text.
+- This applies especially to: vendor pricing, API capabilities, government policy details, and any claims about third-party tools.
+
 ### Documentation Pattern
 When Allyson and Claude work through a technical decision, the output is a styled HTML decision doc. Structure:
 1. Context box (what problem are we solving, who are the users)
@@ -173,6 +178,68 @@ Keep it lean. CSAH is a nonprofit with a small budget. No overengineering. Low r
 
 **Future kiosk → app integration:**
 - Kiosk user requests shelter → push notification to appropriate partner team
+
+---
+
+## Kiosk Software — Options Under Consideration
+
+**SCAD recommendation:** KioWare (already in use on Compass Project kiosks).
+
+### Key Requirement: Single Data Source for Kiosk + App
+This is primarily an **architecture concern, not a kiosk software concern.** Kiosk lockdown software restricts the device to a URL — if the kiosk runs the same PWA as the partner app (pointing to the same backend API), any update to the data source propagates to both surfaces automatically, on demand. No special kiosk software feature is required for this. The choice of kiosk platform does not gate the single-data-source goal.
+
+The one exception: platforms with a built-in CMS. If the kiosk software manages content (rather than just locking down a URL), you'd need to evaluate whether that CMS can also serve the app layer. For this project, the cleaner path is to own the data layer in the app backend and let the kiosk software just do lockdown + remote management.
+
+---
+
+### Comparison: KioWare vs. Alternatives
+
+**Pricing note:** Figures below are estimates based on publicly available information as of mid-2026. Verify directly with vendors before committing — nonprofit pricing and bundling can significantly change the numbers.
+
+---
+
+#### KioWare *(SCAD-recommended, currently deployed)*
+- **Est. cost:** ~$2k/year per device (from existing budget estimate; includes KioCloud remote management)
+- **Pros:** Already in use; SCAD staff familiar with it; proven on this hardware; JAWS/accessibility compatible; KioCloud handles remote monitoring + updates across kiosk network
+- **Cons:** Higher per-device cost than MDM alternatives; two-product stack (KioWare + KioCloud); licensing model can feel dated compared to modern MDMs
+- **CSAH fit:** Known quantity, lowest switching risk. But at ~$2k/device/year × 3 kiosks = ~$6k/year ongoing.
+
+---
+
+#### Scalefusion *(Modern MDM + kiosk, all-in-one)*
+- **Est. cost:** ~$25–50/device/year *(significantly cheaper than KioWare; verify nonprofit pricing)*
+- **Pros:** Bundles kiosk lockdown + remote management in one platform (replaces both KioWare + KioCloud); modern web console; strong Android + Windows support; good for web app/PWA kiosks; on-demand remote push updates built in
+- **Cons:** Less specialized for kiosk use cases than KioWare; may require more configuration for touchscreen/public-facing hardening; less known quantity for this hardware setup
+- **CSAH fit:** Best cost-efficiency of the alternatives. If hardware runs Android or Windows and is PWA-compatible, this could cut ongoing software costs by 90%+. Worth a trial.
+
+---
+
+#### Hexnode MDM *(Lean MDM with kiosk mode)*
+- **Est. cost:** ~$15–30/device/year *(among the cheapest options; verify)*
+- **Pros:** Solid kiosk mode + MDM in one; remote device management included; good web app / browser kiosk support; reportedly strong nonprofit pricing; simple setup
+- **Cons:** Less specialized than KioWare for public-facing kiosk hardening; fewer kiosk-specific features (e.g., attract screen, session reset timers) out of the box; smaller ecosystem
+- **CSAH fit:** Fine if the kiosk is just a locked-down browser pointing to a URL. Not the right call if you need advanced kiosk UX behaviors (idle reset, attract loop, etc.) without custom config work.
+
+---
+
+#### SiteKiosk Online *(by Provisio — direct KioWare competitor)*
+- **Est. cost:** ~$150–300/device/year *(perpetual + maintenance model; verify current SaaS pricing)*
+- **Pros:** Purpose-built for public-facing web kiosks; direct KioWare competitor with comparable feature set; includes content scheduling + remote management; strong browser lockdown features; good accessibility track record
+- **Cons:** Less widely adopted than KioWare in nonprofit/government contexts; pricing model less transparent; less familiar to SCAD staff who may support CSAH
+- **CSAH fit:** Closest feature-for-feature swap for KioWare at lower cost. Worth evaluating if SCAD support isn't a dependency — but staff familiarity advantage of KioWare disappears if SCAD isn't maintaining it long-term.
+
+---
+
+### Summary
+
+| Option | Est. Annual Cost (3 kiosks) | Remote Mgmt Included | Single Data Source | Notes |
+|---|---|---|---|---|
+| KioWare + KioCloud | ~$6k/yr | Yes (KioCloud) | Via app architecture | SCAD-recommended; known quantity |
+| Scalefusion | ~$75–150/yr | Yes (built-in) | Via app architecture | Best value; modern MDM |
+| Hexnode | ~$45–90/yr | Yes (built-in) | Via app architecture | Leanest option; less kiosk-specialized |
+| SiteKiosk Online | ~$450–900/yr | Yes (built-in) | Via app architecture | Closest KioWare alternative |
+
+**Open question:** If CSAH staff will self-maintain post-handoff, KioWare's familiarity advantage matters. If Allyson + Alan own ongoing maintenance, switching cost is lower and Scalefusion's price point is compelling.
 
 ---
 
