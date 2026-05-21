@@ -9,8 +9,13 @@
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; color: #1a1a18; padding: 2rem; }
   h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
   .subtitle { font-size: 14px; color: #5f5e5a; margin-bottom: 1.5rem; }
-  .key-note { background: #e1f5ee; border-left: 3px solid #1d9e75; padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 13px; color: #085041; margin-bottom: 1.5rem; line-height: 1.6; }
-  .key-note strong { font-weight: 500; }
+
+  .note-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.75rem; }
+  .key-note { border-left: 3px solid; padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 13px; line-height: 1.6; }
+  .key-note strong { font-weight: 600; display: block; margin-bottom: 2px; }
+  .note-green  { background: #e1f5ee; border-color: #1d9e75; color: #085041; }
+  .note-blue   { background: #e6f1fb; border-color: #1a4d8f; color: #0c3060; }
+  .note-amber  { background: #faeeda; border-color: #ba7517; color: #633806; }
 
   table { width: 100%; border-collapse: collapse; border: 1px solid #d3d1c7; border-radius: 12px; overflow: hidden; font-size: 13px; }
   th, td { border-right: 0.5px solid #d3d1c7; border-bottom: 0.5px solid #d3d1c7; padding: 10px 12px; vertical-align: middle; }
@@ -23,32 +28,33 @@
   .col-name.green { color: #0f6e56; }
   .col-sub { font-size: 11px; color: #5f5e5a; line-height: 1.4; margin-bottom: 6px; }
   .badge { display: inline-block; font-size: 10px; padding: 2px 9px; border-radius: 20px; }
-  .badge-gray { background: #d3d1c7; color: #444441; }
-  .badge-green { background: #e1f5ee; color: #0f6e56; font-weight: 500; }
-  .badge-blue { background: #e6f1fb; color: #185fa5; }
-  .badge-amber { background: #faeeda; color: #854f0b; }
+  .badge-gray   { background: #d3d1c7; color: #444441; }
+  .badge-green  { background: #e1f5ee; color: #0f6e56; font-weight: 500; }
+  .badge-blue   { background: #e6f1fb; color: #185fa5; }
+  .badge-amber  { background: #faeeda; color: #854f0b; }
 
-  .row-label { background: #f1efe8; font-size: 12px; font-weight: 500; color: #5f5e5a; width: 140px; min-width: 140px; }
+  .row-label { background: #f1efe8; font-size: 12px; font-weight: 500; color: #5f5e5a; width: 150px; min-width: 150px; }
   .section-row td { background: #e8e6df; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #888780; font-weight: 500; padding: 6px 12px; }
 
   .center { text-align: center; }
   .price-main { font-size: 14px; font-weight: 500; color: #1a1a18; display: block; }
   .price-sub { font-size: 11px; color: #5f5e5a; line-height: 1.4; }
+  .warn { font-size: 11px; color: #b45309; font-weight: 500; }
 
   .bar-wrap { display: flex; align-items: center; gap: 6px; }
   .bar-track { flex: 1; background: #e8e6df; border-radius: 4px; height: 7px; overflow: hidden; }
   .bar-fill { height: 100%; border-radius: 4px; }
   .bar-num { font-size: 11px; font-weight: 500; width: 28px; text-align: right; color: #5f5e5a; }
 
-  .check { color: #1d9e75; font-weight: 600; }
-  .cross { color: #d85a30; }
+  .check   { color: #1d9e75; font-weight: 600; }
+  .cross   { color: #d85a30; }
   .partial { color: #ba7517; font-size: 12px; }
 
   .verdict-cell { font-size: 12px; line-height: 1.6; padding: 10px 12px; }
-  .verdict-kw { background: #f5f5f3; color: #444441; }
-  .verdict-sk { background: #e1f5ee; color: #085041; }
-  .verdict-sf { background: #e6f1fb; color: #0c447c; }
-  .verdict-42 { background: #faeeda; color: #633806; }
+  .verdict-kw  { background: #f5f5f3; color: #444441; }
+  .verdict-sk  { background: #e1f5ee; color: #085041; }
+  .verdict-sf  { background: #e6f1fb; color: #0c447c; }
+  .verdict-esp { background: #faeeda; color: #633806; }
 
   .foot { font-size: 11px; color: #888780; margin-top: 12px; line-height: 1.7; }
 </style>
@@ -56,10 +62,21 @@
 <body>
 
 <h1>Kiosk Software Comparison</h1>
-<p class="subtitle">Compass Project — benchmarked against CSAH partner app &amp; kiosk requirements</p>
+<p class="subtitle">Compass Project — evaluated against ARC project requirements</p>
 
-<div class="key-note">
-  <strong>Key requirement:</strong> A single data source that both kiosks and the partner app read from, with on-demand push updates. All four options support locking down a browser to the Framer/CommonNinja site. The differentiator is how well each handles remote fleet management and API-based data sharing across surfaces.
+<div class="note-group">
+  <div class="key-note note-green">
+    <strong>How these platforms work</strong>
+    All four options lock a device to a URL — the kiosk and the partner app read from the same backend automatically if built on a shared API. Single data source and on-demand content updates are solved at the architecture layer, not by the kiosk software. The differentiators are: how well each manages a remote fleet, how much accessibility tooling is built in for public-facing use, and whether the platform is hardware-agnostic.
+  </div>
+  <div class="key-note note-blue">
+    <strong>Push and SMS notifications</strong>
+    Kiosk-triggered notifications (e.g. a user requests a caseworker) are handled by the web app running on the kiosk — not by the kiosk software itself. All four platforms are equivalent here. This is an app architecture decision, not a kiosk software decision.
+  </div>
+  <div class="key-note note-amber">
+    <strong>Hardware vendor not yet selected</strong>
+    Kiosk hardware procurement happens in Phase 1. Platform support (Windows vs. Android) is noted below — confirm hardware shortlist before finalizing software selection. Note that Esper's Windows support is currently in beta.
+  </div>
 </div>
 
 <table>
@@ -68,22 +85,22 @@
       <th class="row-label"></th>
       <th class="col-head">
         <div class="col-name">KioWare</div>
-        <div class="col-sub">Current SCAD recommendation</div>
-        <span class="badge badge-gray">Baseline</span>
+        <div class="col-sub">Purpose-built kiosk lockdown</div>
+        <span class="badge badge-gray">Reference</span>
       </th>
       <th class="col-head featured">
         <div class="col-name green">SiteKiosk Online</div>
-        <div class="col-sub">Cloud kiosk + digital signage</div>
-        <span class="badge badge-green">Top pick</span>
+        <div class="col-sub">Cloud kiosk + content management</div>
+        <span class="badge badge-green">ARC recommendation</span>
       </th>
       <th class="col-head">
         <div class="col-name">Scalefusion MDM</div>
-        <div class="col-sub">MDM-first, multi-platform</div>
+        <div class="col-sub">MDM-first, renowned for kiosk lockdown</div>
         <span class="badge badge-blue">Strong contender</span>
       </th>
       <th class="col-head">
-        <div class="col-name">42Gears SureLock</div>
-        <div class="col-sub">Lockdown + SureMDM pair</div>
+        <div class="col-name">Esper</div>
+        <div class="col-sub">Purpose-built for dedicated devices</div>
         <span class="badge badge-amber">Worth exploring</span>
       </th>
     </tr>
@@ -101,41 +118,55 @@
     </tr>
     <tr>
       <td class="row-label">Per device cost</td>
-      <td class="center"><span class="price-main">$299–499</span><span class="price-sub">one-time + KioCloud subscription</span></td>
+      <td class="center"><span class="price-main">$299–499</span><span class="price-sub">one-time + KioCloud subscription for remote mgmt</span></td>
       <td class="center"><span class="price-main">$239/yr</span><span class="price-sub">$120/yr nonprofit pricing available</span></td>
       <td class="center"><span class="price-main">~$2–4/mo</span><span class="price-sub">NGO discounts available</span></td>
-      <td class="center"><span class="price-main">~$3.99/mo</span><span class="price-sub">SureMDM costs additional</span></td>
+      <td class="center"><span class="price-main">$2/mo (Genesis)</span><span class="price-sub">$4/mo (Bridge) · $6/mo (Architect)</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">Device minimum</td>
+      <td class="center"><span class="check">None</span><span class="price-sub">per-device purchase</span></td>
+      <td class="center"><span class="check">None</span><span class="price-sub">per-device subscription</span></td>
+      <td class="center"><span class="price-sub">Verify with vendor</span></td>
+      <td class="center"><span class="warn">⚠ 25 devices min.</span><span class="price-sub">$600/yr minimum for 3 kiosks</span></td>
     </tr>
     <tr>
       <td class="row-label">Free trial</td>
       <td class="center"><span class="partial">Limited (popup reminders only)</span></td>
       <td class="center"><span class="check">✓</span> 30 days</td>
       <td class="center"><span class="check">✓</span> 14 days</td>
-      <td class="center"><span class="check">✓</span> Available</td>
+      <td class="center"><span class="check">✓</span> 30 days</td>
     </tr>
 
-    <tr class="section-row"><td colspan="5">Platform Support</td></tr>
+    <tr class="section-row"><td colspan="5">Hardware Compatibility</td></tr>
 
     <tr>
       <td class="row-label">Windows</td>
       <td class="center"><span class="check">✓</span></td>
       <td class="center"><span class="check">✓</span></td>
       <td class="center"><span class="check">✓</span></td>
-      <td class="center"><span class="check">✓</span></td>
+      <td class="center"><span class="warn">⚠ Beta only</span></td>
     </tr>
     <tr>
       <td class="row-label">Android</td>
       <td class="center"><span class="check">✓</span></td>
       <td class="center"><span class="check">✓</span></td>
       <td class="center"><span class="check">✓</span></td>
-      <td class="center"><span class="check">✓</span></td>
+      <td class="center"><span class="check">✓</span> Primary platform</td>
     </tr>
     <tr>
       <td class="row-label">iOS / iPad</td>
       <td class="center"><span class="cross">✗</span></td>
       <td class="center"><span class="cross">✗</span></td>
       <td class="center"><span class="check">✓</span></td>
-      <td class="center"><span class="partial">Limited</span></td>
+      <td class="center"><span class="check">✓</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">Hardware agnostic</td>
+      <td class="center"><span class="partial">Win + Android only</span></td>
+      <td class="center"><span class="partial">Win + Android only</span></td>
+      <td class="center"><span class="check">✓</span> Broadest support</td>
+      <td class="center"><span class="partial">Android primary; Win beta</span></td>
     </tr>
 
     <tr class="section-row"><td colspan="5">Compass Project Fit — scored out of 10</td></tr>
@@ -145,21 +176,21 @@
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#888780;"></div></div><span class="bar-num">9</span></div></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#1d9e75;"></div></div><span class="bar-num">9</span></div></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#378add;"></div></div><span class="bar-num">8</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#ba7517;"></div></div><span class="bar-num">9</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#ba7517;"></div></div><span class="bar-num">8</span></div></td>
     </tr>
     <tr>
       <td class="row-label">Single data source</td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:60%;background:#888780;"></div></div><span class="bar-num">6</span></div></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#1d9e75;"></div></div><span class="bar-num">8.5</span></div></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#378add;"></div></div><span class="bar-num">9</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:70%;background:#ba7517;"></div></div><span class="bar-num">7</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#ba7517;"></div></div><span class="bar-num">8</span></div></td>
     </tr>
     <tr>
       <td class="row-label">On-demand updates</td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%;background:#888780;"></div></div><span class="bar-num">7.5</span></div></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:95%;background:#1d9e75;"></div></div><span class="bar-num">9.5</span></div></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#378add;"></div></div><span class="bar-num">9</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#ba7517;"></div></div><span class="bar-num">8</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#ba7517;"></div></div><span class="bar-num">8.5</span></div></td>
     </tr>
     <tr>
       <td class="row-label">Remote fleet mgmt</td>
@@ -169,25 +200,32 @@
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#ba7517;"></div></div><span class="bar-num">8.5</span></div></td>
     </tr>
     <tr>
-      <td class="row-label">Accessibility</td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#888780;"></div></div><span class="bar-num">8.5</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#1d9e75;"></div></div><span class="bar-num">8</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:65%;background:#378add;"></div></div><span class="bar-num">6.5</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:70%;background:#ba7517;"></div></div><span class="bar-num">7</span></div></td>
+      <td class="row-label">Accessibility — public kiosk</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%;background:#888780;"></div></div><span class="bar-num">7.5</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%;background:#1d9e75;"></div></div><span class="bar-num">7.5</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:60%;background:#378add;"></div></div><span class="bar-num">6</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:60%;background:#ba7517;"></div></div><span class="bar-num">6</span></div></td>
+    </tr>
+    <tr>
+      <td class="row-label">Hardware flexibility</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:70%;background:#888780;"></div></div><span class="bar-num">7</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:70%;background:#1d9e75;"></div></div><span class="bar-num">7</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:95%;background:#378add;"></div></div><span class="bar-num">9.5</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:55%;background:#ba7517;"></div></div><span class="bar-num">5.5</span></div></td>
     </tr>
     <tr>
       <td class="row-label">Ease of setup</td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:70%;background:#888780;"></div></div><span class="bar-num">7</span></div></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#1d9e75;"></div></div><span class="bar-num">8.5</span></div></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#378add;"></div></div><span class="bar-num">8</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%;background:#ba7517;"></div></div><span class="bar-num">7.5</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:70%;background:#ba7517;"></div></div><span class="bar-num">7</span></div></td>
     </tr>
     <tr>
       <td class="row-label">Budget fit</td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:70%;background:#888780;"></div></div><span class="bar-num">7</span></div></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#1d9e75;"></div></div><span class="bar-num">9</span></div></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#378add;"></div></div><span class="bar-num">8.5</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:70%;background:#ba7517;"></div></div><span class="bar-num">7</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:55%;background:#ba7517;"></div></div><span class="bar-num">5.5</span></div></td>
     </tr>
 
     <tr class="section-row"><td colspan="5">Key Features</td></tr>
@@ -204,21 +242,21 @@
       <td class="center"><span class="partial">Limited</span></td>
       <td class="center"><span class="check">✓</span></td>
       <td class="center"><span class="check">✓</span></td>
-      <td class="center"><span class="partial">Via SureMDM</span></td>
+      <td class="center"><span class="check">✓</span> Developer-first</td>
     </tr>
     <tr>
-      <td class="row-label">Screen reader</td>
-      <td class="center"><span class="check">✓</span> JAWS built-in</td>
-      <td class="center"><span class="partial">Touch-friendly UI</span></td>
-      <td class="center"><span class="cross">✗</span></td>
-      <td class="center"><span class="partial">Basic</span></td>
+      <td class="row-label">Screen reader support</td>
+      <td class="center"><span class="check">✓</span> JAWS compatible<br><span style="font-size:11px;color:#888780;">(separate license)</span></td>
+      <td class="center"><span class="partial">Browser-native a11y only</span></td>
+      <td class="center"><span class="partial">Browser-native a11y only</span></td>
+      <td class="center"><span class="partial">Browser-native a11y only</span></td>
     </tr>
     <tr>
-      <td class="row-label">Nonprofit pricing</td>
-      <td class="center"><span class="cross">✗</span></td>
-      <td class="center"><span class="check">✓</span> $120/device/yr</td>
-      <td class="center"><span class="check">✓</span> On request</td>
-      <td class="center"><span class="partial">On request</span></td>
+      <td class="row-label">Touch-optimized UI</td>
+      <td class="center"><span class="check">✓</span></td>
+      <td class="center"><span class="check">✓</span> Built for touch</td>
+      <td class="center"><span class="partial">MDM-first; app-dependent</span></td>
+      <td class="center"><span class="check">✓</span> Android-focused</td>
     </tr>
     <tr>
       <td class="row-label">Session auto-clear</td>
@@ -227,21 +265,28 @@
       <td class="center"><span class="check">✓</span></td>
       <td class="center"><span class="check">✓</span></td>
     </tr>
+    <tr>
+      <td class="row-label">Nonprofit pricing</td>
+      <td class="center"><span class="cross">✗</span></td>
+      <td class="center"><span class="check">✓</span> $120/device/yr</td>
+      <td class="center"><span class="check">✓</span> On request</td>
+      <td class="center"><span class="partial">Contact sales</span></td>
+    </tr>
 
     <tr class="section-row"><td colspan="5">Verdict</td></tr>
 
     <tr>
       <td class="row-label">Summary</td>
-      <td class="verdict-cell verdict-kw">Strong accessibility (JAWS) and proven stability. One-time license is appealing for a grant budget. Weakest on shared data source and cloud-native on-demand updates — not designed for API-driven multi-surface sync.</td>
-      <td class="verdict-cell verdict-sk">Best overall fit for this project. Nonprofit pricing, strong API and built-in CMS, 30-day trial to test before Dec 2026. Closest to project needs with least disruption to the existing SCAD-designed system.</td>
-      <td class="verdict-cell verdict-sf">Best single-data-source architecture for kiosk + partner app. Strongest if the app eventually manages device-level data too. Weakest on accessibility — important for serving the homeless population.</td>
-      <td class="verdict-cell verdict-42">Closest philosophy to KioWare. Requires two products (SureLock + SureMDM) to match feature parity. Best if pure browser lockdown is the only priority and API/data-source needs are handled elsewhere.</td>
+      <td class="verdict-cell verdict-kw">Solid, mature lockdown platform with the strongest accessibility story via JAWS compatibility — but JAWS is a separate license with significant per-unit cost. Weakest on API-driven data sharing. One-time license is appealing for a grant budget but add KioCloud for remote management and the cost picture changes. No device minimum is an advantage at small scale.</td>
+      <td class="verdict-cell verdict-sk">Best overall fit for this project. Purpose-built for public-facing web kiosks — not MDM retrofitted. Built-in CMS and strong API align directly with the single-data-source requirement. Touch-first design suits the unhoused user population. Nonprofit pricing at $120/device/yr is the most favorable in this group. 30-day trial de-risks selection before any procurement commitment. No device minimum.</td>
+      <td class="verdict-cell verdict-sf">Strongest hardware flexibility and best-in-class remote fleet management — the right call if hardware selection lands on a non-standard platform. Renowned for deep kiosk lockdown capabilities. MDM-first means accessibility responsibilities shift entirely to the app layer. Best value per device with no device minimum penalty and NGO pricing available on request.</td>
+      <td class="verdict-cell verdict-esp">Developer-first platform purpose-built for dedicated device deployments with a strong API and solid kiosk lockdown. Two significant caveats for this project: the 25-device minimum means paying ~$600/year for 3 kiosks (22 unused licenses), and Windows support is currently in beta — a real risk if hardware selection lands on Windows. Best fit if hardware is confirmed Android and the team wants maximum API flexibility. Verify whether nonprofit pricing is available before pursuing.</td>
     </tr>
 
   </tbody>
 </table>
 
-<p class="foot">Scores out of 10 reflect fit to Compass Project requirements only. Pricing is approximate as of 2025–2026 — verify with vendors and negotiate nonprofit/volume rates. KioWare's lower single-data-source score reflects that it was not originally designed for API-driven multi-surface data sharing; it remains a strong lockdown-first tool.</p>
+<p class="foot">Scores reflect fit to Compass Project requirements only — not general-purpose rankings. Pricing is approximate as of 2026; verify directly with vendors and negotiate nonprofit/volume rates before committing. Accessibility scores reflect platform-level tooling for public kiosk use — app-layer accessibility is a separate design responsibility regardless of platform. Device minimums verified for Hexnode (15) and Esper (25); confirm Scalefusion's minimum directly. Hardware compatibility should be confirmed against the shortlisted kiosk hardware vendor before final software selection in Phase 1.</p>
 
 </body>
 </html>
