@@ -18,8 +18,15 @@
     .hero {
       background: #0e2a5c;
       color: white;
-      padding: 3.5rem 2rem 3rem;
+      padding: 1.25rem 2rem 3rem;
       text-align: center;
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      margin-bottom: 0.75rem;
     }
 
     .hero-logo {
@@ -27,26 +34,25 @@
       background: white;
       border-radius: 12px;
       padding: 0.7rem 1.25rem;
-      margin-bottom: 2rem;
     }
 
     .hero-logo img {
-      height: 52px;
+      height: 72px;
       display: block;
     }
 
     .hero-eyebrow {
       display: inline-block;
-      font-size: 0.7rem;
+      font-size: 1.3rem;
       font-weight: 700;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       color: #f2c030;
       background: rgba(242, 192, 48, 0.12);
       border: 1px solid rgba(242, 192, 48, 0.3);
       border-radius: 999px;
-      padding: 0.3rem 0.9rem;
-      margin-bottom: 1.25rem;
+      padding: 0.6rem 1.8rem;
+      margin-bottom: 1.5rem;
     }
 
     .hero h1 {
@@ -80,7 +86,7 @@
       display: flex;
       align-items: center;
       gap: 0.45rem;
-      font-size: 0.82rem;
+      font-size: 0.9rem;
       color: #6b89b0;
     }
 
@@ -160,7 +166,7 @@
     }
 
     .doc-card {
-      background: white;
+      background: #FDFBD4;
       border: 1px solid #e8e6df;
       border-radius: 12px;
       padding: 1.5rem;
@@ -326,11 +332,13 @@
 
   <!-- HERO -->
   <div class="hero">
-    <div class="hero-logo">
-      <img src="CSAH-logo-transparent-2.png" alt="CSAH — Chatham Savannah Authority for the Homeless" />
+    <div class="hero-top">
+      <div class="hero-logo">
+        <img src="CSAH-logo-transparent-2.png" alt="CSAH — Chatham Savannah Authority for the Homeless" />
+      </div>
     </div>
     <div class="hero-eyebrow">Compass Project · Decision Hub</div>
-    <h1>Building the Tools<br>Savannah <span>Needs</span></h1>
+    <h1>Building the Tools<br>CSAH <span>Needs</span></h1>
     <p class="hero-sub">
       Research, architecture decisions, and technical recommendations —
       prepared by ARC for the CSAH team in a format that's clear, digestible, and easy to act on.
@@ -339,10 +347,6 @@
       <div class="hero-meta-item pulse">
         <div class="dot"></div>
         Phase 1 — Discovery &amp; Strategy in Progress
-      </div>
-      <div class="hero-meta-item">
-        <div class="dot" style="background:#3d6aa0;"></div>
-        Prepared by ARC — Alan Robinson &amp; Allyson Short
       </div>
     </div>
   </div>
@@ -387,12 +391,12 @@
       </div>
     </div>
 
-    <!-- Decision docs -->
-    <div class="section-label">Decision Documents</div>
+    <!-- Open Discussion docs -->
+    <div class="section-label">Open Discussion Docs</div>
     <div class="doc-grid">
 
       <a class="doc-card" href="pwa-vs-mobile.html">
-        <div class="doc-card-leading">PWA</div>
+        <div class="doc-card-leading">PWA vs Native</div>
         <div class="doc-card-title">vs. Native Mobile App — Partner App platform decision</div>
         <div class="doc-card-arrow">
           Open document
@@ -403,7 +407,7 @@
       </a>
 
       <a class="doc-card" href="kiosk_comparison.html">
-        <div class="doc-card-leading">Kiosk</div>
+        <div class="doc-card-leading">Kiosk Software</div>
         <div class="doc-card-title">Software Comparison — KioWare vs. alternatives</div>
         <div class="doc-card-arrow">
           Open document
@@ -413,6 +417,12 @@
         </div>
       </a>
 
+    </div>
+
+    <!-- Approved Decision docs -->
+    <div class="section-label">Approved Decision Docs</div>
+    <div class="doc-grid">
+      <p style="font-size: 0.85rem; color: #888780;">TBD</p>
     </div>
 
   </div>
