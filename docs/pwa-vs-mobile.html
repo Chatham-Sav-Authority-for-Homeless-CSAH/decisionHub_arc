@@ -88,6 +88,33 @@
       font-size: 1.2rem;
     }
 
+    .factor-card details > summary {
+      list-style: none;
+      cursor: pointer;
+      user-select: none;
+      display: block;
+    }
+    .factor-card details > summary::-webkit-details-marker {
+      display: none;
+    }
+    .factor-card details > summary h3 {
+      margin-bottom: 0;
+    }
+    .factor-card details[open] > summary h3 {
+      margin-bottom: 1rem;
+    }
+    .factor-card details > summary h3::after {
+      content: "▶";
+      margin-left: auto;
+      font-size: 0.65rem;
+      color: #9ca3af;
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+    .factor-card details[open] > summary h3::after {
+      transform: rotate(90deg);
+    }
+
     .comparison-row {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
@@ -382,10 +409,13 @@
 
   <!-- Push Notifications -->
   <div class="factor-card">
+    <details>
+    <summary>
     <h3>
       <span class="icon">🔔</span> Push Notifications
       <span class="verdict-badge badge-critical">Critical Factor — Mitigated by SMS</span>
     </h3>
+    </summary>
     <div class="comparison-row">
       <div class="col col-pwa">
         <div class="col-label">PWA</div>
@@ -416,14 +446,18 @@
       extra and neutralizes that risk. A missed push still reaches the worker via text. Open question: is
       receiving both a push and an SMS for every alert too invasive? Should this be a user preference?
     </div>
+    </details>
   </div>
 
   <!-- Government Device Restrictions -->
   <div class="factor-card">
+    <details>
+    <summary>
     <h3>
       <span class="icon">🏛️</span> Government Device Restrictions
       <span class="verdict-badge badge-critical">Critical Factor</span>
     </h3>
+    </summary>
     <div class="comparison-row">
       <div class="col col-pwa">
         <div class="col-label">PWA</div>
@@ -448,14 +482,18 @@
       approval processes at each agency. This is still an open question and may be the single most important
       factor in the decision.
     </div>
+    </details>
   </div>
 
   <!-- Development Cost & Speed -->
   <div class="factor-card">
+    <details>
+    <summary>
     <h3>
       <span class="icon">💰</span> Development Cost &amp; Speed
       <span class="verdict-badge badge-pwa">PWA Advantage</span>
     </h3>
+    </summary>
     <div class="comparison-row">
       <div class="col col-pwa">
         <div class="col-label">PWA</div>
@@ -480,14 +518,18 @@
       Budget is finite and the December 2026 deadline is firm. A PWA is faster and cheaper to ship initially.
       React Native with Expo bridges much of the gap if native is chosen — it's not "build twice."
     </div>
+    </details>
   </div>
 
   <!-- Offline Access -->
   <div class="factor-card">
+    <details>
+    <summary>
     <h3>
       <span class="icon">📶</span> Offline Access
       <span class="verdict-badge badge-native">Native Advantage</span>
     </h3>
+    </summary>
     <div class="comparison-row">
       <div class="col col-pwa">
         <div class="col-label">PWA</div>
@@ -511,14 +553,18 @@
       Case logging and push notifications require connectivity regardless of platform — so this is a moderate
       factor, not a decisive one.
     </div>
+    </details>
   </div>
 
   <!-- Geolocation -->
   <div class="factor-card">
+    <details>
+    <summary>
     <h3>
       <span class="icon">📍</span> Geolocation (One-Time Pin Drop)
       <span class="verdict-badge badge-tie">Tie</span>
     </h3>
+    </summary>
     <div class="comparison-row">
       <div class="col col-pwa">
         <div class="col-label">PWA</div>
@@ -540,14 +586,18 @@
       The use case is simple: officer drops a pin when making contact with an individual. This does not require
       continuous background location. All three options handle it equally well.
     </div>
+    </details>
   </div>
 
   <!-- Distribution & Updates -->
   <div class="factor-card">
+    <details>
+    <summary>
     <h3>
       <span class="icon">🚀</span> Distribution &amp; Updates
       <span class="verdict-badge badge-pwa">PWA Advantage</span>
     </h3>
+    </summary>
     <div class="comparison-row">
       <div class="col col-pwa">
         <div class="col-label">PWA</div>
@@ -572,6 +622,7 @@
       across multiple IT departments. App store accounts are a minor cost but the review and approval
       process adds lead time.
     </div>
+    </details>
   </div>
 
   <!-- Summary -->
