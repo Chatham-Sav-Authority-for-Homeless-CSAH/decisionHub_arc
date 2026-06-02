@@ -340,24 +340,35 @@
     <p>
       The CSAH partner app serves ~50 users: CSAH outreach staff, SPD HOPE unit officers, CCPD behavioral health units,
       city/county code enforcement, and community paramedicine. These are boots-on-the-ground field workers across
-      multiple agencies — including government agencies that may have restrictions on what software their devices can run.
-      The core function of this app is <strong>real-time crisis coordination via push notifications.</strong>
+      multiple agencies — <strong>including government agencies that may have restrictions on what software their devices can run.</strong>
     </p>
   </div>
 
+  <div class="intro" style="border-left-color: #6b7280; margin-top: 1rem;">
+    <h2 style="color: #6b7280;">Key Definitions</h2>
+    <p><strong>Native app:</strong> Software built specifically for one platform (iOS or Android) and installed through the App Store or Google Play, giving it full access to device hardware and OS features.</p>
+    <p style="margin-top: 0.6rem;"><strong>PWA (Progressive Web App):</strong> A website built with modern web technologies that behaves like an app — installable from the browser, works offline, and can receive push notifications — no app store needed.</p>
+    <p style="margin-top: 0.6rem;"><strong>Push notification:</strong> An alert sent directly to a user's device by the app — instant, free per-message, but requires the app to be installed and the OS to support it (iOS support is limited on PWAs).</p>
+    <p style="margin-top: 0.6rem;"><strong>SMS:</strong> A text message sent over the carrier network. Works on any phone regardless of app installation, but costs per message and replies can't be link back to the case record or maitained in app.</p>
+  </div>
+
   <div class="sms-callout">
-    <h2>Key Context: SMS is Already Part of the Solution</h2>
+    <h2>Messaging Strategy: SMS + Push</h2>
     <p>
-      The app will include SMS capability regardless of which platform is chosen — outreach workers need to be able
+      <strong>Outreach messaging:</strong> Regardless of which platform is chosen, outreach workers need to be able
       to text resource links and information directly to individuals experiencing homelessness from within the app.
-      Since approximately 90% of that population has a smartphone, SMS is the primary bridge between the partner
+      Since approximately 70% of the unhoused population has a smartphone, SMS is the primary bridge between the partner
       app and the people it serves.
     </p>
     <p>
-      This has an important implication for the PWA vs. native decision: <strong>an SMS fallback for push
-      notifications is essentially free to build once Twilio is in place.</strong> The pattern works like this —
-      when a critical alert is triggered, the system fires a push notification AND sends an SMS to the recipient.
-      If the push fails to deliver (the main PWA risk on iOS), the SMS ensures the message gets through anyway.
+      <strong>Partner coordination (push):</strong> Push notifications is the desired primary communication channel between
+      partner agencies — CSAH outreach, SPD HOPE unit, CCPD behavioral health, and others. Unlike personal texts,
+      push notifications are tied to case records, keeping all communication in context and out of individual phones.
+    </p>
+    <p>
+      <strong>Push notification fallback:</strong> If an SMS provider is already in use for outreach messaging, adding
+      SMS as a fallback for partner push notifications would require minimal additional effort — the infrastructure
+      would already be in place. This matters for the PWA vs. native decision (see below).
     </p>
     <p>
       At an estimated volume of ~250 messages/month, Twilio costs roughly $20–50/month. Adding push notification
