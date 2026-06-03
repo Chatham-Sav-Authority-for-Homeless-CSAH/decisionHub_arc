@@ -246,13 +246,13 @@
 
     .phase-track {
       display: flex;
-      gap: 0;
       margin-top: 1rem;
     }
 
     .phase-step {
       flex: 1;
       position: relative;
+      cursor: pointer;
     }
 
     .phase-step:not(:last-child)::after {
@@ -263,10 +263,6 @@
       right: calc(-50% + 12px);
       height: 2px;
       background: #e8e6df;
-    }
-
-    .phase-step.done:not(:last-child)::after {
-      background: #1a4d8f;
     }
 
     .phase-circle {
@@ -282,12 +278,6 @@
       font-size: 0.65rem;
       font-weight: 700;
       color: #888780;
-    }
-
-    .phase-step.done .phase-circle {
-      background: #1a4d8f;
-      border-color: #1a4d8f;
-      color: white;
     }
 
     .phase-step.active .phase-circle {
@@ -307,6 +297,68 @@
     .phase-step.active .phase-name {
       color: #1a1a18;
       font-weight: 600;
+    }
+
+    /* ── PHASE BUBBLE ── */
+    .phase-bubble {
+      --bubble-left: 12.5%;
+      position: relative;
+      background: #f0f4ff;
+      border: 1.5px solid #c7d2fe;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .phase-bubble::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: var(--bubble-left);
+      transform: translateX(-50%);
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid #c7d2fe;
+      transition: left 0.25s ease;
+    }
+
+    .phase-bubble::after {
+      content: "";
+      position: absolute;
+      top: -8px;
+      left: var(--bubble-left);
+      transform: translateX(-50%);
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-bottom: 8px solid #f0f4ff;
+      transition: left 0.25s ease;
+    }
+
+    .phase-step:hover .phase-circle {
+      border-color: #1a4d8f;
+      color: #1a4d8f;
+    }
+
+    .phase-bubble ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .phase-bubble ul li {
+      font-size: 0.8rem;
+      color: #374151;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .phase-bubble ul li::before {
+      content: "·";
+      position: absolute;
+      left: 0;
+      color: #1a4d8f;
+      font-weight: 700;
     }
 
     /* ── FOOTER ── */
@@ -532,12 +584,16 @@
         </div>
         <div class="phase-step">
           <div class="phase-circle">3</div>
-          <div class="phase-name">Build &amp;<br>Delivery</div>
+          <div class="phase-name">Build &amp;<br> Delivery</div>
         </div>
         <div class="phase-step">
           <div class="phase-circle">4</div>
           <div class="phase-name">Launch &amp;<br>Handoff</div>
         </div>
+      </div>
+
+      <div class="phase-bubble">
+        <ul></ul>
       </div>
     </div>
 
@@ -611,8 +667,13 @@
     const btn = document.getElementById('auth-btn');
     const error = document.getElementById('auth-error');
 
+    if (sessionStorage.getItem('authed')) {
+      overlay.remove();
+    }
+
     function attempt() {
       if (input.value === CODE) {
+        sessionStorage.setItem('authed', '1');
         overlay.classList.add('fade-out');
         setTimeout(() => overlay.remove(), 400);
       } else {
@@ -626,7 +687,33 @@
 
     btn.addEventListener('click', attempt);
     input.addEventListener('keydown', e => { if (e.key === 'Enter') attempt(); });
-    input.focus();
+    if (!sessionStorage.getItem('authed')) input.focus();
+
+    // Phase bubble interaction
+    const phaseBullets = [
+      ['Partner engagement kickoff. Meet and begin creating excitement', 'User story creation', 'Requirements gathering >> map to features >> lock scope', 'Evaluate UX designs', 'Finalize timelines'],
+      ['TBD', 'TBD', 'TBD', 'TBD', 'TBD'],
+      ['TBD', 'TBD', 'TBD', 'TBD', 'TBD'],
+      ['TBD', 'TBD', 'TBD', 'TBD', 'TBD'],
+    ];
+    const tailPositions = ['12.5%', '37.5%', '62.5%', '87.5%'];
+
+    const bubble = document.querySelector('.phase-bubble');
+    const bubbleList = bubble.querySelector('ul');
+    const phaseSteps = document.querySelectorAll('.phase-step');
+
+    function activatePhase(index) {
+      phaseSteps.forEach(s => s.classList.remove('active'));
+      phaseSteps[index].classList.add('active');
+      bubble.style.setProperty('--bubble-left', tailPositions[index]);
+      bubbleList.innerHTML = phaseBullets[index].map(b => `<li>${b}</li>`).join('');
+    }
+
+    phaseSteps.forEach((step, i) => {
+      step.addEventListener('click', () => activatePhase(i));
+    });
+
+    activatePhase(0);
   </script>
 </body>
 </html>
