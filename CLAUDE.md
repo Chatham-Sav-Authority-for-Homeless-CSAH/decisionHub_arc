@@ -26,6 +26,37 @@ Place at the root of your project repository.
 
 ---
 
+## Street Outreach Programs
+
+Source: homelessauthority.org/street-outreach/
+
+**Approach:** Trauma-informed, evidence-based. Meets people where they are to build trust with service-resistant individuals and connect them to safe shelter, services, and housing via case management.
+
+### Programs
+
+**Streets to Stability**
+Street outreach and case management. Funded by the City of Savannah. Operates Mon–Sat 8:30am–9pm.
+
+**Project Hope Water**
+Mobile shower unit with multiple showers including ADA-accessible facilities. "Radical hospitality" model — connects unhoused residents to basic services. Funded by Chatham County and City of Savannah via American Rescue Plan Act.
+
+**Inclement Weather Response**
+Coordinated emergency services during extreme weather — temporary shelter coordination and transportation for individuals with complex medical/mental health needs.
+
+**Encampment Engagement**
+"Compassionate encampment management and closing plan" — designed to preserve resident dignity while addressing community concerns.
+
+### 2023–2025 Impact
+- 42 days of inclement weather support (2024)
+- 55% encampment reduction (87 → 39 locations)
+- Leads the annual Point-in-Time Count
+- Transportation services connecting residents to medical care, shelter, and food
+
+### Street Outreach Partners
+HUD, Chatham County, City of Savannah, Chatham Emergency Management Agency, emergency shelters, behavioral health providers, code enforcement, local government agencies.
+
+---
+
 ## Existing System — The Compass Project
 
 A prior SCAD Serve team built and delivered a working web app for CSAH.

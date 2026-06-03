@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compass Partner Platform — Project Overview</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f3;
+      color: #1a1a18;
+      line-height: 1.6;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(160deg, #0a1e42 0%, #0e2a5c 60%, #12357a 100%);
+      color: white;
+      padding: 3rem 2rem 2.5rem;
+    }
+
+    .header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .header-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header-logo {
+      background: white;
+      border-radius: 10px;
+      padding: 0.6rem 1rem;
+    }
+
+    .header-logo img {
+      height: 60px;
+      display: block;
+    }
+
+    .header-badges {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      align-items: flex-start;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+    }
+
+    .badge-grant {
+      background: rgba(242, 192, 48, 0.15);
+      border: 1px solid rgba(242, 192, 48, 0.4);
+      color: #f2c030;
+    }
+
+    .badge-deadline {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #93afd4;
+    }
+
+    .header-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #f2c030;
+      margin-bottom: 0.6rem;
+    }
+
+    header h1 {
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+
+    header h1 span { color: #f2c030; }
+
+    .header-tagline {
+      font-size: 1.05rem;
+      color: #93afd4;
+      max-width: 580px;
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: #0e2a5c;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 1.75rem 2rem;
+    }
+
+    .stats-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .stat-divider {
+      border-right: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .stat-number {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: #f2c030;
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: #6b89b0;
+      line-height: 1.4;
+    }
+
+    /* ── CONTAINER ── */
+    .container {
+      max-width: 900px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888780;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #0e2a5c;
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── SUMMARY BLOCK ── */
+    .summary-block {
+      background: white;
+      border-radius: 14px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2.5rem;
+      border: 1px solid #e8e6df;
+    }
+
+    .summary-block p {
+      font-size: 0.97rem;
+      color: #374151;
+      margin-bottom: 0.9rem;
+      line-height: 1.75;
+    }
+
+    .summary-block p:last-child { margin-bottom: 0; }
+
+    .ai-callout {
+      margin-top: 1.5rem;
+      background: linear-gradient(135deg, #f0f4ff, #e8f0fe);
+      border: 1px solid #c4ccf0;
+      border-radius: 10px;
+      padding: 1.1rem 1.4rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .ai-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+
+    .ai-callout-body strong {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #3730a3;
+      margin-bottom: 0.3rem;
+    }
+
+    .ai-callout-body p {
+      font-size: 0.88rem;
+      color: #1e40af;
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    /* ── CAPABILITIES GRID ── */
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .cap-card {
+      background: white;
+      border-radius: 14px;
+      padding: 1.6rem;
+      border: 1px solid #e8e6df;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+
+    .cap-card:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+      transform: translateY(-2px);
+    }
+
+    .cap-icon {
+      font-size: 1.75rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .cap-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0e2a5c;
+      margin-bottom: 0.5rem;
+    }
+
+    .cap-card p {
+      font-size: 0.87rem;
+      color: #6b7280;
+      line-height: 1.65;
+    }
+
+    .cap-pill {
+      display: inline-block;
+      font-size: 0.63rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      margin-top: 0.85rem;
+    }
+
+    .pill-core { background: #dbeafe; color: #1d4ed8; }
+    .pill-ai   { background: #ede9fe; color: #6d28d9; }
+    .pill-kiosk { background: #d1fae5; color: #065f46; }
+
+    /* ── TIMELINE ── */
+    .timeline-section {
+      background: white;
+      border-radius: 14px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2.5rem;
+      border: 1px solid #e8e6df;
+    }
+
+    .timeline-wrapper {
+      margin: 2rem 0 0.5rem;
+      position: relative;
+    }
+
+    /* Today marker sits above the bar */
+    .today-marker {
+      position: absolute;
+      left: 2%;
+      top: -26px;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .today-label {
+      font-size: 0.6rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #ef4444;
+      white-space: nowrap;
+      margin-bottom: 2px;
+    }
+
+    .today-arrow {
+      font-size: 0.6rem;
+      color: #ef4444;
+    }
+
+    .today-line {
+      position: absolute;
+      left: 2%;
+      top: 0;
+      width: 2px;
+      height: 52px;
+      background: #ef4444;
+      z-index: 10;
+    }
+
+    .phase-bar {
+      display: flex;
+      border-radius: 10px;
+      overflow: hidden;
+      height: 52px;
+    }
+
+    .ph {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: white;
+      text-align: center;
+      padding: 0 0.5rem;
+      line-height: 1.3;
+    }
+
+    .ph-1 { background: #f97316; flex: 2; }
+    .ph-2 { background: #0ea5e9; flex: 3; }
+    .ph-3 { background: #0d9488; flex: 2; }
+    .ph-4 { background: #16a34a; flex: 1; }
+
+    .month-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 0.5rem;
+      padding: 0 2px;
+    }
+
+    .month-labels span {
+      font-size: 0.7rem;
+      color: #9ca3af;
+      flex: 1;
+      text-align: center;
+    }
+
+    .month-labels span:first-child { text-align: left; }
+    .month-labels span:last-child { text-align: right; }
+
+    .phase-details {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+      margin-top: 1.5rem;
+    }
+
+    .phase-detail {
+      border-radius: 10px;
+      padding: 0.9rem 1rem;
+    }
+
+    .phase-detail h4 {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .now-badge {
+      background: #ef4444;
+      color: white;
+      font-size: 0.55rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.08rem 0.35rem;
+      border-radius: 999px;
+    }
+
+    .phase-detail ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .phase-detail ul li {
+      font-size: 0.78rem;
+      color: #374151;
+      padding: 0.12rem 0;
+    }
+
+    .phase-detail ul li::before {
+      content: "·";
+      margin-right: 0.4rem;
+      color: #9ca3af;
+    }
+
+    .pd-1 { background: #fff7ed; }
+    .pd-1 h4 { color: #ea580c; }
+    .pd-2 { background: #e0f2fe; }
+    .pd-2 h4 { color: #0284c7; }
+    .pd-3 { background: #f0fdfa; }
+    .pd-3 h4 { color: #0d9488; }
+    .pd-4 { background: #f0fdf4; }
+    .pd-4 h4 { color: #16a34a; }
+
+    .grant-callout {
+      margin-top: 1.5rem;
+      background: #fefce8;
+      border: 1px solid #fde68a;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      font-size: 0.87rem;
+      color: #78350f;
+      line-height: 1.6;
+    }
+
+    .grant-callout .grant-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+
+    /* ── PARTNER AGENCIES ── */
+    .partners-block {
+      background: white;
+      border-radius: 14px;
+      padding: 2rem 2.25rem;
+      margin-bottom: 2.5rem;
+      border: 1px solid #e8e6df;
+    }
+
+    .partners-block p {
+      font-size: 0.92rem;
+      color: #6b7280;
+      margin-bottom: 1rem;
+    }
+
+    .agency-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .agency-tag {
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 999px;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.82rem;
+      color: #374151;
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    a.agency-tag:hover {
+      background: #e0e7ff;
+      border-color: #a5b4fc;
+      color: #3730a3;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0a1e42;
+      padding: 3rem 2rem 2rem;
+    }
+
+    .footer-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .footer-arc-block {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .footer-arc-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #4b6a9b;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-arc-name {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #f2c030;
+      margin-bottom: 0.3rem;
+      letter-spacing: -0.01em;
+    }
+
+    .footer-arc-tagline {
+      font-size: 0.85rem;
+      color: #6b89b0;
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-arc-link {
+      display: inline-block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #93afd4;
+      text-decoration: none;
+      border: 1px solid rgba(147, 175, 212, 0.3);
+      border-radius: 999px;
+      padding: 0.4rem 1.1rem;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .footer-arc-link:hover {
+      color: #f2c030;
+      border-color: rgba(242, 192, 48, 0.4);
+    }
+
+    .footer-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .footer-col h4 {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #4b6a9b;
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-col p {
+      font-size: 0.8rem;
+      color: #6b7280;
+      line-height: 1.65;
+    }
+
+    .footer-col a {
+      color: #6b89b0;
+      text-decoration: none;
+    }
+
+    .footer-col a:hover { color: #93afd4; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      .stats-inner { grid-template-columns: 1fr; }
+      .capabilities-grid { grid-template-columns: 1fr; }
+      .phase-details { grid-template-columns: 1fr 1fr; }
+      .footer-bottom { grid-template-columns: 1fr; }
+      .header-top { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="header-top">
+      <a class="header-logo" href="https://csahcompassapp.netlify.app/" target="_blank" rel="noopener">
+        <img src="CSAH-logo-transparent-2.png" alt="Chatham Savannah Authority for the Homeless" />
+      </a>
+      <div class="header-badges">
+        <span class="badge badge-deadline">⏱ Deadline: December 2026</span>
+      </div>
+    </div>
+    <div class="header-eyebrow">Compass Partner Platform</div>
+    <h1>Coordinating Care.<br><span>Reducing Homelessness.</span></h1>
+    <p class="header-tagline">
+      A purpose-built platform connecting every agency working to meet people where they are —
+      from street outreach to law enforcement to community services the compass partner app is build to support the boots on the ground work being done to reduce homelessness.
+    </p>
+  </div>
+</header>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-divider">
+      <div class="stat-number">628</div>
+      <div class="stat-label">People experiencing homelessness<br>in Chatham County</div>
+    </div>
+    <div class="stat-divider">
+      <div class="stat-number">50+</div>
+      <div class="stat-label">Partner organization users across<br>5+ organizations</div>
+    </div>
+    <div>
+      <div class="stat-number">~3</div>
+      <div class="stat-label">Public kiosk sites<br>planned for deployment</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+  <!-- PROJECT SUMMARY -->
+  <div class="summary-block">
+    <div class="section-eyebrow">Project Overview</div>
+    <div class="section-title">What We're Building</div>
+    <p>
+      The Compass Partner Platform is a purpose-built coordination system for CSAH's network of outreach staff,
+      law enforcement behavioral health units, and partner agencies. Today, coordination happens over personal
+      phones, paper handouts, and disconnected systems. This platform replaces that friction with real-time,
+      case-linked communication — so every agency is working from the same information, at the same time.
+    </p>
+    <p>
+      The platform has two surfaces: a <strong>partner app</strong> used by approximately 50 field workers
+      across CSAH, SPD HOPE unit, CCPD behavioral health, and city/county agencies; and a network of
+      <strong>public kiosks</strong> at high-traffic community sites where individuals can access resources
+      directly. Both connect to a single data layer — any update is reflected everywhere, instantly.
+    </p>
+    <p>
+      Every interaction — who made contact, what was offered, what happened — is logged against a case record.
+      This builds the dataset CSAH needs to demonstrate compassionate diversion, track housing outcomes, and
+      tell the true story of how this community responds to homelessness.
+    </p>
+    <div class="ai-callout">
+      <div class="ai-icon">✦</div>
+      <div class="ai-callout-body">
+        <strong>Innovation for Georgia</strong>
+        <p>TBD</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLATFORM CAPABILITIES -->
+  <div class="section-eyebrow">Platform Capabilities</div>
+  <div class="section-title">What the Platform Does</div>
+  <div class="capabilities-grid">
+
+    <div class="cap-card">
+      <div class="cap-icon">🔔</div>
+      <h3>Crisis Coordination</h3>
+      <p>Push notifications connect SPD HOPE officers, CCPD behavioral health, CSAH outreach, and community
+      paramedicine in real time. Every alert is geotagged and logged against a case record — proving contact
+      was made before any enforcement action.</p>
+      <span class="cap-pill pill-core">Core App Feature</span>
+    </div>
+
+    <div class="cap-card">
+      <div class="cap-icon">📋</div>
+      <h3>Case Tracking - Key Data</h3>
+      <p>Each individual is a case. Interactions, referrals, and outcomes are logged across agencies— building the dataset CSAH needs to demonstrate compassionate diversion
+      and report to funders with confidence. A truth-telling tool for the data that matters.</p>
+      <span class="cap-pill pill-core">Core App Feature</span>
+    </div>
+
+    <div class="cap-card">
+      <div class="cap-icon">📍</div>
+      <h3>Resource Directory</h3>
+      <p>An always current directory of shelter, meals, healthcare, transportation, and services — accessible
+      to field workers in the app and to individuals at public kiosks. No more paper handouts — one source of truth, maintained once, accessible everywhere.</p>
+      <span class="cap-pill pill-core">Core Cross Platform Feature</span>
+    </div>
+
+    <div class="cap-card">
+      <div class="cap-icon">🖥️</div>
+      <h3>Public Kiosks</h3>
+      <p>Touchscreen accessible stations at key locations giving individuals direct access to resources. Kiosk-initiated requests can trigger real-time
+      alerts to the appropriate partner team — connecting the public-facing surface to the coordination layer.</p>
+      <span class="cap-pill pill-kiosk">Kiosk</span>
+    </div>
+
+  </div>
+
+  <!-- SCAD GRANT CALLOUT -->
+  <div class="grant-callout" style="margin-bottom: 2.5rem; border-radius: 14px; padding: 1.25rem 1.5rem; font-size: 0.92rem;">
+    <div class="grant-icon">🎓</div>
+    <div>
+      <strong>SCAD SERVE Community Fund — $150,000</strong> &nbsp;|&nbsp; The SCAD SERVE Community Fund
+      supports student-designed solutions addressing homelessness, public access, and essential services. This
+      award funds the Compass Project kiosk installation — a collaboration where SCAD students applied their
+      Design for Good coursework to a real community challenge, incorporating direct input from people with
+      lived experience of homelessness.
+    </div>
+  </div>
+
+  <!-- PROJECT TIMELINE -->
+  <div class="timeline-section">
+    <div class="section-eyebrow">Project Timeline</div>
+    <div class="section-title">Path to December 31 2026</div>
+
+    <div class="timeline-wrapper">
+      <div class="today-marker">
+        <span class="today-label">Today</span>
+        <span class="today-arrow">▼</span>
+      </div>
+      <div class="today-line"></div>
+
+      <div class="phase-bar">
+        <div class="ph ph-1" style="flex: 1.5;">Discovery &amp;<br>Strategy</div>
+        <div class="ph ph-2" style="flex: 2.5;">Core App Development</div>
+        <div class="ph ph-3" style="flex: 2;">Kiosk Integration</div>
+        <div class="ph ph-4" style="flex: 1;">Pilot &amp;<br>Launch</div>
+      </div>
+    </div>
+
+    <div class="month-labels">
+      <span>Jun</span>
+      <span>Jul</span>
+      <span>Aug</span>
+      <span>Sep</span>
+      <span>Oct</span>
+      <span>Nov</span>
+      <span>Dec</span>
+    </div>
+
+    <div class="phase-details">
+      <div class="phase-detail pd-1">
+        <h4>Phase 1 · Jun – Mid Jul <span class="now-badge">Now</span></h4>
+        <ul>
+          <li>Architecture decisions</li>
+          <li>Tech stack selection</li>
+          <li>Stakeholder alignment</li>
+          <li>Grant documentation</li>
+        </ul>
+      </div>
+      <div class="phase-detail pd-2">
+        <h4>Phase 2 · Mid Jul–Sep</h4>
+        <ul>
+          <li>Partner app build</li>
+          <li>Push + SMS system</li>
+          <li>Case tracking</li>
+          <li>Resource directory</li>
+        </ul>
+      </div>
+      <div class="phase-detail pd-3">
+        <h4>Phase 3 · Oct–Nov</h4>
+        <ul>
+          <li>Kiosk procurement</li>
+          <li>Hardware configuration</li>
+          <li>Kiosk app layer</li>
+          <li>Site installation</li>
+        </ul>
+      </div>
+      <div class="phase-detail pd-4">
+        <h4>Phase 4 · Dec</h4>
+        <ul>
+          <li>Pilot deployment</li>
+          <li>Partner onboarding</li>
+          <li>Staff training</li>
+          <li>Grant closeout</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PARTNER ORGS -->
+  <div class="partners-block">
+    <div class="section-eyebrow">Who Uses the Platform</div>
+    <div class="section-title">Partner Organizations</div>
+    <p>
+      Approximately 50 field workers across various community organizations — all coordinating around the
+      same case records and resource network. The platform replaces disconnected personal text communication
+      with shared, case-linked context that persists across agencies and shifts.
+    </p>
+    <div class="agency-tags">
+      <a class="agency-tag" href="https://www.homelessauthority.org/street-outreach/" target="_blank" rel="noopener">CSAH Outreach Staff</a>
+      <a class="agency-tag" href="https://savannahpd.org/outreach/hope" target="_blank" rel="noopener">SPD HOPE Unit</a>
+      <a class="agency-tag" href="https://savannahpd.org/bhu" target="_blank" rel="noopener">CCPD Behavioral Health</a>
+      <a class="agency-tag" href="https://www.savannahga.gov/516/Code-Compliance" target="_blank" rel="noopener">City & County Code Enforcement</a>
+      <a class="agency-tag" href="PARAMEDICINE_URL" target="_blank" rel="noopener">Community Paramedicine</a>
+      <a class="agency-tag" href="CASE_WORKERS_URL" target="_blank" rel="noopener">Partner Case Workers</a>
+      <a class="agency-tag" href="https://www.renegadepawsrescue.org" target="_blank" rel="noopener">Renegade Paws Rescue</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+
+    <div class="footer-arc-block">
+      <div class="footer-arc-label">Project Lead &amp; Strategy</div>
+      <div class="footer-arc-name">ARC Consulting</div>
+      <div class="footer-arc-tagline">Alan Robinson &amp; Allyson Short</div>
+      <a class="footer-arc-link" href="https://www.alanrobinson.co" target="_blank" rel="noopener">
+        www.alanrobinson.co &nbsp;↗
+      </a>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-col">
+        <h4>Client</h4>
+        <p>
+          Chatham Savannah Authority for the Homeless<br>
+          <a href="https://www.homelessauthority.org" target="_blank" rel="noopener">homelessauthority.org</a><br>
+          912-813-4614 · Savannah, GA
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>Project Team</h4>
+        <p>
+          Alan Robinson · Allyson Short<br>
+          Savannah, GA · 2026
+        </p>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+</body>
+</html>

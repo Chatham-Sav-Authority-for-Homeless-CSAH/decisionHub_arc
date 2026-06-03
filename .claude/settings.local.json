@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "WebSearch",
-      "WebFetch(domain:www.capterra.com)"
+      "WebFetch(domain:www.capterra.com)",
+      "mcp__granola__query_granola_meetings",
+      "WebFetch(domain:www.homelessauthority.org)"
     ]
   }
 }
