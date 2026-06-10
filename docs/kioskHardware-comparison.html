@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiosk Hardware Comparison — Compass Project</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; color: #1a1a18; padding: 2rem; }
+  h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
+  h2 { font-size: 16px; font-weight: 500; margin: 2rem 0 0.75rem; color: #1a1a18; }
+  .subtitle { font-size: 14px; color: #5f5e5a; margin-bottom: 1.5rem; }
+
+  .note-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.75rem; }
+  .key-note { border-left: 3px solid; padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 13px; line-height: 1.6; }
+  .key-note strong { font-weight: 600; display: block; margin-bottom: 2px; }
+  .note-green  { background: #e1f5ee; border-color: #1d9e75; color: #085041; }
+  .note-blue   { background: #e6f1fb; border-color: #1a4d8f; color: #0c3060; }
+  .note-amber  { background: #faeeda; border-color: #ba7517; color: #633806; }
+
+  table { width: 100%; border-collapse: collapse; border: 1px solid #d3d1c7; border-radius: 12px; overflow: hidden; font-size: 13px; }
+  th, td { border-right: 0.5px solid #d3d1c7; border-bottom: 0.5px solid #d3d1c7; padding: 10px 12px; vertical-align: middle; }
+  th:last-child, td:last-child { border-right: none; }
+  tr:last-child td { border-bottom: none; }
+
+  .col-head { background: #f1efe8; text-align: center; vertical-align: top; padding: 14px 10px; }
+  .col-head.featured { background: #e1f5ee; }
+  .col-name { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+  .col-name.green { color: #0f6e56; }
+  .col-sub { font-size: 11px; color: #5f5e5a; line-height: 1.4; margin-bottom: 6px; }
+  .badge { display: inline-block; font-size: 10px; padding: 2px 9px; border-radius: 20px; }
+  .badge-gray   { background: #d3d1c7; color: #444441; }
+  .badge-green  { background: #e1f5ee; color: #0f6e56; font-weight: 500; }
+  .badge-blue   { background: #e6f1fb; color: #185fa5; }
+  .badge-amber  { background: #faeeda; color: #854f0b; }
+
+  .row-label { background: #f1efe8; font-size: 12px; font-weight: 500; color: #5f5e5a; width: 160px; min-width: 160px; }
+  .section-row td { background: #e8e6df; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #888780; font-weight: 500; padding: 6px 12px; }
+
+  .center { text-align: center; }
+  .price-main { font-size: 14px; font-weight: 500; color: #1a1a18; display: block; }
+  .price-sub { font-size: 11px; color: #5f5e5a; line-height: 1.4; }
+  .warn { font-size: 11px; color: #b45309; font-weight: 500; }
+  .good { font-size: 11px; color: #0f6e56; font-weight: 500; }
+
+  .bar-wrap { display: flex; align-items: center; gap: 6px; }
+  .bar-track { flex: 1; background: #e8e6df; border-radius: 4px; height: 7px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; }
+  .bar-num { font-size: 11px; font-weight: 500; width: 28px; text-align: right; color: #5f5e5a; }
+
+  .check   { color: #1d9e75; font-weight: 600; }
+  .cross   { color: #d85a30; }
+  .partial { color: #ba7517; font-size: 12px; }
+
+  .verdict-cell { font-size: 12px; line-height: 1.6; padding: 10px 12px; vertical-align: top; }
+  .verdict-ak  { background: #e1f5ee; color: #085041; }
+  .verdict-mc  { background: #e6f1fb; color: #0c447c; }
+  .verdict-ol  { background: #faeeda; color: #633806; }
+
+  /* Connectivity section */
+  .connectivity-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 1.75rem; }
+  .conn-card { background: #fff; border: 1px solid #d3d1c7; border-radius: 10px; padding: 14px 16px; }
+  .conn-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .conn-card p { font-size: 12px; line-height: 1.6; color: #3d3d3b; }
+  .conn-card .conn-tag { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 20px; margin-bottom: 8px; }
+  .tag-primary   { background: #e1f5ee; color: #0f6e56; }
+  .tag-secondary { background: #e6f1fb; color: #185fa5; }
+  .tag-fallback  { background: #faeeda; color: #854f0b; }
+  .conn-cost { font-size: 11px; color: #5f5e5a; margin-top: 6px; font-style: italic; }
+
+  /* Budget table */
+  .budget-table { width: 100%; border-collapse: collapse; border: 1px solid #d3d1c7; border-radius: 12px; overflow: hidden; font-size: 13px; margin-bottom: 1.75rem; }
+  .budget-table th { background: #e8e6df; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #888780; font-weight: 500; padding: 8px 14px; text-align: left; border-bottom: 0.5px solid #d3d1c7; }
+  .budget-table th:not(:last-child), .budget-table td:not(:last-child) { border-right: 0.5px solid #d3d1c7; }
+  .budget-table td { padding: 10px 14px; border-bottom: 0.5px solid #d3d1c7; font-size: 13px; }
+  .budget-table tr:last-child td { border-bottom: none; }
+  .budget-table .vendor-cell { font-weight: 500; }
+  .status-ok   { color: #0f6e56; font-weight: 600; }
+  .status-warn { color: #b45309; font-weight: 600; }
+
+  .foot { font-size: 11px; color: #888780; margin-top: 12px; line-height: 1.7; }
+  .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #888780; font-weight: 600; margin: 2rem 0 0.6rem; }
+</style>
+</head>
+<body>
+
+<div style="background:#e8e6df; padding:0.6rem 2rem; margin:-2rem -2rem 2rem;">
+  <a href="index.html" style="color:#5f5e5a; font-size:0.8rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem; letter-spacing:0.04em;">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="#5f5e5a" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Decision Hub
+  </a>
+</div>
+
+<h1>Kiosk Hardware Comparison</h1>
+<p class="subtitle">Compass Project — evaluated against ARC project requirements</p>
+
+<div class="note-group">
+  <div class="key-note note-green">
+    <strong>Budget framing</strong>
+    Grant budget is $25,000 per unit, all-in (hardware + installation). Three units are planned across Goodwill Opportunity Campus, Union Mission Resource Center, and the Public Library. All-in estimates below include hardware plus installation (electrical, mounting, site prep) — not just unit sticker price.
+  </div>
+  <div class="key-note note-blue">
+    <strong>These are market estimates, not vendor quotes</strong>
+    All pricing is based on publicly available information and comparable deployments as of mid-2026. Actual quotes will vary. None of these vendors have been contacted yet. Request quotes before any procurement commitment — and always ask specifically about nonprofit pricing.
+  </div>
+  <div class="key-note note-amber">
+    <strong>Kiosk software is a separate decision</strong>
+    This document covers hardware vendors only. Which MDM or kiosk lockdown software runs on the hardware is documented separately in the Kiosk Software Comparison. Hardware and software decisions interact — confirm OS compatibility (Windows vs. Android) across both choices before ordering.
+  </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th class="row-label"></th>
+      <th class="col-head featured">
+        <div class="col-name green">Advanced Kiosks</div>
+        <div class="col-sub">Social service precedent, built-in MDM</div>
+        <span class="badge badge-green">ARC recommendation</span>
+      </th>
+      <th class="col-head">
+        <div class="col-name">MetroClick</div>
+        <div class="col-sub">Public housing analog, most budget-friendly</div>
+        <span class="badge badge-blue">Strong contender</span>
+      </th>
+      <th class="col-head">
+        <div class="col-name">Olea Kiosks</div>
+        <div class="col-sub">Highest hardware quality, large-scale focus</div>
+        <span class="badge badge-amber">If budget allows</span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr class="section-row"><td colspan="4">Hardware &amp; Durability</td></tr>
+
+    <tr>
+      <td class="row-label">Enclosure rating</td>
+      <td><span class="check">✓</span> NEMA 4-rated stainless steel<br><span class="price-sub">Rated for extreme outdoor climates</span></td>
+      <td><span class="check">✓</span> IP65-rated outdoor units<br><span class="price-sub">Anti-vandal enclosure (stainless/aluminum)</span></td>
+      <td><span class="check">✓</span> Industrial-grade US-manufactured<br><span class="price-sub">Tests own LCDs — not trusting factory specs</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">Display (outdoor)</td>
+      <td><span class="check">✓</span> Sunlight-readable, 1,000+ nits<br><span class="price-sub">Active heating/cooling, sealed ventilation</span></td>
+      <td><span class="check">✓</span> Optically bonded anti-glare touchscreen<br><span class="price-sub">Outdoor-rated</span></td>
+      <td><span class="check">✓</span> Outdoor-validated LCDs<br><span class="price-sub">Deployed in Las Vegas outdoor environments</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">Real-world precedent</td>
+      <td>Social services, housing authorities, courts<br><span class="price-sub">Government and nonprofit deployments</span></td>
+      <td>Public housing authority lobbies, community centers, libraries<br><span class="price-sub">Residents fill applications, upload docs, submit service requests</span></td>
+      <td>Transit info + emergency assistance, Las Vegas outdoor fleet<br><span class="price-sub">Mid-to-high-end deployments</span></td>
+    </tr>
+
+    <tr class="section-row"><td colspan="4">ADA &amp; Accessibility</td></tr>
+
+    <tr>
+      <td class="row-label">ADA compliance</td>
+      <td class="center"><span class="check">✓</span> Full outdoor line</td>
+      <td class="center"><span class="check">✓</span> Configurable height &amp; screen size</td>
+      <td class="center"><span class="check">✓</span> Most cited in ADA literature</td>
+    </tr>
+    <tr>
+      <td class="row-label">Language / voice</td>
+      <td>Multilingual + voice guidance standard on government models</td>
+      <td><span class="partial">⚠ Verify with vendor for this config</span></td>
+      <td>Privacy filter option standard add-on</td>
+    </tr>
+
+    <tr class="section-row"><td colspan="4">Software / MDM</td></tr>
+
+    <tr>
+      <td class="row-label">Remote management</td>
+      <td><span class="check">✓</span> Built-in Zamok remote mgmt<br><span class="price-sub">Software updates, monitoring, session security without on-site visits. Supports PWA in browser wrapper.</span></td>
+      <td><span class="partial">⚠ Platform leans integrated<br><span class="price-sub">Verify PWA runs cleanly in Chromium kiosk mode without being locked into their CMS. Ask explicitly.</span></span></td>
+      <td><span class="check">✓</span> Pure hardware — you own the stack<br><span class="price-sub">No Olea layer between your PWA and the user. Bring your own MDM.</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">PWA compatibility</td>
+      <td class="center"><span class="check">✓</span> Confirmed</td>
+      <td class="center"><span class="partial">⚠ Verify in Chromium kiosk mode</span></td>
+      <td class="center"><span class="check">✓</span> Software-agnostic</td>
+    </tr>
+
+    <tr class="section-row"><td colspan="4">Nonprofit / Scale Fit — scored out of 10</td></tr>
+
+    <tr>
+      <td class="row-label">Social service fit</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:95%;background:#1d9e75;"></div></div><span class="bar-num">9.5</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#378add;"></div></div><span class="bar-num">9</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:55%;background:#ba7517;"></div></div><span class="bar-num">5.5</span></div></td>
+    </tr>
+    <tr>
+      <td class="row-label">Small-volume buyer</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#1d9e75;"></div></div><span class="bar-num">9</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#378add;"></div></div><span class="bar-num">8.5</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:55%;background:#ba7517;"></div></div><span class="bar-num">5.5</span></div></td>
+    </tr>
+    <tr>
+      <td class="row-label">Hardware durability</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#1d9e75;"></div></div><span class="bar-num">9</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#378add;"></div></div><span class="bar-num">8.5</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:95%;background:#ba7517;"></div></div><span class="bar-num">9.5</span></div></td>
+    </tr>
+    <tr>
+      <td class="row-label">Pricing transparency</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#1d9e75;"></div></div><span class="bar-num">9</span></div><span style="font-size:11px;color:#5f5e5a;">GSA pricing</span></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%;background:#378add;"></div></div><span class="bar-num">7.5</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:65%;background:#ba7517;"></div></div><span class="bar-num">6.5</span></div></td>
+    </tr>
+    <tr>
+      <td class="row-label">Budget fit ($25K all-in)</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#1d9e75;"></div></div><span class="bar-num">8.5</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:95%;background:#378add;"></div></div><span class="bar-num">9.5</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:55%;background:#ba7517;"></div></div><span class="bar-num">5.5</span></div></td>
+    </tr>
+
+    <tr class="section-row"><td colspan="4">Privacy</td></tr>
+
+    <tr>
+      <td class="row-label">Data surface area</td>
+      <td><span class="partial">⚠ Zamok software layer</span><br><span class="price-sub">Audit data logging behavior before deployment. VOIP features mean broader surface area than bare-hardware vendors. Require contractual controls.</span></td>
+      <td><span class="partial">⚠ No public commitments</span><br><span class="price-sub">No specific data minimization commitments published. Same contractual negotiation required as others.</span></td>
+      <td><span class="check">✓</span> Hardware-only, lowest risk<br><span class="price-sub">No Olea software layer. Still negotiate camera defaults and telemetry contractually.</span></td>
+    </tr>
+
+    <tr class="section-row"><td colspan="4">Cost</td></tr>
+
+    <tr>
+      <td class="row-label">Hardware est.</td>
+      <td class="center"><span class="price-main">$5,000–$20,000</span><span class="price-sub">Enviro/Monolith outdoor line</span></td>
+      <td class="center"><span class="price-main">$5,000–$15,000+</span><span class="price-sub">Sophisticated outdoor transactional units</span></td>
+      <td class="center"><span class="price-main">$15,000–$30,000</span><span class="price-sub">Boulder model may offer lower entry point — ask specifically</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">Installation est.</td>
+      <td class="center"><span class="price-main">$2,000–$3,000</span><span class="price-sub">Site prep, mounting, electrical</span></td>
+      <td class="center"><span class="price-main">$500–$1,500</span><span class="price-sub">Weatherproof electrical, concrete pad, mounting</span></td>
+      <td class="center"><span class="price-main">$2,000–$3,000</span><span class="price-sub">Outdoor premium installation</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">All-in realistic est.</td>
+      <td class="center"><span class="price-main">$15,000–$22,000</span><span class="good">✓ Fits within $25K</span></td>
+      <td class="center"><span class="price-main">$12,000–$18,000</span><span class="good">✓ Most headroom under $25K</span></td>
+      <td class="center"><span class="price-main">$20,000–$28,000</span><span class="warn">⚠ Tight to over — ask about Boulder</span></td>
+    </tr>
+
+    <tr class="section-row"><td colspan="4">Verdict</td></tr>
+
+    <tr>
+      <td class="row-label">Summary</td>
+      <td class="verdict-cell verdict-ak">Best overall fit for CSAH. Directly serves social services, housing authorities, and courts — this is their buyer. Built-in Zamok MDM handles remote management without a separate software contract. GSA pricing gives transparent, structured costs for a nonprofit buyer without volume pressure. Fits the $25K unit budget with room. Zamok data logging should be audited before deployment and data minimization terms contractualized — but that's manageable.</td>
+      <td class="verdict-cell verdict-mc">The strongest comparable existing deployment: public housing authority kiosks in PHA lobbies and community centers, used for service applications and document submission. Most budget-friendly of the three — the most headroom under $25K per unit. Main risk is the integrated platform angle: confirm your PWA runs cleanly in Chromium kiosk mode without being pushed onto their CMS. If it does, this is a compelling choice.</td>
+      <td class="verdict-cell verdict-ol">Highest hardware quality in this group — the choice if you want the most durable, highest-spec units and budget isn't a constraint. Targets larger deployments; a 4-unit order is low priority for their sales team, so expect less flexibility. At $20K–$28K all-in, you're at or over the $25K budget ceiling depending on configuration. Ask specifically about the Boulder outdoor model as a lower entry point before ruling them out.</td>
+    </tr>
+
+  </tbody>
+</table>
+
+<p class="section-label">Connectivity: WiFi vs. Ethernet vs. Cellular</p>
+
+<div class="connectivity-grid">
+  <div class="conn-card">
+    <span class="conn-tag tag-primary">Preferred</span>
+    <h3>Wired Ethernet</h3>
+    <p>Highest stability, lowest latency, no wireless interference. Best choice for kiosks handling sensitive data and expected to run 24/7. Requires trenching conduit to run cable underground plus a certified network installer at each site.</p>
+    <p class="conn-cost">Extra installation cost: $1,000–$2,500 per unit. Pursue wherever conduit to a nearby building is feasible.</p>
+  </div>
+  <div class="conn-card">
+    <span class="conn-tag tag-secondary">Workable in lobbies</span>
+    <h3>WiFi</h3>
+    <p>Cost-effective where the host facility's existing network reaches the kiosk location — no trenching required. Can be affected by signal interference and congestion in crowded environments, which shelters and drop-in spaces often are. If WiFi is the only option, require WiFi 6 (802.11ax) support from the hardware vendor for better performance.</p>
+    <p class="conn-cost">No extra infrastructure cost if the building's network reaches the placement location.</p>
+  </div>
+  <div class="conn-card">
+    <span class="conn-tag tag-fallback">Outdoor fallback</span>
+    <h3>Cellular (4G/5G)</h3>
+    <p>The realistic option for any truly outdoor standalone placement with no nearby building infrastructure. All three vendors (Advanced Kiosks, MetroClick, Olea) support wired Ethernet, WiFi, and 4G/5G cellular. Plan for cellular as primary connectivity in those placements, with WiFi as secondary if available.</p>
+    <p class="conn-cost">Ongoing cost: $30–$80/month per unit ($360–$960/year). Budget this as an operational line, not hardware.</p>
+  </div>
+</div>
+
+<div class="key-note note-blue" style="margin-bottom:1.75rem;">
+  <strong>CSAH site visit recommendation</strong>
+  For each of your 3–4 locations, assess connectivity options during site visits before ordering hardware. If you can run conduit to a nearby building, wired Ethernet is the right call. If not, plan for cellular as primary with WiFi as secondary. Do not assume placement decisions until site visits are complete — connectivity plan should inform hardware spec, not the other way around.
+</div>
+
+<p class="section-label">Budget Reality Check</p>
+
+<table class="budget-table">
+  <thead>
+    <tr>
+      <th>Vendor</th>
+      <th>Hardware est.</th>
+      <th>Installation est.</th>
+      <th>All-in est. per unit</th>
+      <th>vs. $25K budget</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="vendor-cell">MetroClick</td>
+      <td>$10,000–$15,000</td>
+      <td>$500–$1,500</td>
+      <td>$12,000–$18,000</td>
+      <td><span class="status-ok">✓ Comfortable</span></td>
+    </tr>
+    <tr>
+      <td class="vendor-cell">Advanced Kiosks</td>
+      <td>$13,000–$20,000</td>
+      <td>$2,000–$3,000</td>
+      <td>$15,000–$23,000</td>
+      <td><span class="status-ok">✓ Fits</span></td>
+    </tr>
+    <tr>
+      <td class="vendor-cell">Olea Kiosks</td>
+      <td>$18,000–$25,000</td>
+      <td>$2,000–$3,000</td>
+      <td>$20,000–$28,000</td>
+      <td><span class="status-warn">⚠ Tight to over</span></td>
+    </tr>
+    <tr style="background:#f5f5f3;">
+      <td colspan="3" style="font-size:12px;color:#5f5e5a;font-style:italic;">3-unit total (using midpoint estimates)</td>
+      <td style="font-weight:500;">~$45K–$60K (MetroClick)<br>~$57K–$69K (Advanced)<br>~$66K–$84K (Olea)</td>
+      <td><span style="font-size:11px;color:#5f5e5a;">Remaining grant budget covers app dev + remaining kiosk costs within $150K envelope</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<p class="foot">All pricing is market estimates based on comparable deployments as of mid-2026 — not vendor quotes. A 4-unit order will not trigger volume pricing at any of these vendors (bulk pricing typically starts at 10+ units). Negotiate on service terms, warranty, and nonprofit designation rather than unit price. Verify all figures directly with vendors before issuing any purchase orders. Hardware OS (Windows vs. Android) must be confirmed against your kiosk software selection before finalizing specs. Installation costs assume outdoor-rated placement with electrical work; lobby/indoor placements may be significantly lower.</p>
+
+</body>
+</html>

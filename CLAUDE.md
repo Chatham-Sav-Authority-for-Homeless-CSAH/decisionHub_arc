@@ -59,7 +59,7 @@ HUD, Chatham County, City of Savannah, Chatham Emergency Management Agency, emer
 
 ## Existing System — The Compass Project
 
-A prior SCAD Serve team built and delivered a working web app for CSAH.
+A prior SCAD Serve team built and delivered a working web app for CSAH. We wil not keep this work, this is just a baseline for us to start real software development.
 
 **Live URL:** `thecompassproject.framer.website`
 
@@ -101,11 +101,11 @@ A prior SCAD Serve team built and delivered a working web app for CSAH.
 
 ## Ways of Working
 
-### Team Roles
+### Team Roles at ARC Consulting
 - **Alan Robinson** (alan@alanrobinson.co) — client-facing lead / consultant. Manages PMO functions: client relationship, proposal, grant process, scheduling.
 - **Allyson Short** — technical lead / developer. Owns architecture, build, kiosk implementation, and technical decisions.
 
-### Sharing Docs with Alan
+### Sharing Docs with Alan during development
 Alan is not a software developer. He is a visual/UI person. Decision documents are written as **styled HTML files** stored in the `docs/` folder and served via **Netlify** (connected to the private GitHub repo) so Alan can open them in a browser from a URL. Do not share raw markdown, code files, or anything requiring technical context to read.
 
 - All decision/research docs live in `docs/` as `.html` files
@@ -134,11 +134,12 @@ When Allyson and Claude work through a technical decision, the output is a style
 ## Project Scope (This Engagement)
 
 ### Philosophy
-Keep it lean. CSAH is a nonprofit with a small budget. No overengineering. Low recurring costs are a priority. Replit is a candidate hosting platform. Not a big hosted AWS deployment to start.
+Keep it as lean as possible but with an eye for expansion. CSAH is a nonprofit with a small budget. No overengineering. Low recurring costs are important. Replit, Loveable, Netlify, Vercel, Bolt are some possible candidate hosting platform. Not clear on what the CI/CD platform should look like as the end result will be very non technical folks needing GUIs to update content only. If they need any feature adds or changes, ARC consulting will be doing the work. Will need to produce a prototype with Alan.
 
 ### Grant Funding
 - **$150,000 SCAD grant** covers both app development AND kiosk hardware/software
-- **Must spend all funds by December 2026**
+- **Must spend al 
+l funds by December 2026**
 - **SCAD grant structure:** Reimbursement model — requires purchase orders and invoices. No detailed line-item scrutiny; treats kiosk + app as a connected ecosystem.
 - SCAD has a new AI department and wants a "flashy" innovation showcase — lean into AI features in the presentation.
 - **Sustainability:** 3–5 year maintenance funding plan needed beyond initial deployment.
@@ -149,32 +150,32 @@ Keep it lean. CSAH is a nonprofit with a small budget. No overengineering. Low r
 - Three priority kiosk locations identified (see Kiosk section)
 - Remaining budget available for app development
 
-### Two Distinct User Surfaces
+### Two Distinct User Surfaces but they are connected by 1 source of truth data about resources and weather
 
-**1. Partner App (~50 users)**
-- Users: CSAH staff, HOPE unit officers, partner agency case workers
+**1. Partner App (~50 partner users)**
+- Users: CSAH staff, HOPE unit officers, partner agency case workers, code enforcement, etc
 - Boots-on-the-ground teams across multiple agencies
-- Track cases, coordinate across agencies, push resources to individuals
+- Track cases, coordinate comms across agencies, push resources to unhoused individuals, dashboards for Jen- good clean data is key, geo location for incident logging
 - Homeless individuals do NOT have app access
+- All partner orgs will have access to maintain their hours and details for accurate info
 
-**2. Kiosk (future — separate discussion)**
+**2. Kiosks (unhoused individuals access)**
 - Public-facing touchscreen stations
 - Where homeless individuals will interface with the system
-- Architecture TBD pending more context
+- Framer app is likely a reasonable UI representation
 
 ---
 
-## Core App Functions
+## Core Partner App Functions
 
 1. **Push notification system for crisis coordination**
    - SPD HOPE unit → Homeless Authority street outreach team
    - CCPD behavioral health units, city/county code enforcement, community paramedicine
    - Includes geolocation — maps outreach locations, proves contact was made before enforcement
-   - "Truth telling tool": data counters negative narratives about homeless population to city/county gov
 
 2. **Case tracking**
    - Each homeless individual is a "case." Interactions (who made contact, what was offered, outcome) get logged.
-   - Communication thread stays active until case is manually closed
+   - Communication thread stays active until case is manually closed unless automated way can be found
    - Closure via dropdown — outcome options (e.g., housed, declined, referred)
    - Builds dataset showing intervention volume, outcomes, resource utilization
    - Primary goal: demonstrating compassionate diversion from arrest
@@ -187,7 +188,11 @@ Keep it lean. CSAH is a nonprofit with a small budget. No overengineering. Low r
    - Shared messaging tied to case records, not personal phones
    - Multi-agency (HOPE, CSAH, partner orgs) communication in context of a specific individual
 
-5. **Partner → homeless individual (outbound SMS) — future**
+5. **Mgmt Dashboard**
+   - The ED Jen, wants to use good data in a persuasive way to   secure more budget and donations. She wants to tell the story of  how their team is responding with compassion and care. 
+   - "Truth telling tool": data counters negative narratives about homeless population to city/county gov
+
+6. **Partner → homeless individual (outbound SMS) — future**
    - Worker sends a text with resource links/info to an individual's phone number
    - Inbound replies should thread back to the case record
    - Individuals do not have app logins
@@ -195,9 +200,9 @@ Keep it lean. CSAH is a nonprofit with a small budget. No overengineering. Low r
 
 ---
 
-## Kiosk — Planned (Separate Discussion)
+## Kiosks —
 
-**Three priority locations ("easy wins"):**
+**Three priority locations ("easy wins") possibly 2 more:**
 1. Goodwill Opportunity Campus — 761 Wheaton Street (already wants one)
 2. Union Mission Resource Center — across from Greyhound, emergency shelter area
 3. Public library — Bull Street or Southside branch
@@ -276,9 +281,8 @@ The one exception: platforms with a built-in CMS. If the kiosk software manages 
 
 ## Data Notes
 
-- **HMIS integration: NOT now, but desired long-term.** All 76 partner agencies feed into Caseworthy platform. 2-year API approval process due to strict HUD regulations. Building custom DB for now.
+- **HMIS integration: NOT now, but desired long-term.** All 76 partner agencies feed into Caseworthy platform. 2-year API approval process due to strict HUD regulations. Building custom DB for now is likely needed
 - **Not integrating with HUD HMIS** for MVP
-- Building a **custom DB** for the app
 - Homeless individual population is fluid — ~600 in Savannah currently, rotating
 - No PII collection from homeless individuals on the kiosk
 
@@ -288,14 +292,11 @@ The one exception: platforms with a built-in CMS. If the kiosk software manages 
 
 | Name | Role | Contact |
 |---|---|---|
-| Jennifer Dulong | CSAH (primary contact) | jdulong@homelessauthority.org |
-| Kishia Young | CSAH | kishia@homelessauthority.org |
-| McKaylin Zukowski ("Kay") | CSAH | kay@homelessauthority.org |
+| Jennifer Dulong | CSAH (executive director) | jdulong@homelessauthority.org |
+| Kishia Young | HMIS compliance director | kishia@homelessauthority.org |
+| McKaylin Zukowski ("Kay") | CSAH grant admin | kay@homelessauthority.org |
 | Brianna Magoon | CSAH | brianna@homelessauthority.org |
-| Keisha | HMIS compliance director | TBD |
 | Aaron | CSAH marketing team | TBD |
-| Jen (Renegade) | SCAD grant process | TBD — 3-way call planned |
-
 ---
 
 ## SMS — Decision Pending
@@ -350,8 +351,6 @@ The one exception: platforms with a built-in CMS. If the kiosk software manages 
 - [ ] Confirm Twilio cost at combined volume (resource SMS + push fallback)
 - [ ] Kiosk architecture — separate discussion, TBD
 - [ ] Does CSAH have working logins to Framer and Common Ninja?
-- [ ] Contact info for Keisha (HMIS compliance) and Aaron (marketing)
-- [ ] Three-way call with Jen (Renegade) re: SCAD grant process — schedule
 - [ ] Case identity: request HMIS data dictionary from Keisha for custom DB schema reference
 
 ---
