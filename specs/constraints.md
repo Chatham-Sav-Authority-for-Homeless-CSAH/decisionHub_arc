@@ -21,7 +21,7 @@
 
 | Layer | Choice | Status | Notes |
 |---|---|---|---|
-| Hosting | Replit | 🔶 | Candidate; lean/affordable; no large managed cloud deployments to start |
+| Hosting | TBD | ❓ | Netlify, Vercel, Loveable, and others under consideration; lean/affordable required; no large managed cloud |
 | API style | REST | 🔶 | No decision recorded; REST is default unless real-time requirements push toward WebSockets/GraphQL subscriptions |
 | Language/Runtime | TBD | ❓ | Node.js likely given Allyson's stack; not formally decided |
 
@@ -31,7 +31,7 @@
 
 | Layer | Choice | Status | Notes |
 |---|---|---|---|
-| DB platform | TBD (custom DB) | 🔶 | No HMIS integration; building custom schema from scratch; Supabase (Postgres) is a strong candidate for Replit-friendly managed DB |
+| DB platform | TBD (custom DB) | 🔶 | No HMIS integration; building custom schema from scratch; Supabase (Postgres) is a strong candidate |
 | HMIS integration | Not now | ✅ | 2-year HUD approval process; revisit post-MVP |
 | Schema reference | HMIS data dictionary | ❓ | Request from Keisha (HMIS compliance) to inform custom schema design — not to implement |
 
@@ -41,7 +41,7 @@
 
 | Layer | Choice | Status | Notes |
 |---|---|---|---|
-| SMS provider | Twilio | 🔶 | Industry standard; best API; handles 2-way threading; works with Replit; ~$20–50/mo at estimated volume |
+| SMS provider | Twilio | 🔶 | Industry standard; best API; handles 2-way threading; ~$20–50/mo at estimated volume |
 | Volume estimate | ~250 notifications/mo | 🔶 | Low; cost is negligible at this scale |
 | 2-way threading | Required | ✅ | Partner → individual outbound; inbound replies thread back to case record |
 
@@ -81,7 +81,7 @@
 
 | Layer | Choice | Status | Notes |
 |---|---|---|---|
-| App hosting | Replit | 🔶 | Candidate; low recurring cost priority |
+| App hosting | TBD | ❓ | Netlify, Vercel, Loveable, and others under consideration; low recurring cost is a hard constraint |
 | Doc hosting (internal) | Netlify (docs/ folder) | ✅ | Auto-deploys from GitHub on push to main; serves decision docs to Alan |
 | Repo | GitHub (private) | ✅ | Netlify free tier handles private repo deploys |
 
@@ -93,5 +93,5 @@
 |---|---|
 | HMIS / Caseworthy API | 2-year HUD approval process; not viable for MVP |
 | Native mobile app (iOS/Android) | Gov't device MDM policies may block installation; PWA avoids this |
-| AWS (as primary) | Not Allyson's preferred forward path; Replit + managed services preferred for this scale |
+| AWS (as primary) | Not the preferred forward path; managed services preferred for this scale and budget |
 | Java | Non-starter |

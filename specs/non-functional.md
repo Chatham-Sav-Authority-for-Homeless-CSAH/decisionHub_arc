@@ -10,7 +10,7 @@ Non-functional requirements and quality attributes that constrain design decisio
 **Priority:** Hard constraint
 
 - Recurring infrastructure cost must be minimal — nonprofit budget
-- Replit is a candidate hosting platform; no large managed cloud (AWS, GCP) deployments to start
+- Hosting platform TBD (Netlify, Vercel, Loveable, and others under consideration); no large managed cloud (AWS, GCP) deployments to start
 - Kiosk software licensing target: ~$2k/device/year max (KioWare baseline); MDM alternatives significantly cheaper
 - Total kiosk software budget: ~$6k/year for 3 devices (KioWare ceiling)
 - App hosting should be well under $100/month at expected scale
@@ -71,7 +71,7 @@ Non-functional requirements and quality attributes that constrain design decisio
 - Small team (Allyson + Alan) owns the system post-handoff; or CSAH self-maintains
 - Prefer simple, well-understood stack over clever/novel choices
 - Minimize vendor lock-in where practical
-- No custom infra management — managed services (Replit, Supabase, or similar) over self-hosted
+- No custom infra management — managed services (Supabase, or similar) over self-hosted
 - Clear separation between app logic and data layer so kiosk surface can share the same API
 
 ---
