@@ -150,19 +150,34 @@ l funds by December 2026**
 - Three priority kiosk locations identified (see Kiosk section)
 - Remaining budget available for app development
 
-### Two Distinct User Surfaces but they are connected by 1 source of truth data about resources and weather
+### Two Distinct User Surfaces — One Supabase Data Source
 
-**1. Partner App (~50 partner users)**
-- Users: CSAH staff, HOPE unit officers, partner agency case workers, code enforcement, etc
-- Boots-on-the-ground teams across multiple agencies
-- Track cases, coordinate comms across agencies, push resources to unhoused individuals, dashboards for Jen- good clean data is key, geo location for incident logging
+Both surfaces pull from the same Supabase backend. Resource directory data, weather/emergency alerts, and service availability are authored once and consumed by both. The surfaces differ fundamentally in audience, interaction model, and feature set.
+
+**1. Partner App (PWA) — ~50 partner users**
+- Audience: CSAH staff, HOPE unit officers, CCPD behavioral health, partner agency case workers, code enforcement, community paramedicine
+- Full-featured PWA: case tracking, inter-agency messaging, push notifications, management dashboard, geolocation, resource directory
 - Homeless individuals do NOT have app access
-- All partner orgs will have access to maintain their hours and details for accurate info
+- All partner orgs maintain their own service records (hours, availability, contact info) directly
+- Resource directory is embedded here for quick in-person reference — same Supabase data as kiosk, different UI context (compact, search-first, designed for quick lookup during field contact)
+- Weather/emergency alerts: presentation TBD — workers need to know an alert is active and coordinate the response, but the exact UI treatment is still being evaluated
 
-**2. Kiosks (unhoused individuals access)**
-- Public-facing touchscreen stations
-- Where homeless individuals will interface with the system
-- Framer app is likely a reasonable UI representation
+**2. Kiosk App — unhoused individuals**
+- Audience: people experiencing homelessness at public outdoor touchscreen stations
+- Simplified, touch-optimized interface; primary function is the resource directory
+- SPA vs. lightweight PWA: still under evaluation. The kiosk does not need to be "installable," but a service worker for offline caching may be worth including (resource directory loads from cache if connectivity drops). Not yet decided.
+- Kiosk lockdown software (Scalefusion/KioWare/etc.) is a container only — it locks the browser to the kiosk URL and handles remote device management; it does not touch the data layer
+- Weather/emergency alerts: presentation TBD — a prominent alert experience for kiosk users is needed; the specific format (full-screen overlay, persistent banner, etc.) is still being evaluated
+
+**Resource Directory — Shared Across Both Surfaces**
+- Lives in Supabase; maintained by partner orgs directly
+- Kiosk: the primary (and nearly only) user experience
+- Partner app: embedded tool for workers during field contact with individuals
+- Same data, different presentation — no sync required, no duplication
+
+**Architecture Lean (as of June 2026)**
+- Approach: Pattern 1 — custom web app running on kiosk hardware via lockdown browser. Not a kiosk content platform (Pattern 2/CMS approach). CSAH needs custom UI, complex data model, and shared code between surfaces.
+- Structure: single app, two entry points — one codebase, kiosk routes (`/kiosk/*`) and partner routes (`/app/*`) as separate UI shells over shared Supabase hooks and resource directory components. Avoids duplicating resource directory code; route guards prevent kiosk users from accessing partner views. See `docs/app-architecture.html`.
 
 ---
 

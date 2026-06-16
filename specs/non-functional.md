@@ -37,20 +37,32 @@ Non-functional requirements and quality attributes that constrain design decisio
 
 ## NFR-4 — Offline / Low-Connectivity Behavior
 
+**Partner app:**
 - Field workers operate in areas with unreliable connectivity
-- App should handle degraded connectivity gracefully
 - PWA service worker: cache critical resources and UI for offline view
 - Write operations (interaction logs, messages): queue locally, sync when connection restored
 - Push notifications: SMS fallback handles delivery if device is offline
+
+**Kiosk:**
+- Offline caching via service worker under evaluation — resource directory should remain viewable if connectivity drops rather than displaying an error to a user in crisis
+- Dependent on SPA vs. lightweight PWA decision (TBD)
 
 ---
 
 ## NFR-5 — Accessibility
 
-- Partner users may have varying levels of tech literacy
+- WCAG 2.1 AA compliance target for both surfaces
+- No Section 508 requirement — CSAH is not federally funded; ADA physical compliance is a hardware procurement requirement, not an app requirement
+
+**Partner app:**
 - UI must be clear, low-friction, usable in field conditions (glare, one hand, urgency)
-- WCAG 2.1 AA compliance target
-- No accessibility requirements specific to partner app (kiosk has JAWS/screen reader requirements — separate)
+- Partner users may have varying levels of tech literacy
+
+**Kiosk:**
+- Large touch targets — users may have limited fine motor control or be unfamiliar with touchscreens
+- Simplified navigation, minimal choices per screen, high-contrast text
+- Designed for users with varying literacy levels, cognitive load, and physical challenges
+- WCAG 2.1 AA delivered by the app layer — not by kiosk lockdown software
 
 ---
 
@@ -71,8 +83,8 @@ Non-functional requirements and quality attributes that constrain design decisio
 - Small team (Allyson + Alan) owns the system post-handoff; or CSAH self-maintains
 - Prefer simple, well-understood stack over clever/novel choices
 - Minimize vendor lock-in where practical
-- No custom infra management — managed services (Supabase, or similar) over self-hosted
-- Clear separation between app logic and data layer so kiosk surface can share the same API
+- No custom infra management — Supabase for backend (ADR-005, decided); managed hosting (Netlify or Vercel, TBD) over self-hosted
+- Single codebase, two entry points (`/app/*` partner app, `/kiosk/*` kiosk) — shared Supabase hooks and resource directory components; see `docs/app-architecture.html`
 
 ---
 
@@ -86,10 +98,16 @@ Non-functional requirements and quality attributes that constrain design decisio
 
 ## NFR-9 — Device & Platform Constraints
 
-- Partner users: mixed device environment — issued government devices (SPD HOPE, CCPD) with unknown MDM policies; personal devices; tablets
-- Key open question: can government officers install third-party apps on issued devices? This gates the PWA vs. native app decision
-- PWA is the safer bet until device policy is confirmed — no distribution barrier
-- iOS push reliability is a known PWA weakness; SMS fallback is the mitigation
+**Partner app:**
+- Platform: PWA — confirmed (ADR-001, June 2026); not contingent on government device policy outcomes
+- Device environment: mixed — issued government devices (SPD HOPE, CCPD), personal devices, tablets; PWA runs in any browser with no install required
+- iOS push reliability is a known PWA weakness; SMS fallback (Twilio) is the mitigation
+- Expo/React Native remains a possible future upgrade path but does not change the build target for this engagement
+
+**Kiosk:**
+- Dedicated outdoor hardware running kiosk lockdown software (Scalefusion, KioWare, or equivalent)
+- Lockdown software restricts the device to the `/kiosk` URL; handles remote device management
+- OS and browser environment to be confirmed against final hardware selection before build
 
 ---
 

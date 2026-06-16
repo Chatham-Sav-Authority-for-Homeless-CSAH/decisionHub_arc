@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>App Architecture Approach — CSAH Compass Project</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f7fa;
+      color: #1a1a2e;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #1a1a2e;
+      color: white;
+      padding: 2.5rem 2rem;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    header p {
+      color: #9ca3af;
+      font-size: 0.95rem;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 2.5rem auto;
+      padding: 0 1.5rem;
+    }
+
+    .intro {
+      background: white;
+      border-radius: 10px;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+      border-left: 4px solid #4f46e5;
+    }
+
+    .intro h2 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #4f46e5;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .intro p {
+      font-size: 0.97rem;
+      color: #374151;
+    }
+
+    .intro p + p {
+      margin-top: 0.6rem;
+    }
+
+    .callout {
+      background: white;
+      border-radius: 10px;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+      border-left: 4px solid #f59e0b;
+    }
+
+    .callout h2 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #b45309;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .callout p {
+      font-size: 0.97rem;
+      color: #374151;
+      margin-bottom: 0.6rem;
+    }
+
+    .callout p:last-child { margin-bottom: 0; }
+
+    h2.section-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin: 2.5rem 0 0.4rem;
+      color: #1a1a2e;
+    }
+
+    h2.section-title .section-num {
+      display: inline-block;
+      background: #1a1a2e;
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      margin-right: 0.5rem;
+      vertical-align: middle;
+      letter-spacing: 0.04em;
+    }
+
+    .section-sub {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Factor cards */
+    .factor-card {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    .factor-card details > summary {
+      list-style: none;
+      cursor: pointer;
+      user-select: none;
+      display: block;
+    }
+
+    .factor-card details > summary::-webkit-details-marker { display: none; }
+
+    .factor-card details > summary h3 { margin-bottom: 0; }
+    .factor-card details[open] > summary h3 { margin-bottom: 1rem; }
+
+    .factor-card details > summary h3::after {
+      content: "▶";
+      margin-left: auto;
+      font-size: 0.65rem;
+      color: #9ca3af;
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+
+    .factor-card details[open] > summary h3::after { transform: rotate(90deg); }
+
+    .factor-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .factor-card h3 .icon { font-size: 1.2rem; }
+
+    /* Two-column comparison */
+    .comparison-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .col {
+      padding: 0.9rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+
+    .col-p1 { background: #eff6ff; border: 1px solid #bfdbfe; }
+    .col-p2 { background: #f9fafb; border: 1px solid #e5e7eb; }
+
+    .col-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.4rem;
+    }
+
+    .col-p1 .col-label { color: #2563eb; }
+    .col-p2 .col-label { color: #6b7280; }
+
+    .csah-context {
+      background: #fefce8;
+      border: 1px solid #fde68a;
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      font-size: 0.88rem;
+      color: #78350f;
+    }
+
+    .csah-context strong {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.3rem;
+      color: #92400e;
+    }
+
+    /* Verdict badges */
+    .verdict-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      margin-left: 0.5rem;
+    }
+
+    .badge-p1 { background: #dbeafe; color: #1d4ed8; }
+    .badge-tie { background: #f3f4f6; color: #4b5563; }
+
+    /* Summary cards */
+    .summary-card {
+      border-radius: 10px;
+      padding: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .summary-p1 { background: #eff6ff; border: 2px solid #93c5fd; }
+    .summary-p2 { background: #f9fafb; border: 2px solid #e5e7eb; }
+
+    .summary-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .summary-p1 h3 { color: #1d4ed8; }
+    .summary-p2 h3 { color: #6b7280; }
+
+    .summary-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .summary-card ul li {
+      padding: 0.3rem 0;
+      font-size: 0.9rem;
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .summary-card ul li::before { flex-shrink: 0; margin-top: 0.05rem; }
+    .summary-p1 ul li::before { content: "✓"; color: #2563eb; font-weight: 700; }
+    .summary-p2 ul li::before { content: "–"; color: #9ca3af; }
+
+    /* Three-option cards for Part 2 */
+    .option-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 700px) {
+      .option-grid { grid-template-columns: 1fr; }
+      .comparison-row { grid-template-columns: 1fr; }
+    }
+
+    .option-card {
+      background: white;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 1.4rem;
+      font-size: 0.88rem;
+    }
+
+    .option-card.lean {
+      border-color: #93c5fd;
+      background: #eff6ff;
+    }
+
+    .option-card h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .option-card.lean h3 { color: #1d4ed8; }
+
+    .option-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #9ca3af;
+      margin-bottom: 0.75rem;
+    }
+
+    .option-card.lean .option-label { color: #60a5fa; }
+
+    .option-card ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 0.75rem;
+    }
+
+    .option-card ul li {
+      font-size: 0.85rem;
+      padding: 0.2rem 0;
+      padding-left: 1rem;
+      position: relative;
+      color: #374151;
+    }
+
+    .option-card ul li::before {
+      position: absolute;
+      left: 0;
+    }
+
+    .option-card .pros li::before { content: "+"; color: #16a34a; font-weight: 700; }
+    .option-card .cons li::before { content: "–"; color: #dc2626; }
+
+    .pros-label, .cons-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 0.85rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .pros-label { color: #16a34a; }
+    .cons-label { color: #dc2626; }
+
+    /* Recommendation block */
+    .recommendation {
+      background: #1a1a2e;
+      color: white;
+      border-radius: 10px;
+      padding: 2rem;
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .recommendation h2 {
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #a5b4fc;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .recommendation p {
+      font-size: 0.97rem;
+      color: #e5e7eb;
+      margin-bottom: 0.75rem;
+    }
+
+    .recommendation p:last-child { margin-bottom: 0; }
+
+    .recommendation strong { color: white; }
+
+    .recommendation .open-note {
+      background: rgba(255,255,255,0.07);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin-top: 1.25rem;
+    }
+
+    .recommendation .open-note p {
+      margin: 0;
+      font-size: 0.88rem;
+      color: #d1d5db;
+    }
+
+    .recommendation .open-note strong {
+      color: #fde68a;
+      display: block;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.4rem;
+    }
+
+    /* Open questions */
+    .open-questions-list {
+      background: white;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .open-questions-list h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #1a1a2e;
+    }
+
+    .open-questions-list ol {
+      padding-left: 1.25rem;
+      font-size: 0.92rem;
+      color: #374151;
+    }
+
+    .open-questions-list li { margin-bottom: 0.6rem; }
+
+    /* Two-audience context bar */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 600px) { .audience-grid { grid-template-columns: 1fr; } }
+
+    .audience-card {
+      border-radius: 10px;
+      padding: 1.25rem 1.4rem;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .audience-partner {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+    }
+
+    .audience-kiosk {
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+    }
+
+    .audience-card h3 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 0.5rem;
+    }
+
+    .audience-partner h3 { color: #1d4ed8; }
+    .audience-kiosk h3 { color: #16a34a; }
+
+    .audience-card ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .audience-card ul li {
+      padding: 0.15rem 0;
+      padding-left: 0.9rem;
+      position: relative;
+      color: #374151;
+    }
+
+    .audience-card ul li::before {
+      content: "·";
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+    }
+
+    .audience-partner ul li::before { color: #2563eb; }
+    .audience-kiosk ul li::before { color: #16a34a; }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: #9ca3af;
+      padding: 2rem;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<div style="background:#0e1428; padding:0.6rem 2rem;">
+  <a href="index.html" style="color:#9ca3af; font-size:0.8rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem; letter-spacing:0.04em;">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="#9ca3af" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Decision Hub
+  </a>
+</div>
+
+<header>
+  <h1>App Architecture: Approach &amp; Structure</h1>
+  <p>CSAH Compass Project — Internal Decision Document &nbsp;·&nbsp; June 2026</p>
+</header>
+
+<div class="container">
+
+  <!-- Two-audience context -->
+  <div class="intro">
+    <h2>The Setup</h2>
+    <p>Two distinct user surfaces, one Supabase data source. The resource directory, service availability, and weather/emergency alerts are authored once and consumed by both. Everything else — the interaction model, the feature set, and the UI — is built for two fundamentally different audiences in two fundamentally different environments.</p>
+  </div>
+
+  <div class="audience-grid">
+    <div class="audience-card audience-partner">
+      <h3>Partner App (PWA) — ~50 users</h3>
+      <ul>
+        <li>CSAH staff, HOPE officers, CCPD behavioral health, case workers</li>
+        <li>Case tracking, inter-agency messaging, push notifications</li>
+        <li>Management dashboard, geolocation, resource directory</li>
+        <li>Weather alerts: exact UI treatment TBD — workers coordinate the response</li>
+        <li>Full PWA: installable, push-capable, offline-resilient</li>
+      </ul>
+    </div>
+    <div class="audience-card audience-kiosk">
+      <h3>Kiosk App (SPA) — unhoused individuals</h3>
+      <ul>
+        <li>Public outdoor touchscreen stations</li>
+        <li>One primary function: resource directory</li>
+        <li>No login, no case data, no partner functionality</li>
+        <li>Weather alerts: prominent alert experience needed — specific format TBD</li>
+        <li>SPA vs. lightweight PWA: still under evaluation</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <h2>Same alert data, different presentation</h2>
+    <p>An inclement weather or emergency alert is created once by CSAH staff and updated in the database. Both surfaces subscribe and react immediately — but for different audiences. On the kiosk, unhoused individuals likely need a prominent, hard-to-miss alert directing them to emergency resources. In the partner app, workers need to know an alert is active so they can coordinate the response.</p>
+    <p>The architecture is settled: one alert record in Supabase, both surfaces react to it. The presentation layer is an open design question.</p>
+  </div>
+
+
+  <!-- ── PART 1 ── -->
+  <h2 class="section-title"><span class="section-num">Part 1</span> Custom Web App vs. Kiosk Content Platform</h2>
+  <p class="section-sub">The foundational question: do we build our own app that runs on the kiosk, or use a kiosk platform's built-in content tools?</p>
+
+  <div class="intro" style="border-left-color: #6b7280; margin-bottom: 1.5rem;">
+    <h2 style="color: #6b7280;">Two patterns in the industry</h2>
+    <p><strong>Pattern 1 — Custom web app:</strong> You build a web application (PWA or SPA) and the kiosk hardware runs it inside a locked-down browser. The kiosk software (Scalefusion, KioWare, etc.) is purely a container — it restricts the device to your URL and handles remote management. Your app makes API calls to the database exactly the same way it would on any browser.</p>
+    <p style="margin-top: 0.6rem;"><strong>Pattern 2 — Kiosk content platform:</strong> A platform like Intuiface provides a visual layout builder and template system. Non-developers design screens by configuring templates, and the platform can pull data from external APIs to populate them. The platform IS the app layer — you're not writing code, you're configuring a CMS-style tool.</p>
+  </div>
+
+  <!-- Factor cards -->
+  <div class="factor-card">
+    <details open>
+    <summary>
+    <h3><span class="icon">🎨</span> UI Control &amp; Custom Experience <span class="verdict-badge badge-p1">Pattern 1 Advantage</span></h3>
+    </summary>
+    <div class="comparison-row">
+      <div class="col col-p1">
+        <div class="col-label">Pattern 1 — Custom Web App</div>
+        Full control over every pixel. The kiosk displays exactly what you build — large touch targets, simplified navigation designed for users who may have limited tech experience, custom visual language appropriate for the population. You are not constrained by a template system.
+      </div>
+      <div class="col col-p2">
+        <div class="col-label">Pattern 2 — Kiosk Content Platform</div>
+        UI is constrained by the platform's template library. You configure within their system rather than designing freely. Templates are built for general use — not specifically for unhoused individuals who may have limited reading ability, need large targets, or require a trauma-informed UX approach.
+      </div>
+    </div>
+    <div class="csah-context">
+      <strong>CSAH Impact</strong>
+      The kiosk audience — people experiencing homelessness — may have limited technology experience, literacy challenges, or be in a stressed state. The UI needs to be purpose-designed for them: large text, minimal choices, clear hierarchy, culturally appropriate. A template builder doesn't give us that.
+    </div>
+    </details>
+  </div>
+
+  <div class="factor-card">
+    <details>
+    <summary>
+    <h3><span class="icon">🔗</span> Shared Code with the Partner App <span class="verdict-badge badge-p1">Pattern 1 Advantage</span></h3>
+    </summary>
+    <div class="comparison-row">
+      <div class="col col-p1">
+        <div class="col-label">Pattern 1 — Custom Web App</div>
+        The resource directory is built once as a shared component — the same React components, the same Supabase data hooks, the same logic — consumed by both the partner app and the kiosk app. Updates to the resource directory automatically apply to both surfaces.
+      </div>
+      <div class="col col-p2">
+        <div class="col-label">Pattern 2 — Kiosk Content Platform</div>
+        The kiosk platform has its own template system. Any resource directory logic you need in the partner app has to be built separately there, in code. The two surfaces cannot share a component library — they live in entirely different technological worlds.
+      </div>
+    </div>
+    <div class="csah-context">
+      <strong>CSAH Impact</strong>
+      The resource directory is the shared core of both surfaces. Building it twice — once in a kiosk platform template, once in React for the partner app — means maintaining it in two places. Every time a resource category changes or a new UI pattern is needed, you update two systems instead of one.
+    </div>
+    </details>
+  </div>
+
+  <div class="factor-card">
+    <details>
+    <summary>
+    <h3><span class="icon">🔒</span> Data Ownership &amp; Privacy <span class="verdict-badge badge-p1">Pattern 1 Advantage</span></h3>
+    </summary>
+    <div class="comparison-row">
+      <div class="col col-p1">
+        <div class="col-label">Pattern 1 — Custom Web App</div>
+        All data flows from your PWA to Supabase — infrastructure you own and control. No vendor software layer sits between the user and your data. Session behavior, interaction patterns, and any analytics are entirely within CSAH's control.
+      </div>
+      <div class="col col-p2">
+        <div class="col-label">Pattern 2 — Kiosk Content Platform</div>
+        The platform's software layer sits between the kiosk and your data. Most kiosk content platforms collect session analytics on their own servers by default — that's how they demonstrate value to clients. Controlling what data leaves to vendor infrastructure requires active contractual negotiation, and in some cases isn't possible at all.
+      </div>
+    </div>
+    <div class="csah-context">
+      <strong>CSAH Impact</strong>
+      The kiosk serves a vulnerable population. Per the data governance requirements established in the hardware comparison, behavioral data on unhoused users must not flow to vendor infrastructure. The LinkNYC case is the cautionary tale here — a public kiosk network whose advertising model meant user data became a product. Pattern 1 solves this by architecture. Pattern 2 requires negotiating against a vendor's business model.
+    </div>
+    </details>
+  </div>
+
+  <div class="factor-card">
+    <details>
+    <summary>
+    <h3><span class="icon">⚙️</span> Long-term Flexibility <span class="verdict-badge badge-p1">Pattern 1 Advantage</span></h3>
+    </summary>
+    <div class="comparison-row">
+      <div class="col col-p1">
+        <div class="col-label">Pattern 1 — Custom Web App</div>
+        The kiosk surface can evolve as the project grows. Future integrations — a kiosk-to-app referral flow, a check-in system, a multilingual interface — are all buildable features in a custom codebase. You are not bounded by what a template platform supports.
+      </div>
+      <div class="col col-p2">
+        <div class="col-label">Pattern 2 — Kiosk Content Platform</div>
+        You are bounded by the platform's feature roadmap. If CSAH wants to add a kiosk feature the platform doesn't support — a custom interaction, an API integration, a non-standard UX flow — the answer is either "wait for the vendor to build it" or "switch platforms."
+      </div>
+    </div>
+    <div class="csah-context">
+      <strong>CSAH Impact</strong>
+      The roadmap includes future kiosk → app integrations (e.g., a kiosk user requesting shelter generates a push notification to a partner team). That kind of feature requires a custom codebase. A template platform can't support it.
+    </div>
+    </details>
+  </div>
+
+  <div class="factor-card">
+    <details>
+    <summary>
+    <h3><span class="icon">💰</span> Initial Build Complexity <span class="verdict-badge badge-tie">Tie (Pattern 2 easier up front)</span></h3>
+    </summary>
+    <div class="comparison-row">
+      <div class="col col-p1">
+        <div class="col-label">Pattern 1 — Custom Web App</div>
+        Requires a developer to build and maintain the kiosk app. More upfront work than template configuration. However: this is the same skillset already required for the partner app — no new tooling, no new team skills needed.
+      </div>
+      <div class="col col-p2">
+        <div class="col-label">Pattern 2 — Kiosk Content Platform</div>
+        Non-developers can configure and update content using the platform's visual tools. Lower initial build effort for a simple resource directory. The ceiling is low — the moment you need anything custom, you're back to developer time, except now it has to live outside the platform.
+      </div>
+    </div>
+    <div class="csah-context">
+      <strong>CSAH Impact</strong>
+      ARC (Allyson + Alan) is doing all technical work. The team already has the skills for Pattern 1. The initial complexity advantage of Pattern 2 disappears the moment the kiosk needs anything the template platform doesn't support — which will happen.
+    </div>
+    </details>
+  </div>
+
+  <!-- Summary cards -->
+  <h2 class="section-title" style="margin-top: 2rem;">Summary</h2>
+
+  <div class="summary-card summary-p1">
+    <h3>Pattern 1 — Custom Web App &nbsp;<span style="font-size:0.75rem; background:#dbeafe; color:#1d4ed8; padding:0.15rem 0.5rem; border-radius:999px; font-weight:700; letter-spacing:0.04em;">Leaning this way</span></h3>
+    <ul>
+      <li>Full UI control — designed specifically for the kiosk's audience and use case</li>
+      <li>Resource directory is built once, shared across kiosk and partner app</li>
+      <li>All session data stays in CSAH-controlled Supabase infrastructure</li>
+      <li>Same developer skillset as the partner app — no new tooling required</li>
+      <li>Extensible: future kiosk features are buildable, not blocked by platform limitations</li>
+    </ul>
+  </div>
+
+  <div class="summary-card summary-p2">
+    <h3>Pattern 2 — Kiosk Content Platform</h3>
+    <ul>
+      <li>Lower initial build effort — non-developers can configure content</li>
+      <li>Requires maintaining resource directory in two separate systems</li>
+      <li>Session data collection is baked into most platform business models</li>
+      <li>Ceiling is the platform's feature set — custom interactions require switching tools</li>
+      <li>Future kiosk → app integrations are likely impossible within the platform</li>
+    </ul>
+  </div>
+
+  <div class="recommendation">
+    <h2>Our Lean — Part 1</h2>
+    <p>Pattern 1. The kiosk content platform approach trades short-term convenience for long-term constraint — and creates a structural problem on data privacy that can't be fully resolved with a vendor whose revenue depends on session analytics. Pattern 1 is the right call for a project that needs a custom UX, shared code between two surfaces, and clean data ownership.</p>
+    <p><strong>The kiosk software (Scalefusion, KioWare, or equivalent) is a container, not a content platform.</strong> It locks the browser to the kiosk URL and handles remote device management. It does not touch the data layer, does not define the UI, and does not replace what we're building.</p>
+  </div>
+
+
+  <!-- ── PART 2 ── -->
+  <h2 class="section-title" style="margin-top: 3rem;"><span class="section-num">Part 2</span> How to Structure the Two App Surfaces</h2>
+  <p class="section-sub">Given Pattern 1, the question becomes: how do the kiosk app and the partner app relate to each other as codebases?</p>
+
+  <div class="callout" style="margin-bottom: 1.5rem;">
+    <h2>The reason this matters</h2>
+    <p>The resource directory lives in both surfaces. Building it in two separate codebases means writing and maintaining it twice — every UI change, every data hook update, every accessibility improvement gets applied in two places. How tightly you couple the two apps determines how much of that duplication you avoid.</p>
+  </div>
+
+  <div class="option-grid">
+
+    <div class="option-card">
+      <div class="option-label">Option A</div>
+      <h3>Two Separate Apps</h3>
+      <p style="font-size:0.82rem; color:#6b7280; margin-bottom:0.25rem;">Fully independent codebases, both calling Supabase</p>
+      <div class="pros-label">Pros</div>
+      <ul class="pros">
+        <li>Simplest to set up</li>
+        <li>No coupling, no shared risk</li>
+        <li>Each app deployed independently</li>
+      </ul>
+      <div class="cons-label">Cons</div>
+      <ul class="cons">
+        <li>Resource directory written twice</li>
+        <li>Bug fixes applied in two places</li>
+        <li>Codebases drift over time</li>
+        <li>More repo management overhead</li>
+      </ul>
+    </div>
+
+    <div class="option-card lean">
+      <div class="option-label">Option B &nbsp;·&nbsp; Lean</div>
+      <h3>Single App, Two Entry Points</h3>
+      <p style="font-size:0.82rem; color:#3b82f6; margin-bottom:0.25rem;">One codebase, kiosk and partner routes as separate UI shells</p>
+      <div class="pros-label">Pros</div>
+      <ul class="pros">
+        <li>Resource directory built and maintained once</li>
+        <li>Shared Supabase hooks, types, and logic</li>
+        <li>One repo, one deployment pipeline</li>
+        <li>Kiosk UI and partner UI share components where appropriate</li>
+        <li>Schema migrations apply to both surfaces at once — one migration run covers kiosk and partner app; no risk of surfaces running on different schema versions</li>
+      </ul>
+      <div class="cons-label">Cons</div>
+      <ul class="cons">
+        <li>Route guards required to keep kiosk users out of partner views</li>
+        <li>Slightly more complex initial routing setup</li>
+      </ul>
+    </div>
+
+    <div class="option-card">
+      <div class="option-label">Option C</div>
+      <h3>Monorepo + Shared Package</h3>
+      <p style="font-size:0.82rem; color:#6b7280; margin-bottom:0.25rem;">Shared component library; two separate app deployments</p>
+      <div class="pros-label">Pros</div>
+      <ul class="pros">
+        <li>Cleanest separation of concerns</li>
+        <li>Shared code is versioned independently</li>
+        <li>Two deployment targets can diverge on different schedules</li>
+      </ul>
+      <div class="cons-label">Cons</div>
+      <ul class="cons">
+        <li>Monorepo tooling (Turborepo, Nx) adds setup overhead</li>
+        <li>Overkill for a two-surface app with one small team</li>
+        <li>Publish workflow for shared package adds friction</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Option B deeper explanation -->
+  <div class="factor-card" style="margin-top: 0.25rem;">
+    <h3 style="margin-bottom: 0.75rem;">How Option B works in practice</h3>
+    <p style="font-size: 0.92rem; color: #374151; line-height: 1.7;">
+      One React app. Two route namespaces: <code style="background:#f3f4f6; padding:0.1rem 0.35rem; border-radius:4px; font-size:0.88rem;">/kiosk/*</code> and <code style="background:#f3f4f6; padding:0.1rem 0.35rem; border-radius:4px; font-size:0.88rem;">/app/*</code>. Each has its own layout shell — the kiosk shell is full-screen, large-type, touch-optimized, with no navigation to partner views. The partner shell has the full app chrome. Shared components — <code style="background:#f3f4f6; padding:0.1rem 0.35rem; border-radius:4px; font-size:0.88rem;">ResourceDirectory</code>, Supabase data hooks, alert subscription logic, type definitions — live in a shared folder and are imported by both shells.
+    </p>
+    <p style="font-size: 0.92rem; color: #374151; line-height: 1.7; margin-top: 0.75rem;">
+      The kiosk lockdown software points to <code style="background:#f3f4f6; padding:0.1rem 0.35rem; border-radius:4px; font-size:0.88rem;">yourapp.com/kiosk</code>. Route guards at the kiosk shell level ensure that even if a user somehow finds a link, they cannot navigate to <code style="background:#f3f4f6; padding:0.1rem 0.35rem; border-radius:4px; font-size:0.88rem;">/app</code>. Authentication middleware on the <code style="background:#f3f4f6; padding:0.1rem 0.35rem; border-radius:4px; font-size:0.88rem;">/app</code> routes provides a second layer of protection — the partner app requires login, which the kiosk never provides.
+    </p>
+    <div class="csah-context" style="margin-top: 1rem;">
+      <strong>CSAH Impact</strong>
+      The resource directory is maintained in one place. A change to how shelter information is displayed — format, fields, accessibility improvements — propagates to both the kiosk and the partner app automatically. This also means a single QA process, a single deployment pipeline, and no risk of the two surfaces drifting into inconsistency over time.
+    </div>
+  </div>
+
+  <div class="recommendation">
+    <h2>Our Lean — Part 2</h2>
+    <p>Option B: single app, two entry points. The resource directory is the shared core of this project, and writing it once is clearly the right call. Option C (monorepo) is the more architecturally "correct" answer for a large team building long-term — it's the right answer for a different project. For a two-person team on a December deadline building two tightly related surfaces, the monorepo tooling adds friction without proportional benefit.</p>
+    <p><strong>Option A is the only option we'd rule out now.</strong> Two codebases with a shared core is a maintenance debt that compounds. We'd spend more time keeping them in sync than building features.</p>
+    <div class="open-note">
+      <strong>No conflict with ADR-006 (Staging Strategy)</strong>
+      <p>ADR-006 operates at the environment layer — which Supabase instance the build points at, controlled by environment variables set at deploy time. Option B operates at the routing layer — two URL namespaces within the same app. These are orthogonal. A single app with <code style="background:rgba(255,255,255,0.12); padding:0.1rem 0.3rem; border-radius:3px;">/kiosk/*</code> and <code style="background:rgba(255,255,255,0.12); padding:0.1rem 0.3rem; border-radius:3px;">/app/*</code> routes deploys to Netlify/Vercel as one unit, the same as any single-route app would. The environment variable swap is blind to how many routes exist.</p>
+      <p style="margin-top:0.6rem;"><strong style="color:#fde68a;">One practical config check:</strong> Netlify/Vercel SPA redirect rules (<code style="background:rgba(255,255,255,0.12); padding:0.1rem 0.3rem; border-radius:3px;">/* → index.html</code>) must be confirmed so that deep links to <code style="background:rgba(255,255,255,0.12); padding:0.1rem 0.3rem; border-radius:3px;">/kiosk</code> and <code style="background:rgba(255,255,255,0.12); padding:0.1rem 0.3rem; border-radius:3px;">/app</code> resolve correctly in both staging and production. On Netlify this is a one-line <code style="background:rgba(255,255,255,0.12); padding:0.1rem 0.3rem; border-radius:3px;">_redirects</code> file — low risk, just needs to be in place before testing.</p>
+    </div>
+  </div>
+
+  <!-- Open Questions -->
+  <div class="open-questions-list">
+    <h2>Open Questions</h2>
+    <ol>
+      <li><strong>Kiosk shell design:</strong> What does the kiosk landing screen look like — a directory immediately, or a simple "tap to start" attract screen that transitions to the directory? This affects the kiosk route structure and session reset behavior.</li>
+      <li><strong>Alert authoring interface:</strong> Who creates emergency/weather alerts, and what is the UI for it? This is a CSAH admin function (likely Kay or CSAH staff). A simple admin form in the partner app's admin panel is the likely answer — confirm the workflow before building the Supabase schema for alerts.</li>
+      <li><strong>Resource directory scope on kiosk vs. partner app:</strong> Is the kiosk directory a full match to what's in the partner app, or a curated subset? (e.g., should partner-specific internal resources appear on a public kiosk?) Needs a content decision before the shared component can be finalized.</li>
+      <li><strong>Option B validation:</strong> Confirm the single-app, two-entry-point routing structure works cleanly within the chosen deployment platform (Netlify or Vercel) and with Supabase Auth before the build phase begins.</li>
+    </ol>
+  </div>
+
+</div>
+
+<footer>CSAH Partner App — Internal Use Only &nbsp;·&nbsp; Allyson Short + Alan Robinson &nbsp;·&nbsp; June 2026</footer>
+
+</body>
+</html>
