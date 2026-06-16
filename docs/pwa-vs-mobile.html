@@ -365,6 +365,9 @@
 <header>
   <h1>PWA vs. Native Mobile App</h1>
   <p>CSAH Partner App — Internal Decision Document &nbsp;·&nbsp; May 2026</p>
+  <div style="display:inline-flex; align-items:center; gap:0.5rem; margin-top:1rem; background:#16a34a; color:white; padding:0.35rem 0.85rem; border-radius:999px; font-size:0.78rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;">
+    ✓ Decision Approved — PWA &nbsp;·&nbsp; June 2026
+  </div>
 </header>
 
 <div class="container">
@@ -636,7 +639,7 @@
   <h2 class="section-title">Summary — Three Options</h2>
 
   <div class="summary-card summary-pwa">
-    <h3>PWA — Recommended default</h3>
+    <h3>PWA — Approved ✓</h3>
     <ul>
       <li>No install required — works in any browser, zero IT coordination needed</li>
       <li>Fastest and cheapest to build and deploy — important given budget and December deadline</li>
@@ -669,47 +672,44 @@
 
   <!-- Recommendation -->
   <div class="recommendation">
-    <h2>Our Current Lean</h2>
+    <h2>Decision — Approved June 2026</h2>
     <p>
       With SMS fallback in the plan, the strongest argument against PWA is gone. A missed push notification still
-      reaches the worker via text — message delivery is covered either way. That shifts the default recommendation
-      to PWA: it's faster to build, cheaper to run, and sidesteps the government device distribution problem entirely.
+      reaches the worker via text — message delivery is covered either way. PWA is faster to build, cheaper to run,
+      and sidesteps the government device distribution problem entirely.
     </p>
     <p>
       Expo's remaining advantages — cleaner push UX, better offline queuing — are real but not decisive for a
-      50-user internal coordination tool with a hard December deadline. The offline gap matters only if field
-      workers regularly lose connectivity long enough that they need to queue multiple case logs; worth asking,
-      but not a safe assumption either way.
+      50-user internal coordination tool with a hard December deadline. Expo remains an upgrade path if device
+      policy is later confirmed to allow it, but it does not change the build target for this engagement.
     </p>
     <p>
-      <strong style="color: white;">Recommendation: build PWA + SMS. If device policy confirms Expo is distributable to all agencies, revisit — but don't wait on that answer to start building.</strong>
+      <strong style="color: white;">Decision: build PWA + SMS. This is confirmed and not contingent on government device policy outcomes.</strong>
     </p>
     <div class="open-question">
-      <strong>Before Deciding</strong>
+      <strong>Still Open Post-Decision</strong>
       <p>
-        1. Confirm device policies with SPD HOPE and CCPD IT — this is a 1–2 question conversation that should happen early.<br><br>
-        2. Decide on notification preferences: should users be able to choose push only, SMS only, or both?
+        Notification preferences: should users be able to choose push only, SMS only, or both?
         Receiving a push and an SMS for every alert could feel invasive without opt-in control.
-        This may be a worthwhile feature regardless of platform choice.
+        This is a UX question to resolve during build — it does not affect the platform choice.
       </p>
     </div>
   </div>
 
   <!-- Open Questions -->
   <div class="open-questions-list">
-    <h2>Open Questions to Resolve</h2>
+    <h2>Open Questions (Post-Decision)</h2>
     <ol>
-      <li><strong>Government device policies:</strong> Can SPD HOPE and CCPD officers install third-party apps on their issued devices, or are those devices MDM-locked? This is the single most important question — it determines whether Expo is even on the table.</li>
       <li><strong>SMS cost at scale:</strong> Confirm Twilio pricing is not cost-prohibitive when push notification fallback volume is added on top of resource-sharing SMS volume. Estimated combined volume is still low (&lt;500 msg/month), but worth verifying before assuming it's negligible.</li>
-      <li><strong>Notification invasiveness:</strong> Is it acceptable to send both a push notification and an SMS for every critical alert? For a high-frequency coordination tool, receiving duplicate alerts on two channels could feel intrusive. Should workers be able to set a preference (push only / SMS only / both)?</li>
-      <li><strong>User preference feature:</strong> If we build notification preferences, what are the right defaults? Push-only seems reasonable for Expo users; SMS-only as a fallback default for PWA users who haven't set up home screen notifications.</li>
-      <li><strong>Distribution ownership:</strong> If Expo is chosen, will CSAH manage app distribution centrally, or does each partner agency handle installs for their own staff?</li>
+      <li><strong>Notification preferences:</strong> Should workers be able to set a preference (push only / SMS only / both)? For a high-frequency coordination tool, receiving duplicate alerts on two channels could feel intrusive. This is a UX decision to make during build.</li>
+      <li><strong>Notification defaults:</strong> If notification preferences are built, what are the right defaults? Push-only is the reasonable starting point; SMS fallback can be opt-in rather than opt-out.</li>
     </ol>
+    <p style="margin-top:1rem; font-size:0.85rem; color:#6b7280;"><em>Note: Government device policy (SPD HOPE, CCPD) is no longer a gating question — PWA runs in the browser and requires no device policy approval. If device policies later permit native app installs, Expo remains an upgrade path but does not change this decision.</em></p>
   </div>
 
 </div>
 
-<footer>CSAH Partner App — Internal Use Only &nbsp;·&nbsp; Allyson Short + Alan Robinson &nbsp;·&nbsp; May 2026</footer>
+<footer>CSAH Partner App — Internal Use Only &nbsp;·&nbsp; Allyson Short + Alan Robinson &nbsp;·&nbsp; Decision approved June 2026</footer>
 
 </body>
 </html>
