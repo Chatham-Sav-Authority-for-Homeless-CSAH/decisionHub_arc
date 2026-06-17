@@ -25,16 +25,14 @@
 
   .col-head { background: #f1efe8; text-align: center; vertical-align: top; padding: 14px 10px; }
   .col-head.featured { background: #e1f5ee; }
-  .col-head.excluded { background: #fdecea; }
   .col-name { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
   .col-name.green { color: #0f6e56; }
-  .col-name.red { color: #c0392b; }
   .col-sub { font-size: 11px; color: #5f5e5a; line-height: 1.4; margin-bottom: 6px; }
   .badge { display: inline-block; font-size: 10px; padding: 2px 9px; border-radius: 20px; }
   .badge-green  { background: #e1f5ee; color: #0f6e56; font-weight: 500; }
   .badge-blue   { background: #e6f1fb; color: #185fa5; }
   .badge-amber  { background: #faeeda; color: #854f0b; }
-  .badge-red    { background: #fdecea; color: #c0392b; font-weight: 500; }
+  .badge-purple { background: #f5f3ff; color: #7c3aed; }
 
   .row-label { background: #f1efe8; font-size: 12px; font-weight: 500; color: #5f5e5a; width: 160px; min-width: 160px; vertical-align: top; }
   .section-row td { background: #e8e6df; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #888780; font-weight: 500; padding: 6px 12px; }
@@ -59,10 +57,11 @@
   .verdict-ak  { background: #e1f5ee; color: #085041; }
   .verdict-mc  { background: #e6f1fb; color: #0c447c; }
   .verdict-ol  { background: #faeeda; color: #633806; }
-  .verdict-ike { background: #fdecea; color: #5c1010; }
+  .verdict-me  { background: #f5f3ff; color: #4c1d95; }
 
   .privacy-flag { font-size: 11px; line-height: 1.55; }
-  .privacy-flag + .privacy-flag { margin-top: 6px; }
+
+  .tbd-cell { font-size: 12px; color: #9ca3af; font-style: italic; }
 
   .connectivity-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 1.75rem; }
   .conn-card { background: #fff; border: 1px solid #d3d1c7; border-radius: 10px; padding: 14px 16px; }
@@ -82,11 +81,12 @@
   .budget-table .vendor-cell { font-weight: 500; }
   .status-ok   { color: #0f6e56; font-weight: 600; }
   .status-warn { color: #b45309; font-weight: 600; }
-  .status-no   { color: #c0392b; font-weight: 600; }
 
   .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #888780; font-weight: 600; margin: 2rem 0 0.6rem; }
   .foot { font-size: 11px; color: #888780; margin-top: 12px; line-height: 1.7; }
   .tbd-tag { font-size: 10px; background: #e8e6df; color: #5f5e5a; border-radius: 4px; padding: 1px 5px; font-weight: 500; margin-left: 4px; vertical-align: middle; }
+  .confirmed-tag { font-size: 10px; background: #e1f5ee; color: #0f6e56; border-radius: 4px; padding: 1px 5px; font-weight: 500; margin-left: 4px; vertical-align: middle; }
+  .call-needed-tag { font-size: 10px; background: #fdecea; color: #c0392b; border-radius: 4px; padding: 1px 5px; font-weight: 500; margin-left: 4px; vertical-align: middle; }
 </style>
 </head>
 <body>
@@ -99,16 +99,16 @@
 </div>
 
 <h1>Kiosk Hardware Comparison</h1>
-<p class="subtitle">Compass Project — evaluated against CSAH kiosk requirements (June 2026)</p>
+<p class="subtitle">Compass Project — evaluated against CSAH kiosk requirements · Updated June 2026 with vendor call findings</p>
 
 <div class="note-group">
   <div class="key-note note-green">
     <strong>Analysis basis</strong>
-    This comparison is grounded in the CSAH kiosk requirements document (June 2026), organized by the same category buckets: Physical Hardware, Display &amp; Interaction, Software/Integration, Accessibility &amp; UX, Operational/Nonprofit Fit, and Data Privacy &amp; Governance. Items marked <span class="tbd-tag">CONFIRM</span> in the requirements were flagged as "TBD whether required" — they are surfaced here but not treated as hard requirements until confirmed.
+    This comparison is grounded in the CSAH kiosk requirements document (June 2026), organized by the same category buckets: Physical Hardware, Display &amp; Interaction, Software/Integration, Accessibility &amp; UX, Operational/Nonprofit Fit, and Data Privacy &amp; Governance. Items marked <span class="tbd-tag">CONFIRM</span> in the requirements were flagged as "TBD whether required." Cells marked <span class="confirmed-tag">CALL CONFIRMED</span> reflect data gathered from vendor conversations. Cells marked <span class="call-needed-tag">CALL NEEDED</span> flag critical unknowns that must be resolved before this vendor can be evaluated.
   </div>
   <div class="key-note note-red">
     <strong>Data Privacy is a non-negotiable, not a nice-to-have</strong>
-    The requirements introduce a detailed data governance section informed by the LinkNYC case study — in which public kiosks were found to collect browsing history, retain camera footage without notice, and enable hyper-targeted advertising on homeless users. CSAH must contractually prevent these failure modes. Vendors whose software stacks transmit session or behavioral data to their own servers are a compliance risk regardless of hardware quality or price. IKE Smart City's advertising-funded revenue model makes them the clearest example of this pattern in this evaluation.
+    The requirements introduce a detailed data governance section informed by the LinkNYC case study — in which public kiosks collected browsing history, retained camera footage, and enabled hyper-targeted advertising on homeless users. CSAH must contractually prevent these failure modes. Vendors whose software stacks transmit session or behavioral data to their own servers are a compliance risk regardless of hardware quality or price.
   </div>
   <div class="key-note note-amber">
     <strong>No Section 508 requirement</strong>
@@ -135,10 +135,10 @@
         <div class="col-sub">Highest hardware quality; cleanest privacy posture</div>
         <span class="badge badge-amber">If budget allows</span>
       </th>
-      <th class="col-head excluded">
-        <div class="col-name red">IKE Smart City</div>
-        <div class="col-sub">Ad-funded smart city kiosks — 23 city deployments</div>
-        <span class="badge badge-red">Not recommended</span>
+      <th class="col-head">
+        <div class="col-name">Meridian</div>
+        <div class="col-sub">Strong hardware; mZero ad model requires verification</div>
+        <span class="badge badge-purple">Needs vendor call</span>
       </th>
     </tr>
   </thead>
@@ -148,162 +148,197 @@
     <tr class="section-row"><td colspan="5">Physical Hardware</td></tr>
     <tr>
       <td class="row-label">ADA compliance</td>
-      <td><span class="check">✓</span> Full outdoor line; 48" max height and 30"×48" clear floor space standard on government models</td>
-      <td><span class="check">✓</span> Height and screen position configurable per ADA spec</td>
+      <td><span class="check">✓</span> Full outdoor line (Monolith, Enviro models); 48" max height and 30"×48" clear floor space standard on government models. Optional keyboard add-on for wheelchair-height input.</td>
+      <td><span class="check">✓</span> Height and screen position configurable per ADA spec; bolt mounting with or without base</td>
       <td><span class="check">✓</span> Most cited vendor in ADA kiosk literature; compliance is a product differentiator</td>
-      <td><span class="partial">⚠</span> ADA compliance claimed; Berkeley deployment highlighted blind accessibility as a differentiator. Specific ADA measurements not published — confirm 48" max height and 30"×48" floor space before any commitment.</td>
+      <td><span class="check">✓</span> ADA-compliant designs certified; ISO 9001:2015 and UL Self-Certify Facility. Confirm 48" max height on specific outdoor models at quote.</td>
     </tr>
     <tr>
       <td class="row-label">Enclosure rating</td>
-      <td><span class="check">✓</span> NEMA 4-rated stainless steel — exceeds IP65 requirement; rated for extreme outdoor climate, active heating/cooling</td>
-      <td><span class="check">✓</span> IP65-rated; anti-vandal aluminum/stainless enclosure — meets requirement</td>
-      <td><span class="check">✓</span> Industrial-grade US-manufactured; outdoor-validated; deployed in extreme outdoor environments (Las Vegas)</td>
-      <td><span class="partial">⚠</span> "Extreme weather durability" claimed; no IP or NEMA rating published. CSAH outdoor placements require IP65 minimum — verify before any commitment.</td>
+      <td><span class="check">✓</span> 14-gauge steel, tested for extreme weather; active heating/cooling. Expected lifespan 5–6 years (up to 8 years).</td>
+      <td><span class="check">✓</span> Thicker cover glass for direct sunlight, rain, snow; anti-vandal construction — meets IP65</td>
+      <td><span class="check">✓</span> Industrial-grade US-manufactured; validated in extreme outdoor environments</td>
+      <td><span class="check">✓</span> Cold rolled steel, laser cut/welded; dual-stage powder coat; built-in AC/climate control for extreme temperatures; compression locks and extra weld points. ISO 9001:2015 certified manufacturing.</td>
     </tr>
     <tr>
       <td class="row-label">Anti-vandal glass</td>
       <td><span class="check">✓</span> Tempered, scratch-resistant standard on outdoor line</td>
-      <td><span class="check">✓</span> Optically bonded anti-vandal touchscreen</td>
+      <td><span class="check">✓</span> Optically bonded anti-vandal touchscreen; outdoor cover glass engineered for direct sunlight</td>
       <td><span class="check">✓</span> Industrial-grade; outdoor models standard</td>
-      <td><span class="partial">⚠</span> Not specified in public materials. Urban public kiosk deployment implies standard hardening — confirm at outreach.</td>
+      <td><span class="check">✓</span> Tempered or laminated safety glass standard on all outdoor models.</td>
     </tr>
     <tr>
       <td class="row-label">Privacy screen / hood <span class="tbd-tag">CONFIRM</span></td>
-      <td><span class="partial">⚠</span> Sun hoods available on some outdoor models; full privacy screen varies — confirm with vendor for selected config</td>
-      <td><span class="partial">⚠</span> Some configurations support privacy hoods; confirm for selected model</td>
-      <td><span class="check">✓</span> Privacy filter listed as standard add-on option — strongest in this group</td>
-      <td><span class="cross">✗</span> Exterior panels are designed for advertising display — a visual privacy screen is architecturally incompatible with their revenue model.</td>
+      <td><span class="partial">⚠</span> Sun hoods available on some outdoor models — confirm for selected configuration</td>
+      <td><span class="partial">⚠</span> Some configurations support privacy hoods — confirm for selected model</td>
+      <td><span class="check">✓</span> Privacy filter listed as standard add-on — strongest in this group</td>
+      <td class="tbd-cell">Not mentioned in public materials — verify at quote.</td>
     </tr>
     <tr>
       <td class="row-label">Lockable service panel</td>
-      <td><span class="check">✓</span> Standard on all outdoor units</td>
-      <td><span class="check">✓</span> Standard</td>
+      <td><span class="check">✓</span> Standard; internal components are modular — swap parts on-site without shipping the unit back</td>
+      <td><span class="check">✓</span> Standard; easy part swapping. Remote diagnosis first; on-site only if needed.</td>
       <td><span class="check">✓</span> Standard on industrial-grade units</td>
-      <td><span class="partial">⚠</span> Not specified publicly. Assumed standard for city-deployed units; confirm.</td>
+      <td><span class="partial">⚠</span> Security features (compression locks, extra weld points) confirmed on enclosure — service panel access not specifically described. Verify at quote.</td>
     </tr>
     <tr>
       <td class="row-label">Small-volume purchase</td>
-      <td><span class="check">✓</span> GSA pricing; comfortable with government/nonprofit buyers at 3–4 units; no stated minimum</td>
-      <td><span class="check">✓</span> Responsive to small-volume buyers; flexible on configuration</td>
-      <td><span class="partial">⚠</span> Targets mid-to-high-end deployments; 4-unit order is low priority — expect less flexibility and slower sales attention</td>
-      <td><span class="cross">✗</span> IKE's model is city/municipal partnership contracts — not direct hardware sales to nonprofits. A 3-unit nonprofit order is outside their standard buyer profile. CSAH likely cannot purchase IKE units as a direct buyer.</td>
+      <td><span class="check">✓</span> No minimum order. <strong>Bulk discount triggers at 4 units — CSAH's order qualifies.</strong> GSA pricing provides transparent cost structure.</td>
+      <td><span class="check">✓</span> Responsive to small-volume buyers; hardware discounts per order; software discounts scale with network size</td>
+      <td><span class="partial">⚠</span> Targets mid-to-high-end deployments; 4-unit order is low priority</td>
+      <td><span class="partial">⚠</span> No information on minimum orders or nonprofit pricing. Government is a served industry but no small-volume discount program found. Verify flexibility at quote.</td>
+    </tr>
+    <tr>
+      <td class="row-label">Hardware build lead time <span class="confirmed-tag">CALL CONFIRMED (AK, MC)</span></td>
+      <td><span class="check">✓</span> <strong>8–10 weeks</strong> — built to order, powder-coated.</td>
+      <td><span class="check">✓</span> <strong>~2 weeks</strong> in-stock; 10–15 weeks if depleted; +1 week vinyl branding.</td>
+      <td class="tbd-cell">TBD — verify at quote.</td>
+      <td><span class="partial">⚠</span> "Quick Ship Solutions" available for select models (Presenza, Pulse, Navigator Lite, G3). Custom outdoor builds TBD. Verify which outdoor models qualify and typical lead time at quote.</td>
+    </tr>
+    <tr>
+      <td class="row-label">Physical branding availability <span class="confirmed-tag">CALL CONFIRMED (AK, MC)</span></td>
+      <td><span class="partial">⚠</span> Powder-coated finish; custom colors at order time. No vinyl wrap program discussed — confirm logo/branding options at quote.</td>
+      <td><span class="check">✓</span> Custom vinyl wrapping — $500–$650/unit; adds ~1 week to lead time.</td>
+      <td class="tbd-cell">TBD</td>
+      <td><span class="check">✓</span> Full custom design shop; Lexan laminated graphics standard on outdoor models (functionally similar to vinyl wrap). Strong branding capability — designs "reflect business branding." Good fit for CSAH exterior identity.</td>
     </tr>
 
     <!-- ─── DISPLAY & INTERACTION ─── -->
     <tr class="section-row"><td colspan="5">Display &amp; Interaction</td></tr>
     <tr>
       <td class="row-label">Screen size</td>
-      <td><span class="check">✓</span> Multiple sizes including 21–32"; 24–27" range available on outdoor line</td>
-      <td><span class="check">✓</span> Configurable; 24" and 27" options standard in outdoor transactional line</td>
-      <td><span class="check">✓</span> Multiple sizes; outdoor models available in 24–27" range</td>
-      <td><span class="partial">⚠</span> "High-definition screens" referenced; specific dimensions not published. Confirm during outreach if you pursue IKE.</td>
+      <td><span class="check">✓</span> 24–27" range on Monolith/Enviro outdoor line</td>
+      <td><span class="check">✓</span> 21.5"–55" range; 24" and 27" standard in outdoor line</td>
+      <td><span class="check">✓</span> Multiple sizes; 24–27" outdoor range</td>
+      <td><span class="check">✓</span> 14"–65" outdoor range. 32" models available (Atlas 32", Q Series Outdoor 32"). Suitable sizes for CSAH's requirements.</td>
     </tr>
     <tr>
       <td class="row-label">Sunlight-readable display</td>
-      <td><span class="check">✓</span> 1,000+ nits standard on outdoor Enviro/Monolith line — meets requirement</td>
-      <td><span class="check">✓</span> Optically bonded anti-glare; outdoor-rated brightness — verify nit rating for selected model</td>
-      <td><span class="check">✓</span> Tests own LCDs for outdoor performance; Las Vegas outdoor deployment validates real-world brightness</td>
-      <td><span class="partial">⚠</span> "Extreme weather" durability referenced; nit rating not published. Verify for Savannah outdoor placements.</td>
+      <td><span class="check">✓</span> Sunlight-readable monitors standard — confirmed on vendor call</td>
+      <td><span class="check">✓</span> Thicker cover glass for direct sunlight; optically bonded display — verify nit rating at quote</td>
+      <td><span class="check">✓</span> Tests own LCDs for outdoor performance; real-world validated</td>
+      <td><span class="check">✓</span> "High-bright screens" built for direct sunlight; built-in AC manages heat for display longevity. Verify nit rating for selected model at quote.</td>
     </tr>
     <tr>
       <td class="row-label">Audio / headphone jack <span class="tbd-tag">CONFIRM</span></td>
-      <td><span class="partial">⚠</span> Available on some models, not universal — confirm for selected configuration</td>
+      <td><span class="partial">⚠</span> Available on some models — confirm for selected configuration</td>
       <td><span class="partial">⚠</span> Verify for selected configuration</td>
-      <td><span class="partial">⚠</span> You specify hardware components — audio can be included; confirm with Olea at quote time</td>
-      <td><span class="cross">✗</span> Not mentioned in public materials. Design focus is advertising display; accessibility peripherals are not a standard IKE feature.</td>
+      <td><span class="partial">⚠</span> Specifiable at order — confirm with Olea at quote</td>
+      <td class="tbd-cell">Not mentioned in public materials — verify at quote.</td>
     </tr>
     <tr>
-      <td class="row-label">Camera policy</td>
-      <td><span class="warn">⚠ Requires action</span><span class="price-sub">VOIP-capable models include cameras. Per requirements: must be disabled at OS level, physical cover provided, footage must never transmit to vendor infrastructure. Contractual controls required.</span></td>
-      <td><span class="warn">⚠ Requires action</span><span class="price-sub">Many models include cameras. Same contractual disable requirements apply. Must confirm camera is not part of their integrated platform analytics.</span></td>
-      <td><span class="check">✓ Cleanest posture</span><span class="price-sub">Pure hardware — you configure camera policy completely via your chosen MDM. No Olea software layer to route camera data. Physical covers available.</span></td>
-      <td><span class="cross">✗ Structural conflict</span><span class="price-sub">Security cameras are optional per their site. However, IKE's advertising model creates structural incentive to retain engagement data — contractually separating camera data from their platform analytics is not a realistic ask without gutting their revenue model.</span></td>
+      <td class="row-label">Screensaver option <span class="confirmed-tag">CALL CONFIRMED (MC)</span></td>
+      <td class="tbd-cell">Not discussed on vendor call — verify directly. Zamok may support idle screen configuration.</td>
+      <td><span class="check">✓ Confirmed</span> Built into MetroClick's platform — images, videos, or calls to action when idle.</td>
+      <td class="tbd-cell">TBD</td>
+      <td><span class="warn">⚠ Confirmed — but flag</span><span class="price-sub">mZero Platform includes an "attract loop" feature that supports images, videos, and interactive content when idle. However, it is explicitly designed as <strong>"revenue-generating ad space"</strong> — this advertising model mirrors the LinkNYC failure pattern. Must verify whether attract loop can operate without ad delivery, or whether hardware-only purchase with ARC's own MDM is available.</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">Camera policy <span class="confirmed-tag">CALL CONFIRMED (AK, MC)</span> <span class="call-needed-tag">CALL NEEDED (Meridian)</span></td>
+      <td><span class="check">✓ Not included standard</span><span class="price-sub">Cameras must be explicitly requested — confirmed on call. No contractual action required for standard deployment.</span></td>
+      <td><span class="check">✓ Not included standard</span><span class="price-sub">Cameras are explicit add-ons only — confirmed on call. Base units ship without cameras.</span></td>
+      <td><span class="check">✓ Cleanest posture</span><span class="price-sub">Pure hardware — camera policy fully within your MDM.</span></td>
+      <td class="tbd-cell">Camera policy not mentioned anywhere in public materials. Must confirm on vendor call before evaluating this vendor — cameras present a hard disqualifier for CSAH if included standard.</td>
+    </tr>
+    <tr>
+      <td class="row-label">QR code display</td>
+      <td><span class="check">✓</span> QR codes can be displayed on-screen — confirmed on call</td>
+      <td><span class="partial">⚠</span> App-layer feature — QR generation is a CSAH PWA function</td>
+      <td><span class="partial">⚠</span> App-layer, not hardware-specific</td>
+      <td><span class="partial">⚠</span> App-layer feature — not hardware-specific. mZero supports web-based kiosks so QR display via the CSAH PWA would work.</td>
     </tr>
 
     <!-- ─── SOFTWARE / INTEGRATION ─── -->
     <tr class="section-row"><td colspan="5">Software / Integration</td></tr>
     <tr>
-      <td class="row-label">PWA / Chromium kiosk mode</td>
-      <td><span class="check">✓</span> PWA confirmed; runs in browser wrapper via Zamok</td>
-      <td><span class="warn">⚠ Verify</span><span class="price-sub">Platform leans integrated — explicitly confirm PWA runs in Chromium kiosk mode without CMS dependency before ordering</span></td>
-      <td><span class="check">✓</span> Hardware-only; you choose the OS and kiosk mode software (SiteKiosk, Scalefusion, etc.) — full control</td>
-      <td><span class="cross">✗ Hard blocker</span><span class="price-sub">Proprietary application tile platform. No pathway to run CSAH's custom PWA as the primary interface. Their software is what the kiosk runs — it cannot be swapped out.</span></td>
+      <td class="row-label">PWA / web app hosting <span class="confirmed-tag">CALL CONFIRMED (AK, MC)</span></td>
+      <td><span class="check">✓ Confirmed</span><span class="price-sub">Zamok locks device to specific URLs — supports CSAH's single web app architecture. Windows 11. Hardware-only option available.</span></td>
+      <td><span class="check">✓ Confirmed — two paths</span><span class="price-sub"><strong>Recommended:</strong> Blank Windows PC — ARC installs own MDM, eliminates all MetroClick data concerns.<br><strong>Alternative:</strong> MetroClick safe hosting platform — locks to web app, requires data privacy audit.</span></td>
+      <td><span class="check">✓</span> Hardware-only; full OS/MDM choice — cleanest architecture control</td>
+      <td><span class="check">✓ Confirmed via research</span><span class="price-sub">mZero Platform is a secure kiosk browser for web-based kiosk deployment. Supports URL whitelist/blacklist. PWA compatible. Runs on Windows, Apple, or Android. <strong>Verify whether hardware-only purchase (no mZero) is available</strong> — critical for data privacy.</span></td>
     </tr>
     <tr>
-      <td class="row-label">Remote MDM</td>
-      <td><span class="check">✓</span> Built-in Zamok — software updates, monitoring, session security without on-site visits</td>
-      <td><span class="partial">⚠</span> Has own platform; verify update and monitoring capabilities match requirements</td>
-      <td><span class="check">✓</span> Bring your own MDM — works with Scalefusion, SiteKiosk, Hexnode, etc. (see Software Comparison doc)</td>
-      <td><span class="cross">✗</span> IKE owns and operates the platform centrally. CSAH does not have independent MDM access and cannot push updates or change configurations without going through IKE.</td>
+      <td class="row-label">Remote MDM <span class="confirmed-tag">CALL CONFIRMED (MC)</span></td>
+      <td><span class="check">✓</span> Built-in Zamok — software updates, monitoring, session security. Annual cost not confirmed — verify at quote.</td>
+      <td><span class="partial">⚠</span> MetroClick remote management: $780/device/year. Blank Windows PC option: use ARC's MDM instead (~$25–50/yr via Scalefusion).</td>
+      <td><span class="check">✓</span> Bring your own MDM — works with Scalefusion, SiteKiosk, Hexnode, etc.</td>
+      <td><span class="check">✓</span> mZero Manage provides remote administration — supports Windows, Apple, and Android fleets. Pricing not disclosed. If hardware-only purchase is available, ARC's chosen MDM replaces mZero Manage.</td>
     </tr>
     <tr>
       <td class="row-label">Uptime monitoring &amp; alerting</td>
-      <td><span class="check">✓</span> Zamok includes device monitoring and alerting</td>
-      <td><span class="partial">⚠</span> Verify alerting capabilities for unresponsive kiosk detection</td>
+      <td><span class="check">✓</span> Zamok includes device monitoring and alerting — confirm specific capabilities at quote</td>
+      <td><span class="partial">⚠</span> Remote diagnosis confirmed; monitoring capability depends on MDM if using blank Windows PC</td>
       <td><span class="check">✓</span> Via chosen MDM platform</td>
-      <td><span class="partial">⚠</span> IKE's vertically integrated ops team handles monitoring — but CSAH has no independent visibility or alerting access.</td>
+      <td><span class="partial">⚠</span> mZero Manage assumed to include monitoring — specific alerting capabilities not detailed publicly. Verify at quote.</td>
     </tr>
     <tr>
       <td class="row-label">Offline fallback <span class="tbd-tag">CONFIRM</span></td>
-      <td><span class="partial">⚠</span> Zamok handles session management; app-level offline behavior is delivered by PWA service worker — not a hardware question</td>
-      <td><span class="partial">⚠</span> Same — offline fallback is an app architecture concern, not a hardware vendor feature</td>
-      <td><span class="check">✓</span> Same — but with full MDM flexibility, offline configuration is entirely within CSAH's control</td>
-      <td><span class="cross">✗</span> N/A — IKE controls the platform. CSAH cannot configure offline behavior or deploy a service worker to their kiosk environment.</td>
+      <td><span class="partial">⚠</span> App-level offline behavior via PWA service worker — not a hardware question</td>
+      <td><span class="partial">⚠</span> Same — app architecture concern, not a MetroClick feature</td>
+      <td><span class="check">✓</span> Full MDM flexibility — offline configuration within CSAH's control</td>
+      <td><span class="partial">⚠</span> App-layer concern — PWA service worker handles offline caching. Not a Meridian feature question.</td>
+    </tr>
+    <tr>
+      <td class="row-label">OS / platform <span class="confirmed-tag">CALL CONFIRMED (AK, MC)</span></td>
+      <td><span class="check">✓</span> <strong>Windows 11</strong> — confirmed on vendor call</td>
+      <td><span class="check">✓</span> <strong>Windows PC</strong> — confirmed. Blank Windows PC option available.</td>
+      <td class="tbd-cell">TBD — confirm Windows vs. other OS at quote</td>
+      <td><span class="check">✓</span> Windows (primary platform); mZero also supports Apple and Android. Full Windows PC running mZero Platform confirmed via research.</td>
     </tr>
 
     <!-- ─── ACCESSIBILITY & UX ─── -->
     <tr class="section-row"><td colspan="5">Accessibility &amp; UX</td></tr>
     <tr>
       <td class="row-label">Screen reader / WCAG 2.1 AA <span class="tbd-tag">CONFIRM</span></td>
-      <td><span class="partial">⚠</span> Hardware supports it; Zamok touch interface is compatible. WCAG 2.1 AA is delivered by the app layer — not Zamok itself.</td>
-      <td><span class="partial">⚠</span> Hardware supports it; WCAG delivery is app-layer. Confirm their platform doesn't interfere with browser-native accessibility.</td>
-      <td><span class="check">✓</span> Most cited in ADA kiosk literature. No vendor software layer to interfere with browser accessibility — cleanest path to WCAG compliance.</td>
-      <td><span class="partial">⚠</span> Berkeley case study highlighted blind user accessibility. However, WCAG 2.1 AA compliance is delivered through IKE's proprietary platform — CSAH cannot audit or modify its accessibility implementation.</td>
+      <td><span class="partial">⚠</span> Hardware supports it; WCAG 2.1 AA delivered by app layer. Windows 11 supports OS-level accessibility tools.</td>
+      <td><span class="partial">⚠</span> WCAG delivery is app-layer. Blank Windows PC eliminates any MetroClick platform interference.</td>
+      <td><span class="check">✓</span> No vendor software layer to interfere with browser accessibility — cleanest path to WCAG compliance.</td>
+      <td><span class="partial">⚠</span> ADA-compliant designs certified. WCAG 2.1 AA delivered by app layer. If hardware-only purchase is available, no mZero layer to interfere with browser accessibility.</td>
     </tr>
     <tr>
       <td class="row-label">Multilingual support <span class="tbd-tag">CONFIRM</span></td>
       <td><span class="check">✓</span> Multilingual and voice guidance standard on government models</td>
-      <td><span class="partial">⚠</span> Verify for selected configuration and platform</td>
-      <td><span class="check">✓</span> Delivered via app layer and MDM choice — fully within CSAH's control</td>
-      <td><span class="check">✓</span> Listed as a platform feature across deployments.</td>
+      <td><span class="partial">⚠</span> Delivered via app layer — not a MetroClick platform feature</td>
+      <td><span class="check">✓</span> Delivered via app layer — fully within CSAH's control</td>
+      <td><span class="partial">⚠</span> App-layer feature — delivered by the CSAH PWA, not mZero.</td>
     </tr>
     <tr>
       <td class="row-label">Session timeout (≥3 min)</td>
-      <td><span class="check">✓</span> Zamok session timeout is configurable — 3+ minute minimum achievable</td>
-      <td><span class="partial">⚠</span> Likely configurable; verify 3-minute minimum is achievable in their platform defaults</td>
-      <td><span class="check">✓</span> Configured via MDM and app layer — no vendor-imposed defaults</td>
-      <td><span class="cross">✗</span> CSAH cannot configure session parameters — IKE controls all platform defaults. Session behavior is whatever IKE sets.</td>
+      <td><span class="check">✓</span> Zamok session timeout configurable — 3+ minute minimum achievable</td>
+      <td><span class="partial">⚠</span> Configurable via MetroClick platform or app/MDM on blank Windows PC</td>
+      <td><span class="check">✓</span> Via MDM and app layer — no vendor-imposed defaults</td>
+      <td><span class="partial">⚠</span> mZero session reset behavior not described publicly. Verify 3-minute minimum is achievable at quote.</td>
     </tr>
     <tr>
       <td class="row-label">Touch targets / no fine-motor</td>
       <td><span class="check">✓</span> Large-format touchscreen; touch driver configurable for large-target UX</td>
-      <td><span class="check">✓</span> Standard touch hardware; target size is an app design responsibility</td>
+      <td><span class="check">✓</span> Standard touch hardware; target size is app design responsibility</td>
       <td><span class="check">✓</span> Large-format display; touch precision configurable</td>
-      <td><span class="partial">⚠</span> Standard for public kiosk. Touch target sizes are controlled by IKE's app platform tiles — not configurable by CSAH.</td>
+      <td><span class="check">✓</span> Large-format outdoor touchscreens (up to 65"); touch target sizing is app design responsibility.</td>
     </tr>
 
     <!-- ─── OPERATIONAL / NONPROFIT FIT ─── -->
     <tr class="section-row"><td colspan="5">Operational / Nonprofit Fit</td></tr>
     <tr>
-      <td class="row-label">Warranty (≥3 yr + on-site)</td>
-      <td><span class="check">✓</span> Government/nonprofit track record; 3-year warranty with on-site service option standard — verify for selected model at quote time</td>
-      <td><span class="partial">⚠</span> Warranty terms vary; explicitly ask for on-site service option and 3-year coverage at quote</td>
-      <td><span class="partial">⚠</span> High-end market typically offers strong warranty terms; confirm on-site service availability for Savannah, GA</td>
-      <td><span class="cross">✗</span> N/A under city partnership model — IKE owns and operates the hardware. Traditional warranty terms don't apply because CSAH would not own the equipment.</td>
+      <td class="row-label">Warranty <span class="confirmed-tag">CALL CONFIRMED (AK, MC)</span></td>
+      <td><span class="check">✓</span> <strong>3-year standard</strong> — confirmed on call. On-site service available — confirm Savannah, GA coverage at quote.</td>
+      <td><span class="warn">⚠ Negotiate extended warranty</span><br><strong>2-year standard</strong> confirmed on call. Extended up to 5 years available — request 3-year at quote.</td>
+      <td><span class="partial">⚠</span> High-end market typically offers strong terms — confirm on-site service for Savannah, GA</td>
+      <td><span class="warn">⚠ Vague — verify specifics</span><br>Claims "strongest warranty in the industry" in marketing materials — but specific duration and terms are not publicly disclosed. No specific year count found. Verify on a call before relying on this claim.</td>
     </tr>
     <tr>
       <td class="row-label">References (similar deployments)</td>
       <td><span class="check">✓</span> Social services, housing authorities, courts — directly analogous buyer profiles</td>
-      <td><span class="check">✓</span> Public housing authority lobby kiosks — closest real-world analog to shelter and community center placements</td>
-      <td><span class="check">✓</span> Transit, emergency assistance, outdoor public deployments — analogous on hardware durability, less so on population served</td>
-      <td><span class="partial">⚠</span> Social services/equity references are real — Baltimore (digital divide), Berkeley (blind accessibility), St. Louis (30-kiosk deployment). But all are city/municipal partnerships at scale, not nonprofit direct-purchase deployments. No comparable nonprofit buyer precedent found.</td>
+      <td><span class="check">✓</span> Public housing authority lobby kiosks — closest real-world analog</td>
+      <td><span class="check">✓</span> Transit, emergency assistance, outdoor public deployments</td>
+      <td><span class="partial">⚠</span> Government sector cited (Citizen Services, Public Safety, Information Access). No social service or homeless-service deployments referenced. Government context is analogous — verify relevant case studies on a call.</td>
     </tr>
     <tr>
       <td class="row-label">TCO clarity</td>
-      <td><span class="check">✓</span> GSA pricing provides structured, transparent hardware + software cost visibility — best in this group for nonprofit buyers</td>
-      <td><span class="partial">⚠</span> Less pricing structure than GSA; negotiate explicitly for line-item TCO clarity including software licensing and maintenance</td>
-      <td><span class="partial">⚠</span> High-end pricing is less negotiable; software stack is separate (your MDM choice) — TCO clarity requires assembling both quotes independently</td>
-      <td><span class="cross">✗</span> No upfront hardware cost is the hook, but the cost is the advertising model — CSAH's users become the product. If IKE offers direct purchase at all, pricing is not published and the full cost of software licensing, operations, and any advertising obligations is unclear.</td>
+      <td><span class="check">✓</span> GSA pricing provides transparent cost structure. Bulk discount at 4 units. Zamok annual cost not confirmed — verify at quote.</td>
+      <td><span class="check">✓</span> Concrete pricing confirmed on call: $1,000–$1,500 install, $300–$550 shipping, $500–$650 vinyl branding, $780/yr software. Blank Windows PC eliminates software cost.</td>
+      <td><span class="partial">⚠</span> High-end pricing less negotiable; MDM is a separate cost — TCO requires assembling both quotes independently</td>
+      <td><span class="warn">⚠ Least transparent</span><br>Pricing not publicly listed; "higher initial costs" noted in third-party reviews. Custom quotes only — no GSA pricing, no confirmed figures for direct comparison. TCO picture requires a vendor call.</td>
     </tr>
 
     <!-- ─── CSAH FIT SCORES ─── -->
@@ -313,114 +348,128 @@
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#1d9e75;"></div></div><span class="bar-num">9</span></div></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#378add;"></div></div><span class="bar-num">8.5</span></div></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#ba7517;"></div></div><span class="bar-num">8</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:40%;background:#c0392b;"></div></div><span class="bar-num">4</span></div><span style="font-size:10px;color:#c0392b;">Specs unpublished; not a direct-purchase vendor</span></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#7c3aed;"></div></div><span class="bar-num">8</span></div><span style="font-size:10px;color:#0f6e56;">ISO certified, AC, Lexan branding</span></td>
     </tr>
     <tr>
       <td class="row-label">Display &amp; Interaction</td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#1d9e75;"></div></div><span class="bar-num">8.5</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%;background:#378add;"></div></div><span class="bar-num">7.5</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#378add;"></div></div><span class="bar-num">8</span></div><span style="font-size:10px;color:#0f6e56;">Screensaver confirmed; QR via app</span></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#ba7517;"></div></div><span class="bar-num">8.5</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:40%;background:#c0392b;"></div></div><span class="bar-num">4</span></div><span style="font-size:10px;color:#c0392b;">ADA ok; camera and ad panel conflicts</span></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:65%;background:#7c3aed;"></div></div><span class="bar-num">6.5</span></div><span style="font-size:10px;color:#c0392b;">Camera unknown; attract loop ad concern</span></td>
     </tr>
     <tr>
       <td class="row-label">Software / Integration</td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#1d9e75;"></div></div><span class="bar-num">8.5</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:60%;background:#378add;"></div></div><span class="bar-num">6</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#378add;"></div></div><span class="bar-num">8</span></div><span style="font-size:10px;color:#0f6e56;">Blank Windows PC path is ideal</span></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#ba7517;"></div></div><span class="bar-num">8</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:10%;background:#c0392b;"></div></div><span class="bar-num">1</span></div><span style="font-size:10px;color:#c0392b;">Proprietary platform; no PWA; no CSAH control</span></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:65%;background:#7c3aed;"></div></div><span class="bar-num">6.5</span></div><span style="font-size:10px;color:#b45309;">Hardware-only option unconfirmed</span></td>
     </tr>
     <tr>
       <td class="row-label">Accessibility &amp; UX</td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#1d9e75;"></div></div><span class="bar-num">8.5</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:70%;background:#378add;"></div></div><span class="bar-num">7</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%;background:#378add;"></div></div><span class="bar-num">7.5</span></div></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#ba7517;"></div></div><span class="bar-num">8.5</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:55%;background:#c0392b;"></div></div><span class="bar-num">5.5</span></div><span style="font-size:10px;color:#b45309;">ADA + multilingual are real; but CSAH can't configure or audit</span></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:70%;background:#7c3aed;"></div></div><span class="bar-num">7</span></div><span style="font-size:10px;color:#5f5e5a;">ADA certified; WCAG via app layer</span></td>
     </tr>
     <tr>
       <td class="row-label">Operational / Nonprofit Fit</td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#1d9e75;"></div></div><span class="bar-num">9</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#378add;"></div></div><span class="bar-num">8</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%;background:#378add;"></div></div><span class="bar-num">7.5</span></div><span style="font-size:10px;color:#b45309;">2-yr warranty (not 3) — negotiate</span></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:65%;background:#ba7517;"></div></div><span class="bar-num">6.5</span></div></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:20%;background:#c0392b;"></div></div><span class="bar-num">2</span></div><span style="font-size:10px;color:#c0392b;">City partnership model; advertising conflicts with mission</span></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:55%;background:#7c3aed;"></div></div><span class="bar-num">5.5</span></div><span style="font-size:10px;color:#c0392b;">Pricing opaque; warranty terms vague</span></td>
     </tr>
     <tr>
       <td class="row-label">Data Privacy &amp; Governance</td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:65%;background:#1d9e75;"></div></div><span class="bar-num">6.5</span></div><span style="font-size:10px;color:#b45309;">Zamok audit required</span></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:50%;background:#378add;"></div></div><span class="bar-num">5</span></div><span style="font-size:10px;color:#c0392b;">Highest data risk — integrated platform</span></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%;background:#1d9e75;"></div></div><span class="bar-num">7.5</span></div><span style="font-size:10px;color:#b45309;">Zamok session audit still required</span></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#378add;"></div></div><span class="bar-num">8</span></div><span style="font-size:10px;color:#0f6e56;">Blank Windows PC eliminates concern</span></td>
       <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:95%;background:#ba7517;"></div></div><span class="bar-num">9.5</span></div><span style="font-size:10px;color:#0f6e56;">Hardware-only = lowest vendor data risk</span></td>
-      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:10%;background:#c0392b;"></div></div><span class="bar-num">1</span></div><span style="font-size:10px;color:#c0392b;">Advertising model = LinkNYC failure pattern</span></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:40%;background:#7c3aed;"></div></div><span class="bar-num">4</span></div><span style="font-size:10px;color:#c0392b;">mZero ad-revenue model = LinkNYC pattern</span></td>
     </tr>
 
     <!-- ─── DATA PRIVACY & GOVERNANCE ─── -->
     <tr class="section-row"><td colspan="5">Data Privacy &amp; Governance</td></tr>
     <tr>
       <td class="row-label">Network-level data minimization</td>
-      <td class="privacy-flag"><span class="warn">⚠ Audit required</span><br>Zamok is a proprietary software layer. Confirm it does not passively collect MAC addresses or WiFi probe data from nearby devices that haven't initiated a session. VOIP features increase the data surface area beyond bare hardware.</td>
-      <td class="privacy-flag"><span class="risk">⚠ Highest risk</span><br>No public data minimization commitments. Integrated platform may collect proximity or passive device data by default. No documentation on what their software captures. Requires explicit contractual negotiation before any deployment.</td>
-      <td class="privacy-flag"><span class="check">✓ Lowest risk</span><br>Hardware-only means no Olea software layer to collect nearby device data. Hardware health telemetry only (uptime, temp, error codes). Passive data collection risk is near-zero by architecture.</td>
-      <td class="privacy-flag"><span class="risk">✗ Structural disqualification</span><br>Advertising revenue model structurally requires collecting behavioral and engagement data on users. This is the LinkNYC failure pattern this document was written to prevent — not a configurable option, but the core business model. Cannot be resolved through contractual negotiation without IKE abandoning their operating model.</td>
+      <td class="privacy-flag"><span class="warn">⚠ Audit required</span><br>Zamok is a proprietary software layer. Confirm it does not passively collect MAC addresses or WiFi probe data from nearby devices. Hardware-only option eliminates this concern.</td>
+      <td class="privacy-flag"><span class="check">✓ Blank Windows PC eliminates concern</span><br>With blank Windows PC, MetroClick has no software layer to collect passive device data. If using MetroClick's platform, audit explicitly.</td>
+      <td class="privacy-flag"><span class="check">✓ Lowest risk</span><br>Hardware-only; no Olea software layer. Hardware health telemetry only.</td>
+      <td class="privacy-flag"><span class="risk">⚠ High concern — verify hardware-only option</span><br>mZero Platform is designed around an advertising revenue model. Passive data collection from nearby devices cannot be ruled out without a full audit. If hardware-only purchase (no mZero) is available, this concern is eliminated. Critical question for vendor call.</td>
     </tr>
     <tr>
       <td class="row-label">Session data residency</td>
-      <td class="privacy-flag"><span class="warn">⚠ Contractual control required</span><br>Zamok likely collects session analytics on their own servers. Per requirements: all session/behavioral data must reside on CSAH/ARC-controlled infrastructure only. Require contractual confirmation that Zamok transmits zero session data externally — or configure Zamok to run in a data-minimized mode if available.</td>
-      <td class="privacy-flag"><span class="risk">⚠ Highest concern</span><br>Integrated CMS/platform model is designed to retain usage analytics on vendor servers. This is likely a structural incompatibility with the requirement that session data not leave CSAH infrastructure. May require significant platform reconfiguration or disabling core features.</td>
-      <td class="privacy-flag"><span class="check">✓ Structurally compliant</span><br>No Olea software layer means all session data flows through your PWA to Supabase — directly to CSAH-controlled infrastructure. This requirement is satisfied by architecture, not contract negotiation.</td>
-      <td class="privacy-flag"><span class="risk">✗ No data controller rights</span><br>All session data flows through IKE's platform and infrastructure. CSAH has no data controller rights and no pathway to require that session data reside on CSAH-controlled infrastructure. User behavioral data is IKE's product — that's how the kiosk is "free."</td>
+      <td class="privacy-flag"><span class="warn">⚠ Contractual control required</span><br>Zamok likely collects session analytics on vendor servers. Require contractual confirmation of zero external session data transmission, or use hardware-only configuration.</td>
+      <td class="privacy-flag"><span class="check">✓ Blank Windows PC resolves this structurally</span><br>With blank Windows PC, all session data flows through CSAH's PWA directly to Supabase — no MetroClick software in the data path.</td>
+      <td class="privacy-flag"><span class="check">✓ Structurally compliant</span><br>No Olea software layer — session data flows directly to CSAH-controlled Supabase.</td>
+      <td class="privacy-flag"><span class="risk">⚠ Significant concern</span><br>mZero Platform is explicitly built to "create a revenue-generating ad space" via its attract loop. This implies session and behavioral data flow to Meridian servers — a structural match to the LinkNYC failure pattern. Hardware-only purchase with ARC's MDM would resolve this entirely. Until confirmed, this is a near-disqualifier for CSAH.</td>
     </tr>
     <tr>
-      <td class="row-label">Camera policy</td>
-      <td class="privacy-flag"><span class="warn">⚠ Contractual + config action required</span><br>VOIP models include cameras. Requirement: disabled at OS level by default, physical cover provided, footage never transmitted to vendor infrastructure. Confirm Zamok cannot activate camera without explicit CSAH admin action.</td>
-      <td class="privacy-flag"><span class="warn">⚠ Same requirements apply</span><br>Camera present on many models. Must be explicitly disabled at OS level. Confirm their platform has no camera activation pathway. Physical cover required.</td>
-      <td class="privacy-flag"><span class="check">✓ You control camera policy</span><br>Pure hardware — camera configuration is entirely within your MDM and OS setup. No Olea software pathway to activate it. Physical covers specifiable at order time.</td>
-      <td class="privacy-flag"><span class="risk">✗ No independent control</span><br>Security cameras listed as optional. Even where cameras are disabled, the advertising platform still collects engagement data. CSAH has no ability to audit or restrict what IKE's software layer does with camera feeds or proximity sensors.</td>
+      <td class="row-label">Camera policy <span class="confirmed-tag">CALL CONFIRMED (AK, MC)</span> <span class="call-needed-tag">CALL NEEDED (Meridian)</span></td>
+      <td class="privacy-flag"><span class="check">✓ Not a concern for base config</span><br>Cameras not included standard — confirmed on call. No camera to disable or audit for standard deployment.</td>
+      <td class="privacy-flag"><span class="check">✓ Not a concern for base config</span><br>Cameras not included standard — confirmed on call. Base units ship without cameras.</td>
+      <td class="privacy-flag"><span class="check">✓ You control camera policy</span><br>Pure hardware — camera configuration entirely within your MDM.</td>
+      <td class="privacy-flag"><span class="risk">⚠ Unknown — must confirm before evaluation</span><br>Camera policy is not mentioned in any public Meridian materials. This is a hard requirement for CSAH: cameras must not be included in standard outdoor units. Confirm on vendor call — this alone can be a disqualifier.</td>
     </tr>
     <tr>
       <td class="row-label">Vendor telemetry scope</td>
-      <td class="privacy-flag"><span class="warn">⚠ Audit and contract</span><br>Require contractual confirmation that Zamok telemetry is limited to device-level health metrics only (uptime, temperature, error codes, software version). Must explicitly exclude session counts, interaction logs, timestamps, or any user-activity-derived data.</td>
-      <td class="privacy-flag"><span class="risk">⚠ Unclear by design</span><br>No public documentation on telemetry scope. Integrated platform vendors typically send rich analytics back to their servers. This needs explicit contractual definition — and confirmation of what "off" actually means technically.</td>
-      <td class="privacy-flag"><span class="check">✓ Compliant by design</span><br>Hardware-only means Olea's telemetry is physically limited to device health. There is no software layer capable of capturing session counts or interaction data. This requirement is satisfied without negotiation.</td>
-      <td class="privacy-flag"><span class="risk">✗ Telemetry is the product</span><br>Analytics and engagement data are central to IKE's value proposition to their city partners. Their platform is explicitly designed to report on usage. Limiting telemetry to hardware health only would require disabling their core platform — not a realistic contractual ask.</td>
+      <td class="privacy-flag"><span class="warn">⚠ Audit and contract</span><br>Require contractual confirmation that Zamok telemetry is limited to device-level health metrics (uptime, temperature, error codes). Must exclude session counts, interaction logs, or user-activity data.</td>
+      <td class="privacy-flag"><span class="check">✓ Blank Windows PC eliminates concern</span><br>No MetroClick software layer means no MetroClick telemetry. If using their platform, require explicit telemetry scope definition contractually.</td>
+      <td class="privacy-flag"><span class="check">✓ Compliant by design</span><br>Hardware-only; Olea telemetry is limited to device health. No software layer to capture session data.</td>
+      <td class="privacy-flag"><span class="risk">⚠ Likely incompatible as-is</span><br>mZero's advertising revenue model implies telemetry well beyond device health. The attract loop "creates ad space" — which requires impression tracking and behavioral signals. This scope of telemetry is incompatible with CSAH requirements. Hardware-only option is the only viable path for this vendor.</td>
     </tr>
     <tr>
       <td class="row-label">Gov't data access / 3rd-party sharing</td>
-      <td class="privacy-flag"><span class="warn">⚠ Contractual language required</span><br>Require explicit: CSAH is sole data controller; vendor will not respond to law enforcement requests without prior notification to CSAH; no data sharing with advertisers or analytics platforms. Government-focused vendor may have existing law enforcement data-sharing frameworks — confirm these don't apply to CSAH kiosk data.</td>
-      <td class="privacy-flag"><span class="risk">⚠ Same requirements, less leverage</span><br>No specific public commitments. Integrated platform vendors with advertising-adjacent products (check if their platform stack includes any ad components) must contractually disable and confirm zero data collection activity. CSAH has less negotiating leverage at 4-unit volume.</td>
-      <td class="privacy-flag"><span class="check">✓ Minimal exposure</span><br>Olea has no user session data to provide to law enforcement or share with third parties — there's nothing to request. CSAH data controller status is straightforward. Standard contractual language for hardware warranty and support is sufficient.</td>
-      <td class="privacy-flag"><span class="risk">✗ No recourse</span><br>IKE retains user session and behavioral data on their own infrastructure. CSAH has no ability to enforce data access restrictions on IKE's systems. Law enforcement requests to IKE would not require CSAH's knowledge or consent. CSAH is not the data controller — IKE is.</td>
+      <td class="privacy-flag"><span class="warn">⚠ Contractual language required</span><br>Require: CSAH is sole data controller; vendor will not respond to law enforcement requests without prior CSAH notification; no sharing with advertisers or analytics platforms.</td>
+      <td class="privacy-flag"><span class="check">✓ Blank Windows PC minimizes exposure</span><br>With blank Windows PC, MetroClick has no user data to share. Platform software path requires same contractual language as AK.</td>
+      <td class="privacy-flag"><span class="check">✓ Minimal exposure</span><br>Olea has no user session data to provide. CSAH data controller status is straightforward.</td>
+      <td class="privacy-flag"><span class="risk">⚠ Ad platform = 3rd-party sharing by design</span><br>Ad-based platforms are architected to share behavioral signals with advertising infrastructure. "No sharing with advertisers" is structurally in conflict with the mZero business model. Hardware-only purchase eliminates this entirely — otherwise, this is a disqualifying concern for CSAH.</td>
     </tr>
 
     <!-- ─── COST ─── -->
     <tr class="section-row"><td colspan="5">Cost</td></tr>
     <tr>
-      <td class="row-label">Hardware est.</td>
-      <td class="center"><span class="price-main">$5,000–$20,000</span><span class="price-sub">Enviro/Monolith outdoor line</span></td>
-      <td class="center"><span class="price-main">$5,000–$15,000+</span><span class="price-sub">Outdoor transactional units</span></td>
-      <td class="center"><span class="price-main">$15,000–$30,000</span><span class="price-sub">Ask specifically about Boulder model for lower entry point</span></td>
-      <td class="center"><span class="price-main">$0 (city partnership)</span><span class="price-sub">Hardware is IKE-owned under their municipal model. Direct nonprofit purchase pricing not published — may not be available at all.</span></td>
+      <td class="row-label">Hardware est. <span class="confirmed-tag">CALL CONFIRMED (AK)</span></td>
+      <td class="center"><span class="price-main">$10,000–$25,000</span><span class="price-sub">Confirmed range on vendor call. Bulk discount at 4 units.</span></td>
+      <td class="center"><span class="price-main">$5,000–$15,000+</span><span class="price-sub">Request formal quote — not confirmed on call</span></td>
+      <td class="center"><span class="price-main">$15,000–$30,000</span><span class="price-sub">Ask about Boulder model for lower entry</span></td>
+      <td class="center"><span class="price-main" style="font-size:12px;">Not publicly listed</span><span class="price-sub">"Higher initial costs" noted in third-party reviews. Custom quotes only — contact sales for outdoor model pricing.</span></td>
     </tr>
     <tr>
-      <td class="row-label">Installation est.</td>
-      <td class="center"><span class="price-main">$2,000–$3,000</span><span class="price-sub">Site prep, mounting, electrical</span></td>
-      <td class="center"><span class="price-main">$500–$1,500</span><span class="price-sub">Weatherproof electrical, concrete pad, mounting</span></td>
+      <td class="row-label">Annual software cost <span class="confirmed-tag">CALL CONFIRMED (MC)</span></td>
+      <td class="center"><span class="price-main" style="font-size:12px;">TBD — verify Zamok pricing</span><span class="price-sub">Not confirmed on call. Hardware-only option available — ARC manages lockdown via its own MDM.</span></td>
+      <td class="center"><span class="price-main">$780/device/year</span><span class="price-sub">MetroClick platform. <strong>$0 if blank Windows PC</strong> — use ARC's MDM (e.g., Scalefusion ~$25–50/yr).</span></td>
+      <td class="center tbd-cell">TBD — depends on MDM selection</td>
+      <td class="center"><span class="price-main" style="font-size:12px;">Not publicly listed</span><span class="price-sub">mZero Platform pricing not disclosed. If hardware-only purchase is available, replace with ARC's chosen MDM.</span></td>
+    </tr>
+    <tr>
+      <td class="row-label">Installation est. <span class="confirmed-tag">CALL CONFIRMED (MC)</span></td>
+      <td class="center"><span class="price-main">$2,000–$3,000</span><span class="price-sub">Can self-install with vendor manuals</span></td>
+      <td class="center"><span class="price-main">$1,000–$1,500</span><span class="price-sub">Confirmed on call. Does not include electrician. Recommend installing over ground outlet.</span></td>
       <td class="center"><span class="price-main">$2,000–$3,000</span><span class="price-sub">Outdoor premium installation</span></td>
-      <td class="center"><span class="price-main">Handled by IKE</span><span class="price-sub">End-to-end installation included in city partnership. Not a standalone line item for direct buyers.</span></td>
+      <td class="center tbd-cell">Not confirmed — verify at quote.</td>
     </tr>
     <tr>
-      <td class="row-label">All-in est. per unit</td>
-      <td class="center"><span class="price-main">$15,000–$23,000</span><span class="good">✓ Fits within $25K</span></td>
-      <td class="center"><span class="price-main">$12,000–$18,000</span><span class="good">✓ Most headroom under $25K</span></td>
+      <td class="row-label">Shipping est. <span class="confirmed-tag">CALL CONFIRMED (MC)</span></td>
+      <td class="center tbd-cell">TBD — verify at quote.</td>
+      <td class="center"><span class="price-main">$300–$550</span><span class="price-sub">Confirmed on call</span></td>
+      <td class="center tbd-cell">TBD</td>
+      <td class="center tbd-cell">Not confirmed — verify at quote.</td>
+    </tr>
+    <tr>
+      <td class="row-label">All-in est. per unit (hardware + install)</td>
+      <td class="center"><span class="price-main">$12,000–$28,000</span><span class="warn">⚠ Upper end over $25K — plan for mid-range configuration</span></td>
+      <td class="center"><span class="price-main">$7,000–$17,500</span><span class="good">✓ Most headroom under $25K</span><span class="price-sub">Hardware + install + shipping. Optional vinyl branding adds $500–$650.</span></td>
       <td class="center"><span class="price-main">$20,000–$28,000</span><span class="warn">⚠ Tight to over — request Boulder quote</span></td>
-      <td class="center"><span class="price-main">Unknown / N/A</span><span class="risk">✗ Not a viable procurement path for CSAH</span></td>
+      <td class="center tbd-cell">Cannot estimate without pricing. Noted as higher initial costs. Likely in the Advanced Kiosks range or above — verify on vendor call.</td>
     </tr>
 
     <!-- ─── VERDICT ─── -->
     <tr class="section-row"><td colspan="5">Verdict</td></tr>
     <tr>
       <td class="row-label">Summary</td>
-      <td class="verdict-cell verdict-ak">Best overall fit for CSAH across most categories — social service deployment precedent, built-in Zamok MDM, GSA pricing, and 3–4 unit nonprofit buyer comfort. The primary requirement this vendor does not satisfy out of the box is data privacy: Zamok's session data handling must be audited and contractually constrained before deployment. The ask is achievable — Zamok can likely be configured or contractually restricted to hardware-health-only telemetry — but it requires active negotiation, not assumptions.</td>
-      <td class="verdict-cell verdict-mc">The closest real-world hardware analog (PHA lobby kiosks) and the most budget-friendly option. The data privacy concern here is structural, not incidental: integrated CMS/analytics platforms are built to retain session data on vendor servers, and that's an architectural conflict with the CSAH requirements. This doesn't rule MetroClick out, but it means the privacy negotiation is more complex than with Advanced Kiosks — you may need to disable or bypass core platform features to comply.</td>
-      <td class="verdict-cell verdict-ol">The strongest data privacy posture of the three — by architecture, not contract negotiation. Hardware-only means no Olea software layer, no vendor session data collection, no camera activation pathway, and no law enforcement data access points. If data privacy is the top priority and budget is flexible (or the Boulder model comes in under $25K), this is the most defensible choice. The trade-offs are real: 4-unit orders are low priority for their sales team, and TCO requires assembling hardware + separate MDM quotes independently.</td>
-      <td class="verdict-cell verdict-ike">IKE Smart City is a structural disqualification. Their advertising-funded revenue model means user behavioral data is the product — which is precisely the LinkNYC failure pattern this document was written to prevent. CSAH would not own the hardware, the software, the data, or the kiosk session experience. Beyond data governance, IKE's city partnership procurement model may not be available to CSAH as a nonprofit direct buyer. The social services equity references (Baltimore, Berkeley, St. Louis) are genuine, but those are cities deploying IKE at scale with the advertising model intact — not a template CSAH can follow. Do not pursue.</td>
+      <td class="verdict-cell verdict-ak">Best overall fit for CSAH. Social service deployment precedent, modular on-site repairs, Windows 11, Zamok MDM, GSA pricing, confirmed 3-year warranty, and bulk discount triggered at exactly 4 units. Cameras not included standard. Remaining data privacy ask: Zamok session data handling must be audited and contractually constrained. If Zamok audit proves difficult, hardware-only option with ARC-managed lockdown is available. Budget note: upper end of confirmed range hits the $25K ceiling — target mid-range configuration.</td>
+      <td class="verdict-cell verdict-mc">Most budget-friendly and closest real-world hardware analog. <strong>Blank Windows PC is the recommended purchase path</strong> — eliminates MetroClick data concerns entirely, aligns with CSAH's architecture, and lets ARC install its own MDM. Cameras confirmed not standard. Screensaver and vinyl branding both available. One procurement flag: 2-year standard warranty falls short of CSAH's 3-year minimum — negotiate extended warranty at quote.</td>
+      <td class="verdict-cell verdict-ol">Strongest data privacy posture by architecture — no Olea software layer, no vendor session data risk. Best choice if data privacy is the top priority and budget allows (or if Boulder model comes in under $25K). Trade-offs: lowest-priority buyer at 4 units; TCO requires assembling hardware + MDM quotes independently.</td>
+      <td class="verdict-cell verdict-me"><strong>Strong hardware manufacturer — but two blocking questions must be answered on a vendor call before this vendor can be seriously evaluated.</strong><br><br>1. <strong>Camera policy:</strong> Not disclosed publicly. If cameras are standard on outdoor units, this is a hard disqualifier for CSAH.<br><br>2. <strong>Hardware-only purchase:</strong> mZero Platform's built-in advertising revenue model (ad-based "attract loop," behavioral telemetry) is structurally identical to the LinkNYC failure pattern CSAH's requirements specifically call out. If Meridian can be purchased as hardware-only — with ARC installing its own MDM — the entire data privacy concern disappears and Meridian becomes a legitimate contender. If mZero is mandatory, this vendor is likely a disqualifier on data privacy grounds alone.<br><br>Positives if hardware-only is available: ISO 9001:2015 manufacturing, built-in AC, Lexan laminated branding, 14"–65" outdoor screen range, government sector experience, and Quick Ship options for some models. Worth a call.</td>
     </tr>
 
   </tbody>
@@ -438,20 +487,20 @@
   <div class="conn-card">
     <span class="conn-tag tag-secondary">Workable in lobbies</span>
     <h3>WiFi</h3>
-    <p>Cost-effective where the host facility's existing network reaches the kiosk location. Can be affected by signal interference and congestion in crowded environments — which shelters and drop-in spaces often are. If WiFi is the only option, require WiFi 6 (802.11ax) support from the hardware vendor.</p>
+    <p>Cost-effective where the host facility's existing network reaches the kiosk location. Can be affected by signal interference and congestion in crowded environments. If WiFi is the only option, require WiFi 6 (802.11ax) support from the hardware vendor.</p>
     <p class="conn-cost">No extra infrastructure cost if the building's network reaches the placement location.</p>
   </div>
   <div class="conn-card">
     <span class="conn-tag tag-fallback">Outdoor fallback</span>
     <h3>Cellular (4G/5G)</h3>
-    <p>The realistic option for any truly outdoor standalone placement with no nearby building infrastructure. All three viable vendors support wired Ethernet, WiFi, and 4G/5G cellular. Plan for cellular as primary in hard-to-reach placements, with WiFi as secondary if available.</p>
+    <p>The realistic option for truly outdoor standalone placements. All three evaluated vendors support Ethernet, WiFi, and cellular. MetroClick confirmed AT&amp;T, Verizon, and T-Mobile support — cellular stability depends on the installation location.</p>
     <p class="conn-cost">Ongoing cost: $30–$80/month per unit ($360–$960/year). Budget as an operational line, not hardware.</p>
   </div>
 </div>
 
 <div class="key-note note-blue" style="margin-bottom:1.75rem;">
   <strong>CSAH site visit recommendation</strong>
-  For each of your 3–4 locations, assess connectivity options during site visits before ordering hardware. If you can run conduit to a nearby building, wired Ethernet is the right call. If not, plan for cellular as primary with WiFi as secondary. Do not finalize hardware specs until site visits are complete — connectivity plan should inform the hardware order, not the other way around.
+  For each of your 3–4 locations, assess connectivity options during site visits before ordering hardware. If you can run conduit to a nearby building, wired Ethernet is the right call. If not, plan for cellular as primary with WiFi as secondary. Do not finalize hardware specs until site visits are complete — connectivity plan should inform the hardware order, not the other way around. MetroClick recommends positioning the kiosk directly over a ground outlet to keep all electrical elements locked behind the unit.
 </div>
 
 <p class="section-label">Budget Reality Check</p>
@@ -460,45 +509,60 @@
   <thead>
     <tr>
       <th>Vendor</th>
-      <th>Hardware est.</th>
-      <th>Installation est.</th>
-      <th>All-in est. per unit</th>
-      <th>vs. $25K budget</th>
+      <th>Hardware est. (per unit)</th>
+      <th>Annual software cost (per unit)</th>
+      <th>Installation est. (per unit)</th>
+      <th>Shipping est. (per unit)</th>
+      <th>All-in per unit (hardware + install + shipping)</th>
+      <th>3-unit total est.</th>
+      <th>vs. $25K/unit budget</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td class="vendor-cell">MetroClick</td>
-      <td>$10,000–$15,000</td>
-      <td>$500–$1,500</td>
-      <td>$12,000–$18,000</td>
-      <td><span class="status-ok">✓ Comfortable</span></td>
+      <td>$5,000–$15,000+<br><span style="font-size:11px;color:#888780;">Request formal quote</span></td>
+      <td>$780/yr (their platform)<br><span style="font-size:11px;color:#0f6e56;font-weight:500;">$0 if blank Windows PC + own MDM</span></td>
+      <td>$1,000–$1,500<br><span style="font-size:11px;color:#888780;">+ electrician<br>+ $500–$650 vinyl branding (optional)</span></td>
+      <td>$300–$550<br><span style="font-size:11px;color:#0f6e56;font-weight:500;">Confirmed on call</span></td>
+      <td>$6,300–$17,050+</td>
+      <td><strong>$18,900–$51,150+</strong><br><span style="font-size:11px;color:#888780;">Hardware upper end unconfirmed; could shift higher once quoted</span></td>
+      <td><span class="status-ok">✓ Most headroom</span></td>
     </tr>
     <tr>
       <td class="vendor-cell">Advanced Kiosks</td>
-      <td>$13,000–$20,000</td>
-      <td>$2,000–$3,000</td>
-      <td>$15,000–$23,000</td>
-      <td><span class="status-ok">✓ Fits</span></td>
+      <td>$10,000–$25,000<br><span style="font-size:11px;color:#0f6e56;font-weight:500;">Bulk discount at 4 units</span></td>
+      <td style="color:#888780; font-style:italic;">TBD — verify Zamok pricing at quote</td>
+      <td>$2,000–$3,000<br><span style="font-size:11px;color:#888780;">Can self-install with vendor manuals</span></td>
+      <td style="color:#888780; font-style:italic;">TBD</td>
+      <td>$12,000–$28,000<br><span style="font-size:11px;color:#888780;">+ shipping TBD</span></td>
+      <td><strong>$36,000–$84,000+</strong><br><span style="font-size:11px;color:#888780;">+ shipping TBD; bulk discount may lower hardware end</span></td>
+      <td><span class="status-warn">⚠ Upper end over $25K/unit</span></td>
     </tr>
     <tr>
       <td class="vendor-cell">Olea Kiosks</td>
-      <td>$18,000–$25,000</td>
+      <td>$15,000–$30,000</td>
+      <td style="color:#888780; font-style:italic;">TBD — depends on MDM selection</td>
       <td>$2,000–$3,000</td>
-      <td>$20,000–$28,000</td>
-      <td><span class="status-warn">⚠ Tight to over</span></td>
+      <td style="color:#888780; font-style:italic;">TBD</td>
+      <td>$17,000–$33,000<br><span style="font-size:11px;color:#888780;">+ shipping TBD</span></td>
+      <td><strong>$51,000–$99,000+</strong><br><span style="font-size:11px;color:#888780;">+ shipping TBD; Boulder model may lower range</span></td>
+      <td><span class="status-warn">⚠ Tight to over $25K/unit</span></td>
     </tr>
     <tr>
-      <td class="vendor-cell" style="color:#c0392b;">IKE Smart City</td>
-      <td style="color:#c0392b;">N/A (city partnership model)</td>
-      <td style="color:#c0392b;">N/A (IKE-managed)</td>
-      <td style="color:#c0392b;">Not available for direct purchase</td>
-      <td><span class="status-no">✗ Not a viable path</span></td>
+      <td class="vendor-cell" style="color:#7c3aed;">Meridian</td>
+      <td style="color:#888780; font-style:italic;">Not publicly listed — request quote</td>
+      <td style="color:#888780; font-style:italic;">Not publicly listed; $0 if hardware-only</td>
+      <td style="color:#888780; font-style:italic;">TBD</td>
+      <td style="color:#888780; font-style:italic;">TBD</td>
+      <td style="color:#888780; font-style:italic;">TBD</td>
+      <td style="color:#888780; font-style:italic;">TBD</td>
+      <td style="color:#888780; font-style:italic;">TBD</td>
     </tr>
   </tbody>
 </table>
 
-<p class="foot">All pricing is market estimates based on comparable deployments as of mid-2026 — not vendor quotes. A 4-unit order will not trigger volume pricing at any of these vendors (bulk pricing typically starts at 10+ units). Negotiate on service terms, warranty, and nonprofit designation rather than unit price. Verify all figures directly with vendors before issuing any purchase orders. Hardware OS (Windows vs. Android) must be confirmed against your kiosk software selection before finalizing specs. Items marked CONFIRM reflect requirements that were flagged as TBD in the CSAH spec — confirm with CSAH before treating them as hard requirements. IKE Smart City pricing and procurement availability unverified — contact directly to confirm if a direct-purchase model exists.</p>
+<p class="foot">Cells marked <span class="confirmed-tag" style="font-size:10px;">CALL CONFIRMED</span> reflect data from vendor sales conversations (June 2026). Cells marked <span class="call-needed-tag" style="font-size:10px;">CALL NEEDED</span> flag blocking unknowns for Meridian — camera policy and hardware-only purchase availability must be confirmed before Meridian can be meaningfully evaluated. All other figures are market estimates — not vendor quotes. Advanced Kiosks is the only vendor with bulk discount confirmed at 4 units. MetroClick blank Windows PC route is strongly recommended — eliminates annual software cost and data privacy concerns simultaneously. MetroClick warranty flag: 2-year standard does not meet CSAH's 3-year minimum; negotiate extended warranty at quote. Hardware OS (Windows) confirmed for Advanced Kiosks, MetroClick, and Meridian (primary); confirm for Olea. Meridian mZero advertising model is a near-disqualifier for CSAH on data privacy grounds unless hardware-only purchase is available. Annual software costs depend on MDM selection — see Kiosk Software Comparison doc. Cellular connectivity is an ongoing operational cost not included in all-in hardware estimates ($360–$960/unit/year).</p>
 
 </body>
 </html>
