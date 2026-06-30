@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiosk Cellular Connectivity — Compass Project</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; color: #1a1a18; padding: 2rem; }
+  h1 { font-size: 22px; font-weight: 500; margin-bottom: 4px; }
+  .subtitle { font-size: 14px; color: #5f5e5a; margin-bottom: 1.5rem; }
+
+  .note-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.75rem; }
+  .key-note { border-left: 3px solid; padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 13px; line-height: 1.6; }
+  .key-note strong { font-weight: 600; display: block; margin-bottom: 2px; }
+  .note-green  { background: #e1f5ee; border-color: #1d9e75; color: #085041; }
+  .note-blue   { background: #e6f1fb; border-color: #1a4d8f; color: #0c3060; }
+  .note-amber  { background: #faeeda; border-color: #ba7517; color: #633806; }
+  .note-red    { background: #fdecea; border-color: #c0392b; color: #5c1010; }
+
+  .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #888780; font-weight: 600; margin: 2rem 0 0.6rem; }
+
+  /* How it works */
+  .how-it-works { background: #1a1a18; border-radius: 10px; padding: 20px 24px; margin-bottom: 1.75rem; color: #e8e6df; }
+  .how-it-works h2 { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #888780; font-weight: 600; margin-bottom: 14px; }
+  .how-it-works p { font-size: 13px; line-height: 1.7; color: #c8c5bc; margin-bottom: 10px; }
+  .how-it-works p:last-child { margin-bottom: 0; }
+  .data-path { background: #0f0f0e; border-radius: 8px; padding: 14px 18px; margin: 14px 0; font-family: 'SF Mono', 'Menlo', monospace; font-size: 12px; color: #6ee7b7; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .data-path .node { background: rgba(110,231,183,0.1); border: 1px solid rgba(110,231,183,0.25); border-radius: 5px; padding: 4px 10px; }
+  .data-path .arrow { color: #4b5563; font-size: 14px; }
+
+  /* Comparison table */
+  table { width: 100%; border-collapse: collapse; table-layout: fixed; border: 1px solid #d3d1c7; border-radius: 12px; overflow: hidden; font-size: 13px; margin-bottom: 1.75rem; }
+  th, td { border-right: 0.5px solid #d3d1c7; border-bottom: 0.5px solid #d3d1c7; padding: 10px 12px; vertical-align: top; }
+
+  /* Accordion */
+  .accordion { border: 1px solid #d3d1c7; border-radius: 12px; overflow: hidden; margin-bottom: 1.75rem; }
+  .cat-block { border-bottom: 1px solid #d3d1c7; }
+  .cat-block:last-child { border-bottom: none; }
+  .cat-block table { margin-bottom: 0; border: none; border-radius: 0; }
+  .cat-summary { cursor: pointer; list-style: none; background: #e8e6df; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #5f5e5a; font-weight: 600; padding: 9px 14px; display: flex; align-items: center; justify-content: space-between; }
+  .cat-summary::-webkit-details-marker { display: none; }
+  .cat-summary .chevron { flex-shrink: 0; transition: transform 0.15s ease; }
+  .cat-block[open] > .cat-summary { color: #1a1a18; background: #f1efe8; }
+  .cat-block[open] > .cat-summary .chevron { transform: rotate(180deg); }
+  th:last-child, td:last-child { border-right: none; }
+  tr:last-child td { border-bottom: none; }
+
+  .col-head { background: #f1efe8; text-align: center; vertical-align: top; padding: 14px 10px; }
+  .col-head.featured { background: #e1f5ee; }
+  .col-name { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+  .col-name.green { color: #0f6e56; }
+  .col-sub { font-size: 11px; color: #5f5e5a; line-height: 1.4; margin-bottom: 6px; }
+  .badge { display: inline-block; font-size: 10px; padding: 2px 9px; border-radius: 20px; }
+  .badge-green  { background: #e1f5ee; color: #0f6e56; font-weight: 500; }
+  .badge-blue   { background: #e6f1fb; color: #185fa5; }
+  .badge-amber  { background: #faeeda; color: #854f0b; }
+  .badge-purple { background: #f5f3ff; color: #7c3aed; }
+  .badge-gray   { background: #e8e6df; color: #5f5e5a; }
+
+  .row-label { background: #f1efe8; font-size: 12px; font-weight: 500; color: #5f5e5a; width: 160px; min-width: 160px; vertical-align: top; }
+  .section-row td { background: #e8e6df; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #888780; font-weight: 500; padding: 6px 12px; }
+  .csah-row td { background: #e6f1fb; font-size: 12px; color: #0c3060; }
+  .csah-row td.row-label { background: #dce9f7; font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: #1a4d8f; font-weight: 600; }
+
+  .center { text-align: center; }
+  .price-main { font-size: 14px; font-weight: 500; color: #1a1a18; display: block; }
+  .price-sub { font-size: 11px; color: #5f5e5a; line-height: 1.5; display: block; margin-top: 2px; }
+  .warn  { color: #b45309; font-weight: 500; }
+  .good  { color: #0f6e56; font-weight: 500; }
+  .risk  { color: #c0392b; font-weight: 500; }
+  .muted { color: #888780; font-size: 12px; }
+
+  .bar-wrap { display: flex; align-items: center; gap: 6px; }
+  .bar-track { flex: 1; background: #e8e6df; border-radius: 4px; height: 7px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 4px; }
+  .bar-num { font-size: 11px; font-weight: 500; width: 28px; text-align: right; color: #5f5e5a; }
+
+  .check   { color: #1d9e75; font-weight: 600; }
+  .cross   { color: #d85a30; }
+  .partial { color: #ba7517; }
+
+  .tbd-tag          { font-size: 10px; background: #e8e6df; color: #5f5e5a; border-radius: 4px; padding: 1px 5px; font-weight: 500; margin-left: 4px; vertical-align: middle; }
+  .confirmed-tag    { font-size: 10px; background: #e1f5ee; color: #0f6e56; border-radius: 4px; padding: 1px 5px; font-weight: 500; margin-left: 4px; vertical-align: middle; }
+  .verify-tag       { font-size: 10px; background: #faeeda; color: #854f0b; border-radius: 4px; padding: 1px 5px; font-weight: 500; margin-left: 4px; vertical-align: middle; }
+  .highlight-tag    { font-size: 10px; background: #e1f5ee; color: #085041; border-radius: 4px; padding: 1px 5px; font-weight: 600; margin-left: 4px; vertical-align: middle; }
+
+  /* Verdict cells */
+  .verdict-cell { font-size: 12px; line-height: 1.6; padding: 10px 12px; vertical-align: top; }
+  .verdict-rec  { background: #e1f5ee; color: #085041; }
+  .verdict-ok   { background: #e6f1fb; color: #0c447c; }
+  .verdict-caut { background: #faeeda; color: #633806; }
+  .verdict-skip { background: #fdecea; color: #5c1010; }
+
+  /* Cost summary grid */
+  .cost-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; margin-bottom: 1.75rem; }
+  .cost-card { background: #fff; border: 1px solid #d3d1c7; border-radius: 10px; padding: 14px 16px; }
+  .cost-card.featured { border-color: #1d9e75; background: #f8fef9; }
+  .cost-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+  .cost-card .cost-item { font-size: 12px; display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #f1efe8; color: #3d3d3b; }
+  .cost-card .cost-item:last-child { border-bottom: none; }
+  .cost-card .cost-label { color: #5f5e5a; }
+  .cost-card .cost-total { font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; padding: 8px 0 0; margin-top: 4px; color: #1a1a18; }
+
+  .foot { font-size: 11px; color: #888780; margin-top: 12px; line-height: 1.7; }
+
+  ul { padding-left: 16px; }
+  li { font-size: 13px; line-height: 1.6; margin-bottom: 4px; }
+  p { font-size: 13px; line-height: 1.6; }
+  strong { font-weight: 600; }
+
+  /* Questions */
+  .questions-list { list-style: none; counter-reset: q; padding: 0; }
+  .questions-list li { counter-increment: q; padding: 10px 0 10px 32px; border-bottom: 1px solid #e8e6df; position: relative; font-size: 13px; line-height: 1.6; color: #3d3d3b; }
+  .questions-list li::before { content: counter(q); position: absolute; left: 0; top: 10px; background: #e8e6df; color: #5f5e5a; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+  .questions-list li:last-child { border-bottom: none; }
+
+  /* Connectivity overview */
+  .conn-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 1.75rem; }
+  .conn-card { background: #fff; border: 1px solid #d3d1c7; border-radius: 10px; padding: 16px 18px; }
+  .conn-card.winner { border: 2.5px solid #1d9e75; background: #f4fdf8; position: relative; }
+  .conn-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #1a1a18; }
+  .conn-card p { font-size: 12px; line-height: 1.65; color: #3d3d3b; }
+  .conn-card .conn-tag { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 20px; margin-bottom: 10px; font-weight: 500; }
+  .tag-ruled-out { background: #fdecea; color: #991b1b; }
+  .tag-viable    { background: #e8e6df; color: #5f5e5a; }
+  .tag-selected  { background: #e1f5ee; color: #0f6e56; font-weight: 700; }
+  .winner-label  { position: absolute; top: -1px; right: 14px; background: #1d9e75; color: white; font-size: 10px; font-weight: 700; padding: 2px 10px; border-radius: 0 0 6px 6px; letter-spacing: 0.04em; }
+</style>
+</head>
+<body>
+
+<div style="background:#e8e6df; padding:0.6rem 2rem; margin:-2rem -2rem 2rem;">
+  <a href="index.html" style="color:#5f5e5a; font-size:0.8rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem; letter-spacing:0.04em;">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="#5f5e5a" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Decision Hub
+  </a>
+</div>
+
+<h1>Kiosk Cellular Connectivity</h1>
+<p class="subtitle">June 30, 2026</p>
+
+<p class="section-label">Connectivity Approach — Three Options</p>
+<div class="conn-grid">
+  <div class="conn-card winner">
+    <span class="winner-label">SELECTED</span>
+    <span class="conn-tag tag-selected">✓ Selected approach</span>
+    <h3>Cellular</h3>
+    <p>The kiosk connects to a cell tower via a modem with a SIM card — no connection to the building's network whatsoever. The only Ethernet cable involved is a short internal one between the modem and the kiosk computer, contained entirely within the enclosure. Fully independent from any host site's infrastructure. Works 24/7 regardless of building hours, staff, or network changes.</p>
+  </div>
+  <div class="conn-card">
+    <span class="conn-tag tag-viable">Viable but dependent</span>
+    <h3>WiFi</h3>
+    <p>The kiosk's computer has a WiFi antenna and connects wirelessly to the building's or site's WiFi network — no cables to the building at all. Clean installation. But it introduces a dependency: the kiosk relies on the host site's network, which may require coordination with their IT team, is subject to their password changes, and can be affected by their outages.</p>
+  </div>
+  <div class="conn-card">
+    <span class="conn-tag tag-ruled-out">Construction-heavy</span>
+    <h3>Wired Ethernet</h3>
+    <p>A physical cable is trenched or drilled from the building's internal network out to the kiosk — permanent infrastructure work. Reliable and fast, but requires construction coordination, conduit permitting, and ties the kiosk permanently to one site's network. High installation cost per kiosk.</p>
+  </div>
+</div>
+
+<div class="note-group">
+  <div class="key-note note-amber">
+    <strong>All pricing is estimated — verify before committing</strong>
+    IoT plan pricing varies significantly by contract volume, term length, and nonprofit negotiation. Figures below are reference estimates based on publicly available information as of mid-2026. Treat them as order-of-magnitude guidance only. Get direct quotes from each provider before committing.
+  </div>
+  <div class="key-note note-blue">
+    <strong>SMS goes over data — not native cellular SMS</strong>
+    Outbound texts route through the app's messaging API over the data connection — not native cellular SMS. Any IoT data plan supports this.
+  </div>
+  <div class="key-note note-green">
+    <strong>Data usage is very low</strong>
+    The kiosk app loads once and reuses what's already on the device after that, so it isn't constantly pulling data. The only ongoing traffic is small behind-the-scenes updates (like resource info and text messages) — nothing data-heavy. Estimated usage: <span style="font-weight:600;">50–200 MB/device/month</span>, which is light enough that even a budget cellular plan comfortably covers it.
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<p class="section-label">How Cellular Connectivity Works</p>
+<div class="how-it-works">
+  <h2>Technical Overview</h2>
+  <p>The cellular modem is a small device (slightly larger than a deck of cards) with a SIM card slot — conceptually similar to a mobile hotspot. It connects to a cell tower the same way a smartphone does. The kiosk's computer (the brain running the PWA) connects to that modem via an Ethernet cable, exactly the same way it would connect to a regular router. From the computer's perspective, it doesn't know or care whether the connection leads to cellular, WiFi, or wired internet — it just sees "internet access" through that Ethernet port.</p>
+  <div class="data-path">
+    <span class="node">Cell Tower</span>
+    <span class="arrow">→</span>
+    <span class="node">SIM in Modem</span>
+    <span class="arrow">→</span>
+    <span class="node">Modem (converts to standard internet)</span>
+    <span class="arrow">→</span>
+    <span class="node">Ethernet cable</span>
+    <span class="arrow">→</span>
+    <span class="node">Kiosk Computer</span>
+    <span class="arrow">→</span>
+    <span class="node">PWA in locked browser</span>
+  </div>
+</div>
+
+<!-- COMPARISON TABLE -->
+<p class="section-label">Provider Comparison — IoT Plans</p>
+
+<table class="cmp-header">
+  <colgroup><col style="width:160px"><col><col><col><col></colgroup>
+  <thead>
+    <tr>
+      <th class="row-label"></th>
+      <th class="col-head featured">
+        <div class="col-name green">Managed IoT SIM</div>
+        <div class="col-sub">Multi-carrier providers — e.g., Hologram</div>
+        <span class="badge badge-green">Recommended lean</span>
+      </th>
+      <th class="col-head">
+        <div class="col-name">AT&amp;T IoT</div>
+        <div class="col-sub">AT&amp;T DataConnect + FirstNet inquiry</div>
+        <span class="badge badge-blue">Single carrier</span>
+      </th>
+      <th class="col-head">
+        <div class="col-name">Verizon IoT</div>
+        <div class="col-sub">ThingSpace / Business IoT plans</div>
+        <span class="badge badge-amber">Single carrier</span>
+      </th>
+      <th class="col-head">
+        <div class="col-name">T-Mobile IoT</div>
+        <div class="col-sub">T-Mobile for Business IoT / Connect</div>
+        <span class="badge badge-purple">Single carrier</span>
+      </th>
+    </tr>
+  </thead>
+</table>
+
+<div class="accordion">
+
+  <!-- COVERAGE -->
+  <details class="cat-block">
+    <summary class="cat-summary"><span>Coverage &amp; Signal</span><svg class="chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="#5f5e5a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+    <table>
+      <colgroup><col style="width:160px"><col><col><col><col></colgroup>
+      <tbody>
+        <tr>
+          <td class="row-label">Savannah, GA Coverage</td>
+          <td><strong class="good">Multi-carrier resilience.</strong> Managed IoT SIM providers (e.g., Hologram) use multiple carrier networks simultaneously. Device automatically connects to the strongest available signal — no manual configuration. If one carrier has a local outage, the SIM switches transparently.</td>
+          <td>Strong. AT&amp;T has solid urban Savannah coverage. <strong>FirstNet</strong> (the public safety priority network AT&amp;T operates) is worth inquiring about — CSAH may qualify given their emergency coordination role. FirstNet traffic is prioritized during network congestion.</td>
+          <td>Historically the strongest national network. Excellent Savannah coverage. Verizon's reputation is built on rural/suburban reach, which is less relevant here — but urban reliability is not a concern.</td>
+          <td>Strong in urban Savannah. T-Mobile has dramatically improved network quality post-Sprint merger. The most competitive coverage improvement story of the three carriers over the last 3 years for urban deployments.</td>
+        </tr>
+        <tr class="csah-row">
+          <td class="row-label">CSAH Impact</td>
+          <td>Managed SIM eliminates the single-carrier outage risk. For kiosks that are the primary resource access point for unhoused individuals, this resilience is operationally meaningful — especially during high-stress events like inclement weather response when connectivity matters most.</td>
+          <td colspan="3">All 3 confirmed kiosk locations (Union Mission 120 Fahm St, Goodwill 761 Wheaton, Bull Street Library) are in Savannah city proper. All major carriers provide reliable coverage there. Single-carrier risk: if AT&T, Verizon, or T-Mobile has a localized outage at a site, that kiosk goes offline until the carrier resolves it.</td>
+        </tr>
+      </tbody>
+    </table>
+  </details>
+
+  <!-- COST -->
+  <details class="cat-block">
+    <summary class="cat-summary"><span>Cost</span><svg class="chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="#5f5e5a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+    <table>
+      <colgroup><col style="width:160px"><col><col><col><col></colgroup>
+      <tbody>
+        <tr>
+          <td class="row-label">Est. Monthly / Device <span class="verify-tag">VERIFY</span></td>
+          <td>
+            <span class="price-main good">~$2–12/device</span>
+            <span class="price-sub">Varies by provider. Example: Hologram ~$0.60–1.00/MB. At 50–200 MB/month estimated usage: $3–20/device. Pay-per-use; no monthly minimum commitment.</span>
+          </td>
+          <td>
+            <span class="price-main warn">~$10–25/device</span>
+            <span class="price-sub">Enterprise IoT plans; varies by contract term and data tier. Nonprofit negotiation possible but no formal program.</span>
+          </td>
+          <td>
+            <span class="price-main risk">~$15–35/device</span>
+            <span class="price-sub">Premium pricing. ThingSpace enterprise plans; higher baseline than competitors for comparable data tiers.</span>
+          </td>
+          <td>
+            <span class="price-main good">~$5–15/device</span>
+            <span class="price-sub">Most competitive of the three direct carriers. Flexible tier options; month-to-month plans available.</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="row-label">Est. Total (3 kiosks) <span class="verify-tag">VERIFY</span></td>
+          <td><span class="price-main good">~$9–60/mo</span><span class="price-sub">Verify with provider at actual usage volume</span></td>
+          <td><span class="price-main warn">~$30–75/mo</span></td>
+          <td><span class="price-main risk">~$45–105/mo</span></td>
+          <td><span class="price-main good">~$15–45/mo</span></td>
+        </tr>
+        <tr class="csah-row">
+          <td class="row-label">CSAH Impact</td>
+          <td colspan="4">At estimated usage levels (&lt;200 MB/device/month), connectivity cost is a minor line item regardless of provider. The larger cost variable is whether CSAH qualifies for nonprofit pricing — worth asking every provider directly before committing.</td>
+        </tr>
+      </tbody>
+    </table>
+  </details>
+
+  <!-- PLAN STRUCTURE -->
+  <details class="cat-block">
+    <summary class="cat-summary"><span>Plan Structure</span><svg class="chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="#5f5e5a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+    <table>
+      <colgroup><col style="width:160px"><col><col><col><col></colgroup>
+      <tbody>
+        <tr>
+          <td class="row-label">Data Pooling</td>
+          <td class="good">Built-in. All SIMs on the account share a data pool. Easy to scale as kiosks are added — no per-device plan renegotiation.</td>
+          <td>Available across devices on enterprise plans. Useful if one kiosk sees heavier traffic than others.</td>
+          <td>Available on ThingSpace enterprise accounts. Typical for enterprise IoT customers.</td>
+          <td>Available on business IoT plans. More flexible on plan minimums than AT&amp;T/Verizon.</td>
+        </tr>
+        <tr>
+          <td class="row-label">Overage Behavior</td>
+          <td class="good">Pay-per-use model means no "overage" — you pay the same rate per MB whether you're at 50 MB or 500 MB. No bill shock risk.</td>
+          <td>Per-MB overage charges; rate depends on contract. Can configure hard cutoff to prevent bill shock.</td>
+          <td>Per-MB overage charges; premium overage rates. Hard cutoff configurable via ThingSpace.</td>
+          <td>Overage charges or plan upgrade options. Generally more flexible than AT&amp;T/Verizon on overages.</td>
+        </tr>
+        <tr class="csah-row">
+          <td class="row-label">CSAH Impact</td>
+          <td colspan="4">Given the low estimated data volume (&lt;200 MB/device/month), plan structure is less critical than with high-data deployments. The primary considerations are overage protection (don't want surprise bills) and simplicity of adding kiosks 4–5 without renegotiating contracts.</td>
+        </tr>
+      </tbody>
+    </table>
+  </details>
+
+  <!-- RESILIENCE -->
+  <details class="cat-block">
+    <summary class="cat-summary"><span>Resilience</span><svg class="chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="#5f5e5a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+    <table>
+      <colgroup><col style="width:160px"><col><col><col><col></colgroup>
+      <tbody>
+        <tr>
+          <td class="row-label">Multi-Carrier Failover</td>
+          <td><span class="check">✓ Automatic.</span> Managed IoT SIM providers support multi-carrier failover. The SIM monitors signal quality and switches carriers without any configuration or manual intervention. Transparent to the PWA.</td>
+          <td><span class="cross">✗</span> AT&amp;T network only. If AT&amp;T has a local outage at a kiosk location, that kiosk is offline until the carrier resolves it.</td>
+          <td><span class="cross">✗</span> Verizon network only. Same limitation.</td>
+          <td><span class="cross">✗</span> T-Mobile network only. Same limitation.</td>
+        </tr>
+        <tr>
+          <td class="row-label">Offline Fallback</td>
+          <td colspan="4" style="font-size:12px;">Regardless of carrier, the kiosk PWA can cache the resource directory via service worker. If connectivity drops, the cached content remains accessible — users can still browse resources even if real-time data (alerts, updated hours) can't be fetched. SMS requires connectivity. This service worker scope is an open architecture decision.</td>
+        </tr>
+        <tr class="csah-row">
+          <td class="row-label">CSAH Impact</td>
+          <td>Multi-carrier SIM is the only option that eliminates this risk category entirely. For 3–5 outdoor kiosks that are primary resource access points for a vulnerable population, the resilience argument is meaningful beyond the cost comparison.</td>
+          <td colspan="3">Single-carrier plans accept the risk that a localized carrier outage takes a kiosk offline. In practice, major carrier outages in Savannah city are rare but unpredictable. During inclement weather events — exactly when CSAH's kiosk response is most needed — network stability can be strained.</td>
+        </tr>
+      </tbody>
+    </table>
+  </details>
+
+  <!-- OPERATIONS -->
+  <details class="cat-block">
+    <summary class="cat-summary"><span>Remote Management</span><svg class="chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="#5f5e5a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+    <table>
+      <colgroup><col style="width:160px"><col><col><col><col></colgroup>
+      <tbody>
+        <tr>
+          <td class="row-label">Management Dashboard</td>
+          <td class="good">Clean, developer-friendly dashboards (e.g., Hologram's portal). Supports remote diagnostics, data usage monitoring, and SIM provisioning without a carrier account rep involved.</td>
+          <td>AT&amp;T Control Center (powered by Cisco IoT Control Center). Enterprise-grade but complex — designed for fleet deployments at scale. Overkill for 3–5 devices; learning curve is steep.</td>
+          <td>Verizon ThingSpace portal. Functional enterprise dashboard. Similar complexity profile to AT&amp;T Control Center.</td>
+          <td>T-Mobile Business IoT portal. Simpler than AT&amp;T/Verizon's enterprise tools; more approachable for a small team.</td>
+        </tr>
+        <tr>
+          <td class="row-label">Remote SIM Provisioning</td>
+          <td class="good">Supported and central to the managed SIM value proposition. Add/suspend/deactivate SIMs from the dashboard without involving a carrier account rep.</td>
+          <td>Supported via AT&amp;T Control Center. Adding or deactivating SIMs remotely is possible but requires enterprise portal access.</td>
+          <td>Supported via ThingSpace. Standard enterprise IoT feature.</td>
+          <td>Supported. Generally simpler than AT&amp;T/Verizon for small-fleet use cases.</td>
+        </tr>
+        <tr class="csah-row">
+          <td class="row-label">CSAH Impact</td>
+          <td colspan="4">CSAH will not have a dedicated IT person monitoring connectivity. A simple dashboard that surfaces "kiosk 3 has had no data activity for 6 hours" is far more useful than an enterprise IoT control panel designed for fleet managers at logistics companies. Simplicity of operations is a real factor for a small nonprofit team.</td>
+        </tr>
+      </tbody>
+    </table>
+  </details>
+
+  <!-- CONTRACT -->
+  <details class="cat-block">
+    <summary class="cat-summary"><span>Commercial Terms</span><svg class="chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="#5f5e5a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+    <table>
+      <colgroup><col style="width:160px"><col><col><col><col></colgroup>
+      <tbody>
+        <tr>
+          <td class="row-label">Contract Requirements</td>
+          <td class="good"><span class="good">Month-to-month.</span> No long-term commitment required. Add or remove SIMs at any time. No early termination penalties.</td>
+          <td><span class="warn">1–2 year</span> enterprise agreements typical. Month-to-month options exist but at premium rates. Early termination fees apply.</td>
+          <td><span class="warn">1–2 year</span> enterprise agreements typical. Less flexibility than AT&amp;T or T-Mobile for small accounts. Verizon's sales process is more friction for non-enterprise scale.</td>
+          <td><span class="partial">Flexible.</span> T-Mobile offers month-to-month IoT options at competitive rates. Less contract pressure than AT&amp;T or Verizon.</td>
+        </tr>
+        <tr class="csah-row">
+          <td class="row-label">CSAH Impact</td>
+          <td colspan="4">The SCAD grant runs through December 2026 with a staged kiosk rollout — kiosks may come online at different times. A multi-year carrier contract signed before all kiosks are deployed creates unnecessary commitment risk. Month-to-month flexibility lets CSAH add devices on their own timeline without renegotiating.</td>
+        </tr>
+      </tbody>
+    </table>
+  </details>
+
+  <!-- NONPROFIT -->
+  <details class="cat-block">
+    <summary class="cat-summary"><span>Nonprofit Fit</span><svg class="chevron" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="#5f5e5a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+    <table>
+      <colgroup><col style="width:160px"><col><col><col><col></colgroup>
+      <tbody>
+        <tr>
+          <td class="row-label">Nonprofit Pricing / Programs</td>
+          <td><span class="check good">Best nonprofit pathway.</span> Managed IoT SIM providers (e.g., Hologram) typically offer pay-as-you-go pricing with no contract minimums — favorable for small nonprofit deployments. Inquire about nonprofit pricing directly; some providers offer discounts for mission-driven organizations.</td>
+          <td><span class="partial">Possible.</span> AT&amp;T has nonprofit relationships through AT&amp;T Foundation and enterprise sales. No formal IoT nonprofit program; requires negotiation. FirstNet eligibility is worth exploring — CSAH's emergency coordination role may qualify.</td>
+          <td><span class="cross">Limited.</span> No formal nonprofit IoT pricing program identified. Requires direct enterprise negotiation. Verizon's smaller-account sales process can be slow.</td>
+          <td><span class="partial">Better than average.</span> T-Mobile has shown stronger willingness to work with nonprofit and social impact organizations. Worth asking directly about nonprofit IoT pricing.</td>
+        </tr>
+        <tr class="csah-row">
+          <td class="row-label">CSAH Impact</td>
+          <td>No long-term contract means no minimum spend commitment — favorable for a nonprofit that may scale kiosk count over time rather than all at once.</td>
+          <td colspan="3">Nonprofit discounts are available from carriers but require negotiation and aren't guaranteed. The grant covers costs either way, but reducing ongoing operational spend post-grant matters for sustainability.</td>
+        </tr>
+      </tbody>
+    </table>
+  </details>
+
+</div>
+
+<!-- SCORES -->
+<p class="section-label">Evaluation Summary</p>
+<table>
+  <colgroup><col style="width:160px"><col><col><col><col></colgroup>
+  <thead>
+    <tr>
+      <th class="row-label"></th>
+      <th class="col-head featured">
+        <div class="col-name green">Managed IoT SIM</div>
+      </th>
+      <th class="col-head">
+        <div class="col-name">AT&amp;T IoT</div>
+      </th>
+      <th class="col-head">
+        <div class="col-name">Verizon IoT</div>
+      </th>
+      <th class="col-head">
+        <div class="col-name">T-Mobile IoT</div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="row-label">Savannah Coverage</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%; background:#1d9e75;"></div></div><span class="bar-num">9</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%; background:#1a4d8f;"></div></div><span class="bar-num">8</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%; background:#ba7517;"></div></div><span class="bar-num">9</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%; background:#7c3aed;"></div></div><span class="bar-num">7.5</span></div></td>
+    </tr>
+    <tr>
+      <td class="row-label">Cost Efficiency</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%; background:#1d9e75;"></div></div><span class="bar-num">8.5</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:50%; background:#1a4d8f;"></div></div><span class="bar-num">5</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:30%; background:#ba7517;"></div></div><span class="bar-num">3</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%; background:#7c3aed;"></div></div><span class="bar-num">7.5</span></div></td>
+    </tr>
+    <tr>
+      <td class="row-label">Contract Flexibility</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:100%; background:#1d9e75;"></div></div><span class="bar-num">10</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:40%; background:#1a4d8f;"></div></div><span class="bar-num">4</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:30%; background:#ba7517;"></div></div><span class="bar-num">3</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:70%; background:#7c3aed;"></div></div><span class="bar-num">7</span></div></td>
+    </tr>
+    <tr>
+      <td class="row-label">Multi-Carrier Resilience</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:100%; background:#1d9e75;"></div></div><span class="bar-num">10</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:20%; background:#1a4d8f;"></div></div><span class="bar-num">2</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:20%; background:#ba7517;"></div></div><span class="bar-num">2</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:20%; background:#7c3aed;"></div></div><span class="bar-num">2</span></div></td>
+    </tr>
+    <tr>
+      <td class="row-label">Remote Management</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%; background:#1d9e75;"></div></div><span class="bar-num">9</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:60%; background:#1a4d8f;"></div></div><span class="bar-num">6</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:60%; background:#ba7517;"></div></div><span class="bar-num">6</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:65%; background:#7c3aed;"></div></div><span class="bar-num">6.5</span></div></td>
+    </tr>
+    <tr>
+      <td class="row-label">Nonprofit Fit</td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:100%; background:#1d9e75;"></div></div><span class="bar-num">10</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:55%; background:#1a4d8f;"></div></div><span class="bar-num">5.5</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:40%; background:#ba7517;"></div></div><span class="bar-num">4</span></div></td>
+      <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:65%; background:#7c3aed;"></div></div><span class="bar-num">6.5</span></div></td>
+    </tr>
+    <!-- VERDICT -->
+    <tr>
+      <td class="row-label" style="font-weight:600; color:#1a1a18;">Verdict</td>
+      <td class="verdict-cell verdict-rec">
+        <strong>Recommended lean.</strong> Multi-carrier resilience, month-to-month terms, developer-friendly dashboard, and no minimum commitment. At the estimated data volume, cost is competitive with or cheaper than direct carrier plans. Best fit for a small nonprofit scaling kiosks incrementally.
+      </td>
+      <td class="verdict-cell verdict-caut">
+        <strong>Viable with one inquiry.</strong> Coverage is solid. Worth asking AT&amp;T directly about FirstNet eligibility — CSAH's emergency coordination role may qualify them for public safety network priority. If FirstNet fits, it becomes a more compelling option. Without it, costs are higher and contract flexibility is lower than alternatives.
+      </td>
+      <td class="verdict-cell verdict-skip">
+        <strong>Hard to justify.</strong> Premium pricing, rigid contracts, and no formal nonprofit program without meaningful coverage advantage over alternatives. The strongest network for rural coverage — which doesn't apply here. Verizon makes more sense at higher scale or when network reach is the primary requirement.
+      </td>
+      <td class="verdict-cell verdict-ok">
+        <strong>Best direct-carrier option.</strong> Most affordable and flexible of the three major carriers. Reasonable choice if CSAH prefers a direct carrier relationship and the managed SIM approach feels like unnecessary complexity. Month-to-month availability and competitive pricing are real advantages.
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+
+<!-- ESTIMATED COST SUMMARY -->
+<p class="section-label">Estimated Monthly Cost Summary — 3 Kiosks <span class="verify-tag">ALL FIGURES UNVERIFIED</span></p>
+<div class="cost-grid">
+  <div class="cost-card featured">
+    <h3>Managed IoT SIM</h3>
+    <div class="cost-item"><span class="cost-label">Connectivity (3 devices)</span><span class="good">$9–60</span></div>
+    <div class="cost-item"><span class="cost-label">Nonprofit pricing</span><span class="muted">Ask provider directly</span></div>
+    <div class="cost-total"><span>Est. monthly connectivity</span><span class="good">$9–60</span></div>
+  </div>
+  <div class="cost-card">
+    <h3>AT&amp;T IoT</h3>
+    <div class="cost-item"><span class="cost-label">Connectivity (3 devices)</span><span class="warn">$30–75</span></div>
+    <div class="cost-item"><span class="cost-label">Nonprofit discount</span><span class="muted">Possible via negotiation</span></div>
+    <div class="cost-total"><span>Est. monthly connectivity</span><span class="warn">$30–75</span></div>
+  </div>
+  <div class="cost-card">
+    <h3>Verizon IoT</h3>
+    <div class="cost-item"><span class="cost-label">Connectivity (3 devices)</span><span class="risk">$45–105</span></div>
+    <div class="cost-item"><span class="cost-label">Nonprofit discount</span><span class="muted">Unlikely formal program</span></div>
+    <div class="cost-total"><span>Est. monthly connectivity</span><span class="risk">$45–105</span></div>
+  </div>
+  <div class="cost-card">
+    <h3>T-Mobile IoT</h3>
+    <div class="cost-item"><span class="cost-label">Connectivity (3 devices)</span><span class="good">$15–45</span></div>
+    <div class="cost-item"><span class="cost-label">Nonprofit discount</span><span class="muted">Possible; ask directly</span></div>
+    <div class="cost-total"><span>Est. monthly connectivity</span><span class="good">$15–45</span></div>
+  </div>
+</div>
+<p class="foot">All figures are rough estimates based on publicly available pricing as of mid-2026. IoT plan pricing is highly negotiated and volume-dependent. Get direct quotes. Data usage estimate of 50–200 MB/device/month should be validated against actual kiosk traffic before committing to a per-MB plan.</p>
+
+<!-- RECOMMENDATION -->
+<p class="section-label">Recommendation</p>
+<div class="key-note note-green" style="margin-bottom: 1.75rem;">
+  <strong>Lean: Managed IoT SIM</strong>
+  Multi-carrier resilience, month-to-month flexibility, no minimum commitment, and simple dashboards make this the best fit for CSAH's scale. It's not the most familiar option — but it's the most operationally sound for a small nonprofit scaling kiosks incrementally.<br><br>
+  Before committing: <strong>(1)</strong> Confirm Meridian hardware's built-in cellular options — the external modem may not be needed. <strong>(2)</strong> Get quotes from managed IoT SIM providers (Hologram is a good starting point) and ask about nonprofit pricing. <strong>(3)</strong> If managed SIM feels like unnecessary complexity, T-Mobile IoT is the fallback: most affordable direct-carrier option with month-to-month availability. <strong>(4)</strong> Ask AT&amp;T about FirstNet eligibility regardless — CSAH's emergency coordination role may qualify them for public safety network priority. <strong>(5)</strong> Apply to Twilio.org before signing anything — if approved, Twilio Super SIM could cover connectivity under the same nonprofit credits as SMS and change this recommendation entirely.
+</div>
+<div class="key-note note-blue" style="margin-bottom: 1.75rem;">
+  <strong>SMS provider — not yet decided, but worth exploring before signing a connectivity contract</strong>
+  Twilio is the likely pick for the texting feature (2-way reply threading, reliable delivery, works well with lightweight hosting) — not finalized. One detail worth surfacing now: Twilio also sells cellular IoT connectivity directly (<strong>Super SIM</strong>). If CSAH ends up on Twilio for SMS anyway, using Super SIM for kiosk connectivity instead of a separate carrier consolidates both under one vendor — one dashboard (Twilio Console) showing SMS delivery status, data usage, and SIM health together, one invoice, one support relationship.<br><br>
+  The bigger factor: <strong>Twilio.org</strong> is Twilio's formal nonprofit program, offering credits and discounts to qualifying 501(c)(3) human services organizations — CSAH is a strong candidate. Those credits apply to both SMS messaging and Super SIM connectivity, potentially covering both costs under one program. That would be the strongest nonprofit-fit differentiator in this whole comparison, ahead of any option above. Nothing here changes the Managed IoT SIM recommendation today — but it's worth a Twilio.org inquiry before locking in a connectivity contract, since approval could change the math significantly.
+</div>
+
+<!-- OPEN QUESTIONS -->
+<p class="section-label">Open Questions</p>
+<ul class="questions-list">
+  <li>Does Meridian's hardware include a built-in cellular modem option? If yes, SIM procurement goes through the hardware vendor or is inserted at deployment — no separate modem purchase.</li>
+  <li>Does CSAH qualify for AT&amp;T FirstNet? Their inclement weather coordination and emergency services partnership role is adjacent to first responder eligibility. Worth a direct inquiry before ruling AT&amp;T out.</li>
+  <li>What is actual data usage per session at the Compass Project kiosks (if analytics are available)? This validates the &lt;200 MB/month estimate and determines whether a per-MB or flat-rate plan is more economical.</li>
+  <li>Will all 5 potential kiosk locations (Union Mission, Goodwill, Bull Street, Greyhound, Memorial) be confirmed before connectivity contracts are signed? Month-to-month flexibility allows adding devices later — but knowing the final count helps with pooled data plan sizing.</li>
+  <li>Get side-by-side quotes from 2–3 managed IoT SIM providers (Hologram is a recommended starting point) before selecting one. Ask each about nonprofit pricing and multi-carrier network coverage in Savannah specifically.</li>
+  <li>Apply to Twilio.org and ask whether nonprofit credits cover Super SIM connectivity alongside SMS. If approved before a connectivity contract is signed, this could change the recommendation above.</li>
+</ul>
+
+<p class="foot" style="margin-top: 1.75rem;">CSAH Compass Project — ARC Consulting · Prepared June 2026 · All vendor pricing and program eligibility requires direct verification</p>
+
+</body>
+</html>

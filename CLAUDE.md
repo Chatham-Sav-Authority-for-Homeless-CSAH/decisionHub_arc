@@ -154,13 +154,12 @@ l funds by December 2026**
 
 Both surfaces pull from the same Supabase backend. Resource directory data, weather/emergency alerts, and service availability are authored once and consumed by both. The surfaces differ fundamentally in audience, interaction model, and feature set.
 
-**1. Partner App (PWA) — ~50 partner users**
-- Audience: CSAH staff, HOPE unit officers, CCPD behavioral health, partner agency case workers, code enforcement, community paramedicine
-- Full-featured PWA: case tracking, inter-agency messaging, push notifications, management dashboard, geolocation, resource directory
+**1. CSAH Staff App (PWA) — CSAH outreach team (MVP / test run)**
+- Audience (MVP): CSAH outreach staff and case managers only. Partner agencies (SPD HOPE, CCPD behavioral health, code enforcement, paramedicine) are a future expansion — CSAH is the test pilot and needs to prove the tool internally first.
+- Full-featured PWA: case tracking, CSAH-internal messaging, push notifications, management dashboard, geolocation, resource directory, embedded survey tool
 - Homeless individuals do NOT have app access
-- All partner orgs maintain their own service records (hours, availability, contact info) directly
 - Resource directory is embedded here for quick in-person reference — same Supabase data as kiosk, different UI context (compact, search-first, designed for quick lookup during field contact)
-- Weather/emergency alerts: presentation TBD — workers need to know an alert is active and coordinate the response, but the exact UI treatment is still being evaluated
+- Weather/emergency alerts: presentation TBD — workers need to know an alert is active and coordinate the response
 
 **2. Kiosk App — unhoused individuals**
 - Audience: people experiencing homelessness at public outdoor touchscreen stations
@@ -170,7 +169,7 @@ Both surfaces pull from the same Supabase backend. Resource directory data, weat
 - Weather/emergency alerts: presentation TBD — a prominent alert experience for kiosk users is needed; the specific format (full-screen overlay, persistent banner, etc.) is still being evaluated
 
 **Resource Directory — Shared Across Both Surfaces**
-- Lives in Supabase; maintained by partner orgs directly
+- Lives in Supabase; maintained by resource providers via login access to their data
 - Kiosk: the primary (and nearly only) user experience
 - Partner app: embedded tool for workers during field contact with individuals
 - Same data, different presentation — no sync required, no duplication
@@ -184,8 +183,8 @@ Both surfaces pull from the same Supabase backend. Resource directory data, weat
 ## Core Partner App Functions
 
 1. **Push notification system for crisis coordination**
-   - SPD HOPE unit → Homeless Authority street outreach team
-   - CCPD behavioral health units, city/county code enforcement, community paramedicine
+   - Within CSAH outreach team — internal coordination among CSAH staff for MVP
+   - Partner agency integration (SPD HOPE, CCPD, code enforcement, paramedicine) is a future phase; CSAH proves the tool internally first
    - Includes geolocation — maps outreach locations, proves contact was made before enforcement
 
 2. **Case tracking**
@@ -196,18 +195,23 @@ Both surfaces pull from the same Supabase backend. Resource directory data, weat
    - Primary goal: demonstrating compassionate diversion from arrest
 
 3. **Embedded resource directory**
-   - For officers and workers not specialized in homeless services
+   - For CSAH outreach workers in the field — quick lookup during contact with individuals
    - Faster than QR codes and paper handouts currently in use
 
-4. **Partner ↔ partner coordination**
-   - Shared messaging tied to case records, not personal phones
-   - Multi-agency (HOPE, CSAH, partner orgs) communication in context of a specific individual
+4. **Team coordination (CSAH-internal for MVP)**
+   - Shared messaging tied to case records, not personal phones — CSAH team only for initial deployment
+   - Multi-agency expansion (HOPE, partner orgs) is a future roadmap phase
 
-5. **Mgmt Dashboard**
+5. **Point-in-Time count survey tool**
+   - Embedded survey for the annual 10-day Point-in-Time count period
+   - Survey questions to be scoped with Kishia; administered via the app rather than paper
+   - Once-per-year feature but critical for CSAH data collection and grant reporting
+
+6. **Mgmt Dashboard**
    - The ED Jen, wants to use good data in a persuasive way to   secure more budget and donations. She wants to tell the story of  how their team is responding with compassion and care. 
    - "Truth telling tool": data counters negative narratives about homeless population to city/county gov
 
-6. **Partner → homeless individual (outbound SMS) — future**
+7. **Staff → homeless individual (outbound SMS) — future**
    - Worker sends a text with resource links/info to an individual's phone number
    - Inbound replies should thread back to the case record
    - Individuals do not have app logins
@@ -217,10 +221,17 @@ Both surfaces pull from the same Supabase backend. Resource directory data, weat
 
 ## Kiosks —
 
-**Three priority locations ("easy wins") possibly 2 more:**
-1. Goodwill Opportunity Campus — 761 Wheaton Street (already wants one)
-2. Union Mission Resource Center — across from Greyhound, emergency shelter area
-3. Public library — Bull Street or Southside branch
+**Three confirmed priority locations:**
+1. Union Mission Resource Center — 120 Fahm St, outdoor placement (accessible 24/7 even when resource center is closed; clients banned from the property can still access the kiosk from outside)
+2. Goodwill Opportunity Campus — 761 Wheaton Street (has already said yes)
+3. Public library — Bull Street branch
+
+**Potential additions (Jen pursuing):**
+- Greyhound bus station — High PR/proof-of-concept value; entry point for transient unhoused population coming into Savannah. Jen will go through city manager to get approval. If approved, may become Kiosk 1 for the launch PR event; Union Mission is Plan B.
+- Memorial hospital — Jen's future priority: high volume of unhoused individuals discharged with no housing plan.
+
+**Staged rollout under consideration:**
+Alan proposed launching 1 kiosk as a high-visibility PR proof-of-concept (possibly Greyhound), then paying for and scheduling kiosks 2 and 3 before December 2026 but installing in 2027. Jen reviewing SCAD grant requirements before committing.
 
 **Installation notes:**
 - Private nonprofit property avoids city permitting delays
@@ -228,7 +239,7 @@ Both surfaces pull from the same Supabase backend. Resource directory data, weat
 - No property use fees expected — organizations see value for their populations
 
 **Future kiosk → app integration:**
-- Kiosk user requests shelter → push notification to appropriate partner team
+- Kiosk user requests shelter → push notification to CSAH outreach team
 
 ---
 
@@ -294,6 +305,33 @@ The one exception: platforms with a built-in CMS. If the kiosk software manages 
 
 ---
 
+## Analytics & Reporting Architecture
+
+Two distinct reporting surfaces, two different tools. The line between them: **Plausible handles behavioral signals that don't exist in the schema; Supabase views handle operational data that already does.**
+
+### Kiosk → Plausible Analytics
+- **Tool:** Plausible Analytics ($9/month cloud)
+- **Why:** Cookieless, privacy-first, no PII leaves CSAH control, GDPR-compliant, no cookie banner required, dashboard legible without training
+- **What Plausible gives out of the box:** Sessions, unique visitors, session duration, page-level views, date range filtering, CSV export
+- **Kiosk location segmentation is free:** Path-based location IDs (`/kiosk/union-mission/*`, `/kiosk/goodwill/*`) appear as distinct paths in Plausible automatically — no custom event wiring needed for location filtering
+- **Custom events to instrument:**
+  - `Resource Clicked` → `{props: {category: 'shelter', name: 'Union Mission'}}`
+  - `SMS Sent from Kiosk`
+  - `QR Code Displayed`
+  - `Search Performed` → `{props: {term: '...', result_count: N}}`
+  - `Search Returned No Results`
+  - `Alert Viewed / Acknowledged`
+  - `Accessibility Feature Toggled` (large text, audio — only if built as explicit in-app toggles, not OS-level)
+
+### CSAH Staff App → Postgres Views (Supabase)
+- **Tool:** Supabase Postgres views and functions — no third-party analytics
+- **Why:** Everything Jen wants (referrals by staff, encounters by location, open cases, resource frequency) already exists as structured records in the schema. Adding Mixpanel/Amplitude would mean paying to duplicate data you own, and shipping case-adjacent sensitive data to a third party.
+- **Pattern:** Create Supabase views (`referral_summary_by_staff`, `encounter_density_by_region`, `open_referrals_by_agency`). React dashboard fetches from these views via the Supabase client like any other data call.
+- **Map visualizations:** Mapbox GL JS or Leaflet with react-leaflet. Encounter coordinates are already stored from one-time pin drops — a heat map is just feeding those coordinates to a rendering library.
+- **Exports:** CSV is a one-function utility from JSON. Excel via SheetJS. PDF via Playwright/Chromium. No third-party service needed.
+
+---
+
 ## Data Notes
 
 - **HMIS integration: NOT now, but desired long-term.** All 76 partner agencies feed into Caseworthy platform. 2-year API approval process due to strict HUD regulations. Building custom DB for now is likely needed
@@ -349,25 +387,22 @@ The one exception: platforms with a built-in CMS. If the kiosk software manages 
 | 2026-05-08 | Hosting philosophy: keep it lean | Nonprofit budget; low recurring costs; Replit candidate |
 | 2026-05-08 | SMS provider TBD | Leaning Twilio; ~250/mo estimated volume |
 | 2026-05-08 | Budget: $150k SCAD grant | Must spend by Dec 2026; kiosk hardware $10–25k/unit |
-| 2026-05-08 | Push notifications are core | Not just SMS — real-time push between partner agencies is the primary coordination mechanism |
+| 2026-05-08 | Push notifications are core | Not just SMS — real-time push coordination is the primary mechanism; initially CSAH-internal, partner agencies in future phase |
 | 2026-05-08 | No kiosks purchased yet | Allyson + Alan own procurement and implementation by Dec 2026 |
 | 2026-05-08 | No budget split scrutiny | SCAD treats kiosk + app as a connected ecosystem; no line-item breakdown required |
 | 2026-05-08 | Geolocation = one-time pin drop only | Not continuous tracking; officer logs location at moment of contact; minimal consent/union exposure |
 | 2026-05-08 | App platform leaning PWA + SMS | SMS fallback neutralizes main PWA weakness (iOS push reliability); avoids gov't MDM distribution problem; Expo is upgrade path only if device policies allow |
 | 2026-05-08 | Decision docs shared via GitHub Pages | Alan is non-technical/visual; styled HTML in docs/ folder served via GitHub Pages |
+| 2026-06-24 | Scope narrowed to CSAH-only for MVP test run | Partner agencies (HOPE, CCPD, etc.) are a future expansion; CSAH must prove the tool works internally before expanding to other agencies |
+| 2026-06-24 | Survey tool added to app scope | Point-in-Time count survey embedded in CSAH staff app; administered during the annual 10-day count window; Kishia driving question scope |
+| 2026-06-24 | Greyhound station added as potential kiosk location | Jen pursuing city manager approval; high PR value as proof-of-concept launch site; Union Mission is Plan B |
 
 ---
 
 ## Open Questions
 
-- [ ] Gov't device policies: can SPD HOPE and CCPD officers install third-party apps on issued devices? (Gates PWA vs Expo decision)
-- [ ] SMS provider final decision — leaning Twilio
-- [ ] Is push + SMS duplication too invasive? Should notification channel be a user preference (push only / SMS only / both)?
-- [ ] Confirm Twilio cost at combined volume (resource SMS + push fallback)
-- [ ] Kiosk architecture — separate discussion, TBD
-- [ ] Does CSAH have working logins to Framer and Common Ninja?
-- [ ] Case identity: request HMIS data dictionary from Keisha for custom DB schema reference
+See [`open.md`](open.md) for the full list of open questions, leans, and to-dos, organized by: Tech Architecture / Product & UX / Working with AI / Grant & Admin.
 
 ---
 
-*Last updated: 2026-05-08 — Architecture decisions, SMS fallback strategy, and ways of working documented*
+*Last updated: 2026-06-29 — Analytics & Reporting architecture added; open questions moved to open.md*

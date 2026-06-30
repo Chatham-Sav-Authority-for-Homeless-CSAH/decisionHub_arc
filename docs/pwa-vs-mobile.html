@@ -375,9 +375,7 @@
   <div class="intro">
     <h2>Context</h2>
     <p>
-      The CSAH partner app serves ~50 users: CSAH outreach staff, SPD HOPE unit officers, CCPD behavioral health units,
-      city/county code enforcement, and community paramedicine. These are boots-on-the-ground field workers across
-      multiple agencies — <strong>including government agencies that may have restrictions on what software their devices can run.</strong>
+      The CSAH staff app serves CSAH's outreach team — case managers and field workers. <strong>Scope update (June 2026 kickoff):</strong> the MVP is CSAH-staff only. Partner agencies (SPD HOPE unit, CCPD behavioral health, city/county code enforcement, community paramedicine) are a future expansion phase once CSAH proves the tool internally. Government device restriction concerns apply to future partner agency onboarding, not to the MVP audience.
     </p>
   </div>
 
@@ -398,9 +396,7 @@
       app and the people it serves.
     </p>
     <p>
-      <strong>Partner coordination (push):</strong> Push notifications is the desired primary communication channel between
-      partner agencies — CSAH outreach, SPD HOPE unit, CCPD behavioral health, and others. Unlike personal texts,
-      push notifications are tied to case records, keeping all communication in context and out of individual phones.
+      <strong>Team coordination (push):</strong> Push notifications are the primary communication channel for CSAH's outreach team. Unlike personal texts, push notifications are tied to case records, keeping all communication in context and out of individual phones. Partner agency coordination (SPD HOPE, CCPD behavioral health, etc.) is a future expansion phase.
     </p>
     <p>
       <strong>Push notification fallback:</strong> If an SMS provider is already in use for outreach messaging, adding
@@ -449,8 +445,7 @@
     </div>
     <div class="csah-context">
       <strong>CSAH Impact</strong>
-      Push notifications are the core coordination mechanism — SPD HOPE alerting CSAH outreach, CCPD dispatching,
-      real-time crisis response. This is not a "nice to have" alert; it's the primary reason the app exists.
+      Push notifications are the core coordination mechanism for CSAH's outreach team — real-time crisis response, case handoffs, and field coordination. This is not a "nice to have" alert; it's the primary reason the app exists.
       PWA push reliability on iOS was the primary concern with that option — but since SMS is already planned
       as a separate feature (sending resources to individuals), using it as a push fallback costs almost nothing
       extra and neutralizes that risk. A missed push still reaches the worker via text. Open question: is
@@ -487,10 +482,7 @@
     </div>
     <div class="csah-context">
       <strong>CSAH Impact</strong>
-      SPD and CCPD officers use agency-issued devices with IT-controlled policies. If those policies block
-      non-approved app installs, a native app may never reach the people who need it most — without lengthy IT
-      approval processes at each agency. This is still an open question and may be the single most important
-      factor in the decision.
+      CSAH outreach staff use personal or CSAH-issued devices — government device restrictions are not a blocker for the CSAH-only MVP. This factor becomes relevant when partner agency expansion begins (SPD HOPE, CCPD officers on agency-locked devices). PWA's browser-based approach sidesteps this for any future partner agency onboarding as well, which is a lasting advantage.
     </div>
     </details>
   </div>
@@ -628,9 +620,7 @@
     </div>
     <div class="csah-context">
       <strong>CSAH Impact</strong>
-      Onboarding 50 users across 5 agencies is operationally easier with a URL than coordinating installs
-      across multiple IT departments. App store accounts are a minor cost but the review and approval
-      process adds lead time.
+      Onboarding CSAH staff is operationally easy with a URL — no IT coordination, no installs. As the app expands to partner agencies in future phases, this advantage compounds: each new agency gets access via a URL with zero IT involvement on their end.
     </div>
     </details>
   </div>
@@ -704,7 +694,7 @@
       <li><strong>Notification preferences:</strong> Should workers be able to set a preference (push only / SMS only / both)? For a high-frequency coordination tool, receiving duplicate alerts on two channels could feel intrusive. This is a UX decision to make during build.</li>
       <li><strong>Notification defaults:</strong> If notification preferences are built, what are the right defaults? Push-only is the reasonable starting point; SMS fallback can be opt-in rather than opt-out.</li>
     </ol>
-    <p style="margin-top:1rem; font-size:0.85rem; color:#6b7280;"><em>Note: Government device policy (SPD HOPE, CCPD) is no longer a gating question — PWA runs in the browser and requires no device policy approval. If device policies later permit native app installs, Expo remains an upgrade path but does not change this decision.</em></p>
+    <p style="margin-top:1rem; font-size:0.85rem; color:#6b7280;"><em>Note: Government device policy is not a gating question for the CSAH-only MVP — CSAH staff are not on restricted government devices. If future partner agency expansion involves SPD or CCPD officers on locked-down agency devices, PWA's browser-based approach sidesteps the IT approval problem entirely. Expo remains an upgrade path but does not change this decision.</em></p>
   </div>
 
 </div>
