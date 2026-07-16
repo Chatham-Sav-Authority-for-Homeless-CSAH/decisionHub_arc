@@ -262,8 +262,8 @@
     }
 
     .pill-core { background: #dbeafe; color: #1d4ed8; }
-    .pill-ai   { background: #ede9fe; color: #6d28d9; }
     .pill-kiosk { background: #d1fae5; color: #065f46; }
+    .pill-yellow { background: #fef9c3; color: #854d0e; }
 
     /* ── TIMELINE ── */
     .timeline-section {
@@ -282,7 +282,7 @@
     /* Today marker sits above the bar */
     .today-marker {
       position: absolute;
-      left: 2%;
+      left: 25%;
       top: -26px;
       transform: translateX(-50%);
       display: flex;
@@ -307,7 +307,7 @@
 
     .today-line {
       position: absolute;
-      left: 2%;
+      left: 25%;
       top: 0;
       width: 2px;
       height: 52px;
@@ -402,12 +402,15 @@
       font-size: 0.78rem;
       color: #374151;
       padding: 0.12rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.35rem;
     }
 
     .phase-detail ul li::before {
       content: "·";
-      margin-right: 0.4rem;
       color: #9ca3af;
+      flex-shrink: 0;
     }
 
     .pd-1 { background: #fff7ed; }
@@ -639,6 +642,22 @@
   <div class="capabilities-grid">
 
     <div class="cap-card">
+      <div class="cap-icon">🖥️</div>
+      <h3>Public Kiosks</h3>
+      <p>Touchscreen stations at key community sites give individuals direct access to the full resource directory. From the kiosk, anyone can text resources directly to their own phone — no app, no account needed. Kiosk-initiated requests can also trigger real-time alerts to CSAH's outreach team.</p>
+      <span class="cap-pill pill-kiosk">Kiosk</span>
+    </div>
+
+    <div class="cap-card">
+      <div class="cap-icon">📍</div>
+      <h3>Resource Directory</h3>
+      <p>An always current directory of shelter, meals, healthcare, transportation, and services — accessible
+      to field workers in the app and to individuals at public kiosks. No more paper handouts — one source of truth, maintained once, accessible everywhere.</p>
+      <span class="cap-pill pill-kiosk">Kiosk</span>
+      <span class="cap-pill pill-core">Core App Feature</span>
+    </div>
+
+    <div class="cap-card">
       <div class="cap-icon">🔔</div>
       <h3>Crisis Coordination</h3>
       <p>Push notifications keep CSAH's outreach team coordinated in real time — case handoffs, crisis response, and field coverage. Every alert is geotagged and logged against a case record, building a verified record of compassionate outreach ahead of any enforcement action.</p>
@@ -648,7 +667,7 @@
     <div class="cap-card">
       <div class="cap-icon">📋</div>
       <h3>Case Tracking - Key Data</h3>
-      <p>Each individual is a case. Interactions, referrals, and outcomes are logged by CSAH's outreach team — building the dataset needed to demonstrate compassionate diversion, report to funders with confidence, and counter false narratives about the unhoused population. A truth-telling tool for the data that matters.</p>
+      <p>Each individual is a case. Interactions, referrals, and outcomes are logged by CSAH's outreach team — building the dataset needed to demonstrate compassionate diversion. A truth-telling tool for the data that matters.</p>
       <span class="cap-pill pill-core">Core App Feature</span>
     </div>
 
@@ -656,27 +675,12 @@
       <div class="cap-icon">📊</div>
       <h3>Point-in-Time Count Survey</h3>
       <p>An embedded survey tool for CSAH's annual 10-day Point-in-Time count — and for regular interval data collection throughout the year. Survey responses feed directly into CSAH's data layer, replacing paper forms with structured, reportable data.</p>
-      <span class="cap-pill pill-core">Core App Feature</span>
-    </div>
-
-    <div class="cap-card">
-      <div class="cap-icon">📍</div>
-      <h3>Resource Directory</h3>
-      <p>An always current directory of shelter, meals, healthcare, transportation, and services — accessible
-      to field workers in the app and to individuals at public kiosks. No more paper handouts — one source of truth, maintained once, accessible everywhere.</p>
-      <span class="cap-pill pill-core">Core Cross Platform Feature</span>
-    </div>
-
-    <div class="cap-card">
-      <div class="cap-icon">🖥️</div>
-      <h3>Public Kiosks</h3>
-      <p>Touchscreen stations at key community sites give individuals direct access to the full resource directory. From the kiosk, anyone can text a personalized list of resources directly to their own phone — no app, no account needed. Kiosk-initiated requests can also trigger real-time alerts to CSAH's outreach team.</p>
-      <span class="cap-pill pill-kiosk">Kiosk</span>
+      <span class="cap-pill pill-yellow">Scope Under Review</span>
     </div>
 
   </div>
 
-  <!-- SCAD GRANT CALLOUT -->
+  <!-- SCAD GRANT CALLOUT 
   <div class="grant-callout" style="margin-bottom: 2.5rem; border-radius: 14px; padding: 1.25rem 1.5rem; font-size: 0.92rem;">
     <div class="grant-icon">🎓</div>
     <div>
@@ -686,7 +690,7 @@
       Design for Good coursework to a real community challenge, incorporating direct input from people with
       lived experience of homelessness.
     </div>
-  </div>
+  </div>-->
 
   <!-- PROJECT TIMELINE -->
   <div class="timeline-section">
@@ -722,36 +726,38 @@
       <div class="phase-detail pd-1">
         <h4>Phase 1 · Jun – Mid Jul <span class="now-badge">Now</span></h4>
         <ul>
-          <li>Partner collab kickoff</li>
-          <li>Feature definition</li>
-          <li>UX Evaluation</li>
-          <li>Stakeholder alignment</li>
+          <li>Kiosk vendor + site selection</li>
+          <li>CSAH App + kiosk features defined</li>
+          <li>PIT tool approach scoped</li>
+          <li>Scope Confirmed</li>
         </ul>
       </div>
       <div class="phase-detail pd-2">
         <h4>Phase 2 · Mid Jul–Sep</h4>
         <ul>
-          <li>Tech stack selection</li>
-          <li>Partner app build</li>
-          <li>Push + SMS system</li>
-          <li>Resource directory</li>
+          <li>Kiosk sites finalized</li>
+          <li>Kiosks ordered (Aug 1st)</li>
+          <li>UI / UX design finalized</li>
+          <li>App build begins</li>
+          <li>PIT build direction chosen</li>
         </ul>
       </div>
       <div class="phase-detail pd-3">
         <h4>Phase 3 · Oct–Nov</h4>
         <ul>
-          <li>Kiosk configuration</li>
-          <li>Kiosk installation</li>
-          <li>Dashboard development</li>
-          <li>User Acceptance Testing</li>
+          <li>Finalize app build</li>
+          <li>Reporting development</li>
+          <li>Kiosks installed</li>
+          <li>Staff testing (UAT)</li>
         </ul>
       </div>
       <div class="phase-detail pd-4">
         <h4>Phase 4 · Dec</h4>
         <ul>
-          <li>CSAH staff onboarding</li>
-          <li>Staff training</li>
-          <li>Go Live & Ribbon Cutting</li>
+          <li>Staff Training</li>
+          <li>Go Live + Ribbon Cutting</li>
+          <li>3 kiosks live; additional in 2027</li>
+          <li>App, PIT roadmap + future kiosk rollout</li>
         </ul>
       </div>
     </div>
