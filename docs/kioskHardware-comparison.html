@@ -113,7 +113,7 @@
   </a>
 </div>
 <h1>Kiosk Hardware Comparison</h1>
-<p class="subtitle">Compass Project — evaluated against CSAH kiosk requirements · Updated June 2026 with vendor call findings</p>
+<p class="subtitle">Compass Project — evaluated against CSAH kiosk requirements · Updated July 2026 with MetroClick 2nd call findings</p>
 <div class="note-group">
 <div class="key-note note-green">
 <strong>Analysis basis</strong>
@@ -126,6 +126,10 @@
 <div class="key-note note-amber">
 <strong>No Section 508 requirement</strong>
     CSAH is not federally funded, so federal accessibility law (Section 508) does not apply. WCAG 2.1 AA is the target standard. ADA physical compliance (48" max height, 30"×48" clear floor space) is required for all units.
+  </div>
+<div class="key-note note-blue">
+<strong>New app requirement: arrow-key navigation (from MetroClick 2nd call, Jul 20)</strong>
+    For outdoor freestanding kiosks, a 48"-max screen height and a 32"/43" portrait display are mutually exclusive — at those sizes, portrait mounting puts the bottom of the screen ~20–21" off the ground, too low for standing users. MetroClick's standard solution is a physical ADA keypad (directional arrows + enter button, plus a headphone jack for audio guidance) mounted at compliant height beside the screen, decoupling ADA reach compliance from screen height. The keypad emulates keyboard arrow keys and Enter. <strong>This means the CSAH kiosk web app must be fully navigable via keyboard arrow keys and Enter — not touch-only</strong> — for the keypad to work. This is a real app-layer requirement, not just a hardware spec; confirm whether Advanced Kiosks, Meridian, and Olea use the same or an equivalent keypad approach.
   </div>
 </div>
 <!-- Sticky column header -->
@@ -175,7 +179,7 @@
 <td class="row-label">Integrated cellular module<br/><span style="font-weight:400;font-size:11px;">Factory-engineered — not a retrofit or add-on; antenna, enclosure material, and modem designed together; tested with cellular active inside enclosure</span></td>
 <td class="tbd-cell">Verify at quote — cellular available on outdoor models; confirm modem is factory-engineered into the enclosure (not a retrofit), antenna placement is co-designed with enclosure material, and unit has been tested with cellular active inside enclosure under real-world conditions.</td>
 <td class="tbd-cell">Verify at quote — Meridian outdoor units may include built-in cellular option; confirm modem is part of original hardware design, antenna placement is engineered with enclosure material, and unit has been tested with cellular active under real-world conditions. Do not accept retrofit modem as equivalent.</td>
-<td class="tbd-cell">Verify at quote — AT&amp;T, Verizon, T-Mobile cellular support confirmed on call; confirm modem is factory-integrated (not a retrofit add-on) and has been tested under real-world cellular-active conditions inside the enclosure.</td>
+<td><span class="check">✓</span> Factory-integrated confirmed on 2nd call (Jul 20) — puck antenna drilled through housing, mounted on top; modem evaluates AT&amp;T/Verizon/T-Mobile and selects best signal per location. Uses MetroClick's own managed IoT SIM (multi-carrier resilient) by default — CSAH pays MetroClick, no separate carrier account setup needed. CSAH can alternatively supply its own SIM cards if preferred (adds a troubleshooting-visibility tradeoff per MetroClick).</td>
 <td class="tbd-cell">Verify at quote — cellular connectivity available; confirm factory integration vs. retrofit and that unit has been real-world tested with cellular active inside enclosure.</td>
 </tr>
 <tr>
@@ -210,7 +214,7 @@
 <td class="row-label">Audio output<br/><span style="font-weight:400;font-size:11px;">Headphone jack + internal speaker (ADA Title III effective communication)</span></td>
 <td><span class="partial">⚠</span> Available on some models — confirm both headphone jack and internal speaker for selected outdoor configuration at quote.</td>
 <td class="tbd-cell">Not mentioned in public materials or vendor call — required verification item at quote.</td>
-<td><span class="partial">⚠</span> Verify for selected configuration — confirm both internal speaker and accessible headphone jack.</td>
+<td><span class="check">✓</span> Confirmed on 2nd call — headphone jack for audio guidance is built into the ADA keypad accessory. Internal speaker TBD — confirm at quote.</td>
 <td><span class="partial">⚠</span> Specifiable at order — confirm headphone jack and internal speaker with Olea at quote.</td>
 </tr>
 </tbody>
@@ -312,7 +316,7 @@
 <td class="row-label">Multi-domain routing<br/><span style="font-weight:400;font-size:11px;">Kiosk mode must support more than 1 allowed domain (e.g., app + Google Maps)</span></td>
 <td><span class="partial">⚠</span> Verify at quote — confirm Zamok allows domain whitelisting for more than one URL (CSAH app domain + Google Maps at minimum).</td>
 <td><span class="partial">⚠</span> Verify at quote — confirm hardware-only + MDM path supports whitelisting multiple domains. Scalefusion (ARC's likely MDM) supports this natively.</td>
-<td><span class="partial">⚠</span> Verify at quote — confirm MetroClick platform or ARC's MDM supports multi-domain whitelist. Scalefusion supports domain whitelisting natively on the blank Windows PC path.</td>
+<td><span class="warn">⚠ Testing pending</span> MetroClick whitelists base domains only (e.g., facebook.com covers everything under it) — whitelisting all of google.com is explicitly discouraged by MetroClick for a public unattended kiosk (opens general search/browsing, not just Maps). Open question: whether maps.google.com can be isolated, since Maps redirects to google.com/maps once loaded. Michael (MetroClick) is testing this the week of Jul 20 and will report back. <strong>Recommendation from this call: embed Google Maps directly in the CSAH app (API/iframe) rather than linking out</strong> — avoids the whitelist problem entirely and keeps users inside the app URL.</td>
 <td><span class="check">✓</span> Hardware-only — MDM handles domain whitelisting. Fully configurable by ARC.</td>
 </tr>
 <tr>
@@ -341,7 +345,7 @@
 <tr>
 <td class="row-label">No minimum purchase order quantity</td>
 <td><span class="check">✓</span> No minimum order. <strong>Bulk discount triggers at 4 units — CSAH's order qualifies.</strong> GSA pricing provides transparent cost structure.</td>
-<td><span class="partial">⚠</span> No information on minimum orders or nonprofit pricing confirmed. Government is a served segment but no small-volume discount program found. Verify at quote.</td>
+<td><span class="check">✓</span> No minimum order. <strong>5% nonprofit discount on hardware confirmed on 2nd call.</strong> Payment terms: default is full payment upfront, but MetroClick can offer 50% down / 50% net 30, or net 30 from delivery, depending on what the agency requires — flexible for government/nonprofit procurement.</td>
 <td><span class="check">✓</span> Responsive to small-volume buyers; hardware discounts per order.</td>
 <td><span class="partial">⚠</span> Targets mid-to-high-end deployments; 4-unit order is low priority — may face less favorable terms.</td>
 </tr>
@@ -356,14 +360,14 @@
 <td class="row-label">SLA — on-site service<br/><span style="font-weight:400;font-size:11px;">In-person tech support option for hardware issues</span></td>
 <td><span class="check">✓</span> On-site service available — confirm Savannah, GA coverage and response time at quote.</td>
 <td class="tbd-cell">Not confirmed on vendor call — outstanding item. Request on-site SLA terms for Savannah, GA at quote.</td>
-<td><span class="partial">⚠</span> Remote diagnosis first; on-site only if needed. Verify Savannah, GA on-site coverage and response time at quote.</td>
+<td><span class="check">✓</span> Confirmed on 2nd call — remote troubleshooting attempted first, on-site dispatch only if unresolved. Down-device notifications default to 60 min of downtime before alerting (configurable shorter or longer). SLA response tiers exist based on SaaS subscription level — pricing pending via email. Verify Savannah, GA on-site coverage and response time at quote.</td>
 <td><span class="partial">⚠</span> Verify SLA terms and Savannah, GA on-site service availability at quote.</td>
 </tr>
 <tr>
 <td class="row-label">SLA — replacement parts<br/><span style="font-weight:400;font-size:11px;">Parts availability and lead time guarantee</span></td>
 <td><span class="check">✓</span> Internal components modular — parts swappable on-site. Confirm contractual parts availability guarantee and lead times at quote.</td>
 <td class="tbd-cell">Not confirmed on vendor call — request parts availability guarantee and lead time commitment at quote.</td>
-<td><span class="partial">⚠</span> Easy part swapping confirmed. Verify contractual parts availability guarantee and lead time commitment at quote.</td>
+<td><span class="partial">⚠</span> Confirmed on 2nd call — fastest realistic on-site replacement turnaround is 2–3 days (time to ship the physical part + get a technician on site); varies by part and technician type needed. Verify contractual parts availability guarantee at quote.</td>
 <td class="tbd-cell">Verify at quote — request parts availability guarantee and lead time commitments for outdoor unit components.</td>
 </tr>
 <tr>
@@ -479,7 +483,7 @@
 <td class="row-label nicetohave-cell">In-house installation<br/><span style="font-weight:400;font-size:11px;">Soup to nuts; no outside vendor required</span></td>
 <td class="nicetohave-cell"><span class="partial">⚠</span> Can self-install with vendor manuals — full in-house service not confirmed.</td>
 <td class="nicetohave-cell tbd-cell">Verify at quote.</td>
-<td class="nicetohave-cell"><span class="check">✓</span> MetroClick handles installation — $1,000–$1,500/unit confirmed. Does not include electrician.</td>
+<td class="nicetohave-cell"><span class="check">✓</span> MetroClick handles installation — $1,000–$1,500/unit confirmed, including mounting, bolting to ground, and getting the app live and running. Confirmed on 2nd call: does <strong>not</strong> include electrical work or concrete pouring — CSAH/city must have a ground outlet ready before MetroClick's team arrives.</td>
 <td class="nicetohave-cell tbd-cell">Verify at quote.</td>
 </tr>
 <tr>
@@ -586,14 +590,14 @@
 <td class="row-label">Cellular capabilities est.</td>
 <td class="center"><span class="price-main">$550</span><span class="price-sub">Per unit add-on</span></td>
 <td class="center tbd-cell">TBD — verify at quote.</td>
-<td class="center tbd-cell">TBD — verify at quote.</td>
+<td class="center tbd-cell">Managed IoT SIM (multi-carrier: AT&amp;T/Verizon/T-Mobile) confirmed as MetroClick's standard approach on 2nd call — per-unit pricing was requested but not yet provided; pending follow-up. CSAH can alternatively provide its own SIM cards.</td>
 <td class="center tbd-cell">TBD — verify at quote.</td>
 </tr>
 <tr>
 <td class="row-label">Brand wrapping est. <span class="confirmed-tag">CALL CONFIRMED (MC)</span></td>
 <td class="center"><span class="price-main">$280</span><span class="price-sub">Per unit</span></td>
 <td class="center tbd-cell">TBD — verify at quote.</td>
-<td class="center"><span class="price-main">$500–$550</span><span class="price-sub">Custom vinyl wrapping; adds ~1 week lead time.</span></td>
+<td class="center"><span class="price-main">$500–$550</span><span class="price-sub">Custom vinyl wrapping; adds ~1 week lead time. Confirmed on 2nd call: MetroClick recommends applying in their warehouse pre-shipment, but can also apply on-site post-installation if needed for timeline flexibility.</span></td>
 <td class="center tbd-cell">TBD — verify at quote.</td>
 </tr>
 <tr>
@@ -621,7 +625,7 @@
 <td class="row-label">Summary</td>
 <td class="verdict-cell verdict-ak">Best overall fit for CSAH. Social service deployment precedent, modular on-site repairs, Windows 11, Zamok MDM, GSA pricing, confirmed 3-year warranty, and bulk discount triggered at exactly 4 units. Cameras not included standard. Remaining data privacy ask: Zamok session data handling must be audited and contractually constrained. If Zamok audit proves difficult, hardware-only option with ARC-managed lockdown is available. Budget note: upper end of confirmed range hits the $25K ceiling — target mid-range configuration.</td>
 <td class="verdict-cell verdict-me"><strong>Vendor call resolved both blocking questions. Meridian is now a legitimate contender.</strong><br/><br/>Alan Robinson's summary: "The two things I went in worried about — software lock-in and budget — both came back favorable." Hardware-only purchase confirmed available. Pricing confirmed at $10,000–$15,000/unit. ISO 9001:2015 manufacturing, 2,500-nit displays, built-in AC/heating, high-security locks, Lexan branding, and government sector experience all confirmed.<br/><br/><strong>Outstanding items before selection:</strong><br/>1. <strong>Camera policy</strong> — not addressed on call; confirm cameras are not standard on outdoor units (or confirm removal option)<br/>2. <strong>Warranty terms</strong> — marketing claims "strongest in the industry" but specific duration was not confirmed; must clarify before order<br/>3. <strong>IP/NEMA rating</strong> — confirm rating for Savannah's coastal humidity environment<br/>4. <strong>Social-service references</strong> — requested on call; pending delivery<br/><br/><strong>Critical procurement flag:</strong> 16–20 week lead time means contracts and deposits must be signed within weeks to meet the December 30 deadline with ~2 months of buffer. This is the most time-sensitive constraint of any vendor evaluated — if CSAH selects Meridian, the clock is running.</td>
-<td class="verdict-cell verdict-mc">Most budget-friendly and closest real-world hardware analog. <strong>Blank Windows PC is the recommended purchase path</strong> — eliminates MetroClick data concerns entirely, aligns with CSAH's architecture, and lets ARC install its own MDM. Cameras confirmed not standard. Screensaver and vinyl branding both available. One procurement flag: 2-year standard warranty falls short of CSAH's 3-year minimum — negotiate extended warranty at quote.</td>
+<td class="verdict-cell verdict-mc">Most budget-friendly and closest real-world hardware analog. <strong>Blank Windows PC is the recommended purchase path</strong> — eliminates MetroClick data concerns entirely, aligns with CSAH's architecture, and lets ARC install its own MDM. Cameras confirmed not standard. Screensaver and vinyl branding both available. Confirmed: MetroClick is hardware/lockdown-only — ARC builds and hosts the actual web app; MetroClick just points the kiosk at ARC's URL. One procurement flag: 2-year standard warranty falls short of CSAH's 3-year minimum — negotiate extended warranty at quote.<br/><br/><strong>2nd call (Jul 20) findings:</strong><br/>1. <strong>ADA solution clarified</strong> — physical keypad (arrow keys + Enter + headphone jack) mounted at compliant height, not a screen-height constraint. Requires the CSAH app to support full keyboard/arrow-key navigation.<br/>2. <strong>5% nonprofit hardware discount confirmed.</strong> Payment terms flexible for government agencies: 50/50 split or net 30 from delivery available.<br/>3. <strong>Cellular confirmed</strong> as managed multi-carrier IoT SIM (AT&amp;T/Verizon/T-Mobile) via MetroClick's account — per-unit pricing still pending.<br/>4. <strong>Google Maps whitelisting is unresolved</strong> — MetroClick advises against whitelisting all of google.com on a public kiosk; testing whether maps.google.com can be isolated. <strong>Leaning toward embedding Google Maps directly in the app instead of linking out</strong> to sidestep the whitelist risk.<br/>5. Installation confirmed to exclude electrical and concrete work — CSAH/city must prep the site.<br/>6. SLA tier pricing and down-device notification timing (default 60 min, configurable) pending final numbers via email.</td>
 <td class="verdict-cell verdict-ol">Strongest data privacy posture by architecture — no Olea software layer, no vendor session data risk. Best choice if data privacy is the top priority and budget allows (or if Boulder model comes in under $25K). Trade-offs: lowest-priority buyer at 4 units; TCO requires assembling hardware + MDM quotes independently.</td>
 </tr>
 </tbody>
@@ -708,6 +712,6 @@
 </tr>
 </tbody>
 </table>
-<p class="foot">Cells marked <span class="confirmed-tag" style="font-size:10px;">CALL CONFIRMED</span> reflect data from vendor sales conversations (June 2026). Cells marked <span class="call-needed-tag" style="font-size:10px;">CALL NEEDED</span> flag blocking unknowns for Meridian — camera policy and hardware-only purchase availability must be confirmed before Meridian can be meaningfully evaluated. All other figures are market estimates — not vendor quotes. Advanced Kiosks is the only vendor with bulk discount confirmed at 4 units. MetroClick blank Windows PC route is strongly recommended — eliminates annual software cost and data privacy concerns simultaneously. MetroClick warranty flag: 2-year standard does not meet CSAH's 3-year minimum; negotiate extended warranty at quote. Hardware OS (Windows) confirmed for Advanced Kiosks, MetroClick, and Meridian (primary); confirm for Olea. Meridian vendor call completed — hardware-only purchase confirmed, pricing confirmed at $10K–$15K/unit. Outstanding items: camera policy, warranty terms, IP/NEMA coastal rating, and social-service references. Critical procurement flag: 16–20 week lead time requires immediate contract action to meet December 30 deadline. Annual software costs depend on MDM selection — see Kiosk Software Comparison doc. Cellular connectivity is an ongoing operational cost not included in all-in hardware estimates ($360–$960/unit/year).</p>
+<p class="foot">Cells marked <span class="confirmed-tag" style="font-size:10px;">CALL CONFIRMED</span> reflect data from vendor sales conversations (June 2026). Cells marked <span class="call-needed-tag" style="font-size:10px;">CALL NEEDED</span> flag blocking unknowns for Meridian — camera policy and hardware-only purchase availability must be confirmed before Meridian can be meaningfully evaluated. All other figures are market estimates — not vendor quotes. Advanced Kiosks is the only vendor with bulk discount confirmed at 4 units. MetroClick blank Windows PC route is strongly recommended — eliminates annual software cost and data privacy concerns simultaneously. MetroClick warranty flag: 2-year standard does not meet CSAH's 3-year minimum; negotiate extended warranty at quote. Hardware OS (Windows) confirmed for Advanced Kiosks, MetroClick, and Meridian (primary); confirm for Olea. Meridian vendor call completed — hardware-only purchase confirmed, pricing confirmed at $10K–$15K/unit. Outstanding items: camera policy, warranty terms, IP/NEMA coastal rating, and social-service references. Critical procurement flag: 16–20 week lead time requires immediate contract action to meet December 30 deadline. Annual software costs depend on MDM selection — see Kiosk Software Comparison doc. Cellular connectivity is an ongoing operational cost not included in all-in hardware estimates ($360–$960/unit/year). MetroClick 2nd vendor call (Jul 20, 2026): clarified ADA keypad approach (app must support arrow-key navigation), confirmed 5% nonprofit hardware discount and flexible government payment terms, confirmed managed multi-carrier IoT SIM cellular approach, and flagged Google Maps domain-whitelisting as an open risk pending MetroClick testing — current lean is to embed Google Maps in-app rather than link out. SLA tier pricing and per-unit cellular pricing pending via email.</p>
 </body>
 </html>
