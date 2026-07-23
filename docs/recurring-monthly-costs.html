@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Recurring Monthly Costs — Compass Project</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f3; color: #1a1a18; padding: 2rem; position: relative; }
+
+  /* ── WATERMARK (fixed, tiled, huge — visible at any scroll position) ── */
+  .wip-watermark {
+    position: fixed;
+    inset: -20% -20%;
+    z-index: 9000;
+    pointer-events: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-around;
+    transform: rotate(-28deg);
+    opacity: 0.07;
+  }
+  .wip-watermark span {
+    font-size: 3.4rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    color: #c0392b;
+    white-space: nowrap;
+    margin: 1.5rem 2.5rem;
+  }
+
+  /* ── DRAFT RIBBON (corner stamp) ── */
+  .wip-ribbon {
+    position: fixed;
+    top: 34px;
+    right: -84px;
+    z-index: 9100;
+    background: #c0392b;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 5rem;
+    transform: rotate(45deg);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    pointer-events: none;
+  }
+
+  .page { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+
+  h1 { font-size: 24px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { font-size: 14px; color: #5f5e5a; margin-bottom: 1.5rem; }
+
+  .wip-banner {
+    background: #fdecea;
+    border: 1.5px solid #c0392b;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    font-size: 13px;
+    line-height: 1.65;
+    color: #5c1010;
+    margin-bottom: 1.75rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+  }
+  .wip-banner .icon { font-size: 1.3rem; flex-shrink: 0; }
+  .wip-banner strong { display: block; font-size: 13px; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+  .key-note {
+    background: #e6f1fb; border-left: 3px solid #1a4d8f; color: #0c3060;
+    padding: 10px 14px; border-radius: 0 8px 8px 0; font-size: 13px; line-height: 1.6;
+    margin-bottom: 1.75rem;
+  }
+  .key-note strong { font-weight: 600; display: block; margin-bottom: 2px; }
+
+  /* ── CHART ── */
+  .chart-card {
+    background: #fff; border: 1px solid #d3d1c7; border-radius: 12px;
+    padding: 1.5rem 1.75rem 1.25rem; margin-bottom: 1.75rem;
+  }
+  .chart-title { font-size: 13px; font-weight: 600; color: #1a1a18; margin-bottom: 1.1rem; }
+
+  .cost-row { display: flex; align-items: center; gap: 14px; margin-bottom: 1.1rem; }
+  .cost-row:last-child { margin-bottom: 0; }
+  .cost-label { width: 168px; flex-shrink: 0; font-size: 12.5px; font-weight: 500; color: #374151; text-align: right; }
+  .cost-track {
+    position: relative; flex: 1; height: 22px; background: #f1efe8; border-radius: 6px;
+  }
+  .cost-bar {
+    position: absolute; top: 0; height: 100%; min-width: 10px;
+    background: linear-gradient(180deg, #2a5da0, #1a4d8f);
+    border-radius: 6px;
+  }
+  .cost-range-label {
+    font-size: 11.5px; font-weight: 600; color: #1a4d8f; white-space: nowrap; flex-shrink: 0; width: 92px;
+  }
+
+  .chart-axis { display: flex; margin-top: 0.5rem; padding-left: 182px; }
+  .chart-axis span { flex: 1; font-size: 10.5px; color: #9ca3af; text-align: left; }
+  .chart-axis span:last-child { flex: 0; text-align: right; }
+
+  /* ── TOTAL ── */
+  .total-card {
+    background: #0e2a5c; border-radius: 12px; padding: 1.5rem 1.75rem;
+    margin-bottom: 1.75rem; color: white; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .total-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #93afd4; margin-bottom: 6px; }
+  .total-value { font-size: 2rem; font-weight: 800; color: #f2c030; letter-spacing: -0.01em; }
+  .total-sub { font-size: 12px; color: #93afd4; margin-top: 4px; }
+  .total-annual { text-align: right; font-size: 12.5px; color: #93afd4; line-height: 1.6; }
+  .total-annual strong { color: white; font-size: 15px; }
+
+  /* ── TABLE ── */
+  table { width: 100%; border-collapse: collapse; border: 1px solid #d3d1c7; border-radius: 12px; overflow: hidden; font-size: 13px; margin-bottom: 1.75rem; background: #fff; }
+  th, td { border-bottom: 0.5px solid #d3d1c7; padding: 10px 14px; vertical-align: top; text-align: left; }
+  tr:last-child td { border-bottom: none; }
+  th { background: #e8e6df; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #888780; font-weight: 500; }
+  .num { font-weight: 600; color: #1a4d8f; white-space: nowrap; }
+  .note { color: #6b7280; font-size: 12px; }
+
+  .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #888780; font-weight: 600; margin: 0 0 0.6rem; }
+
+  .addl-card {
+    background: #faeeda; border: 1px solid #e5c58a; border-radius: 12px; padding: 1.1rem 1.4rem; margin-bottom: 1.75rem; font-size: 13px; color: #633806; line-height: 1.65;
+  }
+  .addl-card strong { display: block; margin-bottom: 6px; font-size: 13px; }
+  .addl-card ul { margin: 6px 0 0 1.1rem; }
+
+  .foot { font-size: 11px; color: #888780; line-height: 1.7; padding-bottom: 1rem; }
+  .back-link { color:#5f5e5a; font-size:0.8rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem; letter-spacing:0.04em; }
+</style>
+</head>
+<body>
+
+<div class="wip-watermark" aria-hidden="true">
+  <span>DRAFT — DO NOT DISTRIBUTE</span><span>DRAFT — DO NOT DISTRIBUTE</span><span>DRAFT — DO NOT DISTRIBUTE</span>
+  <span>DRAFT — DO NOT DISTRIBUTE</span><span>DRAFT — DO NOT DISTRIBUTE</span><span>DRAFT — DO NOT DISTRIBUTE</span>
+  <span>DRAFT — DO NOT DISTRIBUTE</span><span>DRAFT — DO NOT DISTRIBUTE</span><span>DRAFT — DO NOT DISTRIBUTE</span>
+  <span>DRAFT — DO NOT DISTRIBUTE</span><span>DRAFT — DO NOT DISTRIBUTE</span><span>DRAFT — DO NOT DISTRIBUTE</span>
+</div>
+<div class="wip-ribbon" aria-hidden="true">Draft</div>
+
+<div class="page">
+
+<div style="background:#e8e6df; padding:0.6rem 2rem; margin:-2rem -2rem 2rem; border-radius: 0;">
+<a class="back-link" href="index.html">
+<svg fill="none" height="14" viewbox="0 0 14 14" width="14"><path d="M9 2L4 7l5 5" stroke="#5f5e5a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75"></path></svg>
+Decision Hub
+</a>
+</div>
+
+<h1>Recurring Monthly Costs</h1>
+<p class="subtitle">Compass Project — Phase 1 handoff item · Ongoing operating costs after launch</p>
+
+<div class="wip-banner">
+<div class="icon">🚧</div>
+<div>
+<strong>Work in progress — not a final budget</strong>
+Every figure below is a planning-stage estimate pulled from prior vendor research and internal assumptions in this project's docs — none are locked vendor quotes. Ranges will narrow as Phase 1 vendor selections (kiosk software, hosting, SMS) are finalized. Do not present these numbers to funders or the board as committed costs.
+</div>
+</div>
+
+<div class="key-note">
+<strong>What's assumed here</strong>
+Figures assume 3 kiosks live (Phase 1 target) and CSAH-only staff app usage (no partner-agency expansion yet). Cellular and RDM software lines scale with kiosk count — revisit this doc once kiosk hardware/software vendors are locked in Phase 2.
+</div>
+
+<div class="chart-card">
+<div class="chart-title">Monthly cost range by category — Cellular Connectivity, RDM Software, SMS, Hosting, Domain</div>
+
+<div class="cost-row">
+  <div class="cost-label">Cellular Connectivity</div>
+  <div class="cost-track" title="MetroClick's confirmed Yearly Data Fee is $450/unit/yr ($37.50/mo) × 3 kiosks = $112.50/mo — narrowed from the earlier $30–80/mo general estimate">
+    <div class="cost-bar" style="left:36%; width:24%;"></div>
+  </div>
+  <div class="cost-range-label">$90 – $150</div>
+</div>
+
+<div class="cost-row">
+  <div class="cost-label">RDM / Kiosk Software</div>
+  <div class="cost-track" title="Lean MDM (~$2–4/device/mo) to mid-tier CMS (~$10–20/device/mo) × 3 kiosks">
+    <div class="cost-bar" style="left:4%; width:20%;"></div>
+  </div>
+  <div class="cost-range-label">$10 – $60</div>
+</div>
+
+<div class="cost-row">
+  <div class="cost-label">SMS (Twilio)</div>
+  <div class="cost-track" title="~250 messages/month estimated volume">
+    <div class="cost-bar" style="left:8%; width:12%;"></div>
+  </div>
+  <div class="cost-range-label">$20 – $50</div>
+</div>
+
+<div class="cost-row">
+  <div class="cost-label">Hosting</div>
+  <div class="cost-track" title="Replit / Railway / Render / Vercel / Netlify — platform not finalized">
+    <div class="cost-bar" style="left:0%; width:10%;"></div>
+  </div>
+  <div class="cost-range-label">$0 – $25</div>
+</div>
+
+<div class="cost-row">
+  <div class="cost-label">Domain Name</div>
+  <div class="cost-track" title="Standard .org annual registration, prorated monthly">
+    <div class="cost-bar" style="left:0.4%; width:0.6%;"></div>
+  </div>
+  <div class="cost-range-label">$1 – $2</div>
+</div>
+
+<div class="chart-axis">
+  <span>$0</span><span>$50</span><span>$100</span><span>$150</span><span>$200</span><span style="text-align:right;">$250</span>
+</div>
+</div>
+
+<div class="total-card">
+<div>
+  <div class="total-label">Estimated Monthly Total</div>
+  <div class="total-value">$121 – $287 / mo</div>
+  <div class="total-sub">Sum of the five categories above · 3-kiosk deployment</div>
+</div>
+<div class="total-annual">Annualized:<br/><strong>$1,452 – $3,444 / yr</strong></div>
+</div>
+
+<div class="section-label">Line-Item Detail</div>
+<table>
+<thead>
+<tr><th>Category</th><th>Monthly Range</th><th>Basis</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>Cellular Connectivity</td>
+<td class="num">$90 – $150</td>
+<td class="note">MetroClick's formal quote (Jul 23, 2026) confirms a Yearly Data Fee of $450/unit/yr ($37.50/mo) via a managed multi-carrier IoT SIM — $112.50/mo for 3 kiosks. Range kept slightly wider to account for other vendors: Meridian's formal quote (Jul 22) prices cellular as a one-time $452/unit hardware add-on with no recurring data cost itemized — confirm whether a separate carrier data plan is needed if Meridian is selected instead.</td>
+</tr>
+<tr>
+<td>RDM / Kiosk Software</td>
+<td class="num">$10 – $60</td>
+<td class="note">Reflects the lean, hardware-only-plus-ARC's-own-MDM path: Scalefusion (~$2–4/device/mo) up to SiteKiosk Online (~$10–20/device/mo) × 3 kiosks. <strong>Not finalized, and now a bigger swing than this range shows:</strong> MetroClick's formal quote (Jul 23) prices their own SaaS platform at $702/yr/unit net (~$175.50/mo for 3 units), and Meridian's formal quote (Jul 22) prices mZero Manage + Create SDK at $3,120/yr/unit (~$780/mo for 3 units, from year 2) — both confirmed, and both well above this range if the selected vendor's bundled software is kept rather than switching to hardware-only + ARC's own MDM. Whichever kiosk hardware vendor is selected will likely decide this line.</td>
+</tr>
+<tr>
+<td>SMS (Twilio)</td>
+<td class="num">$20 – $50</td>
+<td class="note">Estimated at ~250 outbound/inbound messages per month for case-linked messaging. Provider leaning Twilio; not yet contracted.</td>
+</tr>
+<tr>
+<td>Hosting</td>
+<td class="num">$0 – $25</td>
+<td class="note">Candidate platforms (Replit, Railway, Render, Vercel, Netlify) all offer free/hobby tiers likely sufficient at MVP traffic; budgeting to a paid tier as a safe planning ceiling. Platform not finalized.</td>
+</tr>
+<tr>
+<td>Domain Name</td>
+<td class="num">$1 – $2</td>
+<td class="note">Standard annual domain registration (~$12–20/yr for a .org), prorated monthly.</td>
+</tr>
+</tbody>
+</table>
+
+<div class="addl-card">
+<strong>Possible additional costs — not included in the total above</strong>
+<ul>
+<li><strong>Database (Supabase):</strong> Free tier likely covers MVP scale; Pro tier (if row/bandwidth limits are exceeded) runs roughly $25/mo. Confirm free-tier limits before committing either way.</li>
+<li><strong>ARC ongoing maintenance:</strong> Not a hosting/software line — this would be a separate service retainer between CSAH and ARC Consulting for post-launch feature work and support. No rate has been discussed; excluded from this doc entirely.</li>
+</ul>
+</div>
+
+<p class="foot">Prepared as a Phase 1 handoff reference — not a final budget. Ranges compiled from prior Compass Project vendor research (see Kiosk Hardware, Kiosk Connectivity, and Kiosk Software comparison docs) and internal planning assumptions. Cellular and RDM/Kiosk Software figures updated Jul 23, 2026 with confirmed pricing from MetroClick's and Meridian's formal quotes — see Kiosk Hardware Comparison doc for full detail. All other lines (SMS, Hosting, Domain) remain unconfirmed planning estimates. Revisit and finalize once kiosk hardware/software and hosting vendors are selected in Phase 2.</p>
+
+</div>
+</body>
+</html>

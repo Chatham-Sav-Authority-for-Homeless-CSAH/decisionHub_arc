@@ -64,16 +64,6 @@
 
   .tbd-cell { font-size: 12px; color: #9ca3af; font-style: italic; }
 
-  .connectivity-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 1.75rem; }
-  .conn-card { background: #fff; border: 1px solid #d3d1c7; border-radius: 10px; padding: 14px 16px; }
-  .conn-card h3 { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
-  .conn-card p { font-size: 12px; line-height: 1.6; color: #3d3d3b; }
-  .conn-card .conn-tag { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 20px; margin-bottom: 8px; }
-  .tag-primary   { background: #e1f5ee; color: #0f6e56; }
-  .tag-secondary { background: #e6f1fb; color: #185fa5; }
-  .tag-fallback  { background: #faeeda; color: #854f0b; }
-  .conn-cost { font-size: 11px; color: #5f5e5a; margin-top: 6px; font-style: italic; }
-
   .budget-table { width: 100%; border-collapse: collapse; border: 1px solid #d3d1c7; border-radius: 12px; overflow: hidden; font-size: 13px; margin-bottom: 1.75rem; }
   .budget-table th { background: #e8e6df; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #888780; font-weight: 500; padding: 8px 14px; text-align: left; border-bottom: 0.5px solid #d3d1c7; }
   .budget-table th:not(:last-child), .budget-table td:not(:last-child) { border-right: 0.5px solid #d3d1c7; }
@@ -113,11 +103,14 @@
   </a>
 </div>
 <h1>Kiosk Hardware Comparison</h1>
-<p class="subtitle">Compass Project — evaluated against CSAH kiosk requirements · Updated July 2026 with MetroClick 2nd call findings</p>
-<div class="note-group">
+<p class="subtitle">Compass Project — evaluated against CSAH kiosk requirements · Updated July 2026 — MetroClick &amp; Meridian formal quotes received (Jul 22–23)</p>
+<div class="accordion" style="margin-bottom:1.75rem;">
+<details class="cat-block">
+<summary class="cat-summary">Assumptions <svg class="chevron" fill="none" height="10" viewbox="0 0 10 10" width="10"><path d="M2 3.5L5 6.5L8 3.5" stroke="#5f5e5a" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path></svg></summary>
+<div class="note-group" style="margin-bottom:0; padding:14px;">
 <div class="key-note note-green">
 <strong>Analysis basis</strong>
-    This comparison is grounded in the finalized CSAH kiosk requirements (July 2026), organized by category: Physical/Hardware &amp; Display, Accessibility &amp; UX Interaction, Software/Integration, Operational/Nonprofit Fit, Data Privacy &amp; Governance, and Nice-to-Haves. Cells marked <span class="confirmed-tag">CALL CONFIRMED</span> reflect data gathered from vendor conversations. All other vendor cells represent market-estimate or unverified data — treat as starting points for quote conversations, not confirmed specs.
+    This comparison is grounded in the finalized CSAH kiosk requirements (July 2026), organized by category: Physical/Hardware &amp; Display, Accessibility &amp; UX Interaction, Software/Integration, Operational/Nonprofit Fit, Data Privacy &amp; Governance, and Nice-to-Haves. Cells marked <span class="confirmed-tag">CALL CONFIRMED</span> reflect data gathered from vendor conversations; cells citing a "formal quote" reflect written pricing documents. All other vendor cells represent market-estimate or unverified data — treat as starting points for quote conversations, not confirmed specs.
   </div>
 <div class="key-note note-red">
 <strong>Data Privacy is a non-negotiable, not a nice-to-have</strong>
@@ -128,9 +121,15 @@
     CSAH is not federally funded, so federal accessibility law (Section 508) does not apply. WCAG 2.1 AA is the target standard. ADA physical compliance (48" max height, 30"×48" clear floor space) is required for all units.
   </div>
 <div class="key-note note-blue">
-<strong>New app requirement: arrow-key navigation (from MetroClick 2nd call, Jul 20)</strong>
-    For outdoor freestanding kiosks, a 48"-max screen height and a 32"/43" portrait display are mutually exclusive — at those sizes, portrait mounting puts the bottom of the screen ~20–21" off the ground, too low for standing users. MetroClick's standard solution is a physical ADA keypad (directional arrows + enter button, plus a headphone jack for audio guidance) mounted at compliant height beside the screen, decoupling ADA reach compliance from screen height. The keypad emulates keyboard arrow keys and Enter. <strong>This means the CSAH kiosk web app must be fully navigable via keyboard arrow keys and Enter — not touch-only</strong> — for the keypad to work. This is a real app-layer requirement, not just a hardware spec; confirm whether Advanced Kiosks, Meridian, and Olea use the same or an equivalent keypad approach.
+<strong>New app requirement: arrow-key navigation (from MetroClick 2nd call, Jul 20 — now confirmed by both formal proposals)</strong>
+    For outdoor freestanding kiosks, a 48"-max screen height and a large portrait display are mutually exclusive — at those sizes, portrait mounting puts the bottom of the screen too low for standing users. Both MetroClick (ADA Device) <strong>and Meridian (ADA NavPad with Audio Jack)</strong> solve this the same way: a physical directional keypad + Enter button + headphone jack mounted at compliant height beside the screen, decoupling ADA reach compliance from screen height. <strong>This means the CSAH kiosk web app must be fully navigable via keyboard arrow keys and Enter — not touch-only</strong> — for the keypad to work on either vendor's hardware. Confirm the same for Advanced Kiosks and Olea.
   </div>
+<div class="key-note note-red">
+<strong>Formal quotes received — MetroClick &amp; Meridian (Jul 22–23, 2026)</strong>
+    Both vendors' phone-call estimates are now superseded by written quotes for specific models: MetroClick for <strong>43" and 55" portrait kiosks</strong> (not the 32" originally discussed), Meridian for <strong>32" and 43" Presenza kiosks</strong>. Two findings change the picture materially: (1) <strong>MetroClick's confirmed all-in price ($16,098–$17,118/unit)</strong> lands comfortably under budget with nonprofit discounts already baked in. (2) <strong>Meridian's confirmed all-in price ($32,626–$37,458/unit)</strong> is 2.2–2.7× the earlier $10K–$15K phone-call estimate and exceeds the $25K/unit ceiling at both sizes — driven by Meridian's own mZero software (Manage + Create SDK), SLA, and 3-year warranty being priced into the base quote rather than offered as a stripped hardware-only SKU. Advanced Kiosks' price list turned out to have the same problem. Olea still has no pricing at all — treat its figures as estimates only. Vendor column order below reflects current priority: MetroClick, Meridian, Advanced Kiosks, Olea.
+  </div>
+</div>
+</details>
 </div>
 <!-- Sticky column header -->
 <table class="cmp-header" style="table-layout:fixed;">
@@ -139,19 +138,19 @@
 <tr>
 <th class="row-label"></th>
 <th class="col-head featured">
-<div class="col-name green">Advanced Kiosks</div>
-<div class="col-sub">Social service precedent, built-in MDM</div>
+<div class="col-name green">MetroClick</div>
+<div class="col-sub">Formal quote confirmed — best value, well under budget</div>
 <span class="badge badge-green">ARC recommendation</span>
 </th>
 <th class="col-head">
 <div class="col-name">Meridian</div>
-<div class="col-sub">Hardware-only confirmed; Interact software optional</div>
-<span class="badge badge-green">Call completed</span>
+<div class="col-sub">Formal quote confirmed — over the $25K/unit ceiling</div>
+<span class="badge badge-amber">Over budget as quoted</span>
 </th>
 <th class="col-head">
-<div class="col-name">MetroClick</div>
-<div class="col-sub">Public housing analog, most budget-friendly</div>
-<span class="badge badge-blue">Strong contender</span>
+<div class="col-name">Advanced Kiosks</div>
+<div class="col-sub">Price list confirmed — over the $25K/unit ceiling</div>
+<span class="badge badge-amber">Over budget as priced</span>
 </th>
 <th class="col-head">
 <div class="col-name">Olea Kiosks</div>
@@ -159,7 +158,7 @@
 <span class="badge badge-amber">If budget allows</span>
 </th>
 </tr>
-<tr><td class="row-label" style="font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#888780;font-weight:600;">Models being considered</td><td class="col-head featured" style="font-size:12px;color:#0f6e56;">Monolith &amp; Enviro</td><td class="col-head" style="font-size:12px;">Presenza &amp; Q-Series</td><td class="col-head" style="font-size:12px;">Portrait 32" or 43"</td><td class="col-head" style="font-size:12px;color:#9ca3af;font-style:italic;">TBD</td></tr></thead>
+<tr><td class="row-label" style="font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#888780;font-weight:600;">Models being considered</td><td class="col-head featured" style="font-size:12px;color:#0f6e56;">Portrait 43" or 55" <span style="color:#5f5e5a;font-style:italic;">(formal quote)</span></td><td class="col-head" style="font-size:12px;">Presenza 32" or 43" <span style="color:#5f5e5a;font-style:italic;">(formal quote)</span></td><td class="col-head" style="font-size:12px;">Monolith (46" or 55")</td><td class="col-head" style="font-size:12px;color:#9ca3af;font-style:italic;">TBD</td></tr></thead>
 </table>
 <div class="accordion">
 <!-- ─── PHYSICAL / HARDWARE & DISPLAY ─── -->
@@ -170,51 +169,51 @@
 <tbody>
 <tr>
 <td class="row-label">Industrial-grade enclosure<br/><span style="font-weight:400;font-size:11px;">IP65 or higher recommended</span></td>
-<td><span class="check">✓</span> 14-gauge steel, tested for extreme weather; expected lifespan 5–6 years (up to 8). Confirm IP65 rating for selected outdoor configuration at quote.</td>
-<td><span class="check">✓</span> Cold rolled steel, laser cut/welded; dual-stage powder coat; compression locks and extra weld points; ISO 9001:2015 certified manufacturing. Confirm IP rating at quote.</td>
 <td><span class="check">✓</span> IP65 confirmed — anti-vandal construction, thicker cover glass rated for rain, snow, and direct sunlight.</td>
+<td><span class="check">✓</span> Cold rolled steel, laser cut/welded; dual-stage powder coat; compression locks and extra weld points; ISO 9001:2015 certified manufacturing. Jul 22 proposal confirms durable aluminum enclosure with UV outdoor powder coat finish (grey) for the Presenza line. Confirm IP rating at quote.</td>
+<td><span class="check">✓</span> 14-gauge steel, tested for extreme weather; expected lifespan 5–6 years (up to 8). Confirm IP65 rating for selected outdoor configuration at quote.</td>
 <td><span class="check">✓</span> Industrial-grade US-manufactured; validated in extreme outdoor environments. Confirm IP rating at quote.</td>
 </tr>
 <tr>
 <td class="row-label">Integrated cellular module<br/><span style="font-weight:400;font-size:11px;">Factory-engineered — not a retrofit or add-on; antenna, enclosure material, and modem designed together; tested with cellular active inside enclosure</span></td>
-<td class="tbd-cell">Verify at quote — cellular available on outdoor models; confirm modem is factory-engineered into the enclosure (not a retrofit), antenna placement is co-designed with enclosure material, and unit has been tested with cellular active inside enclosure under real-world conditions.</td>
-<td class="tbd-cell">Verify at quote — Meridian outdoor units may include built-in cellular option; confirm modem is part of original hardware design, antenna placement is engineered with enclosure material, and unit has been tested with cellular active under real-world conditions. Do not accept retrofit modem as equivalent.</td>
 <td><span class="check">✓</span> Factory-integrated confirmed on 2nd call (Jul 20) — puck antenna drilled through housing, mounted on top; modem evaluates AT&amp;T/Verizon/T-Mobile and selects best signal per location. Uses MetroClick's own managed IoT SIM (multi-carrier resilient) by default — CSAH pays MetroClick, no separate carrier account setup needed. CSAH can alternatively supply its own SIM cards if preferred (adds a troubleshooting-visibility tradeoff per MetroClick).</td>
+<td><span class="check">✓</span> Confirmed in Jul 22 formal quote — "Cellular Router &amp; Low-Profile Antenna" is a standard hardware kit item on the Presenza line, plus a Wi-Fi Kit. One-time add-on cost: $452/unit. Factory integration implied by kit packaging; still confirm co-engineered antenna/enclosure and real-world cellular-active testing before order.</td>
+<td class="tbd-cell">Verify at quote — cellular available on outdoor models; confirm modem is factory-engineered into the enclosure (not a retrofit), antenna placement is co-designed with enclosure material, and unit has been tested with cellular active inside enclosure under real-world conditions.</td>
 <td class="tbd-cell">Verify at quote — cellular connectivity available; confirm factory integration vs. retrofit and that unit has been real-world tested with cellular active inside enclosure.</td>
 </tr>
 <tr>
 <td class="row-label">Active thermal management<br/><span style="font-weight:400;font-size:11px;">Heating and/or cooling — outdoor temperature range operation</span></td>
-<td><span class="check">✓</span> Active heating/cooling confirmed for outdoor line.</td>
-<td><span class="check">✓</span> Built-in AC/climate control for extreme temperatures — confirmed on vendor call.</td>
 <td><span class="partial">⚠</span> Outdoor enclosure rated for temperature extremes — confirm active (not passive) heating/cooling system at quote.</td>
+<td><span class="check">✓</span> Built-in AC/climate control for extreme temperatures — confirmed on vendor call. Not explicitly restated as a line item in the Jul 22 written proposal; reconfirm for the specific Presenza configuration at order.</td>
+<td><span class="check">✓</span> Active heating/cooling confirmed for outdoor line.</td>
 <td><span class="check">✓</span> Industrial-grade outdoor — validate active climate control for Savannah's heat and humidity range at quote.</td>
 </tr>
 <tr>
 <td class="row-label">Anti-vandal touchscreen glass<br/><span style="font-weight:400;font-size:11px;">Tempered, scratch-resistant</span></td>
-<td><span class="check">✓</span> Tempered, scratch-resistant standard on outdoor line.</td>
-<td><span class="check">✓</span> Tempered or laminated safety glass standard on all outdoor models.</td>
 <td><span class="check">✓</span> Optically bonded anti-vandal touchscreen; outdoor cover glass engineered for direct sunlight.</td>
+<td><span class="check">✓</span> Tempered or laminated safety glass standard on all outdoor models.</td>
+<td><span class="check">✓</span> Tempered, scratch-resistant standard on outdoor line.</td>
 <td><span class="check">✓</span> Industrial-grade; standard on outdoor models.</td>
 </tr>
 <tr>
 <td class="row-label">Lockable service panel</td>
-<td><span class="check">✓</span> Standard; internal components are modular — swap parts on-site without shipping the unit back.</td>
-<td><span class="partial">⚠</span> Compression locks and extra weld points confirmed on enclosure — dedicated service panel access not specifically described. Verify at quote.</td>
 <td><span class="check">✓</span> Standard; easy part swapping. Remote diagnosis first; on-site only if needed.</td>
+<td><span class="partial">⚠</span> Compression locks and extra weld points confirmed on enclosure; "High Security Locks" also confirmed as a standard hardware kit item in the Jul 22 proposal. Dedicated service panel access still not specifically described — verify at quote.</td>
+<td><span class="check">✓</span> Standard; internal components are modular — swap parts on-site without shipping the unit back.</td>
 <td><span class="check">✓</span> Standard on industrial-grade units.</td>
 </tr>
 <tr>
 <td class="row-label">High-contrast sunlight-readable display<br/><span style="font-weight:400;font-size:11px;">1,000+ nits minimum; adjustable brightness</span></td>
-<td><span class="check">✓</span> Sunlight-readable monitors standard — confirmed on vendor call. Confirm nit rating (1,000+ minimum) at quote.</td>
-<td><span class="check">✓</span> 2,500-nit sunlight-readable displays confirmed on vendor call. Exceeds 1,000-nit minimum requirement.</td>
 <td><span class="check">✓</span> Optically bonded display with thicker cover glass for direct sunlight. Verify nit rating at quote.</td>
+<td><span class="check">✓</span> 2,500-nit sunlight-readable displays confirmed on vendor call. Exceeds 1,000-nit minimum requirement.</td>
+<td><span class="check">✓</span> Sunlight-readable monitors standard — confirmed on vendor call. Confirm nit rating (1,000+ minimum) at quote.</td>
 <td><span class="check">✓</span> Tests own LCDs for outdoor performance; real-world validated. Confirm nit rating at quote.</td>
 </tr>
 <tr>
 <td class="row-label">Audio output<br/><span style="font-weight:400;font-size:11px;">Headphone jack + internal speaker (ADA Title III effective communication)</span></td>
+<td><span class="check">✓</span> Confirmed on 2nd call — headphone jack for audio guidance is built into the ADA keypad accessory ($500, see Cost table). Internal speaker not itemized separately.</td>
+<td><span class="check">✓</span> Confirmed in Jul 22 proposal — "Outdoor Audio Kit (no microphone)" plus "ADA NavPad with Audio Jack" are both standard hardware kit items, and a speaker add-on ($267) is separately priced. Matches MetroClick's keypad + audio jack approach — cross-vendor confirmation of the arrow-key navigation requirement above.</td>
 <td><span class="partial">⚠</span> Available on some models — confirm both headphone jack and internal speaker for selected outdoor configuration at quote.</td>
-<td class="tbd-cell">Not mentioned in public materials or vendor call — required verification item at quote.</td>
-<td><span class="check">✓</span> Confirmed on 2nd call — headphone jack for audio guidance is built into the ADA keypad accessory. Internal speaker TBD — confirm at quote.</td>
 <td><span class="partial">⚠</span> Specifiable at order — confirm headphone jack and internal speaker with Olea at quote.</td>
 </tr>
 </tbody>
@@ -228,64 +227,64 @@
 <tbody>
 <tr>
 <td class="row-label">Minimum 21" touchscreen<br/><span style="font-weight:400;font-size:11px;">ADA — viewability from seated/wheelchair position</span></td>
-<td><span class="check">✓</span> 24–27" range on Monolith/Enviro outdoor line. Exceeds minimum.</td>
-<td><span class="check">✓</span> 14"–65" outdoor range; 32" models available (Atlas, Q Series Outdoor). Confirm selected model meets 21" minimum at quote.</td>
-<td><span class="check">✓</span> 21.5"–55" range; 24" standard outdoor. Confirm selected configuration meets 21" minimum.</td>
+<td><span class="check">✓</span> 43" and 55" models formally quoted (Jul 23) — both well exceed the 21" minimum. General catalog range 21.5"–55".</td>
+<td><span class="check">✓</span> 32" and 43" Presenza models formally quoted (Jul 22) — both exceed 21" minimum.</td>
+<td><span class="check">✓</span> <strong>Correction:</strong> AK's own site confirms the Outdoor Monolith is 46" or 55" only (not the 24–27" previously listed here — that figure didn't apply to this model). Far exceeds the 21" minimum.</td>
 <td><span class="check">✓</span> 24–27" outdoor range. Exceeds minimum.</td>
 </tr>
 <tr>
 <td class="row-label">Max 48" screen height from floor<br/><span style="font-weight:400;font-size:11px;">ADA forward reach limit — unobstructed approach</span></td>
-<td><span class="check">✓</span> Government models designed to ADA spec; 48" max screen height standard. Confirm for selected outdoor configuration at quote.</td>
-<td><span class="check">✓</span> ADA-compliant designs certified; ISO 9001:2015. Confirm 48" max height on specific outdoor model at quote.</td>
 <td><span class="check">✓</span> Height and screen position configurable per ADA spec. Confirm 48" max for selected configuration.</td>
+<td><span class="check">✓</span> "ADA Compliant Screen Location" explicitly listed as a standard spec line in the Jul 22 proposal, alongside the ADA NavPad — same height-decoupling strategy as MetroClick (see key-note above).</td>
+<td><span class="warn">⚠</span> Government models designed to ADA spec; 48" max screen height standard per AK. <strong>Now that the Monolith is confirmed 46"/55" only</strong> — the same size class as MetroClick's 55" and Meridian's 43" — the same height-vs-reach tension applies: a screen that large in portrait typically can't fit within 48" without a keypad-style ADA accessory. AK's site references "tactile feedback" as part of its ADA approach, which may mean a similar keypad, but this isn't confirmed. Ask directly whether Monolith uses a physical keypad accessory (like MetroClick's ADA Device or Meridian's NavPad) or achieves compliance another way.</td>
 <td><span class="check">✓</span> Most-cited vendor in ADA kiosk literature; 48" compliance is a product differentiator. Confirm at quote.</td>
 </tr>
 <tr>
 <td class="row-label">30"×48" clear floor space<br/><span style="font-weight:400;font-size:11px;">ADA — approach and positioning space for wheeled mobility aids (installation requirement)</span></td>
-<td><span class="partial">⚠</span> Confirm unit footprint and installation spec maintains 30"×48" approach clearance at each site. Request installation documentation.</td>
-<td><span class="partial">⚠</span> Verify at quote — confirm outdoor unit footprint and installation spec preserve 30"×48" clear approach space per ADA requirements.</td>
 <td><span class="partial">⚠</span> Confirm installation footprint preserves required clear floor space. Site-specific — verify with MetroClick installation team.</td>
+<td><span class="partial">⚠</span> Verify at quote — confirm outdoor unit footprint and installation spec preserve 30"×48" clear approach space per ADA requirements.</td>
+<td><span class="partial">⚠</span> Confirm unit footprint and installation spec maintains 30"×48" approach clearance at each site. Request installation documentation.</td>
 <td><span class="partial">⚠</span> Verify installation spec maintains 30"×48" clear floor space. Request vendor documentation specifying clearance requirements.</td>
 </tr>
 <tr>
 <td class="row-label">Screen reader / audio guidance<br/><span style="font-weight:400;font-size:11px;">WCAG 2.1 AA — screen reader-capable OS required; Windows Narrator, Android TalkBack, or Linux equiv.</span></td>
+<td><span class="check">✓</span> Windows confirmed — includes Narrator. <strong>Note:</strong> the Jul 23 formal quote is priced for MetroClick's own SaaS platform (Yearly SaaS Fee + Data Fee), not the "blank Windows PC + ARC's own MDM" path assumed elsewhere in this doc — re-confirm the "no MetroClick software layer" framing at this actual pricing. See Data Privacy caveat below.</td>
+<td><span class="check">✓</span> <strong>Now a standout</strong> — the Jul software requirements response confirms integrated NVDA screen reader with automatic activation when headphones are inserted into the ADA accessibility pad, plus <strong>English and Spanish voices</strong> and automatic page reading. Exceeds the base requirement for a screen-reader-capable OS. Note: this is delivered via Meridian's own mZero Secure Browser layer, not a blank-OS/hardware-only path — see Data Privacy caveat below for the pricing/software-bundling nuance.</td>
 <td><span class="check">✓</span> Windows 11 confirmed — includes Narrator. WCAG 2.1 AA delivered by app layer. Zamok lockdown must not block accessibility API access — verify at quote.</td>
-<td><span class="check">✓</span> Windows primary platform confirmed. Hardware-only path: no mZero layer to interfere with browser accessibility API. Equivalent posture to MetroClick blank Windows PC.</td>
-<td><span class="check">✓</span> Windows confirmed — includes Narrator. Blank Windows PC eliminates any platform interference with browser accessibility APIs. Cleanest path to WCAG 2.1 AA.</td>
 <td><span class="check">✓</span> Hardware-only; CSAH controls OS and accessibility config. No vendor software layer to interfere — cleanest architecture for WCAG compliance.</td>
 </tr>
 <tr>
 <td class="row-label">Chromium kiosk mode — Web Speech API<br/><span style="font-weight:400;font-size:11px;">Browser-level TTS for narrating content to low-literacy or visually impaired users; must not be blocked by lockdown config</span></td>
+<td><span class="partial">⚠</span> Web Speech API is accessible in standard Chromium kiosk mode, but the formal quote is for MetroClick's own SaaS platform, not the blank-Windows-PC path referenced here — confirm Speech API isn't restricted within MetroClick's own kiosk software if that path is used.</td>
+<td><span class="check">✓</span> Confirmed compliant (with configuration) in the Jul software requirements response — Chromium supports Speech Synthesis and Web Speech API. Speech Recognition is available but would stay <strong>disabled</strong> for CSAH (no audio leaves the kiosk — good privacy alignment). NVDA auto-dictates without needing Web Speech API once accessibility mode is active. <strong>Open question:</strong> the response says "client to provide API keys through their own website" — unclear which API this refers to; get Meridian to clarify before assuming this is free of ARC-side setup work.</td>
 <td><span class="partial">⚠</span> Windows 11 + Zamok lockdown confirmed. Web Speech API is a Chromium browser-level feature — verify Zamok config does not block Speech API access within the locked-down Chrome session.</td>
-<td><span class="check">✓</span> Hardware-only path: ARC installs and configures Chromium. Web Speech API accessible in standard Chromium kiosk mode — no Meridian software layer to restrict it.</td>
-<td><span class="check">✓</span> Blank Windows PC path: ARC installs Chromium in kiosk mode with full API access control. Web Speech API available by default in Chromium — no MetroClick software layer to restrict it.</td>
 <td><span class="check">✓</span> Hardware-only; CSAH configures Chromium kiosk mode. Web Speech API accessible — no vendor software layer to restrict it.</td>
 </tr>
 <tr>
 <td class="row-label">Screensaver<br/><span style="font-weight:400;font-size:11px;">Touch-responsive; returns to app immediately on touch</span></td>
-<td class="tbd-cell">Not discussed on vendor call — verify directly. Zamok may support idle screen config. Hardware-only path: configure via MDM or app-layer idle handler.</td>
-<td><span class="check">✓</span> Meridian Interact software includes attract loop for idle screen. Hardware-only path: configure via ARC's MDM or app-layer idle handler.</td>
 <td><span class="check">✓</span> Confirmed — MetroClick platform: images or calls to action when idle, returns on touch. Blank Windows PC path: configure via ARC's MDM or app-layer idle handler.</td>
+<td><span class="check">✓</span> Attract loop for idle screen confirmed on vendor call. Hardware-only path: configure via ARC's MDM or app-layer idle handler. <em>Note:</em> the call referenced this as part of optional "Interact" wayfinding software ($3,000 one-time + $1,500/yr) — the Jul 22 formal proposal instead itemizes "mZero Manage" + "mZero Create SDK" as the year-2 subscription. Clarify whether Interact and mZero are the same product family or genuinely separate offerings.</td>
+<td class="tbd-cell">Not discussed on vendor call — verify directly. Zamok may support idle screen config. Hardware-only path: configure via MDM or app-layer idle handler.</td>
 <td class="tbd-cell">TBD — verify at quote. Hardware-only path: configure via MDM or app-layer idle detection.</td>
 </tr>
 <tr>
 <td class="row-label">Session timeout<br/><span style="font-weight:400;font-size:11px;">Configurable to ≥ X minutes (not the typical 60-second default)</span></td>
-<td><span class="check">✓</span> Zamok session timeout configurable — verify minimum achievable timeout at quote.</td>
-<td><span class="partial">⚠</span> Not discussed on vendor call. Hardware-only + ARC MDM: fully configurable. Verify minimum timeout at quote.</td>
 <td><span class="partial">⚠</span> Configurable via MetroClick platform or ARC's MDM on blank Windows PC. Confirm minimum configurable timeout duration at quote.</td>
+<td><span class="partial">⚠</span> Not discussed on vendor call or in the formal proposal. Hardware-only + ARC MDM: fully configurable. Verify minimum timeout at quote.</td>
+<td><span class="check">✓</span> Zamok session timeout configurable — verify minimum achievable timeout at quote.</td>
 <td><span class="check">✓</span> Via MDM and app layer — no vendor-imposed defaults. Fully configurable.</td>
 </tr>
 <tr>
 <td class="row-label">Touch-only user flows<br/><span style="font-weight:400;font-size:11px;">No keyboard required for user-facing flows; no fine motor skills required</span></td>
-<td><span class="check">✓</span> Large-format touchscreen; touch driver configurable for large-target UX. Touch-only flow design is app responsibility.</td>
-<td><span class="check">✓</span> Large-format outdoor touchscreens (up to 65"). Touch-only flow design is app responsibility.</td>
 <td><span class="check">✓</span> Standard touch hardware. Large touch target sizing is app design responsibility.</td>
+<td><span class="check">✓</span> Large-format outdoor touchscreens (up to 65"). Touch-only flow design is app responsibility.</td>
+<td><span class="check">✓</span> Large-format touchscreen; touch driver configurable for large-target UX. Touch-only flow design is app responsibility.</td>
 <td><span class="check">✓</span> Large-format display; touch precision configurable. App design responsibility.</td>
 </tr>
 <tr>
 <td class="row-label">Physical volume control<br/><span style="font-weight:400;font-size:11px;">Accessible without touchscreen interaction</span></td>
 <td class="tbd-cell">Verify at quote — not addressed in public materials or vendor call.</td>
-<td class="tbd-cell">Verify at quote — not addressed in public materials or vendor call.</td>
+<td><span class="check">✓</span> "Accessible volume control" confirmed in the Jul software requirements response, alongside configurable session timeout and touch-first workflows requiring no keyboard.</td>
 <td class="tbd-cell">Verify at quote — not addressed in public materials or vendor call.</td>
 <td class="tbd-cell">Verify at quote — not addressed in public materials or vendor call.</td>
 </tr>
@@ -300,37 +299,37 @@
 <tbody>
 <tr>
 <td class="row-label">PWA / web app in Chrome/Chromium kiosk mode <span class="confirmed-tag">CALL CONFIRMED (AK, MC)</span></td>
+<td><span class="check">✓</span> Confirmed — two paths: <strong>As quoted (Jul 23):</strong> MetroClick's own SaaS platform (Yearly SaaS Fee $780 + Yearly Data Fee $450, both with nonprofit discounts applied) locks to the CSAH web app.<br/><strong>Alternative (not yet re-quoted):</strong> Blank Windows PC — ARC installs its own MDM, eliminating MetroClick's software layer. Confirm this is still available and get separate pricing if CSAH prefers it.</td>
+<td><span class="check">✓</span> Confirmed — the Jul 22 formal quote bundles mZero Manage ($620/yr) + mZero Create SDK ($2,500/yr from year 2) — this is Meridian's own software stack, not a hardware-only SKU. <strong>The "hardware-only" path referenced elsewhere in this doc has not been re-quoted</strong> — confirm availability and pricing if CSAH wants to avoid the mZero layer.</td>
 <td><span class="check">✓</span> Confirmed — Zamok locks device to specific URLs. Supports CSAH's single web app architecture. Windows 11. Hardware-only option available.</td>
-<td><span class="check">✓</span> Confirmed — hardware-only purchase confirmed. ARC installs own MDM (e.g., Scalefusion ~$25–50/yr). Optional Interact wayfinding software at $3,000/unit + $1,500/yr.</td>
-<td><span class="check">✓</span> Confirmed — two paths:<br/><strong>Recommended:</strong> Blank Windows PC — ARC installs own MDM, eliminates MetroClick data concerns.<br/><strong>Alternative:</strong> MetroClick platform — locks to web app, requires data privacy audit.</td>
 <td><span class="check">✓</span> Hardware-only; full OS/MDM choice — cleanest architecture control.</td>
 </tr>
 <tr>
 <td class="row-label">Locked-down OS<br/><span style="font-weight:400;font-size:11px;">No access to general browser or OS for users</span></td>
+<td><span class="check">✓</span> MetroClick's own SaaS platform (as quoted) locks the device to the web app. Blank Windows PC + ARC's own MDM remains a theoretical alternative pending separate pricing.</td>
+<td><span class="check">✓</span> mZero (as quoted) provides locked-down browser mode. Hardware-only + ARC's own MDM remains a theoretical alternative pending separate pricing.</td>
 <td><span class="check">✓</span> Zamok provides URL lockdown — restricts device to specified web app. No general browser access.</td>
-<td><span class="check">✓</span> Hardware-only path — ARC installs MDM for lockdown. Optional Interact software also provides locked-down browser mode.</td>
-<td><span class="check">✓</span> MetroClick platform locks to web app. Blank Windows PC: ARC's MDM (e.g., Scalefusion) provides equivalent lockdown.</td>
 <td><span class="check">✓</span> Hardware-only — CSAH installs chosen MDM for full lockdown. No vendor-imposed restrictions on configuration.</td>
 </tr>
 <tr>
 <td class="row-label">Multi-domain routing<br/><span style="font-weight:400;font-size:11px;">Kiosk mode must support more than 1 allowed domain (e.g., app + Google Maps)</span></td>
-<td><span class="partial">⚠</span> Verify at quote — confirm Zamok allows domain whitelisting for more than one URL (CSAH app domain + Google Maps at minimum).</td>
-<td><span class="partial">⚠</span> Verify at quote — confirm hardware-only + MDM path supports whitelisting multiple domains. Scalefusion (ARC's likely MDM) supports this natively.</td>
 <td><span class="warn">⚠ Testing pending</span> MetroClick whitelists base domains only (e.g., facebook.com covers everything under it) — whitelisting all of google.com is explicitly discouraged by MetroClick for a public unattended kiosk (opens general search/browsing, not just Maps). Open question: whether maps.google.com can be isolated, since Maps redirects to google.com/maps once loaded. Michael (MetroClick) is testing this the week of Jul 20 and will report back. <strong>Recommendation from this call: embed Google Maps directly in the CSAH app (API/iframe) rather than linking out</strong> — avoids the whitelist problem entirely and keeps users inside the app URL.</td>
+<td><span class="check">✓</span> Confirmed in the Jul software requirements response — configurable domain whitelisting supports multiple trusted domains, with <strong>the CSAH application, Google Maps, and mapping APIs given as the explicit example.</strong> More resolved than MetroClick's still-pending whitelist test (see MetroClick's cell) — worth asking Meridian directly whether they've hit the same maps.google.com-redirect nuance MetroClick flagged.</td>
+<td><span class="partial">⚠</span> Verify at quote — confirm Zamok allows domain whitelisting for more than one URL (CSAH app domain + Google Maps at minimum).</td>
 <td><span class="check">✓</span> Hardware-only — MDM handles domain whitelisting. Fully configurable by ARC.</td>
 </tr>
 <tr>
 <td class="row-label">Remote MDM <span class="confirmed-tag">CALL CONFIRMED (MC)</span><br/><span style="font-weight:400;font-size:11px;">Software updates without on-site visits</span></td>
+<td><span class="check">✓</span> MetroClick's Yearly SaaS Fee ($780, net $702/yr after 10% nonprofit discount) confirmed in Jul 23 quote — covers software updates, monitoring, session security. Blank Windows PC + ARC's own MDM (~$25–50/yr via Scalefusion) remains a cheaper theoretical alternative, not yet re-quoted.</td>
+<td><span class="check">✓</span> mZero Manage ($620/yr) confirmed in Jul 22 quote as the remote management layer (part of the $3,120/yr year-2 mZero bundle alongside Create SDK). Hardware-only + ARC's own MDM not yet re-quoted as an alternative.</td>
 <td><span class="check">✓</span> Built-in Zamok — software updates, monitoring, session security. Annual cost not confirmed — verify at quote.</td>
-<td><span class="check">✓</span> Hardware-only path — ARC installs chosen MDM. mZero Manage not required. Remote updates via ARC's MDM.</td>
-<td><span class="partial">⚠</span> MetroClick remote management: $780/device/year. Blank Windows PC: ARC's MDM (~$25–50/yr via Scalefusion).</td>
 <td><span class="check">✓</span> Bring your own MDM — Scalefusion, SiteKiosk, Hexnode all compatible.</td>
 </tr>
 <tr>
 <td class="row-label">Uptime monitoring &amp; alerting<br/><span style="font-weight:400;font-size:11px;">Web portal where CSAH can view status and receive alerts</span></td>
+<td><span class="partial">⚠</span> MetroClick's SaaS platform (as quoted) includes device monitoring. Down-device alerting defaults to 60 min of downtime before notifying (configurable), per the 2nd call.</td>
+<td><span class="partial">⚠</span> mZero Manage (confirmed in Jul 22 quote) assumed to include monitoring. Meridian's separate Annual Extended Service Plan ($360/yr) also defines formal response/resolution SLA tiers (Level 1–5, see Operational section) — not specifically a monitoring dashboard, but a support-response structure.</td>
 <td><span class="check">✓</span> Zamok includes device monitoring and alerting — confirm specific alert capabilities and web portal access at quote.</td>
-<td><span class="partial">⚠</span> mZero Manage assumed to include monitoring — not specifically confirmed. Hardware-only + Scalefusion MDM provides uptime monitoring and alerting. Verify at quote.</td>
-<td><span class="partial">⚠</span> Remote diagnosis confirmed. Blank Windows PC: Scalefusion provides uptime monitoring and alerting dashboard.</td>
 <td><span class="check">✓</span> Via chosen MDM — Scalefusion/Hexnode both provide uptime monitoring and web portal.</td>
 </tr>
 </tbody>
@@ -344,44 +343,44 @@
 <tbody>
 <tr>
 <td class="row-label">No minimum purchase order quantity</td>
+<td><span class="check">✓</span> No minimum order. <strong>5% nonprofit discount on hardware + 10% nonprofit discount on the yearly SaaS fee — both confirmed in writing on the Jul 23 formal quote</strong> (not just verbal). Payment terms: default upfront; quote is Net 30-valid through Sep 20/21, 2026.</td>
+<td><span class="warn">⚠</span> No minimum order size mentioned. The Jul 22 formal quote does not itemize any nonprofit discount — unlike MetroClick, no discount line appears anywhere on Meridian's proposal. Ask directly whether nonprofit pricing exists before finalizing.</td>
 <td><span class="check">✓</span> No minimum order. <strong>Bulk discount triggers at 4 units — CSAH's order qualifies.</strong> GSA pricing provides transparent cost structure.</td>
-<td><span class="check">✓</span> No minimum order. <strong>5% nonprofit discount on hardware confirmed on 2nd call.</strong> Payment terms: default is full payment upfront, but MetroClick can offer 50% down / 50% net 30, or net 30 from delivery, depending on what the agency requires — flexible for government/nonprofit procurement.</td>
-<td><span class="check">✓</span> Responsive to small-volume buyers; hardware discounts per order.</td>
 <td><span class="partial">⚠</span> Targets mid-to-high-end deployments; 4-unit order is low priority — may face less favorable terms.</td>
 </tr>
 <tr>
-<td class="row-label">Hardware warranty<br/><span style="font-weight:400;font-size:11px;">≥ 1 year minimum required</span> <span class="confirmed-tag">CALL CONFIRMED (AK, MC)</span></td>
+<td class="row-label">Hardware warranty<br/><span style="font-weight:400;font-size:11px;">≥ 1 year minimum required</span> <span class="confirmed-tag">CALL CONFIRMED (AK, MC) · QUOTE CONFIRMED (Me)</span></td>
+<td><span class="warn">⚠</span> <strong>2-year standard</strong> confirmed on call. Extended up to 5 years available — request 3-year at quote. Note: the written quote itself is silent on warranty terms — get whatever is negotiated into the actual contract, not just the sales conversation.</td>
+<td><span class="check">✓</span> <strong>3-year warranty confirmed in the Jul 22 formal quote</strong> — covers screen, glass, and PC. Priced as a separate $3,000 line item (both sizes), included in the all-in totals below. Resolves the previously-outstanding warranty question and matches Advanced Kiosks' 3-year term.</td>
 <td><span class="check">✓</span> <strong>3-year standard</strong> — confirmed on call. Exceeds 1-year minimum.</td>
-<td><span class="warn">⚠ Outstanding item</span> Marketing claims "strongest warranty in the industry" but specific duration not confirmed on vendor call. Must clarify before order.</td>
-<td><span class="warn">⚠</span> <strong>2-year standard</strong> confirmed on call. Extended up to 5 years available — request 3-year at quote. Meets 1-year minimum; negotiate for longer.</td>
 <td><span class="partial">⚠</span> High-end market typically offers strong terms — confirm duration and terms at quote.</td>
 </tr>
 <tr>
 <td class="row-label">SLA — on-site service<br/><span style="font-weight:400;font-size:11px;">In-person tech support option for hardware issues</span></td>
-<td><span class="check">✓</span> On-site service available — confirm Savannah, GA coverage and response time at quote.</td>
+<td><span class="check">✓</span> Confirmed on 2nd call — remote troubleshooting attempted first, on-site dispatch only if unresolved. Down-device notifications default to 60 min of downtime before alerting (configurable). SLA response tiers exist based on SaaS subscription level — pricing referenced as "pending via email" but has not yet arrived in writing; the Jul 23 quote itself doesn't itemize SLA tiers beyond the base SaaS fee. Verify Savannah, GA on-site coverage and response time at quote.</td>
+<td><span class="check">✓</span> <strong>Annual Extended Service Plan confirmed in the Jul 22 quote — $360/yr.</strong> Tiered response by severity: Level 1 (Critical, 24/7) — 1hr response / 4hr resolution. Level 2 (High, 24/7) — 2hr / 8hr. Level 3 (Medium, business hours) — 4hr / 24hr. Level 4 (Low) — 8hr / 3 business days. Level 5 (Info) — 24hr / 5 business days. Does not explicitly state whether Level 1–2 resolution includes on-site technician dispatch or is remote-only — confirm before relying on this for physical hardware failures.</td>
 <td class="tbd-cell">Not confirmed on vendor call — outstanding item. Request on-site SLA terms for Savannah, GA at quote.</td>
-<td><span class="check">✓</span> Confirmed on 2nd call — remote troubleshooting attempted first, on-site dispatch only if unresolved. Down-device notifications default to 60 min of downtime before alerting (configurable shorter or longer). SLA response tiers exist based on SaaS subscription level — pricing pending via email. Verify Savannah, GA on-site coverage and response time at quote.</td>
 <td><span class="partial">⚠</span> Verify SLA terms and Savannah, GA on-site service availability at quote.</td>
 </tr>
 <tr>
 <td class="row-label">SLA — replacement parts<br/><span style="font-weight:400;font-size:11px;">Parts availability and lead time guarantee</span></td>
-<td><span class="check">✓</span> Internal components modular — parts swappable on-site. Confirm contractual parts availability guarantee and lead times at quote.</td>
-<td class="tbd-cell">Not confirmed on vendor call — request parts availability guarantee and lead time commitment at quote.</td>
 <td><span class="partial">⚠</span> Confirmed on 2nd call — fastest realistic on-site replacement turnaround is 2–3 days (time to ship the physical part + get a technician on site); varies by part and technician type needed. Verify contractual parts availability guarantee at quote.</td>
+<td class="tbd-cell">Not confirmed — the Annual Extended Service Plan defines response/resolution time by severity level but doesn't specify parts availability or on-site dispatch lead time for hardware failures. Request this explicitly.</td>
+<td class="tbd-cell">Not confirmed on vendor call — request parts availability guarantee and lead time commitment at quote.</td>
 <td class="tbd-cell">Verify at quote — request parts availability guarantee and lead time commitments for outdoor unit components.</td>
 </tr>
 <tr>
 <td class="row-label">Cellular deployment references<br/><span style="font-weight:400;font-size:11px;">References must be for cellular-connected deployments specifically — not WiFi or wired only</span></td>
-<td><span class="partial">⚠</span> Social services and government deployments cited — directly analogous. Confirm references include cellular-connected deployments specifically at quote.</td>
-<td><span class="partial">⚠ Outstanding item</span> Social-service references requested on vendor call — pending delivery. Confirm references specifically include cellular-connected outdoor deployments.</td>
 <td><span class="partial">⚠</span> AT&amp;T/Verizon/T-Mobile cellular support confirmed on call. Request references for cellular-connected kiosk deployments specifically at quote.</td>
+<td><span class="partial">⚠ Outstanding item</span> Social-service references requested on vendor call — pending delivery. Confirm references specifically include cellular-connected outdoor deployments.</td>
+<td><span class="partial">⚠</span> Social services and government deployments cited — directly analogous. Confirm references include cellular-connected deployments specifically at quote.</td>
 <td><span class="partial">⚠</span> Transit and outdoor public deployments cited. Confirm references include cellular-connected units at quote.</td>
 </tr>
 <tr>
-<td class="row-label">Custom branding / graphics <span class="confirmed-tag">CALL CONFIRMED (AK, MC)</span></td>
+<td class="row-label">Custom branding / graphics <span class="confirmed-tag">CALL CONFIRMED (AK, MC) · QUOTE CONFIRMED (Me)</span></td>
+<td><span class="check">✓</span> Vinyl wrapping confirmed as an <strong>optional</strong> line item in the Jul 23 quote: $600 (43") – $650 (55")/unit; adds ~1 week to lead time.</td>
+<td><span class="warn">⚠ Correction</span> Despite Meridian's general capability description (full custom design shop, Lexan laminated graphics), the Jul 22 formal quote prices graphics/brand wrapping as an <strong>add-on</strong>, not standard: $770 (32") – $1,531 (43")/unit.</td>
 <td><span class="partial">⚠</span> Powder-coated finish; custom colors at order time. No vinyl wrap program confirmed — verify logo/branding options at quote.</td>
-<td><span class="check">✓</span> Full custom design shop; Lexan laminated graphics standard on outdoor models. Strong branding capability.</td>
-<td><span class="check">✓</span> Custom vinyl wrapping — $500–$650/unit; adds ~1 week to lead time.</td>
 <td class="tbd-cell">TBD — verify at quote.</td>
 </tr>
 </tbody>
@@ -393,61 +392,69 @@
 <table style="table-layout:fixed;">
 <colgroup><col style="width:160px"/><col/><col/><col/><col/></colgroup>
 <tbody>
+<tr><td colspan="5" style="background:#fdecea;color:#5c1010;font-size:12px;line-height:1.6;padding:10px 12px;">⚠ <strong>MetroClick caveat still open (Jul 23 formal quote):</strong> the cells below assume a blank-OS deployment with ARC's own MDM, but the actual quote received is for MetroClick's own SaaS platform (Yearly SaaS Fee + Data Fee). No written privacy commitment has been provided for that platform path yet — treat MetroClick's "resolved" claims below as <strong>not yet re-confirmed</strong> at this pricing.<br/><br/>✓ <strong>Meridian caveat substantially addressed (Jul software requirements response):</strong> Meridian's Jul 22 quote also bundles its own mZero software, but Meridian has since sent a written, point-by-point response committing to a privacy-hardened deployment profile for CSAH (no MAC/WiFi-probe collection, no behavioral telemetry to Meridian's servers, hardware-health-only vendor telemetry, CSAH as sole data controller). <strong>This is an explicitly proposed customization, not the platform's out-of-box default</strong> — Meridian's own Gaps table calls it a "software enhancement." Confirm it's priced into the existing quote before treating it as settled.</td></tr>
 <tr>
 <td class="row-label">Data minimization — network level<br/><span style="font-weight:400;font-size:11px;">No passive collection of MAC addresses or WiFi probe data from nearby devices</span></td>
+<td class="privacy-flag"><span class="check">✓ Blank Windows PC eliminates concern</span><br/>No MetroClick software layer to collect passive device data. Platform path (as quoted): audit explicitly before deployment.</td>
+<td class="privacy-flag"><span class="check">✓ Explicitly confirmed — Jul software requirements response</span><br/>"Meridian kiosks do not collect: nearby MAC addresses, WiFi probe requests, passive Bluetooth identifiers." A direct written vendor commitment, not just an inference from the hardware-only architecture.</td>
 <td class="privacy-flag"><span class="warn">⚠ Audit required</span><br/>Zamok is a proprietary software layer. Confirm it does not passively collect MAC addresses or WiFi probe data from nearby devices. Hardware-only option eliminates this concern.</td>
-<td class="privacy-flag"><span class="check">✓ Resolved via hardware-only path</span><br/>No mZero software layer on device — passive data collection concern eliminated. Same posture as MetroClick blank Windows PC and Olea.</td>
-<td class="privacy-flag"><span class="check">✓ Blank Windows PC eliminates concern</span><br/>No MetroClick software layer to collect passive device data. Platform path: audit explicitly before deployment.</td>
 <td class="privacy-flag"><span class="check">✓ Lowest risk</span><br/>Hardware-only; no Olea software layer. Hardware health telemetry only.</td>
 </tr>
 <tr>
 <td class="row-label">Session data residency<br/><span style="font-weight:400;font-size:11px;">All session/behavioral data on CSAH/ARC-controlled infrastructure only — vendor contractual confirmation required</span></td>
+<td class="privacy-flag"><span class="check">✓ Blank Windows PC resolves structurally</span><br/>Session data flows through CSAH's PWA directly to Supabase — no MetroClick software in the data path (blank-PC path only).</td>
+<td class="privacy-flag"><span class="check">✓ Addressed via proposed privacy profile</span><br/>Standard platform's optional session analytics "exceed CSAH's privacy requirements and would not be enabled." Proposed profile removes behavioral telemetry sent to Meridian infrastructure and disables session navigation reporting, leaving utilization reporting under CSAH control. Custom software enhancement per Meridian's Gaps table, not default.</td>
 <td class="privacy-flag"><span class="warn">⚠ Contractual control required</span><br/>Zamok likely collects session analytics on vendor servers. Require contractual confirmation of zero external session data transmission, or use hardware-only configuration.</td>
-<td class="privacy-flag"><span class="check">✓ Resolved via hardware-only path</span><br/>Session data flows from CSAH's PWA to Supabase with no Meridian software in the path. Structurally equivalent to Olea and MetroClick blank Windows PC.</td>
-<td class="privacy-flag"><span class="check">✓ Blank Windows PC resolves structurally</span><br/>Session data flows through CSAH's PWA directly to Supabase — no MetroClick software in the data path.</td>
 <td class="privacy-flag"><span class="check">✓ Structurally compliant</span><br/>No Olea software layer — session data flows directly to CSAH-controlled Supabase.</td>
 </tr>
 <tr>
 <td class="row-label">Re-identification risk<br/><span style="font-weight:400;font-size:11px;">No timestamped per-session logs or feature-level usage data to vendor infrastructure; aggregate counts to CSAH only</span></td>
+<td class="privacy-flag"><span class="check">✓ Blank Windows PC eliminates concern</span><br/>No MetroClick software layer in the telemetry path (blank-PC path only). Platform path: require explicit contractual prohibition on per-session log transmission.</td>
+<td class="privacy-flag"><span class="check">✓ Addressed via proposed privacy profile</span><br/>Same privacy-hardened profile as above disables session navigation reporting and removes behavioral telemetry — per Meridian's Gaps table this is a "minor software enhancement," not the platform's current default behavior.</td>
 <td class="privacy-flag"><span class="warn">⚠ Audit required</span><br/>Require contractual confirmation that Zamok transmits no per-session interaction logs or timestamped behavioral data to vendor servers. Hardware-only path eliminates this concern entirely.</td>
-<td class="privacy-flag"><span class="check">✓ Hardware-only path confirmed</span><br/>No mZero behavioral data collection in this deployment. No per-session logs transmitted to Meridian infrastructure.</td>
-<td class="privacy-flag"><span class="check">✓ Blank Windows PC eliminates concern</span><br/>No MetroClick software layer in the telemetry path. Platform path: require explicit contractual prohibition on per-session log transmission.</td>
 <td class="privacy-flag"><span class="check">✓ Lowest risk</span><br/>Hardware-only — no Olea software layer means no per-session log collection or transmission by vendor.</td>
 </tr>
 <tr>
-<td class="row-label">Camera policy <span class="confirmed-tag">CALL CONFIRMED (AK, MC)</span><br/><span style="font-weight:400;font-size:11px;">No active camera; if present, disabled at OS level and physically coverable; no footage to vendor</span></td>
-<td class="privacy-flag"><span class="check">✓ Not included standard</span><br/>Cameras must be explicitly requested — confirmed on call. No contractual action required for standard deployment.</td>
-<td class="privacy-flag"><span class="warn">⚠ Still unconfirmed</span><br/>Camera policy not addressed on vendor call. Required verification item at quote — cameras must not be included standard, or removal must be clearly available.</td>
+<td class="row-label">Camera policy <span class="confirmed-tag">CALL CONFIRMED (AK, MC) · DOC CONFIRMED (Me)</span><br/><span style="font-weight:400;font-size:11px;">No active camera; if present, disabled at OS level and physically coverable; no footage to vendor</span></td>
 <td class="privacy-flag"><span class="check">✓ Not included standard</span><br/>Cameras are explicit add-ons only — confirmed on call. Base units ship without cameras.</td>
+<td class="privacy-flag"><span class="check">✓ Resolved — Jul software requirements response</span><br/>Proposed CSAH deployment disables cameras at the OS level, omits audience-analytics components, and disables camera-derived demographic functionality; physical camera covers available if desired. No customer-facing app has camera access by default. Listed in Meridian's own Gaps table as a straightforward "configuration" item, not a software build.</td>
+<td class="privacy-flag"><span class="check">✓ Not included standard</span><br/>Cameras must be explicitly requested — confirmed on call. AK's price list quantifies this: "Camera (5 MP 720p Auto Focus)" is a $872 optional add-on, not part of the base Monolith price — corroborates the call. No contractual action required for standard deployment (i.e., don't order it).</td>
 <td class="privacy-flag"><span class="check">✓ You control camera policy</span><br/>Pure hardware — camera configuration entirely within CSAH's MDM.</td>
 </tr>
 <tr>
 <td class="row-label">Government data access<br/><span style="font-weight:400;font-size:11px;">CSAH is sole data controller; vendor notifies CSAH before responding to any law enforcement request</span></td>
+<td class="privacy-flag"><span class="check">✓ Blank Windows PC minimizes exposure</span><br/>MetroClick holds no user data to provide (blank-PC path). Platform path: require same contractual language.</td>
+<td class="privacy-flag"><span class="check">✓ Confirmed — Jul software requirements response</span><br/>Meridian "supports CSAH serving as the sole data controller." Contract language for government requests, law enforcement notification, data ownership, third-party disclosure, and incident notification is stated as "available during contract negotiation" — get it drafted and reviewed, not just referenced.</td>
 <td class="privacy-flag"><span class="warn">⚠ Contractual language required</span><br/>Require: CSAH is sole data controller; vendor will not respond to law enforcement requests without prior CSAH notification; CSAH retains right to contest independently.</td>
-<td class="privacy-flag"><span class="check">✓ Hardware-only confirmed</span><br/>Meridian holds no user data. Apply standard data controller contractual language at quote.</td>
-<td class="privacy-flag"><span class="check">✓ Blank Windows PC minimizes exposure</span><br/>MetroClick holds no user data to provide. Platform path: require same contractual language.</td>
 <td class="privacy-flag"><span class="check">✓ Minimal exposure</span><br/>No user session data held by Olea. CSAH data controller status is straightforward.</td>
 </tr>
 <tr>
 <td class="row-label">Third-party data sharing<br/><span style="font-weight:400;font-size:11px;">Contractual prohibition on sharing kiosk-derived data with advertisers, analytics platforms, or any third party</span></td>
+<td class="privacy-flag"><span class="check">✓ Blank Windows PC eliminates concern</span><br/>No MetroClick software layer to share data (blank-PC path). Platform path: audit for third-party analytics integrations and require contractual prohibition.</td>
+<td class="privacy-flag"><span class="check">✓ Confirmed — Jul software requirements response</span><br/>"Compliant for proposed deployment" — no advertising platforms, audience measurement, demographic analytics, or third-party behavioral analytics would be used; any optional commercial advertising functionality remains disabled. Still get standard contractual prohibition written into the contract.</td>
 <td class="privacy-flag"><span class="warn">⚠ Contractual required</span><br/>Require contractual prohibition on third-party data sharing. Confirm Zamok has no third-party analytics integrations transmitting data externally.</td>
-<td class="privacy-flag"><span class="check">✓ Hardware-only confirmed</span><br/>mZero advertising infrastructure not in this deployment. Require standard contractual prohibition at quote.</td>
-<td class="privacy-flag"><span class="check">✓ Blank Windows PC eliminates concern</span><br/>No MetroClick software layer to share data. Platform path: audit for third-party analytics integrations and require contractual prohibition.</td>
 <td class="privacy-flag"><span class="check">✓ Hardware-only posture</span><br/>No vendor advertising or analytics platform in the stack. No third-party sharing risk from Olea hardware layer.</td>
 </tr>
 <tr>
 <td class="row-label">Vendor telemetry scope<br/><span style="font-weight:400;font-size:11px;">Device-level metrics only: uptime, temperature, error codes, software version — no session counts or interaction logs</span></td>
+<td class="privacy-flag"><span class="check">✓ Blank Windows PC eliminates concern</span><br/>No MetroClick telemetry layer (blank-PC path). Platform path: require explicit telemetry scope definition contractually.</td>
+<td class="privacy-flag"><span class="check">✓ Addressed via proposed privacy profile</span><br/>Under the proposed profile, telemetry is restricted to device uptime, temperature, hardware faults, software version, and connectivity health — explicitly matching the device-health-only requirement. Per Meridian's own Gaps table, getting there from the standard commercial platform is a "configuration + software enhancement," not the default.</td>
 <td class="privacy-flag"><span class="warn">⚠ Audit and contract</span><br/>Require contractual confirmation that Zamok telemetry is limited to device-level health metrics only (uptime, temperature, error codes). Must exclude session counts, interaction logs, and user-activity data.</td>
-<td class="privacy-flag"><span class="check">✓ Hardware-only path confirmed</span><br/>Meridian telemetry limited to device-level hardware health. No mZero behavioral data collection. ARC's MDM telemetry scope is within CSAH's control.</td>
-<td class="privacy-flag"><span class="check">✓ Blank Windows PC eliminates concern</span><br/>No MetroClick telemetry layer. Platform path: require explicit telemetry scope definition contractually.</td>
 <td class="privacy-flag"><span class="check">✓ Compliant by design</span><br/>Hardware-only; Olea telemetry limited to device health. No software layer to capture session data.</td>
 </tr>
 <tr>
 <td class="row-label">Incident notification<br/><span style="font-weight:400;font-size:11px;">Vendor notifies CSAH within 24 hours of any breach, unauthorized access, or law enforcement inquiry</span></td>
-<td class="privacy-flag tbd-cell">Verify at quote — require 24-hour incident notification clause in contract covering data breach, unauthorized access, and law enforcement inquiries related to CSAH kiosk hardware or data.</td>
-<td class="privacy-flag tbd-cell">Verify at quote — require 24-hour incident notification clause. Hardware-only path minimizes Meridian's data exposure but obligation should be documented.</td>
 <td class="privacy-flag tbd-cell">Verify at quote — require 24-hour incident notification clause. Blank Windows PC reduces vendor exposure but contractual obligation should still be established.</td>
+<td class="privacy-flag"><span class="partial">⚠ Available, not yet in writing</span><br/>Meridian's Jul software requirements response lists "incident notification" among the contract terms "available during contract negotiation." Confirm the specific 24-hour clause and get it drafted into the actual contract.</td>
+<td class="privacy-flag tbd-cell">Verify at quote — require 24-hour incident notification clause in contract covering data breach, unauthorized access, and law enforcement inquiries related to CSAH kiosk hardware or data.</td>
 <td class="privacy-flag tbd-cell">Verify at quote — require 24-hour incident notification clause. Olea's hardware-only posture minimizes risk but obligation should be documented.</td>
+</tr>
+<tr>
+<td class="row-label">IP geolocation lookup <span class="confirmed-tag">DOC CONFIRMED (Me)</span><br/><span style="font-weight:400;font-size:11px;">Kiosk should not passively determine or transmit user/site location via an IP-based geolocation request on load</span></td>
+<td class="privacy-flag tbd-cell">Not yet assessed — new finding, surfaced by Meridian's own software requirements response. Ask MetroClick directly whether their platform performs a startup IP geolocation lookup.</td>
+<td class="privacy-flag"><span class="warn">⚠ New finding — flagged by Meridian itself</span><br/>Meridian's own Gaps table discloses that the standard platform performs an IP geolocation lookup on startup. Proposed resolution: remove the startup geolocation request for CSAH — listed as a "minor software enhancement." Not previously identified as a privacy concern for <em>any</em> vendor; credit to Meridian for surfacing it, but confirm the removal is actually implemented and tested, not just proposed.</td>
+<td class="privacy-flag tbd-cell">Not yet assessed — ask directly whether Zamok or the underlying OS performs a startup IP geolocation lookup.</td>
+<td class="privacy-flag tbd-cell">Not yet assessed — ask directly whether the platform performs a startup IP geolocation lookup.</td>
 </tr>
 </tbody>
 </table>
@@ -461,7 +468,7 @@
 <tr>
 <td class="row-label nicetohave-cell">Remote sensing / proximity screensaver<br/><span style="font-weight:400;font-size:11px;">Screensaver activates when human approaches</span></td>
 <td class="nicetohave-cell tbd-cell">Verify at quote.</td>
-<td class="nicetohave-cell tbd-cell">Verify at quote.</td>
+<td class="nicetohave-cell"><span class="check">✓</span> Confirmed in Jul 22 proposal — "Proximity Sensor" listed as a standard hardware kit item on the Presenza line.</td>
 <td class="nicetohave-cell tbd-cell">Verify at quote.</td>
 <td class="nicetohave-cell tbd-cell">Verify at quote.</td>
 </tr>
@@ -474,30 +481,30 @@
 </tr>
 <tr>
 <td class="row-label nicetohave-cell">Municipal / social-service references<br/><span style="font-weight:400;font-size:11px;">From comparable deployments</span></td>
-<td class="nicetohave-cell"><span class="check">✓</span> Social services, housing authorities, courts — directly analogous.</td>
-<td class="nicetohave-cell"><span class="partial">⚠</span> Pending — requested on vendor call.</td>
 <td class="nicetohave-cell"><span class="check">✓</span> Public housing authority kiosks — closest real-world analog.</td>
+<td class="nicetohave-cell"><span class="partial">⚠</span> Pending — requested on vendor call; not included in the Jul 22 formal proposal. (Goodwill appears among client logos on Meridian's general capabilities deck — not a confirmed homelessness-sector reference, just a shared-partner data point worth asking about directly.)</td>
+<td class="nicetohave-cell"><span class="check">✓</span> Social services, housing authorities, courts — directly analogous.</td>
 <td class="nicetohave-cell"><span class="check">✓</span> Transit, emergency assistance, outdoor public deployments.</td>
 </tr>
 <tr>
 <td class="row-label nicetohave-cell">In-house installation<br/><span style="font-weight:400;font-size:11px;">Soup to nuts; no outside vendor required</span></td>
+<td class="nicetohave-cell"><span class="check">✓</span> MetroClick handles installation — <strong>$1,575/unit confirmed as an optional line item in the Jul 23 quote</strong> (previously estimated $1,000–$1,500 on the call; the written quote came in somewhat higher). Includes mounting, bolting to ground, and getting the app live. Does not include electrical work or concrete pouring — CSAH/city must have a ground outlet ready.</td>
+<td class="nicetohave-cell"><span class="check">✓</span> <strong>Confirmed in Jul 22 quote — $4,200/unit</strong> (estimate, can change based on shipping survey). Substantially higher than MetroClick's confirmed rate. Scope of what's included/excluded (electrical, concrete) not specified — confirm directly.</td>
 <td class="nicetohave-cell"><span class="partial">⚠</span> Can self-install with vendor manuals — full in-house service not confirmed.</td>
-<td class="nicetohave-cell tbd-cell">Verify at quote.</td>
-<td class="nicetohave-cell"><span class="check">✓</span> MetroClick handles installation — $1,000–$1,500/unit confirmed, including mounting, bolting to ground, and getting the app live and running. Confirmed on 2nd call: does <strong>not</strong> include electrical work or concrete pouring — CSAH/city must have a ground outlet ready before MetroClick's team arrives.</td>
 <td class="nicetohave-cell tbd-cell">Verify at quote.</td>
 </tr>
 <tr>
 <td class="row-label nicetohave-cell">Dedicated point person<br/><span style="font-weight:400;font-size:11px;">Named contact for end-to-end process; not generic customer service</span></td>
-<td class="nicetohave-cell tbd-cell">Verify at quote.</td>
-<td class="nicetohave-cell tbd-cell">Verify at quote.</td>
+<td class="nicetohave-cell"><span class="check">✓</span> Michael Rothman named as sales lead on the formal quote (direct phone/email) — consistent single point of contact through both calls and the written proposal.</td>
+<td class="nicetohave-cell"><span class="check">✓</span> Elise A. Ellis named as contact on the formal proposal (direct email/phone).</td>
 <td class="nicetohave-cell tbd-cell">Verify at quote.</td>
 <td class="nicetohave-cell tbd-cell">Verify at quote.</td>
 </tr>
 <tr>
 <td class="row-label nicetohave-cell">Built-in privacy screen / sun hood</td>
-<td class="nicetohave-cell"><span class="partial">⚠</span> Sun hoods available on some models — confirm for selected configuration.</td>
 <td class="nicetohave-cell tbd-cell">Not mentioned in public materials — verify at quote.</td>
 <td class="nicetohave-cell"><span class="partial">⚠</span> Some configurations support privacy hoods — confirm for selected model.</td>
+<td class="nicetohave-cell"><span class="partial">⚠</span> Sun hoods available on some models — confirm for selected configuration.</td>
 <td class="nicetohave-cell"><span class="check">✓</span> Privacy filter listed as standard add-on.</td>
 </tr>
 <tr>
@@ -518,37 +525,37 @@
 <tr class="section-row"><td colspan="5">CSAH Fit — scored out of 10 per requirements category</td></tr>
 <tr>
 <td class="row-label">Physical / Hardware &amp; Display</td>
-<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#1d9e75;"></div></div><span class="bar-num">9</span></div></td>
-<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#7c3aed;"></div></div><span class="bar-num">8.5</span></div><span style="font-size:10px;color:#0f6e56;">2,500-nit confirmed; ISO cert, AC, Lexan</span></td>
 <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#378add;"></div></div><span class="bar-num">8.5</span></div></td>
+<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#7c3aed;"></div></div><span class="bar-num">9</span></div><span style="font-size:10px;color:#0f6e56;">Audio kit, ADA NavPad, cellular router, proximity sensor all confirmed in Jul 22 proposal</span></td>
+<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#1d9e75;"></div></div><span class="bar-num">9</span></div></td>
 <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#ba7517;"></div></div><span class="bar-num">8</span></div></td>
 </tr>
 <tr>
 <td class="row-label">Accessibility &amp; UX Interaction</td>
-<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#1d9e75;"></div></div><span class="bar-num">8.5</span></div></td>
-<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%;background:#7c3aed;"></div></div><span class="bar-num">7.5</span></div><span style="font-size:10px;color:#0f6e56;">ADA certified; no mZero layer w/ hardware-only</span></td>
 <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%;background:#378add;"></div></div><span class="bar-num">7.5</span></div></td>
+<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#7c3aed;"></div></div><span class="bar-num">9</span></div><span style="font-size:10px;color:#0f6e56;">Integrated NVDA + English/Spanish voices + accessible volume control confirmed — strongest accessibility offering evaluated</span></td>
+<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#1d9e75;"></div></div><span class="bar-num">8.5</span></div></td>
 <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#ba7517;"></div></div><span class="bar-num">8.5</span></div></td>
 </tr>
 <tr>
 <td class="row-label">Software / Integration</td>
+<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%;background:#378add;"></div></div><span class="bar-num">7.5</span></div><span style="font-size:10px;color:#b45309;">Formal quote confirms platform path, not blank-PC — see caveat</span></td>
+<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:65%;background:#7c3aed;"></div></div><span class="bar-num">6.5</span></div><span style="font-size:10px;color:#b45309;">Bundles mZero, not hardware-only — but Google Maps multi-domain now explicitly confirmed</span></td>
 <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#1d9e75;"></div></div><span class="bar-num">8.5</span></div></td>
-<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:85%;background:#7c3aed;"></div></div><span class="bar-num">8.5</span></div><span style="font-size:10px;color:#0f6e56;">Hardware-only confirmed; Interact optional</span></td>
-<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#378add;"></div></div><span class="bar-num">8</span></div><span style="font-size:10px;color:#0f6e56;">Blank Windows PC path is ideal</span></td>
 <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#ba7517;"></div></div><span class="bar-num">8</span></div></td>
 </tr>
 <tr>
 <td class="row-label">Operational / Nonprofit Fit</td>
-<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#1d9e75;"></div></div><span class="bar-num">9</span></div></td>
-<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:65%;background:#7c3aed;"></div></div><span class="bar-num">6.5</span></div><span style="font-size:10px;color:#b45309;">16–20 wk lead time; warranty TBD</span></td>
-<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%;background:#378add;"></div></div><span class="bar-num">7.5</span></div><span style="font-size:10px;color:#b45309;">2-yr warranty (not 3) — negotiate</span></td>
+<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:90%;background:#378add;"></div></div><span class="bar-num">9</span></div><span style="font-size:10px;color:#0f6e56;">Formal quote confirmed Jul 23 — $16.1K–$17.1K/unit all-in, discounts locked in writing</span></td>
+<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:45%;background:#7c3aed;"></div></div><span class="bar-num">4.5</span></div><span style="font-size:10px;color:#b45309;">Warranty now confirmed (3-yr), but formal quote is $32.6K–$37.5K/unit — far over $25K ceiling</span></td>
+<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:45%;background:#1d9e75;"></div></div><span class="bar-num">4.5</span></div><span style="font-size:10px;color:#b45309;">Price list confirmed $25.8K–$28.9K/unit hardware alone — over $25K ceiling at both sizes; 3-yr warranty still a plus</span></td>
 <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:65%;background:#ba7517;"></div></div><span class="bar-num">6.5</span></div></td>
 </tr>
 <tr>
 <td class="row-label">Data Privacy &amp; Governance</td>
+<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:65%;background:#378add;"></div></div><span class="bar-num">6.5</span></div><span style="font-size:10px;color:#b45309;">Formal quote is MetroClick's own SaaS platform, not blank-PC — re-verify</span></td>
+<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#7c3aed;"></div></div><span class="bar-num">8</span></div><span style="font-size:10px;color:#0f6e56;">Written privacy-hardened profile now committed (MAC/WiFi, telemetry, camera, IP-geo) — still a proposed customization, not default; confirm pricing</span></td>
 <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:75%;background:#1d9e75;"></div></div><span class="bar-num">7.5</span></div><span style="font-size:10px;color:#b45309;">Zamok session audit still required</span></td>
-<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#7c3aed;"></div></div><span class="bar-num">8</span></div><span style="font-size:10px;color:#0f6e56;">Hardware-only path resolves structural concern</span></td>
-<td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:80%;background:#378add;"></div></div><span class="bar-num">8</span></div><span style="font-size:10px;color:#0f6e56;">Blank Windows PC eliminates concern</span></td>
 <td><div class="bar-wrap"><div class="bar-track"><div class="bar-fill" style="width:95%;background:#ba7517;"></div></div><span class="bar-num">9.5</span></div><span style="font-size:10px;color:#0f6e56;">Hardware-only = lowest vendor data risk</span></td>
 </tr>
 </tbody>
@@ -559,59 +566,66 @@
 <tbody>
 <tr class="section-row"><td colspan="5">Cost</td></tr>
 <tr>
-<td class="row-label">Hardware est. <span class="confirmed-tag">CALL CONFIRMED (AK, Me)</span></td>
-<td class="center"><span class="price-main">$10,000–$25,000</span><span class="price-sub">Confirmed range on vendor call. Bulk discount at 4 units.</span></td>
-<td class="center"><span class="price-main">$10,000–$15,000</span><span class="price-sub">Confirmed on vendor call (outdoor unit, hardware only). Optional Interact wayfinding software: +$3,000/unit one-time + $1,500/yr.</span></td>
-<td class="center"><span class="price-main">$7,631–$11,733</span><span class="price-sub">MSRP for Portrait 32" &amp; 43" models. Request formal quote for nonprofit/volume pricing.</span></td>
+<td class="row-label">Hardware est. <span class="confirmed-tag">QUOTE CONFIRMED (MC, Me) · PRICE LIST CONFIRMED (AK)</span></td>
+<td class="center"><span class="price-main">$11,733–$12,727</span><span class="price-sub">Kiosk unit only (43"/55"), per <strong>formal quote received Jul 23, 2026.</strong> 5% nonprofit discount already reflected in the all-in total below.</span></td>
+<td class="center"><span class="price-main">$17,088–$21,145</span><span class="price-sub">Chassis only (32"/43"), per <strong>formal quote received Jul 22, 2026</strong> — well above the earlier $10K–$15K phone-call estimate.</span></td>
+<td class="center"><span class="price-main">$25,817–$28,856</span><span class="price-sub">46"/55" single-sided display, per AK's price list — <strong>the earlier $10K–$25K call-estimated range was too low; the earlier "soft ceiling" flag was correct.</strong> Both sizes exceed the $25K/unit ceiling on hardware alone, before install/shipping/options. Unclear whether this list price already reflects the bulk (4-unit) or GSA discount referenced elsewhere in this doc — confirm directly.</span></td>
 <td class="center"><span class="price-main">$15,000–$30,000</span><span class="price-sub">Ask about Boulder model for lower entry</span></td>
 </tr>
 <tr>
-<td class="row-label">Annual software cost <span class="confirmed-tag">CALL CONFIRMED (MC)</span></td>
+<td class="row-label">Annual software cost <span class="confirmed-tag">QUOTE CONFIRMED (MC, Me)</span></td>
+<td class="center"><span class="price-main">$780/yr gross · $702/yr net</span><span class="price-sub">MetroClick's own SaaS platform, per formal quote, net of confirmed 10% nonprofit discount. Blank-Windows-PC + ARC MDM alternative (~$25–50/yr) not yet re-quoted.</span></td>
+<td class="center"><span class="price-main">$3,120/yr (from yr 2)</span><span class="price-sub">mZero Manage ($620) + mZero Create SDK ($2,500), confirmed in formal quote. Year-1 software ($5,505) is bundled into the hardware line below. Hardware-only alternative not yet re-quoted. Note: an earlier call referenced separate "Interact" wayfinding software ($3,000 one-time + $1,500/yr) — clarify whether this is the same product family as mZero or a distinct add-on.</span></td>
 <td class="center"><span class="price-main" style="font-size:12px;">TBD — verify Zamok pricing</span><span class="price-sub">Not confirmed on call. Hardware-only option available — ARC manages lockdown via its own MDM.</span></td>
-<td class="center"><span class="price-main">$0 (hardware-only path)</span><span class="price-sub">Hardware-only confirmed — use ARC's MDM (~$25–50/yr via Scalefusion).<br/>Optional Interact software: $1,500/unit/yr if adopted.</span></td>
-<td class="center"><span class="price-main">$780/device/year</span><span class="price-sub">MetroClick platform. <strong>$0 if blank Windows PC</strong> — use ARC's MDM (e.g., Scalefusion ~$25–50/yr).</span></td>
 <td class="center tbd-cell">TBD — depends on MDM selection</td>
 </tr>
 <tr>
-<td class="row-label">Installation est. <span class="confirmed-tag">CALL CONFIRMED (MC)</span></td>
+<td class="row-label">Installation est. <span class="confirmed-tag">QUOTE CONFIRMED (MC, Me)</span></td>
+<td class="center"><span class="price-main">$1,575</span><span class="price-sub">Optional line item, per formal quote — higher than the $1,000–$1,500 verbally estimated on the 2nd call. Does not include electrician. Recommend installing over ground outlet.</span></td>
+<td class="center"><span class="price-main">$4,200</span><span class="price-sub">Per formal quote (estimate — can change based on shipping survey). Scope of what's included/excluded not specified.</span></td>
 <td class="center"><span class="price-main">$2,000–$3,000</span><span class="price-sub">Can self-install with vendor manuals</span></td>
-<td class="center tbd-cell">Not confirmed — verify at quote.</td>
-<td class="center"><span class="price-main">$1,000–$1,500</span><span class="price-sub">Confirmed on call. Does not include electrician. Recommend installing over ground outlet.</span></td>
 <td class="center"><span class="price-main">$2,000–$3,000</span><span class="price-sub">Outdoor premium installation</span></td>
 </tr>
 <tr>
-<td class="row-label">Shipping est. <span class="confirmed-tag">CALL CONFIRMED (MC)</span></td>
+<td class="row-label">Shipping est. <span class="confirmed-tag">QUOTE CONFIRMED (MC, Me)</span></td>
+<td class="center"><span class="price-main">$575–$600</span><span class="price-sub">Per formal quote (43"/55") — slightly higher than the $300–$550 verbally estimated on the call.</span></td>
+<td class="center"><span class="price-main">$984–$998</span><span class="price-sub">To Savannah zip 31406, per formal quote (estimate — can change based on shipping survey).</span></td>
 <td class="center tbd-cell">TBD — verify at quote.</td>
-<td class="center tbd-cell">Not confirmed — verify at quote.</td>
-<td class="center"><span class="price-main">$300–$550</span><span class="price-sub">Confirmed on call</span></td>
 <td class="center tbd-cell">TBD</td>
 </tr>
 <tr>
 <td class="row-label">Cellular capabilities est.</td>
-<td class="center"><span class="price-main">$550</span><span class="price-sub">Per unit add-on</span></td>
-<td class="center tbd-cell">TBD — verify at quote.</td>
-<td class="center tbd-cell">Managed IoT SIM (multi-carrier: AT&amp;T/Verizon/T-Mobile) confirmed as MetroClick's standard approach on 2nd call — per-unit pricing was requested but not yet provided; pending follow-up. CSAH can alternatively provide its own SIM cards.</td>
+<td class="center"><span class="price-main">$550 one-time + $450/yr</span><span class="price-sub">Cellular Modem (one-time hardware) + Yearly Data Fee (recurring), both confirmed in formal quote. Managed multi-carrier IoT SIM (AT&amp;T/Verizon/T-Mobile).</span></td>
+<td class="center"><span class="price-main">$452 one-time</span><span class="price-sub">"Add on Cellular Cost" confirmed in formal quote — appears to be one-time hardware (router/antenna), not a recurring data plan. No recurring cellular data/SIM cost is itemized — confirm whether CSAH needs to arrange its own carrier data plan separately.</span></td>
+<td class="center"><span class="price-main">$550</span><span class="price-sub">"Cellular Modem (Hardware Only)" — confirmed on AK's price list, matching the earlier call-estimated figure exactly. One-time; recurring data/SIM plan not itemized — confirm separately.</span></td>
 <td class="center tbd-cell">TBD — verify at quote.</td>
 </tr>
 <tr>
-<td class="row-label">Brand wrapping est. <span class="confirmed-tag">CALL CONFIRMED (MC)</span></td>
-<td class="center"><span class="price-main">$280</span><span class="price-sub">Per unit</span></td>
-<td class="center tbd-cell">TBD — verify at quote.</td>
-<td class="center"><span class="price-main">$500–$550</span><span class="price-sub">Custom vinyl wrapping; adds ~1 week lead time. Confirmed on 2nd call: MetroClick recommends applying in their warehouse pre-shipment, but can also apply on-site post-installation if needed for timeline flexibility.</span></td>
+<td class="row-label">ADA keypad / audio device est.</td>
+<td class="center"><span class="price-main">$500</span><span class="price-sub">"ADA Device" (keypad + audio jack), confirmed in formal quote — one-time, per unit.</span></td>
+<td class="center"><span class="price-main">Included</span><span class="price-sub">ADA NavPad with Audio Jack is bundled into the base chassis price (not a separate line item) per formal quote.</span></td>
+<td class="center tbd-cell">Verify at quote.</td>
+<td class="center tbd-cell">Verify at quote.</td>
+</tr>
+<tr>
+<td class="row-label">Brand wrapping est. <span class="confirmed-tag">QUOTE CONFIRMED (MC, Me)</span></td>
+<td class="center"><span class="price-main">$600–$650</span><span class="price-sub">Optional vinyl wrapping, per formal quote (43"/55") — up from the $500–$550 previously estimated. Applied in warehouse pre-shipment by default; on-site application also possible.</span></td>
+<td class="center"><span class="price-main">$770–$1,531</span><span class="price-sub">"Add on Graphics/Brand Wrapping," per formal quote (32"/43") — priced as an add-on despite Meridian's general marketing describing custom graphics as standard.</span></td>
+<td class="center"><span class="price-main">$280</span><span class="price-sub">"Graphic Vinyl Logo (below monitor)" — confirmed on AK's price list, matching the earlier call-estimated figure exactly.</span></td>
 <td class="center tbd-cell">TBD — verify at quote.</td>
 </tr>
 <tr>
 <td class="row-label">Speakers est.</td>
-<td class="center tbd-cell">TBD — verify at quote.</td>
-<td class="center tbd-cell">TBD — verify at quote.</td>
+<td class="center tbd-cell">Not itemized separately — audio covered via the $500 ADA Device line.</td>
+<td class="center"><span class="price-main">$267</span><span class="price-sub">"Add on Speaker," confirmed in formal quote.</span></td>
 <td class="center tbd-cell">TBD — verify at quote.</td>
 <td class="center tbd-cell">TBD — verify at quote.</td>
 </tr>
 <tr>
-<td class="row-label">All-in est. per unit (hardware + install)</td>
-<td class="center"><span class="price-main">$12,000–$28,000</span><span class="warn">⚠ Upper end over $25K — plan for mid-range configuration</span></td>
-<td class="center"><span class="price-main">~$12,000–$18,000 est.</span><span class="price-sub">Hardware $10K–$15K confirmed. Install + shipping TBD — budgeting similar to Advanced Kiosks range. Well within $25K/unit ceiling.</span></td>
-<td class="center"><span class="price-main">$7,000–$17,500</span><span class="good">✓ Most headroom under $25K</span><span class="price-sub">Hardware + install + shipping. Optional vinyl branding adds $500–$650.</span></td>
+<td class="row-label">All-in est. per unit (year 1, confirmed where noted)</td>
+<td class="center"><span class="price-main">$16,098–$17,118</span><span class="good">✓ Confirmed all-in, Jul 23 formal quote</span><span class="price-sub">Includes hardware, ADA device, cellular modem, shipping, 1-yr data fee, 1-yr SaaS fee, optional install ($1,575) and optional vinyl wrap ($600–650), net of both nonprofit discounts. Comfortably under the $25K/unit ceiling.</span></td>
+<td class="center"><span class="price-main">$32,626–$37,458</span><span class="warn">⚠ Over $25K/unit ceiling — Jul 22 formal quote</span><span class="price-sub">Includes chassis, year-1 software/coverage, shipping, install, cellular, branding, speaker, SLA (1yr), and 3-yr warranty. Year 2+ adds $3,120/yr recurring (mZero) on top.</span></td>
+<td class="center"><span class="price-main">$28,647–$32,686+</span><span class="warn">⚠ Confirmed over $25K/unit at both sizes</span><span class="price-sub">Hardware ($25,817–$28,856) + cellular modem ($550) + vinyl logo ($280) + install ($2,000–$3,000 call estimate) + shipping TBD. Hardware alone already exceeds the ceiling before any options.</span></td>
 <td class="center"><span class="price-main">$20,000–$28,000</span><span class="warn">⚠ Tight to over — request Boulder quote</span></td>
 </tr>
 </tbody>
@@ -623,38 +637,13 @@
 <tr class="section-row"><td colspan="5">Verdict</td></tr>
 <tr>
 <td class="row-label">Summary</td>
-<td class="verdict-cell verdict-ak">Best overall fit for CSAH. Social service deployment precedent, modular on-site repairs, Windows 11, Zamok MDM, GSA pricing, confirmed 3-year warranty, and bulk discount triggered at exactly 4 units. Cameras not included standard. Remaining data privacy ask: Zamok session data handling must be audited and contractually constrained. If Zamok audit proves difficult, hardware-only option with ARC-managed lockdown is available. Budget note: upper end of confirmed range hits the $25K ceiling — target mid-range configuration.</td>
-<td class="verdict-cell verdict-me"><strong>Vendor call resolved both blocking questions. Meridian is now a legitimate contender.</strong><br/><br/>Alan Robinson's summary: "The two things I went in worried about — software lock-in and budget — both came back favorable." Hardware-only purchase confirmed available. Pricing confirmed at $10,000–$15,000/unit. ISO 9001:2015 manufacturing, 2,500-nit displays, built-in AC/heating, high-security locks, Lexan branding, and government sector experience all confirmed.<br/><br/><strong>Outstanding items before selection:</strong><br/>1. <strong>Camera policy</strong> — not addressed on call; confirm cameras are not standard on outdoor units (or confirm removal option)<br/>2. <strong>Warranty terms</strong> — marketing claims "strongest in the industry" but specific duration was not confirmed; must clarify before order<br/>3. <strong>IP/NEMA rating</strong> — confirm rating for Savannah's coastal humidity environment<br/>4. <strong>Social-service references</strong> — requested on call; pending delivery<br/><br/><strong>Critical procurement flag:</strong> 16–20 week lead time means contracts and deposits must be signed within weeks to meet the December 30 deadline with ~2 months of buffer. This is the most time-sensitive constraint of any vendor evaluated — if CSAH selects Meridian, the clock is running.</td>
-<td class="verdict-cell verdict-mc">Most budget-friendly and closest real-world hardware analog. <strong>Blank Windows PC is the recommended purchase path</strong> — eliminates MetroClick data concerns entirely, aligns with CSAH's architecture, and lets ARC install its own MDM. Cameras confirmed not standard. Screensaver and vinyl branding both available. Confirmed: MetroClick is hardware/lockdown-only — ARC builds and hosts the actual web app; MetroClick just points the kiosk at ARC's URL. One procurement flag: 2-year standard warranty falls short of CSAH's 3-year minimum — negotiate extended warranty at quote.<br/><br/><strong>2nd call (Jul 20) findings:</strong><br/>1. <strong>ADA solution clarified</strong> — physical keypad (arrow keys + Enter + headphone jack) mounted at compliant height, not a screen-height constraint. Requires the CSAH app to support full keyboard/arrow-key navigation.<br/>2. <strong>5% nonprofit hardware discount confirmed.</strong> Payment terms flexible for government agencies: 50/50 split or net 30 from delivery available.<br/>3. <strong>Cellular confirmed</strong> as managed multi-carrier IoT SIM (AT&amp;T/Verizon/T-Mobile) via MetroClick's account — per-unit pricing still pending.<br/>4. <strong>Google Maps whitelisting is unresolved</strong> — MetroClick advises against whitelisting all of google.com on a public kiosk; testing whether maps.google.com can be isolated. <strong>Leaning toward embedding Google Maps directly in the app instead of linking out</strong> to sidestep the whitelist risk.<br/>5. Installation confirmed to exclude electrical and concrete work — CSAH/city must prep the site.<br/>6. SLA tier pricing and down-device notification timing (default 60 min, configurable) pending final numbers via email.</td>
-<td class="verdict-cell verdict-ol">Strongest data privacy posture by architecture — no Olea software layer, no vendor session data risk. Best choice if data privacy is the top priority and budget allows (or if Boulder model comes in under $25K). Trade-offs: lowest-priority buyer at 4 units; TCO requires assembling hardware + MDM quotes independently.</td>
+<td class="verdict-cell verdict-mc"><strong>Best value, confirmed in writing.</strong> The Jul 23 formal quote ($16,098–$17,118/unit all-in) lands comfortably under the $25K/unit ceiling and bakes in both nonprofit discounts (5% hardware, 10% SaaS fee) — no further negotiation required to hit these numbers. Confirmed models are 43" and 55" portrait (not the 32" originally discussed). ADA compliance is solved via a $500 physical keypad + audio jack accessory — an approach Meridian's own proposal now mirrors exactly, meaning <strong>the CSAH app must support full keyboard arrow-key + Enter navigation</strong>, not just touch.<br/><br/><strong>Caveat:</strong> this quote is priced for MetroClick's own SaaS platform (Yearly SaaS Fee + Data Fee) — not the "blank Windows PC + ARC's own MDM" path previously recommended for data-privacy reasons. That alternative hasn't been re-quoted; the privacy posture assumed elsewhere in this doc needs re-confirming at MetroClick's actual pricing.<br/><br/>Outstanding: Google Maps domain-whitelisting test (pending from Michael), SLA tier pricing beyond the base SaaS fee, and warranty terms (2-year standard, not restated in the written quote — get 3-year written into the contract, not just discussed verbally).</td>
+<td class="verdict-cell verdict-me"><strong>Best technical fit, worst confirmed price.</strong> Between the Jul 22 quote and the follow-up software requirements response, Meridian now has the strongest accessibility story of any vendor evaluated — integrated NVDA with automatic headphone activation, <strong>English and Spanish voices</strong>, accessible volume control — plus a confirmed 3-year warranty, a full ADA hardware kit (NavPad + audio jack, proximity sensor, cellular router), and Google Maps named explicitly as a supported multi-domain example. Camera policy is now resolved (disabled, no audience analytics). Meridian also proactively disclosed a new privacy finding — a default startup IP geolocation lookup — and proposed removing it, which is more transparency than any other vendor has offered.<br/><br/>None of that changes the confirmed all-in price: <strong>$32,626 (32") – $37,458 (43") per unit</strong> — 2.2–2.7× the earlier $10K–$15K phone-call estimate, and well over the $25K/unit ceiling at both sizes. The privacy-hardened profile that resolves most of the Data Privacy concerns is explicitly framed by Meridian as a <strong>custom software enhancement</strong>, not the platform's out-of-box default — confirm whether it's included in the quoted price or adds cost/timeline. The "hardware-only, no-mZero" configuration this doc previously assumed has still not been quoted.<br/><br/><strong>Still outstanding:</strong> IP/NEMA coastal rating, social-service references (Goodwill appears among Meridian's general client logos, not a confirmed reference for this use case), and what "client to provide API keys through their own website" actually means for Web Speech API setup. The earlier procurement flag still applies: 16–20 week lead time. If budget can stretch, Meridian is now the strongest overall submission on paper — the question is whether it fits the grant, not whether it meets the requirements.</td>
+<td class="verdict-cell verdict-ak"><strong>The "known quantity" turned out to be over budget too.</strong> Scope is now narrowed to the <strong>Monolith (46" or 55") only</strong> — the Enviro option has been dropped from consideration. AK's price list puts the Monolith at <strong>$25,817 (46") – $28,856 (55") for hardware alone</strong> — both sizes already exceed the $25K/unit ceiling before install, shipping, cellular ($550), or branding ($280) are added. That's a real price list, not a phone-call estimate, but it's unclear whether it already reflects the bulk (4-unit) or GSA discount referenced elsewhere in this doc — worth confirming directly, since a meaningful discount could bring 46" back under budget.<br/><br/>Camera pricing ($872 add-on) confirms the earlier call: not included standard, and easy to simply not order. Cellular modem ($550) and vinyl logo branding ($280) both matched the earlier call-estimated figures exactly — a good sign the rest of AK's pricing info has been reliable.<br/><br/>Social service deployment precedent, modular on-site repairs, Windows 11, and a confirmed 3-year warranty remain genuine strengths. Remaining data privacy ask: Zamok session data handling must be audited and contractually constrained — unlike Meridian, no written privacy response has been provided yet. The Monolith's large screen size (same class as MetroClick's 55" and Meridian's 43") also raises the same ADA height-vs-reach question those two vendors solved with a keypad accessory — confirm whether Monolith uses something similar. Of the three vendors with real numbers now in hand, only MetroClick is confirmed under budget.</td>
+<td class="verdict-cell verdict-ol">Strongest data privacy posture by architecture — no Olea software layer, no vendor session data risk. Best choice if data privacy is the top priority and budget allows (or if Boulder model comes in under $25K). Trade-offs: lowest-priority buyer at 4 units; TCO requires assembling hardware + MDM quotes independently. Worth noting: Olea's own (unconfirmed) estimate range is now cheaper than Meridian's confirmed formal quote — a real Olea quote would make for a cleaner three-way comparison against MetroClick and Meridian.</td>
 </tr>
 </tbody>
 </table>
-<p class="section-label">Connectivity: WiFi vs. Ethernet vs. Cellular</p>
-<div class="connectivity-grid">
-<div class="conn-card">
-<span class="conn-tag tag-primary">Preferred</span>
-<h3>Wired Ethernet</h3>
-<p>Highest stability, lowest latency, no wireless interference. Best choice for kiosks handling sensitive data and expected to run 24/7. Requires trenching conduit to run cable underground plus a certified network installer at each site.</p>
-<p class="conn-cost">Extra installation cost: $1,000–$2,500 per unit. Pursue wherever conduit to a nearby building is feasible.</p>
-</div>
-<div class="conn-card">
-<span class="conn-tag tag-secondary">Workable in lobbies</span>
-<h3>WiFi</h3>
-<p>Cost-effective where the host facility's existing network reaches the kiosk location. Can be affected by signal interference and congestion in crowded environments. If WiFi is the only option, require WiFi 6 (802.11ax) support from the hardware vendor.</p>
-<p class="conn-cost">No extra infrastructure cost if the building's network reaches the placement location.</p>
-</div>
-<div class="conn-card">
-<span class="conn-tag tag-fallback">Outdoor fallback</span>
-<h3>Cellular (4G/5G)</h3>
-<p>The realistic option for truly outdoor standalone placements. All three evaluated vendors support Ethernet, WiFi, and cellular. MetroClick confirmed AT&amp;T, Verizon, and T-Mobile support — cellular stability depends on the installation location.</p>
-<p class="conn-cost">Ongoing cost: $30–$80/month per unit ($360–$960/year). Budget as an operational line, not hardware.</p>
-</div>
-</div>
-<div class="key-note note-blue" style="margin-bottom:1.75rem;">
-<strong>CSAH site visit recommendation</strong>
-  For each of your 3–4 locations, assess connectivity options during site visits before ordering hardware. If you can run conduit to a nearby building, wired Ethernet is the right call. If not, plan for cellular as primary with WiFi as secondary. Do not finalize hardware specs until site visits are complete — connectivity plan should inform the hardware order, not the other way around. MetroClick recommends positioning the kiosk directly over a ground outlet to keep all electrical elements locked behind the unit.
-</div>
 <p class="section-label">Budget Reality Check</p>
 <table class="budget-table">
 <thead>
@@ -672,27 +661,37 @@
 <tbody>
 <tr>
 <td class="vendor-cell">MetroClick</td>
-<td>$5,000–$15,000+<br/><span style="font-size:11px;color:#888780;">Request formal quote</span></td>
-<td>$780/yr (their platform)<br/><span style="font-size:11px;color:#0f6e56;font-weight:500;">$0 if blank Windows PC + own MDM</span></td>
-<td>$1,000–$1,500<br/><span style="font-size:11px;color:#888780;">+ electrician<br/>+ $500–$650 vinyl branding (optional)</span></td>
-<td>$300–$550<br/><span style="font-size:11px;color:#0f6e56;font-weight:500;">Confirmed on call</span></td>
-<td>$6,300–$17,050+</td>
-<td><strong>$18,900–$51,150+</strong><br/><span style="font-size:11px;color:#888780;">Hardware upper end unconfirmed; could shift higher once quoted</span></td>
-<td><span class="status-ok">✓ Most headroom</span></td>
+<td>$11,733–$12,727<br/><span style="font-size:11px;color:#0f6e56;font-weight:500;">Confirmed — formal quote, Jul 23</span></td>
+<td>$702/yr net<br/><span style="font-size:11px;color:#888780;">$780 gross − confirmed 10% nonprofit discount. Blank-PC + ARC MDM alt. not re-quoted.</span></td>
+<td>$1,575<br/><span style="font-size:11px;color:#0f6e56;font-weight:500;">Confirmed, optional line item</span></td>
+<td>$575–$600<br/><span style="font-size:11px;color:#0f6e56;font-weight:500;">Confirmed on formal quote</span></td>
+<td>$16,098–$17,118<br/><span style="font-size:11px;color:#0f6e56;font-weight:500;">Confirmed all-in — incl. ADA device, cellular modem, 1-yr data+SaaS, optional install+wrap, net of discounts</span></td>
+<td><strong>$48,295–$51,353</strong><br/><span style="font-size:11px;color:#888780;">Confirmed per-unit × 3</span></td>
+<td><span class="status-ok">✓ Well within budget</span></td>
+</tr>
+<tr>
+<td class="vendor-cell" style="color:#7c3aed;">Meridian</td>
+<td>$17,088–$21,145<br/><span style="font-size:11px;color:#b45309;font-weight:500;">Confirmed — chassis only, formal quote Jul 22</span></td>
+<td>$3,120/yr (from yr 2)<br/><span style="font-size:11px;color:#888780;">mZero Manage + Create SDK, confirmed. Hardware-only alt. not re-quoted.</span></td>
+<td>$4,200<br/><span style="font-size:11px;color:#b45309;font-weight:500;">Confirmed (estimate, per shipping survey)</span></td>
+<td>$984–$998<br/><span style="font-size:11px;color:#0f6e56;font-weight:500;">Confirmed, to Savannah zip 31406</span></td>
+<td>$32,626–$37,458<br/><span style="font-size:11px;color:#b45309;font-weight:600;">⚠ Confirmed — over $25K ceiling</span><br/><span style="font-size:11px;color:#888780;">Incl. chassis, yr-1 software/coverage, shipping, install, cellular, branding, speaker, SLA, 3-yr warranty</span></td>
+<td><strong>$97,878–$112,374</strong><br/><span style="font-size:11px;color:#888780;">Confirmed per-unit × 3 — nearly double MetroClick's total</span></td>
+<td><span class="status-warn">⚠ Over budget at both sizes</span></td>
 </tr>
 <tr>
 <td class="vendor-cell">Advanced Kiosks</td>
-<td>$10,000–$25,000<br/><span style="font-size:11px;color:#0f6e56;font-weight:500;">Bulk discount at 4 units</span></td>
+<td>$25,817–$28,856<br/><span style="font-size:11px;color:#b45309;font-weight:500;">Price list confirmed (46"/55", single-sided) — bulk/GSA discount not yet verified against this figure</span></td>
 <td style="color:#888780; font-style:italic;">TBD — verify Zamok pricing at quote</td>
 <td>$2,000–$3,000<br/><span style="font-size:11px;color:#888780;">Can self-install with vendor manuals</span></td>
 <td style="color:#888780; font-style:italic;">TBD</td>
-<td>$12,000–$28,000<br/><span style="font-size:11px;color:#888780;">+ shipping TBD</span></td>
-<td><strong>$36,000–$84,000+</strong><br/><span style="font-size:11px;color:#888780;">+ shipping TBD; bulk discount may lower hardware end</span></td>
-<td><span class="status-warn">⚠ Upper end over $25K/unit</span></td>
+<td>$28,647–$32,686+<br/><span style="font-size:11px;color:#888780;">+ shipping TBD; includes cellular modem + vinyl logo</span></td>
+<td><strong>$85,941–$98,058+</strong><br/><span style="font-size:11px;color:#888780;">+ shipping TBD; bulk/GSA discount, if applicable, would lower this</span></td>
+<td><span class="status-warn">⚠ Over $25K/unit at both sizes</span></td>
 </tr>
 <tr>
 <td class="vendor-cell">Olea Kiosks</td>
-<td>$15,000–$30,000</td>
+<td>$15,000–$30,000<br/><span style="font-size:11px;color:#888780;">Estimate only — now cheaper than Meridian's confirmed quote</span></td>
 <td style="color:#888780; font-style:italic;">TBD — depends on MDM selection</td>
 <td>$2,000–$3,000</td>
 <td style="color:#888780; font-style:italic;">TBD</td>
@@ -700,18 +699,8 @@
 <td><strong>$51,000–$99,000+</strong><br/><span style="font-size:11px;color:#888780;">+ shipping TBD; Boulder model may lower range</span></td>
 <td><span class="status-warn">⚠ Tight to over $25K/unit</span></td>
 </tr>
-<tr>
-<td class="vendor-cell" style="color:#7c3aed;">Meridian</td>
-<td>$10,000–$15,000<br/><span style="font-size:11px;color:#0f6e56;font-weight:500;">Confirmed on vendor call</span></td>
-<td>$0 (hardware-only + ARC MDM)<br/><span style="font-size:11px;color:#888780;">Optional Interact: $1,500/unit/yr</span></td>
-<td style="color:#888780; font-style:italic;">TBD — verify at quote</td>
-<td style="color:#888780; font-style:italic;">TBD — verify at quote</td>
-<td>~$12,000–$18,000 est.<br/><span style="font-size:11px;color:#888780;">Install + shipping TBD; within $25K budget</span></td>
-<td><strong>~$36,000–$54,000 est.</strong><br/><span style="font-size:11px;color:#888780;">+ install/shipping TBD</span></td>
-<td><span class="status-ok">✓ Within budget</span></td>
-</tr>
 </tbody>
 </table>
-<p class="foot">Cells marked <span class="confirmed-tag" style="font-size:10px;">CALL CONFIRMED</span> reflect data from vendor sales conversations (June 2026). Cells marked <span class="call-needed-tag" style="font-size:10px;">CALL NEEDED</span> flag blocking unknowns for Meridian — camera policy and hardware-only purchase availability must be confirmed before Meridian can be meaningfully evaluated. All other figures are market estimates — not vendor quotes. Advanced Kiosks is the only vendor with bulk discount confirmed at 4 units. MetroClick blank Windows PC route is strongly recommended — eliminates annual software cost and data privacy concerns simultaneously. MetroClick warranty flag: 2-year standard does not meet CSAH's 3-year minimum; negotiate extended warranty at quote. Hardware OS (Windows) confirmed for Advanced Kiosks, MetroClick, and Meridian (primary); confirm for Olea. Meridian vendor call completed — hardware-only purchase confirmed, pricing confirmed at $10K–$15K/unit. Outstanding items: camera policy, warranty terms, IP/NEMA coastal rating, and social-service references. Critical procurement flag: 16–20 week lead time requires immediate contract action to meet December 30 deadline. Annual software costs depend on MDM selection — see Kiosk Software Comparison doc. Cellular connectivity is an ongoing operational cost not included in all-in hardware estimates ($360–$960/unit/year). MetroClick 2nd vendor call (Jul 20, 2026): clarified ADA keypad approach (app must support arrow-key navigation), confirmed 5% nonprofit hardware discount and flexible government payment terms, confirmed managed multi-carrier IoT SIM cellular approach, and flagged Google Maps domain-whitelisting as an open risk pending MetroClick testing — current lean is to embed Google Maps in-app rather than link out. SLA tier pricing and per-unit cellular pricing pending via email.</p>
+<p class="foot">Vendor order reflects current priority: MetroClick, Meridian, Advanced Kiosks, Olea. Cells marked <span class="confirmed-tag" style="font-size:10px;">CALL CONFIRMED</span> reflect data from vendor sales conversations; cells marked "QUOTE CONFIRMED" reflect written pricing documents received Jul 22 (Meridian) and Jul 23 (MetroClick), 2026. Olea figures remain market estimates only — no pricing has been produced yet. <strong>Advanced Kiosks:</strong> scope narrowed to the Monolith only (46"/55", Enviro dropped); AK's price list confirms hardware alone at $25,817 (46") – $28,856 (55") — over the $25K/unit ceiling at both sizes before install/shipping/options, and unclear whether bulk/GSA discount is already reflected. Cellular modem ($550) and vinyl-logo branding ($280) both matched the earlier call-estimated figures exactly; camera ($872) confirmed as an optional add-on, not standard. Zamok software pricing and shipping remain unconfirmed for AK. <strong>MetroClick formal quote (Jul 23):</strong> confirmed models are 43"/55" portrait (not 32"); all-in $16,098–$17,118/unit including hardware, ADA device, cellular modem, shipping, 1-yr data + SaaS fees, optional install/wrap, net of a 5% hardware and 10% SaaS-fee nonprofit discount — both now confirmed in writing. Quote is priced for MetroClick's own SaaS platform, not the blank-Windows-PC path this doc otherwise assumes for data-privacy reasons. <strong>Meridian formal quote (Jul 22):</strong> confirmed models are 32"/43" Presenza; all-in $32,626–$37,458/unit, 2.2–2.7× the earlier phone-call estimate and over the $25K/unit ceiling at both sizes, driven by Meridian's own mZero software (Manage + Create SDK, $3,120/yr from year 2) being bundled rather than offered hardware-only. 3-year warranty (screen, glass, PC) and a full ADA accessibility kit (NavPad + audio jack, proximity sensor, cellular router) are now confirmed for Meridian. <strong>Meridian Software Requirements Response (Jul 2026):</strong> a follow-up written, point-by-point response to the CSAH/ARC software requirements resolved most of Meridian's outstanding Data Privacy items — integrated NVDA screen reader with English/Spanish voices and automatic headphone activation, accessible volume control, camera policy (disabled, no audience analytics), explicit MAC/WiFi-probe non-collection, and a proposed privacy-hardened telemetry profile (device health only). It also surfaced a new finding — a default startup IP geolocation lookup — that Meridian proposes removing; this hadn't been assessed for any vendor and is now a new row in the Data Privacy table for all four. All of this is framed by Meridian as a custom software enhancement, not the platform's out-of-box default — confirm it's priced into the existing quote. IP/NEMA coastal rating, social-service references, and the meaning of "client to provide API keys through their own website" remain outstanding for Meridian. Critical procurement flag: Meridian's 16–20 week lead time requires immediate contract action to meet the December 2026 deadline if selected. Annual software costs depend on final MDM/platform selection — see Kiosk Software Comparison doc. Cellular connectivity is an ongoing operational cost, separate from the all-in unit totals above.</p>
 </body>
 </html>
