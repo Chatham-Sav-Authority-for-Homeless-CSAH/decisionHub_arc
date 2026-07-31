@@ -76,6 +76,7 @@
     margin-bottom: 1.75rem;
   }
   .key-note strong { font-weight: 600; display: block; margin-bottom: 2px; }
+  .key-note.note-amber { background: #faeeda; border-color: #ba7517; color: #633806; }
 
   /* ── CHART ── */
   .chart-card {
@@ -166,40 +167,48 @@ Every figure below is a planning-stage estimate pulled from prior vendor researc
 
 <div class="key-note">
 <strong>What's assumed here</strong>
-Figures assume 3 kiosks live (Phase 1 target) and CSAH-only staff app usage (no partner-agency expansion yet). Cellular and RDM software lines scale with kiosk count — revisit this doc once kiosk hardware/software vendors are locked in Phase 2.
+Figures assume 3 kiosks. Cellular and Kiosk Monitoring lines scale with kiosk count — revisit this doc once kiosk vendor is finalized.
 </div>
 
 <div class="chart-card">
-<div class="chart-title">Monthly cost range by category — Cellular Connectivity, RDM Software, SMS, Hosting, Domain</div>
+<div class="chart-title">Monthly cost range by category — Kiosk Monitoring, Cellular Connectivity, SMS, Supabase, Hosting, Domain, Map/Tiles</div>
+
+<div class="cost-row">
+  <div class="cost-label">Kiosk Hardware Monitoring</div>
+  <div class="cost-track" title="MetroClick's confirmed formal quote combines both recurring fee line items: Yearly Data Fee ($450/unit/yr) + Yearly SaaS fee ($702/unit/yr net) = $1,152/unit/yr ($96/unit/mo) — $288/mo for 3 kiosks. Low end reflects the theoretical lean hardware-only + ARC's-own-MDM path, not yet re-quoted.">
+    <div class="cost-bar" style="left:3.3%; width:92.7%;"></div>
+  </div>
+  <div class="cost-range-label">$10 – $288</div>
+</div>
 
 <div class="cost-row">
   <div class="cost-label">Cellular Connectivity</div>
-  <div class="cost-track" title="MetroClick's confirmed Yearly Data Fee is $450/unit/yr ($37.50/mo) × 3 kiosks = $112.50/mo — narrowed from the earlier $30–80/mo general estimate">
-    <div class="cost-bar" style="left:36%; width:24%;"></div>
+  <div class="cost-track" title="General market estimate for Managed IoT SIM (multi-carrier, e.g. Hologram-style) — the recommended lean approach per the Kiosk Connectivity doc. ~$9–60/mo for 3 kiosks, still marked VERIFY there — not vendor-confirmed. Vendor-agnostic; independent of which kiosk hardware is selected.">
+    <div class="cost-bar" style="left:3%; width:17%;"></div>
   </div>
-  <div class="cost-range-label">$90 – $150</div>
+  <div class="cost-range-label">$9 – $60</div>
 </div>
 
 <div class="cost-row">
-  <div class="cost-label">RDM / Kiosk Software</div>
-  <div class="cost-track" title="Lean MDM (~$2–4/device/mo) to mid-tier CMS (~$10–20/device/mo) × 3 kiosks">
-    <div class="cost-bar" style="left:4%; width:20%;"></div>
+  <div class="cost-label">SMS</div>
+  <div class="cost-track" title="Re-estimated at 400 texts/month (~13/day across 3 kiosks) assuming 2 segments/message average, Twilio standard SMS + A2P 10DLC fees">
+    <div class="cost-bar" style="left:3.3%; width:3.3%;"></div>
   </div>
-  <div class="cost-range-label">$10 – $60</div>
+  <div class="cost-range-label">$10 – $20</div>
 </div>
 
 <div class="cost-row">
-  <div class="cost-label">SMS (Twilio)</div>
-  <div class="cost-track" title="~250 messages/month estimated volume">
-    <div class="cost-bar" style="left:8%; width:12%;"></div>
+  <div class="cost-label">Database</div>
+  <div class="cost-track" title="Supabase Pro, flat — Free tier has no backups, not an acceptable risk for case-adjacent data">
+    <div class="cost-bar" style="left:8.3%; width:0.4%;"></div>
   </div>
-  <div class="cost-range-label">$20 – $50</div>
+  <div class="cost-range-label">$25 flat</div>
 </div>
 
 <div class="cost-row">
   <div class="cost-label">Hosting</div>
   <div class="cost-track" title="Replit / Railway / Render / Vercel / Netlify — platform not finalized">
-    <div class="cost-bar" style="left:0%; width:10%;"></div>
+    <div class="cost-bar" style="left:0%; width:8.3%;"></div>
   </div>
   <div class="cost-range-label">$0 – $25</div>
 </div>
@@ -207,23 +216,31 @@ Figures assume 3 kiosks live (Phase 1 target) and CSAH-only staff app usage (no 
 <div class="cost-row">
   <div class="cost-label">Domain Name</div>
   <div class="cost-track" title="Standard .org annual registration, prorated monthly">
-    <div class="cost-bar" style="left:0.4%; width:0.6%;"></div>
+    <div class="cost-bar" style="left:0.3%; width:0.3%;"></div>
   </div>
   <div class="cost-range-label">$1 – $2</div>
 </div>
 
+<div class="cost-row">
+  <div class="cost-label">Map / Tiles</div>
+  <div class="cost-track" title="Per ADR-008: effectively free at projected volume, especially with lazy caching of directions. Small ceiling kept only as a buffer, not an expected cost. Self-hosted OSM tiles remain on the table as a zero-cost path regardless.">
+    <div class="cost-bar" style="left:0%; width:3.3%;"></div>
+  </div>
+  <div class="cost-range-label">$0 – $10</div>
+</div>
+
 <div class="chart-axis">
-  <span>$0</span><span>$50</span><span>$100</span><span>$150</span><span>$200</span><span style="text-align:right;">$250</span>
+  <span>$0</span><span>$60</span><span>$120</span><span>$180</span><span>$240</span><span style="text-align:right;">$300</span>
 </div>
 </div>
 
 <div class="total-card">
 <div>
   <div class="total-label">Estimated Monthly Total</div>
-  <div class="total-value">$121 – $287 / mo</div>
-  <div class="total-sub">Sum of the five categories above · 3-kiosk deployment</div>
+  <div class="total-value">$55 – $430 / mo</div>
+  <div class="total-sub">Sum of the seven categories above · 3-kiosk deployment. Wide range is mostly Kiosk Monitoring — driven by which kiosk vendor/path is selected.</div>
 </div>
-<div class="total-annual">Annualized:<br/><strong>$1,452 – $3,444 / yr</strong></div>
+<div class="total-annual">Annualized:<br/><strong>$660 – $5,160 / yr</strong></div>
 </div>
 
 <div class="section-label">Line-Item Detail</div>
@@ -233,19 +250,24 @@ Figures assume 3 kiosks live (Phase 1 target) and CSAH-only staff app usage (no 
 </thead>
 <tbody>
 <tr>
-<td>Cellular Connectivity</td>
-<td class="num">$90 – $150</td>
-<td class="note">MetroClick's formal quote (Jul 23, 2026) confirms a Yearly Data Fee of $450/unit/yr ($37.50/mo) via a managed multi-carrier IoT SIM — $112.50/mo for 3 kiosks. Range kept slightly wider to account for other vendors: Meridian's formal quote (Jul 22) prices cellular as a one-time $452/unit hardware add-on with no recurring data cost itemized — confirm whether a separate carrier data plan is needed if Meridian is selected instead.</td>
+<td>Kiosk Hardware Monitoring</td>
+<td class="num">$10 – $288</td>
+<td class="note">MetroClick's confirmed formal quote (Jul 23, 2026) combines <strong>both</strong> of their recurring fee line items: Yearly Data Fee ($450/unit/yr) + Yearly SaaS fee ($702/unit/yr net of the 10% nonprofit discount) = $1,152/unit/yr ($96/unit/mo) — <strong>$288/mo for 3 kiosks.</strong> Low end ($10/mo) reflects the theoretical lean hardware-only + ARC's-own-MDM path (Scalefusion-style, ~$2–4/device/mo), not yet re-quoted.</td>
 </tr>
 <tr>
-<td>RDM / Kiosk Software</td>
-<td class="num">$10 – $60</td>
-<td class="note">Reflects the lean, hardware-only-plus-ARC's-own-MDM path: Scalefusion (~$2–4/device/mo) up to SiteKiosk Online (~$10–20/device/mo) × 3 kiosks. <strong>Not finalized, and now a bigger swing than this range shows:</strong> MetroClick's formal quote (Jul 23) prices their own SaaS platform at $702/yr/unit net (~$175.50/mo for 3 units), and Meridian's formal quote (Jul 22) prices mZero Manage + Create SDK at $3,120/yr/unit (~$780/mo for 3 units, from year 2) — both confirmed, and both well above this range if the selected vendor's bundled software is kept rather than switching to hardware-only + ARC's own MDM. Whichever kiosk hardware vendor is selected will likely decide this line.</td>
+<td>Cellular Connectivity</td>
+<td class="num">$9 – $60</td>
+<td class="note">General market estimate for Managed IoT SIM (multi-carrier, e.g. Hologram-style) — the recommended lean approach per the Kiosk Connectivity comparison doc, still marked VERIFY there. This is the raw carrier/data cost, independent of kiosk hardware vendor — MetroClick (or any kiosk vendor) doesn't have real market insight into telecom pricing, so their bundled quote isn't used here. See Kiosk Monitoring above for MetroClick's actual recurring charges.</td>
 </tr>
 <tr>
 <td>SMS (Twilio)</td>
-<td class="num">$20 – $50</td>
-<td class="note">Estimated at ~250 outbound/inbound messages per month for case-linked messaging. Provider leaning Twilio; not yet contracted.</td>
+<td class="num">$10 – $20</td>
+<td class="note">Estimated at <strong>400 texts/month</strong> (~13/day total, ~4–5/day per kiosk across 3 kiosks) — mainly the kiosk's text-a-resource feature, which the earlier 250/month figure didn't account for (that estimate only covered partner-app push-notification fallback). Worked estimate against Twilio's public rate card, assuming resource-info texts average 2 SMS segments each (shelter name/address/hours easily exceeds the 160-character single-segment limit): 800 segments × ~$0.0079 (~$6.32) + A2P 10DLC per-segment carrier surcharge (~$2.40) + phone number rental (~$1.15) + A2P 10DLC monthly campaign fee (~$1.50–$10, varies by tier) ≈ <strong>$11–$20/mo.</strong> This is a worked estimate from public pricing, not a live Twilio quote — verify current rates before treating as final. Provider leaning Twilio; not yet contracted.</td>
+</tr>
+<tr>
+<td>Database (Supabase)</td>
+<td class="num">$25 flat</td>
+<td class="note">Budgeting Supabase Pro flat rather than starting on the free tier. <strong>Free tier has no backups</strong> — not an acceptable risk, even though row/bandwidth limits would likely allow staying on Free at launch scale otherwise.</td>
 </tr>
 <tr>
 <td>Hosting</td>
@@ -257,18 +279,22 @@ Figures assume 3 kiosks live (Phase 1 target) and CSAH-only staff app usage (no 
 <td class="num">$1 – $2</td>
 <td class="note">Standard annual domain registration (~$12–20/yr for a .org), prorated monthly.</td>
 </tr>
+<tr>
+<td>Map / Tiles</td>
+<td class="num">$0 – $10</td>
+<td class="note">Covers embedding a map directly in the app for wayfinding/directions instead of linking out. Easy to assume this is free the way consumer Google Maps is — it's technically a metered developer API, not a truly free product. That said, <strong>per ADR-008, cost is effectively a non-factor at CSAH's projected volume, especially combined with the lazy-caching approach for directions</strong> (fetch once, reuse for 30 days) — the small ceiling here is a buffer, not an expected charge. Self-hosted OpenStreetMap (OSM) tiles remain on the table as a $0 path regardless of which vendor is chosen. Vendor/approach not finalized — see ADR-008.</td>
+</tr>
 </tbody>
 </table>
 
 <div class="addl-card">
 <strong>Possible additional costs — not included in the total above</strong>
 <ul>
-<li><strong>Database (Supabase):</strong> Free tier likely covers MVP scale; Pro tier (if row/bandwidth limits are exceeded) runs roughly $25/mo. Confirm free-tier limits before committing either way.</li>
 <li><strong>ARC ongoing maintenance:</strong> Not a hosting/software line — this would be a separate service retainer between CSAH and ARC Consulting for post-launch feature work and support. No rate has been discussed; excluded from this doc entirely.</li>
 </ul>
 </div>
 
-<p class="foot">Prepared as a Phase 1 handoff reference — not a final budget. Ranges compiled from prior Compass Project vendor research (see Kiosk Hardware, Kiosk Connectivity, and Kiosk Software comparison docs) and internal planning assumptions. Cellular and RDM/Kiosk Software figures updated Jul 23, 2026 with confirmed pricing from MetroClick's and Meridian's formal quotes — see Kiosk Hardware Comparison doc for full detail. All other lines (SMS, Hosting, Domain) remain unconfirmed planning estimates. Revisit and finalize once kiosk hardware/software and hosting vendors are selected in Phase 2.</p>
+<p class="foot">Prepared as a Phase 1 handoff reference — not a final budget. Ranges compiled from prior Compass Project vendor research (see Kiosk Hardware, Kiosk Connectivity, and Kiosk Software comparison docs) and internal planning assumptions. <strong>Cellular Connectivity</strong> is a vendor-agnostic market estimate from the Kiosk Connectivity doc (still marked VERIFY there) — not tied to a specific kiosk hardware vendor's quote. <strong>Kiosk Monitoring</strong> reflects MetroClick's confirmed formal quote (Jul 23, 2026), combining their Yearly Data Fee and Yearly SaaS fee into one recurring per-kiosk charge — see Kiosk Hardware Comparison doc for full detail. All other lines (SMS, Hosting, Domain, Map/Tiles) remain unconfirmed planning estimates. Revisit and finalize once kiosk hardware/software, hosting, and mapping vendors are selected in Phase 2.</p>
 
 </div>
 </body>
