@@ -124,7 +124,7 @@ Use Supabase as the primary backend. Postgres for data, Supabase Auth for authen
 
 **Options Considered**
 1. **Supabase** (chosen) — Postgres + auth + realtime + storage + edge functions in one platform; free/cheap tier is real at this scale (~$0–25/mo); built-in admin UI (Supabase Studio); data layer is portable (plain Postgres)
-2. **Custom backend** (Node/Express or Python/FastAPI on Replit or Vercel) — maximum control, zero lock-in, but requires building auth, permissions, and realtime from scratch; more upfront work; better ceiling if HMIS integration eventually demands complex custom logic
+2. **Custom backend** (Node/Express or Python/FastAPI on Netlify) — maximum control, zero lock-in, but requires building auth, permissions, and realtime from scratch; more upfront work; better ceiling if HMIS integration eventually demands complex custom logic
 3. **Low-code** (Bubble, FlutterFlow, etc.) — fastest to MVP, but ceiling is real and expansion path is murky for a 3–5 year horizon
 
 **Consequences**

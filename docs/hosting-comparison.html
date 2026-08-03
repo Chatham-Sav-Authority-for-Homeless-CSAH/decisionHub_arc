@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSAH Compass — Hosting Platform &amp; Comparison</title>
+<style>
+  :root {
+    --bg: #f8f7f4;
+    --surface: #ffffff;
+    --surface-2: #f2f1ee;
+    --border: #e2e0db;
+    --border-strong: #c8c5be;
+    --text-primary: #1a1917;
+    --text-secondary: #5c5a56;
+    --text-muted: #8c8a85;
+    --blue: #1d6fb8;
+    --blue-bg: #eaf2fb;
+    --blue-border: #b5d4f4;
+    --green: #2a6b3a;
+    --green-bg: #eaf3de;
+    --green-border: #97c459;
+    --amber: #7a4e0a;
+    --amber-bg: #faeeda;
+    --amber-border: #ef9f27;
+    --red: #8b2020;
+    --red-bg: #fcebeb;
+    --red-border: #f09595;
+    --gold: #9a6b00;
+    --gold-bg: #fdf3d9;
+    --gold-border: #e8bd4e;
+    --gray-bg: #f2f1ee;
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --font-mono: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text-primary);
+    line-height: 1.5;
+    padding: 1.25rem 1.5rem 4rem;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .back-link { color: var(--text-muted); font-size: 12px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; letter-spacing: 0.04em; margin-bottom: 1.25rem; }
+  .back-link:hover { color: var(--text-secondary); }
+
+  header { margin-bottom: 2rem; }
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+  }
+  h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.35rem;
+  }
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-secondary);
+    max-width: 600px;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0.6rem 1rem;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.25rem;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .legend strong { color: var(--text-primary); font-size: 11px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .dot-good { background: #2a6b3a; }
+  .dot-caution { background: #7a4e0a; }
+  .dot-weak { background: #8b2020; }
+  .dot-na { background: var(--border-strong); }
+
+  /* Column header row */
+  .col-header {
+    display: grid;
+    grid-template-columns: 220px repeat(10, 1fr);
+    gap: 4px;
+    padding: 0 0 0.4rem;
+    margin-bottom: 2px;
+  }
+  .col-h {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.3;
+  }
+  .col-h.left { text-align: left; }
+
+  /* Section dividers */
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    padding: 1.25rem 0 0.4rem 0;
+    border-top: 1px solid var(--border);
+    margin-top: 0.5rem;
+  }
+  .section-label:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+
+  /* Card row */
+  .card {
+    display: grid;
+    grid-template-columns: 220px repeat(10, 1fr);
+    gap: 4px;
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+  .card.recommended {
+    border: 2px solid var(--gold-border);
+    position: relative;
+    box-shadow: 0 2px 14px rgba(154, 107, 0, 0.12);
+  }
+  .winner-ribbon {
+    position: absolute;
+    top: -1px;
+    right: 14px;
+    background: var(--gold);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    padding: 5px 12px;
+    border-radius: 0 0 6px 6px;
+  }
+  .pill-gold { background: var(--gold-bg); color: var(--gold); }
+
+  /* Platform info cell */
+  .plat-cell {
+    padding: 0.85rem 1rem;
+    border-right: 0.5px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .plat-top { display: flex; align-items: center; gap: 8px; }
+  .rank {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; flex-shrink: 0;
+  }
+  .r1 { background: var(--gold); color: #fff; }
+  .r2 { background: var(--green-bg); color: var(--green); }
+  .r3,.r4,.r5,.r6 { background: var(--gray-bg); color: var(--text-secondary); }
+  .r7 { background: var(--amber-bg); color: var(--amber); }
+  .r8 { background: var(--red-bg); color: var(--red); }
+  .plat-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+  .plat-tag { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
+  .pills { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 2px; }
+  .pill {
+    font-size: 9px; font-weight: 600; padding: 2px 6px;
+    border-radius: var(--radius-sm);
+  }
+  .pill-blue { background: var(--blue-bg); color: var(--blue); }
+  .pill-green { background: var(--green-bg); color: var(--green); }
+  .pill-amber { background: var(--amber-bg); color: var(--amber); }
+  .pill-gray { background: var(--gray-bg); color: var(--text-secondary); }
+
+  /* Score cell */
+  .score-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 4px;
+    gap: 5px;
+  }
+  .dots-row { display: flex; gap: 2px; }
+  .score-note {
+    font-size: 9px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.3;
+    padding: 0 2px;
+  }
+
+  /* Detail chips row */
+  .chips-row {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 0 1rem 0.75rem;
+    border-top: 0.5px solid var(--border);
+  }
+  .ch {
+    font-size: 10px; font-weight: 500;
+    padding: 2px 8px; border-radius: var(--radius-sm);
+  }
+  .ch-good { background: var(--green-bg); color: var(--green); }
+  .ch-ok { background: var(--amber-bg); color: var(--amber); }
+  .ch-bad { background: var(--red-bg); color: var(--red); }
+  .ch-neu { background: var(--gray-bg); color: var(--text-secondary); }
+
+  /* Cost note */
+  .cost-row {
+    grid-column: 1 / -1;
+    font-size: 11px;
+    color: var(--text-secondary);
+    padding: 0 1rem 0.75rem;
+  }
+  .cost-row strong { color: var(--text-primary); }
+
+  /* Recommendation box */
+  .rec-box {
+    background: var(--blue-bg);
+    border: 0.5px solid var(--blue-border);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1.1rem;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 1.5rem;
+    line-height: 1.6;
+  }
+  .rec-box strong { color: var(--blue); }
+  .rec-box.pop {
+    border-width: 2px;
+    font-size: 14px;
+  }
+
+  /* Domain note */
+  .domain-box {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0.85rem 1.1rem;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+  .domain-box strong { color: var(--text-primary); }
+
+  /* Deep dive */
+  .deep-dive {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .deep-dive h2 { font-size: 15px; font-weight: 700; color: var(--text-primary); margin-bottom: 0.35rem; }
+  .deep-dive > p.deep-intro { font-size: 12.5px; line-height: 1.65; color: var(--text-secondary); margin-bottom: 0.5rem; }
+  .deep-dive h3 { font-size: 12.5px; font-weight: 700; color: var(--text-primary); margin: 1.15rem 0 0.4rem; }
+  .deep-dive h3:first-of-type { margin-top: 0.9rem; }
+  .deep-dive p { font-size: 12.5px; line-height: 1.65; color: var(--text-secondary); margin-bottom: 0.5rem; }
+  .deep-dive ul { margin: 0.3rem 0 0.6rem 1.1rem; }
+  .deep-dive li { font-size: 12.5px; line-height: 1.6; color: var(--text-secondary); }
+  .deep-dive table { width: 100%; border-collapse: collapse; margin: 0.5rem 0 0.6rem; font-size: 12px; }
+  .deep-dive th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); padding: 6px 8px; border-bottom: 1px solid var(--border-strong); }
+  .deep-dive td { padding: 6px 8px; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+  .deep-dive tr:last-child td { font-weight: 700; color: var(--text-primary); border-bottom: none; }
+
+  footer {
+    margin-top: 2rem;
+    font-size: 11px;
+    color: var(--text-muted);
+    border-top: 0.5px solid var(--border);
+    padding-top: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<a class="back-link" href="index.html">
+  <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  Decision Hub
+</a>
+
+<header>
+  <p class="eyebrow">CSAH Compass Project — ARC Consulting</p>
+  <h1>Hosting Platform Comparison</h1>
+  <p class="subtitle" style="max-width: none;">"Hosting" is where the app's code actually runs once it's deployed — aka the server infrastructure between "the code exists in a GitHub repo" and "a browser loading the app at a URL."</p>
+  <p class="subtitle" style="max-width: none; margin-top: 0.5rem;">Ranked by cost, reliability, security, deployment ease, scalability, support, monitoring, demo capability, Twilio SMS integration, and PWA support.</p>
+</header>
+
+<div class="legend">
+  <strong>Score key (5 dots = best):</strong>
+  <span class="legend-item"><span class="dot dot-good"></span> Good</span>
+  <span class="legend-item"><span class="dot dot-caution"></span> Caution</span>
+  <span class="legend-item"><span class="dot dot-weak"></span> Weak</span>
+  <span class="legend-item"><span class="dot dot-na"></span> N/A</span>
+  <span style="margin-left:auto;color:var(--text-muted);font-size:11px;">App restore not scored — any platform redeploys from GitHub in &lt;2 min</span>
+</div>
+
+<div class="col-header">
+  <div class="col-h left">Platform</div>
+  <div class="col-h">Cost</div>
+  <div class="col-h">Uptime</div>
+  <div class="col-h">Security</div>
+  <div class="col-h">Deploy</div>
+  <div class="col-h">Scale</div>
+  <div class="col-h">Support</div>
+  <div class="col-h">Monitor</div>
+  <div class="col-h">Demo</div>
+  <div class="col-h">Twilio</div>
+  <div class="col-h">PWA</div>
+</div>
+
+<!-- HOSTING PLATFORMS -->
+<p class="section-label">Hosting platforms</p>
+
+<!-- #1 Netlify -->
+<div class="card recommended">
+  <div class="winner-ribbon">🏆 WINNER</div>
+  <div class="plat-cell">
+    <div class="plat-top">
+      <span class="rank r1">1</span>
+      <span class="plat-name">Netlify</span>
+    </div>
+    <div class="plat-tag">Free commercial hosting, serverless Twilio, native PWA, branch preview demos</div>
+    <div class="pills">
+      <span class="pill pill-blue">Host</span>
+      <span class="pill pill-green">$0/mo viable</span>
+      <span class="pill pill-gold">🏆 Recommended</span>
+    </div>
+  </div>
+  <!-- Cost -->
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">$0 commercial OK</div>
+  </div>
+  <!-- Uptime -->
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">&gt;99.9% measured</div>
+  </div>
+  <!-- Security -->
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Auto HTTPS, WAF, audit logs</div>
+  </div>
+  <!-- Deploy -->
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">GitHub push-to-deploy</div>
+  </div>
+  <!-- Scale -->
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Auto CDN scaling</div>
+  </div>
+  <!-- Support -->
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Excellent docs</div>
+  </div>
+  <!-- Monitor -->
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Basic analytics</div>
+  </div>
+  <!-- Demo -->
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">Branch preview URLs</div>
+  </div>
+  <!-- Twilio -->
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">Functions → full Node.js</div>
+  </div>
+  <!-- PWA -->
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">Native SW support</div>
+  </div>
+  <div class="chips-row">
+    <span class="ch ch-good">$0/mo — no commercial restriction</span>
+    <span class="ch ch-good">Branch preview URLs = instant client demos</span>
+    <span class="ch ch-good">Netlify Functions → Twilio (Node.js, no separate backend)</span>
+    <span class="ch ch-good">Native PWA + service worker tooling</span>
+    <span class="ch ch-good">Auto HTTPS, audit logs, WAF on Pro</span>
+    <span class="ch ch-ok">100GB/mo bandwidth on free (plenty for CSAH scale)</span>
+    <span class="ch ch-ok">No contractual SLA below Enterprise</span>
+  </div>
+  <div class="cost-row"><strong>~$0/mo</strong> at CSAH scale. Pro is $19/mo flat for unlimited members if needed. Custom domain free. Free SSL auto-provisioned.</div>
+</div>
+
+<!-- #2 Cloudflare Pages -->
+<div class="card">
+  <div class="plat-cell">
+    <div class="plat-top">
+      <span class="rank r2">2</span>
+      <span class="plat-name">Cloudflare Pages</span>
+    </div>
+    <div class="plat-tag">Most generous free tier — unlimited bandwidth, 300+ edge nodes, no commercial restriction</div>
+    <div class="pills">
+      <span class="pill pill-blue">Host</span>
+      <span class="pill pill-green">Unlimited BW free</span>
+    </div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">$0, unlimited BW</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">Cloudflare network</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">DDoS + WAF free</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">GitHub push-to-deploy</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">Global edge network</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Community + great docs</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Analytics dashboard</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Preview URLs per PR</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-caution"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Workers → V8, not full Node</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">Native PWA</div>
+  </div>
+  <div class="chips-row">
+    <span class="ch ch-good">Unlimited bandwidth on free — no cap</span>
+    <span class="ch ch-good">300+ edge locations — fastest mobile load times</span>
+    <span class="ch ch-good">Free DDoS + WAF included on all plans</span>
+    <span class="ch ch-good">GitHub push-to-deploy, preview URLs per PR</span>
+    <span class="ch ch-good">Native PWA support</span>
+    <span class="ch ch-ok">Twilio via Workers works — V8 runtime, not full Node.js (use REST API directly, ~1hr extra setup)</span>
+    <span class="ch ch-ok">Community support only on free; documentation excellent</span>
+  </div>
+  <div class="cost-row"><strong>$0/mo</strong> with no bandwidth ceiling. If hosting on Cloudflare Pages, buy domain via <strong>Cloudflare Registrar</strong> — at-cost pricing, DNS auto-configured. Twilio note: Workers uses V8 isolates — call Twilio REST API directly rather than using the Node SDK. Not a blocker, just slightly more setup.</div>
+</div>
+
+<!-- #3 Vercel -->
+<div class="card">
+  <div class="plat-cell">
+    <div class="plat-top">
+      <span class="rank r3">3</span>
+      <span class="plat-name">Vercel</span>
+    </div>
+    <div class="plat-tag">Technically matches Netlify on every feature — only drops because free tier bars commercial use</div>
+    <div class="pills">
+      <span class="pill pill-amber">No free commercial</span>
+      <span class="pill pill-blue">Host</span>
+    </div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-caution"></span><span class="dot dot-caution"></span><span class="dot dot-caution"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">$20/user/mo minimum</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">&gt;99.9% measured</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Auto HTTPS, firewall</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">Best Next.js DX</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">Edge CDN</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Good docs + community</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Basic analytics</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">Branch preview URLs</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">Functions → full Node.js</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">Native PWA</div>
+  </div>
+  <div class="chips-row">
+    <span class="ch ch-good">Branch preview URLs per PR</span>
+    <span class="ch ch-good">Vercel Functions → Twilio (full Node.js, no issues)</span>
+    <span class="ch ch-good">Best-in-class React PWA performance + edge CDN</span>
+    <span class="ch ch-bad">Free tier prohibits commercial use — nonprofits included</span>
+    <span class="ch ch-bad">$20/user/mo Pro — per-seat pricing compounds with team growth</span>
+    <span class="ch ch-ok">Custom domain requires Pro plan</span>
+  </div>
+  <div class="cost-row"><strong>$20/mo minimum</strong> for any production commercial use. Identical to Netlify on every technical dimension — PWA, Twilio, demo URLs. Budget is the only reason it's #3.</div>
+</div>
+
+<!-- #4 Render -->
+<div class="card">
+  <div class="plat-cell">
+    <div class="plat-top">
+      <span class="rank r4">4</span>
+      <span class="plat-name">Render</span>
+    </div>
+    <div class="plat-tag">Best if you ever need a persistent backend — flat billing, solid uptime, no per-seat fees</div>
+    <div class="pills">
+      <span class="pill pill-blue">Host</span>
+      <span class="pill pill-blue">Full-stack option</span>
+    </div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Flat billing, no surprises</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">&gt;99.9% measured</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Auto HTTPS, env secrets</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">GitHub auto-deploy</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Scales cleanly</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Good docs</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Best built-in logging</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Deploy URL; no branch previews</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">Full Node.js, best for two-way SMS</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Works, no edge CDN</div>
+  </div>
+  <div class="chips-row">
+    <span class="ch ch-good">Flat predictable billing — zero bill shock</span>
+    <span class="ch ch-good">Full Node.js — best option for two-way inbound Twilio SMS</span>
+    <span class="ch ch-good">Best built-in logging/metrics of any static host here</span>
+    <span class="ch ch-good">No per-seat fees (2026)</span>
+    <span class="ch ch-ok">PWA works but no edge CDN like Cloudflare or Netlify</span>
+    <span class="ch ch-ok">Deploy URL exists — no automatic branch preview URLs</span>
+    <span class="ch ch-ok">Static hosting free; backend service $7+/mo</span>
+  </div>
+  <div class="cost-row"><strong>~$0/mo</strong> static PWA hosting. <strong>$7–25/mo</strong> if you add a persistent backend service. Best choice if inbound Twilio SMS handling becomes a requirement — persistent Node process beats serverless functions for two-way messaging.</div>
+</div>
+
+<!-- BUILD + DEMO TOOLS -->
+<p class="section-label">Build + demo tools</p>
+
+<!-- #5 Lovable -->
+<div class="card">
+  <div class="plat-cell">
+    <div class="plat-top">
+      <span class="rank r5">5</span>
+      <span class="plat-name">Lovable</span>
+    </div>
+    <div class="plat-tag">Best build + demo tool — tightest Supabase integration, visual editor, two-way GitHub sync from day one</div>
+    <div class="pills">
+      <span class="pill pill-blue">Build</span>
+      <span class="pill pill-blue">Demo</span>
+      <span class="pill pill-green">→ Netlify for prod</span>
+    </div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">$0–$20/mo build phase</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Lovable Cloud unverified</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Supabase auth baked in</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">GitHub two-way sync</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Hand off to Netlify</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Docs + community</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Minimal</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">Shareable URL + visual editor</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Via Netlify Functions post-handoff</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">Generates React PWA natively</div>
+  </div>
+  <div class="chips-row">
+    <span class="ch ch-good">Shareable URL + visual editor for stakeholder demos</span>
+    <span class="ch ch-good">Two-way GitHub sync on all plans including free</span>
+    <span class="ch ch-good">Supabase auth scaffolded automatically</span>
+    <span class="ch ch-good">Generates React PWA → deploys clean to Netlify</span>
+    <span class="ch ch-good">Twilio via Netlify Functions after handoff</span>
+    <span class="ch ch-ok">$20/mo Starter during active build; $0 after handoff to Netlify</span>
+    <span class="ch ch-ok">Not a production host — hand off to Netlify or Cloudflare Pages</span>
+  </div>
+  <div class="cost-row"><strong>$0–$20/mo</strong> during build phase. Once code is in GitHub and live on Netlify, Lovable cost drops to $0. Best demo experience: shareable URL + non-dev visual editor for real-time stakeholder feedback without engineering involvement.</div>
+</div>
+
+<!-- #6 Bolt -->
+<div class="card">
+  <div class="plat-cell">
+    <div class="plat-top">
+      <span class="rank r6">6</span>
+      <span class="plat-name">Bolt</span>
+    </div>
+    <div class="plat-tag">Solid Lovable alternative — cheaper entry, multi-framework, GitHub export — weaker Supabase integration, PWA needs workaround</div>
+    <div class="pills">
+      <span class="pill pill-blue">Build</span>
+      <span class="pill pill-blue">Demo</span>
+      <span class="pill pill-gray">→ Netlify for prod</span>
+    </div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
+    <div class="score-note">Free tier; Pro $25/mo</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">bolt.host uptime unverified</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Basic</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">GitHub export + 1-click Netlify</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Hand off to Netlify</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Docs + Discord community</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Minimal</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">bolt.host shareable URL</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Code into exported project</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-caution"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Requires Progressier (3rd party)</div>
+  </div>
+  <div class="chips-row">
+    <span class="ch ch-good">Free tier: 1M tokens/mo, no credit card required</span>
+    <span class="ch ch-good">GitHub export: full frontend + backend, runs locally with npm install</span>
+    <span class="ch ch-good">One-click deploy to Netlify or Vercel</span>
+    <span class="ch ch-good">Shareable bolt.host URL for demos</span>
+    <span class="ch ch-good">Twilio works — code into exported project</span>
+    <span class="ch ch-ok">Supabase integration works but more manual than Lovable</span>
+    <span class="ch ch-ok">PWA requires Progressier third-party integration — not native</span>
+    <span class="ch ch-ok">No visual editor for non-dev stakeholder tweaks</span>
+  </div>
+  <div class="cost-row"><strong>$0–$25/mo</strong>. Free tier is genuinely usable for initial scaffolding. Choose Bolt over Lovable for framework flexibility or a lower entry price. Choose Lovable if native PWA and Supabase auth out-of-the-box matters more.</div>
+</div>
+
+<!-- AVOID -->
+<p class="section-label">Avoid for this use case</p>
+
+<!-- #7 Railway -->
+<div class="card">
+  <div class="plat-cell">
+    <div class="plat-top">
+      <span class="rank r7">7</span>
+      <span class="plat-name">Railway</span>
+    </div>
+    <div class="plat-tag">Two major platform outages in 8 months — uptime record disqualifies it for production</div>
+    <div class="pills">
+      <span class="pill pill-amber">Uptime risk</span>
+    </div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">$5/mo + usage overages</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-caution"></span><span class="dot dot-caution"></span><span class="dot dot-na"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Two major outages 2025–26</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Adequate</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Fast Git-based deploys</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Usage-based scaling</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Community support</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Best observability here</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Deploy URL; no branch previews</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Full Node.js backend</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Works, no edge CDN</div>
+  </div>
+  <div class="chips-row">
+    <span class="ch ch-good">Best built-in observability of any option here</span>
+    <span class="ch ch-bad">May 2026: 8hr platform-wide outage — GCP suspended Railway's production account</span>
+    <span class="ch ch-bad">Dec 2025: EU region build outage</span>
+    <span class="ch ch-bad">No contractual SLA without $2,000+/mo Enterprise</span>
+    <span class="ch ch-ok">$5/mo minimum + usage overages — real apps $20–50/mo</span>
+  </div>
+  <div class="cost-row"><strong>$5/mo+.</strong> The uptime pattern since late 2025 is the disqualifier, not the cost. A platform-wide 8-hour outage from a cloud provider billing issue is not an acceptable risk when Netlify and Cloudflare Pages exist at $0.</div>
+</div>
+
+<!-- #8 Replit -->
+<div class="card">
+  <div class="plat-cell">
+    <div class="plat-top">
+      <span class="rank r8">8</span>
+      <span class="plat-name">Replit</span>
+    </div>
+    <div class="plat-tag">Costs more than everything else, delivers less — prototype-only at best</div>
+    <div class="pills">
+      <span class="pill pill-amber">Prototype only</span>
+    </div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-weak"></span><span class="dot dot-weak"></span><span class="dot dot-na"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">$25/mo — $100–300 real</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Adequate</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Adequate</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Manual GitHub export</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Limited</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Docs + community</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Minimal</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Shareable URL</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">Full Node.js backend</div>
+  </div>
+  <div class="score-cell">
+    <div class="dots-row"><span class="dot dot-caution"></span><span class="dot dot-caution"></span><span class="dot dot-caution"></span><span class="dot dot-na"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">No native SW tooling</div>
+  </div>
+  <div class="chips-row">
+    <span class="ch ch-good">Browser IDE — zero local setup</span>
+    <span class="ch ch-good">Twilio works via backend code</span>
+    <span class="ch ch-bad">$25/mo base — $100–300/mo real-world with overages</span>
+    <span class="ch ch-bad">PWA support weak — no native service worker tooling</span>
+    <span class="ch ch-bad">No built-in auth</span>
+    <span class="ch ch-ok">GitHub export is manual — not two-way sync</span>
+    <span class="ch ch-ok">Demo URL exists but not client-polished</span>
+  </div>
+  <div class="cost-row"><strong>$25+/mo with unpredictable overages.</strong> Nothing Replit offers is better than Netlify for CSAH, and it costs significantly more. The PWA gap alone disqualifies it as a production option — service worker configuration requires manual work against an environment not designed for it.</div>
+</div>
+
+<!-- RECOMMENDATION -->
+<div class="rec-box">
+  <strong>Recommended CSAH stack:</strong> <strong>Lovable</strong> (build + client demo) → <strong>GitHub</strong> (source of truth, maintained in VS Code + Claude Code) → <strong>Netlify</strong> (production PWA host). Twilio via Netlify Functions — no separate backend needed. If inbound Twilio SMS handling becomes a requirement, add <strong>Render</strong> at $7/mo for a persistent Node service. <strong>Bolt</strong> is a viable Lovable substitute at a lower entry price if framework flexibility matters more than native PWA scaffolding. <strong>Cloudflare Pages</strong> is a compelling Netlify swap if bandwidth ever becomes a concern — identical setup, unlimited bandwidth, $0/mo.
+</div>
+
+<!-- DOMAIN NOTE -->
+<div class="domain-box">
+  <strong>Domain considerations:</strong> No urgent decisions required. Options: (1) <strong>Subdomain of homelessauthority.org</strong> — e.g. compass.homelessauthority.org — zero registrar cost, requires Aaron to add a DNS record. Best path if branding allows it. (2) <strong>New domain</strong> — .org is appropriate for a nonprofit. If hosting on Cloudflare Pages, buy via <strong>Cloudflare Registrar</strong> (at-cost, DNS auto-configured). Otherwise any major registrar works. SSL/HTTPS auto-provisioned at no cost on all platforms listed. Vercel requires Pro plan for custom domains on commercial projects — one more reason it sits at #3.
+</div>
+
+<!-- NETLIFY FREE TIER DEEP DIVE -->
+<div class="deep-dive">
+  <h2>Netlify Free Tier — Is It Actually Enough?</h2>
+  <p class="deep-intro">Netlify was picked as the winner on cost, but "free" is only the right call if the limits actually hold at CSAH's real usage. Here's the reasoning behind staying on free tier for now.</p>
+
+  <h3>Bandwidth — 100GB/mo free</h3>
+  <p>We'd have to be serving enormous assets to approach that. A typical React PWA with a cached service worker is a 1–5MB initial load, then minimal traffic on repeat visits.</p>
+
+  <h3>Map tile traffic</h3>
+  <p>Google Maps tiles are served directly from Google's CDN — they don't pass through Netlify at all. Tile bandwidth is billed by Google Maps Platform, not Netlify. Not a Netlify concern.</p>
+
+  <h3>What actually hits Netlify</h3>
+  <ul>
+    <li>The React PWA bundle (initial load + service worker cache)</li>
+    <li>Any API calls routed through Netlify Functions (Twilio, etc.)</li>
+    <li>Static assets — icons, fonts, manifest</li>
+  </ul>
+  <p>With lazy caching, repeat visits serve almost entirely from the service worker cache. First load per user per device is the only real Netlify bandwidth hit — and that's still just the app bundle, not map tiles.</p>
+
+  <h3>Build minutes — 300/mo free</h3>
+  <p>Each GitHub push triggers a build. At normal development velocity (say, 1–5 deploys a day) we'll burn maybe 150/mo. During heavy sprints you could get close. Not a blocker once live.</p>
+
+  <h3>Estimated monthly traffic</h3>
+  <table>
+    <tr><th>Source</th><th>Est. monthly traffic</th></tr>
+    <tr><td>Kiosk initial loads</td><td>~90 loads × 8MB = ~0.7GB</td></tr>
+    <tr><td>Staff app (cached after first load)</td><td>~30 loads × 8MB = ~0.2GB</td></tr>
+    <tr><td>Update deploys (all devices refetch)</td><td>~18 devices × 8MB per deploy × ~8 deploys/mo = ~1.2GB</td></tr>
+    <tr><td>Netlify Functions (Twilio, API calls)</td><td>Negligible — function responses are tiny</td></tr>
+    <tr><td>Total estimate</td><td>~2GB/mo</td></tr>
+  </table>
+
+  <h3>Support — community only on free</h3>
+  <p>Paid (<strong>$19/mo Pro</strong>) gets priority email support.</p>
+
+  <h3>SLA — none on free</h3>
+  <p>Netlify's measured uptime is excellent (&gt;99.9% per independent monitoring), but there's no contractual guarantee or service credits below Enterprise.</p>
+
+  <h3>What Pro ($19/mo) actually gets you</h3>
+  <ul>
+    <li>Priority email support</li>
+    <li>400 build minutes (vs. 300)</li>
+    <li>1TB bandwidth (vs. 100GB)</li>
+    <li>Password protection on deploy previews</li>
+    <li>Larger serverless function limits</li>
+  </ul>
+</div>
+
+<div class="rec-box pop">
+  <strong>Recommendation:</strong> Start on free. Set a Netlify usage alert (available in the dashboard) so CSAH gets an email if you approach limits. Revisit at launch with real traffic data. If support response time is something Jen or stakeholders would flag as a concern, $19/mo flat is an easy yes — it's cheaper than one hour of troubleshooting time. If/when this grows to the partner app, upgrade to Pro then.
+</div>
+
+<footer>
+  CSAH Compass Project — ARC Consulting · Platform analysis current as of August 2026 · Pricing and features subject to change
+</footer>
+
+</body>
+</html>

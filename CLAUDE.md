@@ -134,7 +134,7 @@ When Allyson and Claude work through a technical decision, the output is a style
 ## Project Scope (This Engagement)
 
 ### Philosophy
-Keep it as lean as possible but with an eye for expansion. CSAH is a nonprofit with a small budget. No overengineering. Low recurring costs are important. Replit, Loveable, Netlify, Vercel, Bolt are some possible candidate hosting platform. Not clear on what the CI/CD platform should look like as the end result will be very non technical folks needing GUIs to update content only. If they need any feature adds or changes, ARC consulting will be doing the work. Will need to produce a prototype with Alan.
+Keep it as lean as possible but with an eye for expansion. CSAH is a nonprofit with a small budget. No overengineering. Low recurring costs are important. See `docs/hosting-comparison.html` for the hosting platform comparison (Netlify recommended). Not clear on what the CI/CD platform should look like as the end result will be very non technical folks needing GUIs to update content only. If they need any feature adds or changes, ARC consulting will be doing the work. Will need to produce a prototype with Alan.
 
 ### Grant Funding
 - **$150,000 SCAD grant** covers both app development AND kiosk hardware/software
@@ -365,7 +365,7 @@ Two distinct reporting surfaces, two different tools. The line between them: **P
 
 | Provider | Est. Cost | Notes |
 |---|---|---|
-| **Twilio** | ~$20–50/mo at this volume | Industry standard. Best API. Handles 2-way threading. Works with Replit. Frontrunner. |
+| **Twilio** | ~$20–50/mo at this volume | Industry standard. Best API. Handles 2-way threading. Works with hosting. Frontrunner. |
 | **Textbelt** | ~$25/500 texts (credit) | Dead simple, great for low-frequency outbound only. No real 2-way support. |
 | **Vonage (Infobip)** | Comparable to Twilio | Solid alternative, slightly more nonprofit-friendly. No meaningful cost difference at this scale. |
 
@@ -374,7 +374,7 @@ Two distinct reporting surfaces, two different tools. The line between them: **P
 ### Why Twilio is the likely call
 - 2-way threading needed for partner↔individual replies
 - Cost at this volume is negligible for a nonprofit
-- Works with lightweight hosting like Replit
+- Works with lightweight hosting like Netlify
 - All messages logged against case records, not personal phones
 
 ---
@@ -384,7 +384,7 @@ Two distinct reporting surfaces, two different tools. The line between them: **P
 | Date | Decision | Rationale |
 |---|---|---|
 | 2026-05-08 | No HMIS integration for now | 2-year approval process; build custom DB instead; revisit later |
-| 2026-05-08 | Hosting philosophy: keep it lean | Nonprofit budget; low recurring costs; Replit candidate |
+| 2026-05-08 | Hosting philosophy: keep it lean | Nonprofit budget; low recurring costs; Netlify candidate |
 | 2026-05-08 | SMS provider TBD | Leaning Twilio; ~250/mo estimated volume |
 | 2026-05-08 | Budget: $150k SCAD grant | Must spend by Dec 2026; kiosk hardware $10–25k/unit |
 | 2026-05-08 | Push notifications are core | Not just SMS — real-time push coordination is the primary mechanism; initially CSAH-internal, partner agencies in future phase |
