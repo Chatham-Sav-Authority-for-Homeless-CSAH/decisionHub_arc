@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Recurring Monthly Costs — Compass Project</title>
+<title>Recurring Annual Costs — Compass Project</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { overflow-x: hidden; }
@@ -87,7 +87,8 @@
 
   .cost-row { display: flex; align-items: center; gap: 14px; margin-bottom: 1.1rem; }
   .cost-row:last-child { margin-bottom: 0; }
-  .cost-label { width: 168px; flex-shrink: 0; font-size: 12.5px; font-weight: 500; color: #374151; text-align: right; }
+  .cost-label { width: 190px; flex-shrink: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 3px; font-size: 12.5px; font-weight: 500; color: #374151; text-align: right; }
+  .cost-label .cat-tag { margin-left: 0; }
   .cost-track {
     position: relative; flex: 1; height: 22px; background: #f1efe8; border-radius: 6px;
   }
@@ -100,20 +101,47 @@
     font-size: 11.5px; font-weight: 600; color: #1a4d8f; white-space: nowrap; flex-shrink: 0; width: 92px;
   }
 
-  .chart-axis { display: flex; margin-top: 0.5rem; padding-left: 182px; }
+  .chart-axis { display: flex; margin-top: 0.5rem; padding-left: 204px; }
   .chart-axis span { flex: 1; font-size: 10.5px; color: #9ca3af; text-align: left; }
   .chart-axis span:last-child { flex: 0; text-align: right; }
 
   /* ── TOTAL ── */
   .total-card {
     background: #0e2a5c; border-radius: 12px; padding: 1.5rem 1.75rem;
-    margin-bottom: 1.75rem; color: white; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+    margin-bottom: 1.75rem; color: white; display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: nowrap; gap: 1.5rem;
+  }
+  .total-block { min-width: 0; flex: 0 0 auto; }
+  .total-block.shrink { flex-shrink: 0; }
+  .total-arrow { display: flex; align-items: center; gap: 3px; width: 110px; flex-shrink: 0; align-self: center; }
+  .total-arrow .line { flex: 1; height: 3px; background: #93afd4; }
+  .total-arrow .head {
+    width: 0; height: 0;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-left: 13px solid #93afd4;
   }
   .total-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #93afd4; margin-bottom: 6px; }
-  .total-value { font-size: 2rem; font-weight: 800; color: #f2c030; letter-spacing: -0.01em; }
-  .total-sub { font-size: 12px; color: #93afd4; margin-top: 4px; }
-  .total-annual { text-align: right; font-size: 12.5px; color: #93afd4; line-height: 1.6; }
-  .total-annual strong { color: white; font-size: 15px; }
+  .total-value { font-size: 2rem; font-weight: 800; color: #ffffff; letter-spacing: -0.01em; white-space: nowrap; }
+  .total-value.alt { color: #f2c030; }
+
+  /* ── SCOPE TAGS ── */
+  .cat-tag { display: inline-block; font-size: 9.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; padding: 1px 7px; border-radius: 999px; margin-left: 6px; vertical-align: middle; }
+  .tag-perkiosk { background: #e6f1fb; color: #185fa5; }
+  .tag-shared { background: #e8e6df; color: #5f5e5a; }
+
+  /* ── 3-KIOSK MATH ── */
+  .math-card {
+    background: #fff; border: 1px solid #d3d1c7; border-radius: 12px;
+    padding: 1.25rem 1.5rem; margin-bottom: 1.75rem;
+  }
+  .math-card .chart-title { margin-bottom: 0.85rem; }
+  .math-row { display: flex; justify-content: space-between; align-items: baseline; padding: 7px 0; border-bottom: 0.5px solid #efeee8; font-size: 13px; }
+  .math-row .m-label { color: #374151; }
+  .math-row .m-label span { color: #9ca3af; font-size: 11.5px; }
+  .math-row .m-value { font-weight: 600; color: #1a4d8f; white-space: nowrap; }
+  .math-total { display: flex; justify-content: space-between; align-items: baseline; padding-top: 10px; margin-top: 4px; font-size: 14.5px; }
+  .math-total .m-label { font-weight: 700; color: #1a1a18; }
+  .math-total .m-value { font-weight: 800; color: #0e2a5c; }
 
   /* ── TABLE ── */
   table { width: 100%; border-collapse: collapse; border: 1px solid #d3d1c7; border-radius: 12px; overflow: hidden; font-size: 13px; margin-bottom: 1.75rem; background: #fff; }
@@ -154,8 +182,8 @@ Decision Hub
 </a>
 </div>
 
-<h1>Recurring Monthly Costs</h1>
-<p class="subtitle">Compass Project — Phase 1 handoff item · Ongoing operating costs after launch</p>
+<h1>Recurring Annual Costs</h1>
+<p class="subtitle">Compass Project — Phase 1 handoff item · Ongoing operating costs after launch, shown annually</p>
 
 <div class="wip-banner">
 <div class="icon">🚧</div>
@@ -167,121 +195,151 @@ Every figure below is a planning-stage estimate pulled from prior vendor researc
 
 <div class="key-note">
 <strong>What's assumed here</strong>
-Figures assume 1 kiosk. Cellular and Kiosk Monitoring lines scale with kiosk count — revisit this doc once kiosk vendor is finalized.
+All figures are annual. Three categories scale directly with kiosk count: Kiosk Hardware Monitoring, & Cellular Connectivity. The remaining categories (SMS,Database, Domain, Maps) are shared platform costs that stay the same whether CSAH runs 1 kiosk or 3. Hosting should scale based on a larger threshold of Kiosks than 3.
 </div>
 
 <div class="chart-card">
-<div class="chart-title">Monthly cost range by category — Kiosk Monitoring, Cellular Connectivity, SMS, Supabase, Hosting, Domain, Map/Tiles</div>
+<div class="chart-title" style="font-size: 22px; text-align: center;">Annual Costs — Per Kiosk</div>
 
 <div class="cost-row">
-  <div class="cost-label">Kiosk Hardware Monitoring</div>
-  <div class="cost-track" title="MetroClick's confirmed formal quote combines both recurring fee line items: Yearly Data Fee ($450/unit/yr) + Yearly SaaS fee ($702/unit/yr net) = $1,152/unit/yr ($96/unit/mo) — $288/mo for 3 kiosks. Low end reflects the theoretical lean hardware-only + ARC's-own-MDM path, not yet re-quoted.">
-    <div class="cost-bar" style="left:3.3%; width:92.7%;"></div>
+  <div class="cost-label">Kiosk Hardware Monitoring<span class="cat-tag tag-perkiosk">Per Kiosk</span></div>
+  <div class="cost-track" title="Updated per-kiosk figure: $700/yr. Scales directly with kiosk count.">
+    <div class="cost-bar" style="left:70%; width:0.1%;"></div>
   </div>
-  <div class="cost-range-label">$10 – $288</div>
+  <div class="cost-range-label">$700 flat</div>
 </div>
 
 <div class="cost-row">
-  <div class="cost-label">Cellular Connectivity</div>
-  <div class="cost-track" title="General market estimate for Managed IoT SIM (multi-carrier, e.g. Hologram-style) — the recommended lean approach per the Kiosk Connectivity doc. ~$9–60/mo for 3 kiosks, still marked VERIFY there — not vendor-confirmed. Vendor-agnostic; independent of which kiosk hardware is selected.">
-    <div class="cost-bar" style="left:3%; width:17%;"></div>
+  <div class="cost-label">Cellular Connectivity<span class="cat-tag tag-perkiosk">Per Kiosk</span></div>
+  <div class="cost-track" title="Updated per-kiosk figure: $450/yr. Managed IoT SIM (multi-carrier, e.g. Hologram-style) — the recommended lean approach per the Kiosk Connectivity doc. Vendor-agnostic; independent of which kiosk hardware is selected. Scales directly with kiosk count.">
+    <div class="cost-bar" style="left:45%; width:0.1%;"></div>
   </div>
-  <div class="cost-range-label">$9 – $60</div>
+  <div class="cost-range-label">$450 flat</div>
 </div>
 
 <div class="cost-row">
-  <div class="cost-label">SMS</div>
-  <div class="cost-track" title="Re-estimated at 400 texts/month (~13/day across 3 kiosks) assuming 2 segments/message average, Twilio standard SMS + A2P 10DLC fees">
-    <div class="cost-bar" style="left:3.3%; width:3.3%;"></div>
+  <div class="cost-label">SMS<span class="cat-tag tag-shared">Shared</span></div>
+  <div class="cost-track" title="Re-estimated at 400 texts/month combined across the kiosk fleet (~13/day) assuming 2 segments/message average, Twilio standard SMS + A2P 10DLC fees. Treated as a shared platform cost — one Twilio account serves all kiosks, not a per-unit charge.">
+    <div class="cost-bar" style="left:12%; width:12%;"></div>
   </div>
-  <div class="cost-range-label">$10 – $20</div>
+  <div class="cost-range-label">$120 – $240</div>
 </div>
 
 <div class="cost-row">
-  <div class="cost-label">Database</div>
-  <div class="cost-track" title="Supabase Pro, flat — Free tier has no backups, not an acceptable risk for case-adjacent data">
-    <div class="cost-bar" style="left:8.3%; width:0.4%;"></div>
+  <div class="cost-label">Database<span class="cat-tag tag-shared">Shared</span></div>
+  <div class="cost-track" title="Supabase Pro, flat — Free tier has no backups, not an acceptable risk for case-adjacent data. One project serves the whole system regardless of kiosk count.">
+    <div class="cost-bar" style="left:30%; width:0.1%;"></div>
   </div>
-  <div class="cost-range-label">$25 flat</div>
+  <div class="cost-range-label">$300 flat</div>
 </div>
 
 <div class="cost-row">
-  <div class="cost-label">Hosting</div>
-  <div class="cost-track" title="Hosting — platform not finalized">
-    <div class="cost-bar" style="left:0%; width:6.3%;"></div>
+  <div class="cost-label">Hosting<span class="cat-tag tag-shared">Shared</span></div>
+  <div class="cost-track" title="Hosting — platform not finalized. One Netlify deployment serves all kiosks and the staff app.">
+    <div class="cost-bar" style="left:0%; width:22.8%;"></div>
   </div>
-  <div class="cost-range-label">$0 – $19</div>
+  <div class="cost-range-label">$0 – $228</div>
 </div>
 
 <div class="cost-row">
-  <div class="cost-label">Domain Name</div>
-  <div class="cost-track" title="Standard .org annual registration, prorated monthly">
-    <div class="cost-bar" style="left:0.3%; width:0.3%;"></div>
+  <div class="cost-label">Domain Name<span class="cat-tag tag-shared">Shared</span></div>
+  <div class="cost-track" title="Standard .org annual registration. One domain for the whole system.">
+    <div class="cost-bar" style="left:1.2%; width:0.8%;"></div>
   </div>
-  <div class="cost-range-label">$1 – $2</div>
+  <div class="cost-range-label">$12 – $20</div>
 </div>
 
 <div class="cost-row">
-  <div class="cost-label">Map / Tiles</div>
+  <div class="cost-label">Map / Tiles<span class="cat-tag tag-shared">Shared</span></div>
   <div class="cost-track" title="Per ADR-008: effectively free at projected volume, especially with lazy caching of directions. Small ceiling kept only as a buffer, not an expected cost. Self-hosted OSM tiles remain on the table as a zero-cost path regardless.">
-    <div class="cost-bar" style="left:0%; width:3.3%;"></div>
+    <div class="cost-bar" style="left:0%; width:12%;"></div>
   </div>
-  <div class="cost-range-label">$0 – $10</div>
+  <div class="cost-range-label">$0 – $120</div>
 </div>
 
 <div class="chart-axis">
-  <span>$0</span><span>$60</span><span>$120</span><span>$180</span><span>$240</span><span style="text-align:right;">$300</span>
+  <span>$0</span><span>$200</span><span>$400</span><span>$600</span><span>$800</span><span style="text-align:right;">$1,000</span>
 </div>
 </div>
 
 <div class="total-card">
-<div>
-  <div class="total-label">Estimated Monthly Total</div>
-  <div class="total-value">$55 – $424 / mo</div>
-  <div class="total-sub">Sum of the seven categories above · 3-kiosk deployment. Wide range is mostly Kiosk Monitoring — driven by which kiosk vendor/path is selected.</div>
-</div>
-<div class="total-annual">Annualized:<br/><strong>$660 – $5,088 / yr</strong></div>
+  <div class="total-block grow">
+    <div class="total-label">Estimated Annual Cost — Per Kiosk</div>
+    <div class="total-value">$1,582 – $2,058 / yr</div>
+  </div>
+  <div class="total-arrow"><div class="line"></div><div class="head"></div></div>
+  <div class="total-block shrink">
+    <div class="total-label">All 3 Kiosks</div>
+    <div class="total-value alt">$3,882 – $4,358 / yr</div>
+  </div>
 </div>
 
-<div class="section-label">Line-Item Detail</div>
+<div class="math-card">
+<div class="chart-title">The math for all 3 kiosks</div>
+<div class="math-row">
+  <div class="m-label">Kiosk Hardware Monitoring &times; 3 <span>$700/kiosk</span></div>
+  <div class="m-value">$2,100</div>
+</div>
+<div class="math-row">
+  <div class="m-label">Cellular Connectivity &times; 3 <span>$450/kiosk</span></div>
+  <div class="m-value">$1,350</div>
+</div>
+<div class="math-row" style="border-bottom: none;">
+  <div class="m-label">Shared platform costs <span>SMS, Database, Hosting, Domain, Map/Tiles — unchanged, don't scale with kiosk count</span></div>
+  <div class="m-value">$432 – $908</div>
+</div>
+<div class="math-total">
+  <div class="m-label">Total, 3 kiosks</div>
+  <div class="m-value">$3,882 – $4,358 / yr</div>
+</div>
+</div>
+
+<div class="section-label">Line-Item Detail — Per Kiosk Basis</div>
 <table>
 <thead>
-<tr><th>Category</th><th>Monthly Range</th><th>Basis</th></tr>
+<tr><th>Category</th><th>Scope</th><th>Annual Range</th><th>Basis</th></tr>
 </thead>
 <tbody>
 <tr>
 <td>Kiosk Hardware Monitoring</td>
-<td class="num">$10 – $288</td>
-<td class="note">MetroClick's confirmed formal quote (Jul 23, 2026) combines <strong>both</strong> of their recurring fee line items: Yearly Data Fee ($450/unit/yr) + Yearly SaaS fee ($702/unit/yr net of the 10% nonprofit discount) = $1,152/unit/yr ($96/unit/mo) — <strong>$288/mo for 3 kiosks.</strong> Low end ($10/mo) reflects the theoretical lean hardware-only + ARC's-own-MDM path (Scalefusion-style, ~$2–4/device/mo), not yet re-quoted.</td>
+<td><span class="cat-tag tag-perkiosk">Per Kiosk</span></td>
+<td class="num">$700 flat</td>
+<td class="note">Updated per-kiosk figure: <strong>$700/unit/yr.</strong> Scales directly with kiosk count — 3 kiosks = $2,100/yr. <em>Note: this differs from the $1,152/yr figure derived from MetroClick's Jul 23, 2026 formal quote (Yearly Data Fee $450 + Yearly SaaS fee $702 net) cited in the Kiosk Hardware comparison doc and ADR-011 — reconcile which figure is current before finalizing.</em></td>
 </tr>
 <tr>
 <td>Cellular Connectivity</td>
-<td class="num">$9 – $60</td>
-<td class="note">General market estimate for Managed IoT SIM (multi-carrier, e.g. Hologram-style) — the recommended lean approach per the Kiosk Connectivity comparison doc, still marked VERIFY there. This is the raw carrier/data cost, independent of kiosk hardware vendor — MetroClick (or any kiosk vendor) doesn't have real market insight into telecom pricing, so their bundled quote isn't used here. See Kiosk Monitoring above for MetroClick's actual recurring charges.</td>
+<td><span class="cat-tag tag-perkiosk">Per Kiosk</span></td>
+<td class="num">$450 flat</td>
+<td class="note">Updated per-kiosk figure: <strong>$450/unit/yr.</strong> Managed IoT SIM (multi-carrier, e.g. Hologram-style) — the recommended lean approach per the Kiosk Connectivity comparison doc. Independent of kiosk hardware vendor. Scales directly with kiosk count — 3 kiosks = $1,350/yr.</td>
 </tr>
 <tr>
 <td>SMS (Twilio)</td>
-<td class="num">$10 – $20</td>
-<td class="note">Estimated at <strong>400 texts/month</strong> (~13/day total, ~4–5/day per kiosk across 3 kiosks) — mainly the kiosk's text-a-resource feature, which the earlier 250/month figure didn't account for (that estimate only covered partner-app push-notification fallback). Worked estimate against Twilio's public rate card, assuming resource-info texts average 2 SMS segments each (shelter name/address/hours easily exceeds the 160-character single-segment limit): 800 segments × ~$0.0079 (~$6.32) + A2P 10DLC per-segment carrier surcharge (~$2.40) + phone number rental (~$1.15) + A2P 10DLC monthly campaign fee (~$1.50–$10, varies by tier) ≈ <strong>$11–$20/mo.</strong> This is a worked estimate from public pricing, not a live Twilio quote — verify current rates before treating as final. Provider leaning Twilio; not yet contracted.</td>
+<td><span class="cat-tag tag-shared">Shared</span></td>
+<td class="num">$120 – $240</td>
+<td class="note">Estimated at <strong>400 texts/month combined across the kiosk fleet</strong> (~13/day total) — Worked estimate against Twilio's public rate card, assuming resource-info texts average 2 SMS segments each (shelter name/address/hours easily exceeds the 160-character single-segment limit): 800 segments × ~$0.0079 (~$6.32) + A2P 10DLC per-segment carrier surcharge (~$2.40) + phone number rental (~$1.15) + A2P 10DLC monthly campaign fee (~$1.50–$10, varies by tier) ≈ <strong>$132–$240/yr.</strong> Treated as a shared platform cost — one Twilio account serves all kiosks, not a per-unit charge. This is a worked estimate from public pricing, not a live Twilio quote — verify current rates before treating as final. Provider leaning Twilio; not yet contracted.</td>
 </tr>
 <tr>
 <td>Database (Supabase)</td>
-<td class="num">$25 flat</td>
-<td class="note">Budgeting Supabase Pro flat rather than starting on the free tier. <strong>Free tier has no backups</strong> — not an acceptable risk, even though row/bandwidth limits would likely allow staying on Free at launch scale otherwise.</td>
+<td><span class="cat-tag tag-shared">Shared</span></td>
+<td class="num">$300 flat</td>
+<td class="note">Budgeting Supabase Pro flat rather than starting on the free tier. <strong>Free tier has no backups</strong> — not an acceptable risk, even though row/bandwidth limits would likely allow staying on Free at launch scale otherwise. One project serves the whole system regardless of kiosk count.</td>
 </tr>
 <tr>
 <td>Hosting</td>
-<td class="num">$0 – $19</td>
-<td class="note">Netlify free tier covers MVP traffic comfortably (see Hosting comparison doc). $19/mo ceiling reflects Netlify Pro — priority support, 1TB bandwidth, 400 build minutes — as an upgrade path, not a default cost.</td>
+<td><span class="cat-tag tag-shared">Shared</span></td>
+<td class="num">$0 – $228</td>
+<td class="note">Netlify free tier covers MVP traffic comfortably (see Hosting comparison doc). $228/yr ($19/mo) ceiling reflects Netlify Pro — priority support, 1TB bandwidth, 400 build minutes — as an upgrade path, not a default cost. One deployment serves all kiosks and the staff app.</td>
 </tr>
 <tr>
 <td>Domain Name</td>
-<td class="num">$1 – $2</td>
-<td class="note">Standard annual domain registration (~$12–20/yr for a .org), prorated monthly.</td>
+<td><span class="cat-tag tag-shared">Shared</span></td>
+<td class="num">$12 – $20</td>
+<td class="note">Standard annual domain registration for a .org. Heavily consider subdomain on https://www.homelessauthority.org/ to save costs and keep consistency.</td>
 </tr>
 <tr>
 <td>Map / Tiles</td>
-<td class="num">$0 – $10</td>
+<td><span class="cat-tag tag-shared">Shared</span></td>
+<td class="num">$0 – $120</td>
 <td class="note">Covers embedding a map directly in the app for wayfinding/directions instead of linking out. Easy to assume this is free the way consumer Google Maps is — it's technically a metered developer API, not a truly free product. That said, <strong>per ADR-008, cost is effectively a non-factor at CSAH's projected volume, especially combined with the lazy-caching approach for directions</strong> (fetch once, reuse for 30 days) — the small ceiling here is a buffer, not an expected charge. Self-hosted OpenStreetMap (OSM) tiles remain on the table as a $0 path regardless of which vendor is chosen. Vendor/approach not finalized — see ADR-008.</td>
 </tr>
 </tbody>
