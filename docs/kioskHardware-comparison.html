@@ -25,7 +25,8 @@
   tr:last-child td { border-bottom: none; }
 
   .col-head { background: #f1efe8; text-align: center; vertical-align: top; padding: 14px 10px; }
-  .col-head.featured { background: #e1f5ee; }
+  .col-head.featured { position: relative; background: #e1f5ee; border: 2px solid #1d9e75; }
+  .selected-ribbon { position: absolute; top: -2px; right: -2px; background: #0f6e56; color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; padding: 4px 10px; border-radius: 0 4px 0 8px; }
   .col-name { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
   .col-name.green { color: #0f6e56; }
   .col-sub { font-size: 11px; color: #5f5e5a; line-height: 1.4; margin-bottom: 6px; }
@@ -34,6 +35,7 @@
   .badge-blue   { background: #e6f1fb; color: #185fa5; }
   .badge-amber  { background: #faeeda; color: #854f0b; }
   .badge-purple { background: #f5f3ff; color: #7c3aed; }
+  .badge-selected { background: #0f6e56; color: #fff; font-weight: 700; letter-spacing: 0.03em; padding: 3px 11px; }
 
   .row-label { background: #f1efe8; font-size: 12px; font-weight: 500; color: #5f5e5a; width: 160px; min-width: 160px; vertical-align: top; }
   .section-row td { background: #e8e6df; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: #888780; font-weight: 500; padding: 6px 12px; }
@@ -138,9 +140,10 @@
 <tr>
 <th class="row-label"></th>
 <th class="col-head featured">
+<div class="selected-ribbon">✓ SELECTED</div>
 <div class="col-name green">MetroClick</div>
 <div class="col-sub">Formal quote confirmed — best value, well under budget</div>
-<span class="badge badge-green">ARC recommendation</span>
+<span class="badge badge-selected">✓ Vendor Selected</span>
 </th>
 <th class="col-head">
 <div class="col-name">Meridian</div>

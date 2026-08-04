@@ -396,6 +396,7 @@ Two distinct reporting surfaces, two different tools. The line between them: **P
 | 2026-06-24 | Scope narrowed to CSAH-only for MVP test run | Partner agencies (HOPE, CCPD, etc.) are a future expansion; CSAH must prove the tool works internally before expanding to other agencies |
 | 2026-06-24 | Survey tool added to app scope | Point-in-Time count survey embedded in CSAH staff app; administered during the annual 10-day count window; Kishia driving question scope |
 | 2026-06-24 | Greyhound station added as potential kiosk location | Jen pursuing city manager approval; high PR value as proof-of-concept launch site; Union Mission is Plan B |
+| 2026-08-03 | Netlify selected for hosting | Free tier covers CSAH's expected traffic with no commercial-use restriction; $19/mo Pro upgrade path if support/bandwidth needs grow; see docs/hosting-comparison.html for full vendor comparison |
 
 ---
 

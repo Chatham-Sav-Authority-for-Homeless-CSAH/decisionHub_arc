@@ -205,7 +205,7 @@ Implement a Git-based CI/CD pipeline (Netlify or Vercel) with a strict `main`/`s
 - Two databases require ongoing schema synchronization via migration files; drift between staging and production schemas would introduce hard-to-diagnose bugs
 
 **Open Questions**
-- Netlify vs. Vercel: current Netlify usage for `docs/` makes Netlify the path-of-least-resistance, but Vercel's preview deployment UX may be preferable for Alan/Jen review flows. Confirm before first app deploy.
+- ~~Netlify vs. Vercel~~ — Resolved by ADR-011 (2026-08-03): Netlify selected.
 
 ---
 
@@ -477,6 +477,40 @@ The residual risk is a temporarily awkward-looking button, caught on the next vi
 - Kiosk vendor TTS voice inventory — add to hardware evaluation criteria. Low risk for Spanish, still worth confirming in writing.
 - Per-field review status — currently row-level (`last_edited_by` on the whole translation row). If reviewers need to vet a description without touching the notes, this needs to move to field level. Decide when speccing the admin UI.
 - PIT survey translation (roadmap, not MVP) — the survey lives in the partner app but staff administer it to clients. If an outreach worker walks a Spanish-speaking person through the questions, question text must render in Spanish on the worker's screen, which pulls translation into the partner app surface. Kishia, when PIT is scoped.
+
+---
+
+## ADR-011 — Hosting Platform: Netlify
+
+**Date:** 2026-08-03
+**Status:** Accepted
+
+**Context**
+ADR-006 established a Git-based CI/CD pipeline on "Netlify or Vercel" without picking between them, and ADR-007 established a single codebase serving both the kiosk (`/kiosk/*`) and partner app (`/app/*`) from one deployment. The project needed a production host for that deployment: one that serves a React PWA at low/no recurring cost for a nonprofit budget, supports serverless functions for Twilio SMS (ADR-002) without standing up a separate backend, and gives Alan/Jen a shareable preview URL for review before production release.
+
+**Decision**
+Use Netlify as the production hosting platform for both the kiosk and partner app surfaces.
+
+**Options Considered**
+Eight platforms were scored across cost, uptime, security, deploy ease, scale, support, monitoring, demo capability, Twilio integration, and PWA support — full breakdown in `docs/hosting-comparison.html`.
+1. **Netlify** (chosen) — free tier covers CSAH's expected traffic with no commercial-use restriction (~100GB/mo bandwidth), native PWA/service-worker support, Netlify Functions handle Twilio server-side with no separate backend, branch preview URLs for demos
+2. **Cloudflare Pages** — closest runner-up; unlimited free bandwidth beats Netlify outright, but Functions run on Workers' V8 isolates rather than full Node.js, so Twilio requires calling the REST API directly instead of using the Node SDK (~1hr extra setup, not a blocker)
+3. **Vercel** — technically at parity with Netlify on every other dimension, but its free tier prohibits commercial use (nonprofits included), forcing a $20/mo minimum
+4. **Render** — kept as the fallback if two-way inbound Twilio SMS ever requires a persistent Node process instead of serverless functions ($7+/mo)
+5. **Railway, Replit** — ruled out (Railway: two platform-wide outages in the prior 8 months; Replit: highest cost of any option evaluated for the least capability)
+
+**Consequences**
+- $0/mo at current expected traffic; a Netlify usage alert will be set to flag approaching the free-tier bandwidth/build-minute limits before they're hit
+- $19/mo Pro is the defined upgrade path if priority support or headroom is needed later — not a default cost
+- Resolves ADR-006's open Netlify-vs-Vercel question; the staging/production branch-deploy strategy in ADR-006 now has a confirmed platform
+- Netlify Functions is the execution environment for Twilio SMS (ADR-002) — full Node.js, no separate backend service required for the MVP
+- HTTPS is auto-provisioned, satisfying the hard HTTPS dependency for geolocation capture (ADR-009)
+- Same Netlify deployment serves both `/kiosk/*` and `/app/*` per the monorepo structure (ADR-007) — no per-surface hosting decision needed
+
+**Risks**
+- No contractual SLA or service credits below Netlify's Enterprise tier — accepted given Netlify's independently measured >99.9% uptime and the low cost of brief downtime relative to Enterprise pricing
+- Free-tier bandwidth (~100GB/mo) is finite; mitigated by the planned usage alert, with Pro ($19/mo) or a swap to Cloudflare Pages (unlimited bandwidth, same architecture) both available without a rebuild if traffic grows past projections
+- If two-way inbound SMS becomes a hard requirement, Netlify Functions (serverless, stateless) are not the ideal execution model for that — Render is the identified fallback path, not yet built
 
 ---
 
