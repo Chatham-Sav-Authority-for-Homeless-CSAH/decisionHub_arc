@@ -139,9 +139,33 @@
   .math-row .m-label { color: #374151; }
   .math-row .m-label span { color: #9ca3af; font-size: 11.5px; }
   .math-row .m-value { font-weight: 600; color: #1a4d8f; white-space: nowrap; }
-  .math-total { display: flex; justify-content: space-between; align-items: baseline; padding-top: 10px; margin-top: 4px; font-size: 14.5px; }
-  .math-total .m-label { font-weight: 700; color: #1a1a18; }
-  .math-total .m-value { font-weight: 800; color: #0e2a5c; }
+  .math-total { display: flex; justify-content: space-between; align-items: baseline; padding-top: 10px; margin-top: 4px; font-size: 14.5px; gap: 1rem; }
+  .math-total .m-label { font-weight: 700; color: #1a1a18; flex-shrink: 0; }
+  .math-total .m-value { font-weight: 800; color: #0e2a5c; white-space: normal; text-align: right; }
+
+  /* ── COST SCENARIOS ── */
+  .scenario-card {
+    background: linear-gradient(180deg, #0e2a5c, #0c2450); border-radius: 12px;
+    padding: 1.75rem 1.75rem 1.5rem; margin-bottom: 1.75rem; color: white;
+  }
+  .scenario-card .chart-title { color: #ffffff; }
+  .scenario-scroll { overflow-x: auto; }
+  .scenario-table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 12.5px; background: transparent; border: none; border-radius: 0; }
+  .scenario-table th {
+    background: rgba(255,255,255,0.06); font-size: 11px; text-transform: uppercase; letter-spacing: 0.03em;
+    color: #93afd4; font-weight: 700; padding: 10px 12px; text-align: right; white-space: nowrap;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+  .scenario-table th:first-child { text-align: left; }
+  .scenario-table td {
+    padding: 10px 12px; text-align: right; white-space: nowrap; border-bottom: 0.5px solid rgba(255,255,255,0.1); color: #dbe6f5;
+  }
+  .scenario-table td:first-child { text-align: left; font-weight: 600; color: #ffffff; }
+  .scenario-table tr:last-child td { border-bottom: none; }
+  .scenario-table tr.total-row-1 td { font-weight: 700; color: #ffffff; background: rgba(255,255,255,0.08); }
+  .scenario-table tr.total-row-3 td { font-weight: 800; color: #f2c030; background: rgba(242,192,48,0.12); border-top: 1.5px solid rgba(242,192,48,0.4); }
+  .scenario-placeholder { color: #6b87ad; font-style: italic; }
+  .scenario-note { font-size: 11.5px; color: #93afd4; margin-top: 0.9rem; line-height: 1.6; }
 
   /* ── TABLE ── */
   table { width: 100%; border-collapse: collapse; border: 1px solid #d3d1c7; border-radius: 12px; overflow: hidden; font-size: 13px; margin-bottom: 1.75rem; background: #fff; }
@@ -185,112 +209,110 @@ Decision Hub
 <h1>Recurring Annual Costs</h1>
 <p class="subtitle">Compass Project — Phase 1 handoff item · Ongoing operating costs after launch, shown annually</p>
 
-<div class="wip-banner">
-<div class="icon">🚧</div>
-<div>
-<strong>Work in progress — not a final budget</strong>
-Every figure below is a planning-stage estimate pulled from prior vendor research and internal assumptions in this project's docs — none are locked vendor quotes. Ranges will narrow as remaining Phase 1 vendor selections (kiosk software/MDM, maps, cellular) are finalized. Hosting (Netlify) and SMS (Twilio) are decided. Do not present these numbers to funders or the board as committed costs.
-</div>
-</div>
-
 <div class="key-note">
 <strong>What's assumed here</strong>
-All figures are annual. Three categories scale directly with kiosk count: Kiosk Hardware Monitoring, & Cellular Connectivity. The remaining categories (SMS,Database, Domain, Maps) are shared platform costs that stay the same whether CSAH runs 1 kiosk or 3. Hosting should scale based on a larger threshold of Kiosks than 3.
+<ul style="margin: 6px 0 0 1.1rem; padding: 0;">
+<li>All figures are annual.</li>
+<li>Three categories scale directly with kiosk count: Kiosk Hardware Monitoring, Screen Reader Tech, &amp; Cellular Connectivity.</li>
+<li>The remaining categories (SMS, Database, Domain, Maps) are shared platform costs that stay the same whether CSAH runs 1 kiosk or 3.</li>
+<li>Hosting should scale based on a larger threshold than 3 kiosks- re-eval once traffic is known and more kiosks are added. So cost assumes free hosting (Netlify free tier).</li>
+<li>Assumes a subdomain of homelessauthority.org is used instead of purchasing a new domain name.</li>
+</ul>
 </div>
 
-<div class="chart-card">
-<div class="chart-title" style="font-size: 22px; text-align: center;">Annual Costs — Per Kiosk</div>
-
-<div class="cost-row">
-  <div class="cost-label">Kiosk Hardware Monitoring<span class="cat-tag tag-perkiosk">Per Kiosk</span></div>
-  <div class="cost-track" title="Updated per-kiosk figure: $700/yr. Scales directly with kiosk count.">
-    <div class="cost-bar" style="left:70%; width:0.1%;"></div>
-  </div>
-  <div class="cost-range-label">$700 flat</div>
+<div class="scenario-card">
+<div class="chart-title" style="font-size: 22px; text-align: center; margin-bottom: 1.4rem;">Cost Scenarios</div>
+<div class="scenario-scroll">
+<table class="scenario-table">
+<thead>
+<tr>
+<th>Category</th>
+<th>All vendors<br/>independent</th>
+<th>Metro + build<br/>Screen Reader</th>
+<th>Metro + JAWS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Kiosk HW Monitoring</td>
+<td>$250</td>
+<td>$700</td>
+<td>$700</td>
+</tr>
+<tr>
+<td>Screen Reader Tech (JAWS)</td>
+<td>$0</td>
+<td>$0</td>
+<td>$3,500</td>
+</tr>
+<tr>
+<td>Cellular</td>
+<td>$240</td>
+<td>$450</td>
+<td>$450</td>
+</tr>
+<tr>
+<td>SMS</td>
+<td>$200</td>
+<td>$200</td>
+<td>$200</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>$300</td>
+<td>$300</td>
+<td>$300</td>
+</tr>
+<tr>
+<td>Hosting</td>
+<td>$0</td>
+<td>$0</td>
+<td>$0</td>
+</tr>
+<tr>
+<td>Domain</td>
+<td>$0</td>
+<td>$0</td>
+<td>$0</td>
+</tr>
+<tr>
+<td>Map/Tiles</td>
+<td>$0</td>
+<td>$0</td>
+<td>$0</td>
+</tr>
+<tr class="total-row-1">
+<td>Annual Total (1 kiosk)</td>
+<td>$990</td>
+<td>$1,650</td>
+<td>$5,150</td>
+</tr>
+<tr class="total-row-3">
+<td>Total (3 kiosks)</td>
+<td>$1,970</td>
+<td>$3,950</td>
+<td>$14,450</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="scenario-note">SMS, Database, Hosting, Domain, and Map/Tiles are shared platform costs, so they're identical across all three scenarios — Kiosk HW Monitoring, Screen Reader Tech, and Cellular vary by which kiosk software/screen-reader path is chosen. Domain assumes a subdomain of homelessauthority.org is used instead of purchasing a new domain (see Hosting doc). "Annual Total (1 kiosk)" = Kiosk HW Monitoring + Screen Reader Tech + Cellular + all shared categories. "Total (3 kiosks)" = (Kiosk HW Monitoring + Screen Reader Tech + Cellular) &times; 3 + shared categories once.</div>
 </div>
 
-<div class="cost-row">
-  <div class="cost-label">Cellular Connectivity<span class="cat-tag tag-perkiosk">Per Kiosk</span></div>
-  <div class="cost-track" title="Updated per-kiosk figure: $450/yr. Managed IoT SIM (multi-carrier, e.g. Hologram-style) — the recommended lean approach per the Kiosk Connectivity doc. Vendor-agnostic; independent of which kiosk hardware is selected. Scales directly with kiosk count.">
-    <div class="cost-bar" style="left:45%; width:0.1%;"></div>
-  </div>
-  <div class="cost-range-label">$450 flat</div>
-</div>
-
-<div class="cost-row">
-  <div class="cost-label">SMS<span class="cat-tag tag-shared">Shared</span></div>
-  <div class="cost-track" title="Re-estimated at 400 texts/month combined across the kiosk fleet (~13/day) assuming 2 segments/message average, Twilio standard SMS + A2P 10DLC fees. Treated as a shared platform cost — one Twilio account serves all kiosks, not a per-unit charge.">
-    <div class="cost-bar" style="left:12%; width:12%;"></div>
-  </div>
-  <div class="cost-range-label">$120 – $240</div>
-</div>
-
-<div class="cost-row">
-  <div class="cost-label">Database<span class="cat-tag tag-shared">Shared</span></div>
-  <div class="cost-track" title="Supabase Pro, flat — Free tier has no backups, not an acceptable risk for case-adjacent data. One project serves the whole system regardless of kiosk count.">
-    <div class="cost-bar" style="left:30%; width:0.1%;"></div>
-  </div>
-  <div class="cost-range-label">$300 flat</div>
-</div>
-
-<div class="cost-row">
-  <div class="cost-label">Hosting<span class="cat-tag tag-shared">Shared</span></div>
-  <div class="cost-track" title="Hosting — platform not finalized. One Netlify deployment serves all kiosks and the staff app.">
-    <div class="cost-bar" style="left:0%; width:22.8%;"></div>
-  </div>
-  <div class="cost-range-label">$0 – $228</div>
-</div>
-
-<div class="cost-row">
-  <div class="cost-label">Domain Name<span class="cat-tag tag-shared">Shared</span></div>
-  <div class="cost-track" title="Standard .org annual registration. One domain for the whole system.">
-    <div class="cost-bar" style="left:1.2%; width:0.8%;"></div>
-  </div>
-  <div class="cost-range-label">$12 – $20</div>
-</div>
-
-<div class="cost-row">
-  <div class="cost-label">Map / Tiles<span class="cat-tag tag-shared">Shared</span></div>
-  <div class="cost-track" title="Per ADR-008: effectively free at projected volume, especially with lazy caching of directions. Small ceiling kept only as a buffer, not an expected cost. Self-hosted OSM tiles remain on the table as a zero-cost path regardless.">
-    <div class="cost-bar" style="left:0%; width:12%;"></div>
-  </div>
-  <div class="cost-range-label">$0 – $120</div>
-</div>
-
-<div class="chart-axis">
-  <span>$0</span><span>$200</span><span>$400</span><span>$600</span><span>$800</span><span style="text-align:right;">$1,000</span>
-</div>
-</div>
-
-<div class="total-card">
-  <div class="total-block grow">
-    <div class="total-label">Estimated Annual Cost — Per Kiosk</div>
-    <div class="total-value">$1,582 – $2,058 / yr</div>
-  </div>
-  <div class="total-arrow"><div class="line"></div><div class="head"></div></div>
-  <div class="total-block shrink">
-    <div class="total-label">All 3 Kiosks</div>
-    <div class="total-value alt">$3,882 – $4,358 / yr</div>
-  </div>
-</div>
 
 <div class="math-card">
-<div class="chart-title">The math for all 3 kiosks</div>
+<div class="chart-title">The math for all 3 kiosks — same formula, any scenario</div>
 <div class="math-row">
-  <div class="m-label">Kiosk Hardware Monitoring &times; 3 <span>$700/kiosk</span></div>
-  <div class="m-value">$2,100</div>
-</div>
-<div class="math-row">
-  <div class="m-label">Cellular Connectivity &times; 3 <span>$450/kiosk</span></div>
-  <div class="m-value">$1,350</div>
+  <div class="m-label">Per-kiosk costs &times; 3 <span>Scales with kiosk count</span></div>
+  <div class="m-value">(HW + Screen Reader + Cellular) &times; 3</div>
 </div>
 <div class="math-row" style="border-bottom: none;">
-  <div class="m-label">Shared platform costs <span>SMS, Database, Hosting, Domain, Map/Tiles — unchanged, don't scale with kiosk count</span></div>
-  <div class="m-value">$432 – $908</div>
+  <div class="m-label">Shared platform costs, once <span>Unchanged regardless of kiosk count</span></div>
+  <div class="m-value">SMS + DB + Hosting + Domain + Maps</div>
 </div>
 <div class="math-total">
   <div class="m-label">Total, 3 kiosks</div>
-  <div class="m-value">$3,882 – $4,358 / yr</div>
+  <div class="m-value">[(HW + Screen Reader + Cellular) &times; 3] + SMS + DB + Hosting + Domain + Maps</div>
 </div>
 </div>
 
