@@ -21,7 +21,7 @@ Real-time push alerts for cross-agency coordination when a homeless individual i
 - Notification delivers to relevant partner(s) in real time
 - Includes geolocation pin (one-time drop at moment of contact — not continuous tracking)
 - Notification links to the associated case record
-- SMS fallback if push not delivered (Twilio, pending final decision)
+- SMS fallback if push not delivered (Twilio)
 
 ### Notes
 - Geolocation is a single pin drop, not continuous tracking — minimal consent/union exposure
@@ -129,14 +129,14 @@ Worker sends a text with resource links/info to an individual's phone number. In
 
 ### Behavior
 - Worker selects resources from directory, composes message, enters individual's phone number
-- Message sent via Twilio (pending)
+- Message sent via Twilio
 - If individual replies, message is captured and attached to the case thread
 - Individuals do not have app logins or accounts
 
 ### Notes
 - ~90% of the homeless population has smartphones
 - Volume estimate: ~250 notifications/month (low)
-- 2-way threading required — Twilio frontrunner for this reason
+- 2-way threading required — Twilio selected for this reason (ADR-002)
 
 ---
 

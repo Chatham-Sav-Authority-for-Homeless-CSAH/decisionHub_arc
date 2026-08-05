@@ -137,7 +137,7 @@
 
   <div class="intro">
     <h2>What this page is</h2>
-    <p>A plain-English map of how the Compass Project works under the hood — no code, no jargon. It's meant to give CSAH a clear picture of where things live and how information moves between them. Specific tools that haven't been locked in yet (like the texting provider) are marked TBD rather than guessed at — this page fills in as those decisions get made.</p>
+    <p>A plain-English map of how the Compass Project works under the hood — no code, no jargon. It's meant to give CSAH a clear picture of where things live and how information moves between them. Specific tools that haven't been locked in yet (like the maps or cellular provider) are marked TBD rather than guessed at — this page fills in as those decisions get made.</p>
   </div>
 
   <h2 class="section-title">The Big Picture</h2>
@@ -154,7 +154,7 @@
 
     <div class="flow-row" style="align-items: center; gap: 0.75rem;">
       <div class="flow-col" style="gap: 0.6rem;">
-        <div class="node node-tbd"><div class="node-title">SMS Provider</div><div class="node-sub">Provider TBD</div></div>
+        <div class="node node-entry"><div class="node-title">Twilio</div><div class="node-sub">SMS provider</div></div>
         <div class="node node-tbd"><div class="node-title">Maps Provider</div><div class="node-sub">Provider TBD</div></div>
         <div class="node node-tbd"><div class="node-title">Cellular Provider</div><div class="node-sub">Provider TBD</div></div>
       </div>
@@ -239,8 +239,8 @@
   </div>
 
   <div class="leg-card">
-    <div class="leg-title"><span class="leg-dot" style="background:#92400e;"></span>SMS Message Alerts <span class="tbd-tag">Provider TBD</span></div>
-    <p>When someone at a kiosk requests help, an SMS message goes out to the CSAH outreach team so they know to respond. The texting provider hasn't been locked in yet.</p>
+    <div class="leg-title"><span class="leg-dot" style="background:#15803d;"></span>SMS Message Alerts <span class="decided-tag">Decided</span></div>
+    <p>When someone at a kiosk requests help, an SMS message goes out to the CSAH outreach team as a nudge — the request itself is saved first, so it's never lost even if the text doesn't arrive. Twilio is the texting provider.</p>
   </div>
 
   <div class="leg-card">
@@ -252,7 +252,7 @@
     <h2 style="color: #6b7280;">What's not locked in yet</h2>
     <ul class="opens-list" style="padding-left: 1.5rem;">
       <li>Analytics- tbd Plausable or is what's provided by vendor sufficient?</li>
-      <li>Kiosk lockdown/MDM software — see the <a href="kiosk_comparison.html">Kiosk Software comparison doc</a></li>
+      <li>Kiosk lockdown/MDM software — see the <a href="kiosk_software_comparison.html">Kiosk Software comparison doc</a></li>
       <li>Domain/DNS — subdomain of homelessauthority.org vs. a new domain, still open per the <a href="hosting-comparison.html">Hosting doc</a></li>
       <li>Translation Architecture- leaning towards I18N self define to keep costs down and it's simple nature</li>
   </ul>

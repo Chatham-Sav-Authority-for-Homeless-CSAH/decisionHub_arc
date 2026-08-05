@@ -111,7 +111,7 @@ Alan is not a software developer. He is a visual/UI person. Decision documents a
 - All decision/research docs live in `docs/` as `.html` files
 - When creating a new decision doc, follow the visual style established in `docs/pwa-vs-mobile.html` (dark header, card-based layout, color-coded columns, CSAH Impact callout rows)
 - Netlify publish directory is set to `docs/` — every push to main auto-deploys
-- Netlify URL: `csahcompassapp.netlify.app` — e.g. `csahcompassapp.netlify.app/kiosk_comparison.html`
+- Netlify URL: `csahcompassapp.netlify.app` — e.g. `csahcompassapp.netlify.app/kiosk_software_comparison.html`
 - A `docs/index.html` landing page listing all docs is the intended navigation surface for Alan
 - Repo is **private** on GitHub — Netlify free tier handles deployment from private repos
 
@@ -352,30 +352,35 @@ Two distinct reporting surfaces, two different tools. The line between them: **P
 | Aaron | CSAH marketing team | TBD |
 ---
 
-## SMS — Decision Pending
+## SMS — Decided: Twilio
 
-**Decision: NOT finalized.** Leaning Twilio.
+**Decision: Finalized (2026-08-04).** Twilio.
 
 ### Use Cases
 - Partner ↔ partner messaging tied to case records (not personal phones)
 - Partner → homeless individual outbound (resource info + links)
+- Kiosk request nudge to CSAH outreach team (see ADR-012, `specs/tech-decision-log.md`)
 - Potential inbound reply threading back to case record
 
 ### Options Evaluated
 
 | Provider | Est. Cost | Notes |
 |---|---|---|
-| **Twilio** | ~$20–50/mo at this volume | Industry standard. Best API. Handles 2-way threading. Works with hosting. Frontrunner. |
+| **Twilio** (chosen) | ~$20–50/mo at this volume | Industry standard. Best API. Handles 2-way threading. Works with hosting. |
+| **Telnyx** | Comparable to Twilio | Same underlying US A2P 10DLC registration system as Twilio (both submit to TCR — The Campaign Registry). No meaningful deliverability difference at this scale. |
 | **Textbelt** | ~$25/500 texts (credit) | Dead simple, great for low-frequency outbound only. No real 2-way support. |
 | **Vonage (Infobip)** | Comparable to Twilio | Solid alternative, slightly more nonprofit-friendly. No meaningful cost difference at this scale. |
 
 **Estimated volume:** ~250 notifications/month (small). At this scale, cost is negligible.
 
-### Why Twilio is the likely call
-- 2-way threading needed for partner↔individual replies
-- Cost at this volume is negligible for a nonprofit
-- Works with lightweight hosting like Netlify
-- All messages logged against case records, not personal phones
+### Why Twilio
+- **Twilio has the only documented nonprofit path for A2P 10DLC campaign registration.** Government and nonprofit agencies are eligible for A2P 10DLC Special Use Cases — increased throughput and/or discounted pricing. The dominant SMS failure mode at this scale isn't delivery percentage, it's a rejected or suspended campaign registration; reducing that risk beats optimizing marginal deliverability.
+- For US A2P messaging generally, deliverability is determined by 10DLC registration and trust score, not the provider — Twilio and Telnyx both submit to the same TCR (The Campaign Registry) system. This is why Telnyx isn't meaningfully worse, just not better enough to justify not using the provider with the clearer nonprofit registration path.
+- Twilio's deeper carrier relationships and longer history with US carriers can translate to marginally better delivery on edge cases.
+- 2-way threading needed for partner↔individual replies.
+- Cost at this volume is negligible for a nonprofit.
+- Works with lightweight hosting like Netlify.
+- All messages logged against case records, not personal phones.
 
 ---
 
@@ -397,6 +402,7 @@ Two distinct reporting surfaces, two different tools. The line between them: **P
 | 2026-06-24 | Survey tool added to app scope | Point-in-Time count survey embedded in CSAH staff app; administered during the annual 10-day count window; Kishia driving question scope |
 | 2026-06-24 | Greyhound station added as potential kiosk location | Jen pursuing city manager approval; high PR value as proof-of-concept launch site; Union Mission is Plan B |
 | 2026-08-03 | Netlify selected for hosting | Free tier covers CSAH's expected traffic with no commercial-use restriction; $19/mo Pro upgrade path if support/bandwidth needs grow; see docs/hosting-comparison.html for full vendor comparison |
+| 2026-08-04 | Twilio selected for SMS | Only provider with a documented A2P 10DLC nonprofit registration path; campaign rejection/suspension is the dominant failure mode at this scale, not raw deliverability — see ADR-002, specs/tech-decision-log.md |
 
 ---
 

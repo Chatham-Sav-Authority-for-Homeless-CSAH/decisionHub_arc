@@ -33,30 +33,38 @@ Build as a Progressive Web App (PWA). This decision is confirmed and not conting
 
 ---
 
-## ADR-002 — SMS Fallback via Twilio
+## ADR-002 — SMS Provider: Twilio
 
 **Date:** 2026-05-08
-**Status:** Accepted (provider pending final confirmation)
+**Confirmed:** 2026-08-04
+**Status:** Accepted — Final
 
 **Context**
-PWA push notifications are unreliable on iOS. Field workers on iPhones may miss critical coordination alerts. The system must reliably deliver notifications to all users regardless of device.
+PWA push notifications are unreliable on iOS. Field workers on iPhones may miss critical coordination alerts. The system must reliably deliver notifications to all users regardless of device. Twilio is also the frontrunner for the partner → individual outbound SMS feature (F5) and the kiosk request nudge (ADR-012).
 
 **Decision**
-Use Twilio as an SMS fallback for push notifications. Twilio is also the frontrunner for the partner → individual outbound SMS feature (F5).
+Use Twilio as the SMS provider, for both the push-notification fallback and every other SMS use case in the project (F5, ADR-012).
 
 **Options Considered**
-1. Twilio (chosen/leaning) — best API, 2-way threading
-2. Textbelt — dead simple, outbound only, no 2-way support
-3. Vonage/Infobip — comparable to Twilio, no meaningful cost difference at this volume
+1. **Twilio** (chosen) — best API, 2-way threading, only provider with a documented A2P 10DLC nonprofit registration path
+2. **Telnyx** — comparable API and pricing; submits to the same TCR (The Campaign Registry) as Twilio for US A2P 10DLC registration, so no meaningful deliverability difference at this scale. No documented nonprofit registration path.
+3. Textbelt — dead simple, outbound only, no 2-way support
+4. Vonage/Infobip — comparable to Twilio, no meaningful cost difference at this volume
+
+**Why Twilio over Telnyx specifically**
+The dominant SMS failure mode for a project this size isn't a delivery-percentage difference between providers — it's a rejected or suspended A2P 10DLC campaign registration, which stops messages from sending at all. Government and nonprofit agencies are eligible for Twilio's A2P 10DLC Special Use Cases (increased throughput and/or discounted pricing); this is the only *documented* nonprofit registration path found across the providers evaluated. Since US A2P deliverability is governed by 10DLC registration and trust score in TCR — not by which provider submitted it — Twilio and Telnyx perform equivalently once registered. The deciding factor is registration risk, not runtime deliverability. Twilio's longer history and deeper relationships with US carriers is a secondary, marginal factor on top of that.
 
 **Consequences**
 - Estimated ~250 notifications/month = ~$20–50/mo; negligible for a nonprofit
 - 2-way threading (partner → individual → case record) supported by Twilio
 - SMS adds a communication layer outside the app — must ensure replies are captured in case records
+- One provider across all SMS use cases (push fallback, F5 outbound, ADR-012 kiosk nudge) — one A2P 10DLC campaign registration to maintain, not several
+- Every send from this provider gets delivery-status tracking — see ADR-013
 
 **Risks**
 - Cost scales with volume; current estimate is low but should be monitored
-- Open question: is push + SMS duplication too invasive? User preference settings may be needed
+- A2P 10DLC campaign registration itself is a real setup step with CSAH's nonprofit documentation (501(c)(3) charter, etc.) — not instant; needs lead time before launch, not a same-day integration
+- Open question: is push + SMS duplication too invasive? User preference settings may be needed (see `open.md`)
 
 ---
 
@@ -264,7 +272,7 @@ Kiosk wayfinding requires an in-app maps/directions integration. Three vendor ca
 - Neither vendor has a wheelchair routing profile. Accessibility routing is out of scope; replaced by accessibility metadata on resource records plus worker-pinned hazards.
 
 **Blocking the Decision**
-- Google TTS clause clarification & lazy cache clarification — determines whether Web Speech narration of directions is permitted. Also, whether a lazy read-through cache with 30-day expiry is acceptable.
+- Google TTS clause clarification & lazy cache clarification — determines whether Web Speech narration of directions is permitted. Also, whether a lazy read-through cache with 30-day expiry is acceptable. See ADR-010, "Where the map vendor touches this," for why this clause matters only for directions text and not CSAH's own content.
 - Route quality test results — script written, not run. Pass/fail on sidewalk-vs-centerline routing determines helps to know if vendor option 1 is robust
 
 **Not a Factor**
@@ -432,6 +440,39 @@ Every translatable field has an optional spoken counterpart. It is null in the l
 
 This is the second payoff from the content-tier split below — structured data can generate a correct spoken form, while a pre-formatted display string cannot.
 
+**Narration Implementation**
+
+`speechSynthesis` — built into the browser, free, no vendor, no licensing. Hand it text and a language code; it speaks. The voices come from the kiosk's **operating system**, not the browser itself — this is why voice availability (see Risks, below) is a hardware/OS question, not a browser-support question. Kiosk hardware selection must confirm Spanish voices are installed at the OS level, not just that the Web Speech API is exposed.
+
+What gets built:
+
+1. **A narration service.** One module wrapping `speechSynthesis` — speak, stop, pause, queue, current language. Every screen calls into this module rather than touching the Web Speech API directly.
+2. **Display/spoken field pairs.** Covered above — screen text and spoken text differ (abbreviations, phone numbers, addresses read digit-by-digit), and the pairing flows through the existing translate-on-write pipeline so Spanish spoken text is authored alongside English, not bolted on afterward.
+3. **A persistent narration control.** Speaker icon + stop button on every screen, large touch target, state survives navigation — once a user turns narration on, it stays on until session reset.
+4. **Language wiring.** The app's active language sets the utterance's `lang` (`en-US` / `es-US`) — the same toggle already driving UI string selection.
+5. **Session reset behavior.** Narration off, language back to English when the kiosk resets between users. Without this, the next person at the kiosk inherits the previous user's settings.
+
+**Discovering narration exists, and audio routing**
+
+On touch, before any narration mode is active, the kiosk speaker announces itself once: "Compass. Audio guidance available. Headphone jack and keypad on the lower right. For audio guidance, press any button on the keypad or insert headphones." Pressing any keypad button, or inserting headphones, puts the app into narration mode from that point on — this is how a user who can't see the screen discovers the feature exists at all.
+
+Once active, narration routes to headphones when present, and the speaker is suppressed entirely. This isn't just UX polish: narration through an open speaker means the kiosk announces "Domestic violence shelter, Safe Shelter Savannah" out loud in a public lobby — a real safety concern for that population, not merely an annoyance.
+
+Worth testing before relying on it: whether `navigator.mediaDevices.ondevicechange` actually fires in the kiosk's locked-down browser shell on headphone insertion. If it does, narration can auto-start on plug-in — the same behavior JAWS for Kiosk provides natively. If it doesn't fire reliably in that environment, the spoken attract-loop announcement above is what carries discoverability instead.
+
+**The real scope of "narration"**
+
+ARIA labels don't produce speech — they're metadata, not an execution path. The actual work is a focus-tracking narrator: a layer that tracks what's focused or selected in the UI, reads the corresponding accessibility-tree content, and calls `speechSynthesis` to speak it. This — not the speak/stop/pause wrapper in item 1 above — is the largest single piece of implementation work in the narration feature, and none of the schema or pipeline work described elsewhere in this ADR gets it for free. It's entirely ahead of the team.
+
+**Where the map vendor touches this**
+
+Only one place: directions text.
+
+CSAH's own content — shelter names, hours, addresses — comes from the database and flows entirely through the display/spoken pipeline above; no vendor terms apply to any of it. Directions text is different: it arrives from the map API at request time, already phrased for turn-by-turn narration in the requested language, and bypasses the display/spoken pipeline entirely. Two consequences:
+
+- **Quality is unreviewed.** Abbreviations like "St" or "N" may not expand cleanly in speech. Needs testing against real routes, in both languages, before relying on it.
+- **This is exactly where ADR-008's Google TTS clause lands.** Passing Google's directions text into a speech synthesizer is the ambiguous case flagged there — see ADR-008, "Blocking the Decision." Mapbox and OpenRouteService carry no equivalent restriction, so narrating their directions text is unambiguous regardless of which vendor ADR-008 ultimately selects for maps overall.
+
 **Content Tiers**
 
 Content is classified by translation risk, not by field type:
@@ -469,6 +510,7 @@ The residual risk is a temporarily awkward-looking button, caught on the next vi
 - **Review backlog may go unworked.** The digest makes it visible but nothing enforces it. This is explicitly CSAH's responsibility, accepted as such.
 - **Web Speech API voice availability is device-dependent.** Spanish voices ship on essentially every platform, so this is low risk at current scope. It must still be confirmed with kiosk hardware vendors — the criterion is not "does your browser expose the Web Speech API" but "list the installed TTS voices." Fallback if a voice is missing is server-side pre-generated audio into Supabase Storage, using the same write-time pipeline.
 - **MT provider not yet selected.** Deferred, not blocking — the schema is provider-agnostic.
+- **Deafblind users are out of scope.** No braille output path exists or is planned. Accepted limitation, not deferred — flagging it here so it's a documented decision rather than a silent gap.
 
 **Open Questions**
 - Narration scope — full resource record, or essentials only? Determines how many fields need a distinct spoken value and how much formatter work is required. Jen / Kishia.
@@ -476,6 +518,11 @@ The residual risk is a temporarily awkward-looking button, caught on the next vi
 - Nonprofit credits — Google for Nonprofits and Microsoft's Azure nonprofit grant would both cover this volume many times over. Confirm eligibility before attaching a payment method. Kay.
 - Kiosk vendor TTS voice inventory — add to hardware evaluation criteria. Low risk for Spanish, still worth confirming in writing.
 - Per-field review status — currently row-level (`last_edited_by` on the whole translation row). If reviewers need to vet a description without touching the notes, this needs to move to field level. Decide when speccing the admin UI.
+- Speech rate — default `speechSynthesis` rate reads as too slow; needs a user-adjustable rate control, not just a fixed setting.
+- Orientation announcements — e.g. "Resources. 7 options." — announcing where the user is and what's available on a given screen.
+- Position state — e.g. "Shelters, 3 of 7" — announcing position within a list as the user navigates through it.
+- Turn-by-turn narration text — directions are visual-only right now; narrating them requires generating spoken turn-by-turn text, not just reading the visual route (see "Where the map vendor touches this," above).
+- Alert interrupts — an incoming alert needs to `cancel()` the current speech queue rather than queue behind whatever's already speaking.
 - PIT survey translation (roadmap, not MVP) — the survey lives in the partner app but staff administer it to clients. If an outreach worker walks a Spanish-speaking person through the questions, question text must render in Spanish on the worker's screen, which pulls translation into the partner app surface. Kishia, when PIT is scoped.
 
 ---
@@ -511,6 +558,147 @@ Eight platforms were scored across cost, uptime, security, deploy ease, scale, s
 - No contractual SLA or service credits below Netlify's Enterprise tier — accepted given Netlify's independently measured >99.9% uptime and the low cost of brief downtime relative to Enterprise pricing
 - Free-tier bandwidth (~100GB/mo) is finite; mitigated by the planned usage alert, with Pro ($19/mo) or a swap to Cloudflare Pages (unlimited bandwidth, same architecture) both available without a rebuild if traffic grows past projections
 - If two-way inbound SMS becomes a hard requirement, Netlify Functions (serverless, stateless) are not the ideal execution model for that — Render is the identified fallback path, not yet built
+
+---
+
+## ADR-012 — Kiosk Request Flow: Database-First, SMS as Notification Only
+
+**Date:** 2026-08-04
+**Status:** Accepted
+
+**Context**
+Kiosk Compass lets someone at a kiosk request help (e.g., transportation, shelter) — per the architecture diagram, this triggers an SMS to the CSAH outreach team. Not to be confused with ADR-002, which is Twilio-as-fallback for the *partner app's own* push notifications (staff-to-staff coordination) — this ADR covers a different flow: a kiosk-initiated request reaching staff in the first place. An SMS-only design for that flow has a serious failure mode: if the text doesn't arrive — Twilio outage, staff phone off, carrier spam filter — the request simply doesn't exist anywhere. No row, no trace, no way to know it happened or recover it after the fact. That's a person who asked for help and got nothing. Compounding this: CSAH outreach staff work Mon–Sat, 8:30 a.m.–9 p.m., but the kiosk itself is reachable 24/7 — a request made at 10 p.m. Sunday has no one on shift to see it for roughly 10.5 hours.
+
+**Decision**
+Write the request to Postgres first. Send the SMS second, as a notification only — not the system of record.
+
+- The kiosk request creates a row in the database the moment it's submitted. That row is the durable, queryable fact of "someone asked for X, at kiosk Y, at time Z" — it exists independent of whether the SMS ever arrives.
+- The SMS is sent after the write succeeds, as a best-effort nudge to staff — e.g. "New transportation request, Bull St kiosk, 2:14pm" — with a link into the request queue in the partner/admin PWA.
+- Staff acknowledge/resolve the request in the app; the row closes on that action, not on message delivery. This is the only way to know whether anyone responded — an SMS has no such state.
+- The kiosk's confirmation screen checks the time **server-side** against outreach hours (Mon–Sat, 8:30 a.m.–9 p.m.) and renders different copy outside that window. Never "someone will contact you shortly" at 2 a.m. — the copy has to be honest about when a person will actually see the request.
+
+**Options Considered**
+1. **Database-first, SMS as notification** (chosen) — durable record regardless of SMS delivery outcome; enables acknowledgment state and honest, hours-aware kiosk copy
+2. **SMS-only (fire-and-forget)** — rejected. A failed send means the request exists nowhere. No queue to check, no way to detect the failure, no way to follow up.
+
+**Consequences**
+- Every kiosk request is visible and auditable in the partner/admin PWA queue, independent of SMS deliverability — this is the same durability principle ADR-004 established for the resource directory, applied to a write path instead of a read path
+- Enables an acknowledgment/resolution workflow (staff marks handled → row closes) that an SMS-only design structurally cannot support
+- Feeds the same truth-telling/reporting story as F1 and the Mgmt Dashboard (F6) — request volume and response outcomes become real, queryable data instead of an untracked side channel
+- Requires the kiosk confirmation screen to carry real logic (server-side clock check against outreach hours), not just static "thank you" copy
+- Lowers the stakes on Twilio deliverability — since the database row is the actual source of truth, an SMS delivery failure degrades the experience (staff finds out late, from checking the queue) rather than losing the request entirely
+- Pairs with ADR-013: this ADR keeps the *request* from being lost if the SMS fails; ADR-013 is how you'd actually detect that the SMS failed in the first place
+
+**Risks**
+- A request made outside outreach hours can still sit unacknowledged for up to ~10.5 hours — the database-first pattern guarantees the request isn't *lost*, not that it's answered faster. That's a staffing constraint, not something this pattern solves.
+- A bug or timezone error in the server-side hour-check could show incorrect "we'll respond soon" copy at the wrong time — needs testing against real clock boundaries (including the Saturday 9pm→Sunday all-day→Monday 8:30am gap), not just the happy path.
+- Acknowledgment state adds a small amount of UI complexity to the partner app (a queue view, a "mark handled" action) beyond what a pure notification-only design would need.
+
+**Open Questions**
+- Where does this queue live in the partner app UI — a dedicated "Kiosk Requests" view, or merged into the existing F1 notification/case queue?
+- Does an unacknowledged request need an escalation path (e.g., re-notify after N minutes), or is staff checking the queue at shift start sufficient for MVP?
+- Exact copy for the outside-hours confirmation screen — needs Jen/Kishia input, same as other user-facing kiosk copy decisions.
+
+---
+
+## ADR-013 — SMS Delivery Observability: Log Twilio Status Webhooks
+
+**Date:** 2026-08-04
+**Status:** Accepted
+
+**Context**
+SMS can fail to reach a recipient without any error surfacing to the sending application — silent carrier-side filtering, an under-trust-scored or misconfigured A2P 10DLC campaign (see ADR-002), or a bad number. This project has three SMS use cases: F1's push-notification fallback, F5's partner → individual outbound messages, and ADR-012's kiosk request nudge. ADR-012 in particular treats the SMS as "just a nudge" on top of a database row that's the real source of truth — but that framing only holds up if there's a way to know, after the fact, whether the nudge actually landed. Without delivery tracking, a consistently failing SMS channel is invisible: CSAH would have no real delivery rate to look at, and a pattern of failures (a carrier block, a registration problem) could run for months undetected.
+
+**Decision**
+Every outbound Twilio SMS is logged with its delivery status, using Twilio's status callback webhook. Each message row carries, at minimum: message SID, recipient, timestamp sent, and a status field the webhook updates as Twilio reports it (`queued` → `sent` → `delivered` / `undelivered` / `failed`), including Twilio's error code when one is returned.
+
+**Options Considered**
+1. **Status webhook logged per send** (chosen) — Twilio POSTs delivery status updates to a callback URL; store status against the message row. Standard Twilio feature, no added cost.
+2. **No delivery tracking (fire-and-forget)** — rejected. This is exactly the blind spot ADR-012 was written to eliminate for the kiosk flow; leaving F1 and F5 without it would just relocate the same problem.
+3. **Poll Twilio's Message resource API periodically** — rejected as unnecessary complexity. Webhooks are push-based and lower-latency for data Twilio already provides for free.
+
+**Consequences**
+- CSAH gets a real, measured delivery rate instead of an assumed one — feeds the Mgmt Dashboard (F6) truth-telling story, and surfaces a failing campaign registration or carrier block as data instead of silence
+- Requires a webhook endpoint (a Netlify Function) that's publicly routable and validates Twilio's request signature — this is a real build item, not a config toggle
+- Complements ADR-012 rather than duplicating it: ADR-012's acknowledgment state tells you a human saw the request; this ADR's delivery status tells you whether the SMS itself arrived. Different failure modes, both need visibility.
+- One webhook handler serves all three SMS callers (F1, F5, ADR-012) — a single piece of infrastructure, not three
+
+**Risks**
+- The status webhook itself can fail to arrive (network blip, endpoint downtime) — the message row would just stay at `sent` indefinitely. A degraded state, not a regression from having no tracking at all.
+- Twilio's status callback must be signature-validated, or the endpoint becomes a spoofable write path into message status. Twilio's SDK provides the helper for this — it has to actually be used, not skipped for expediency.
+- Adds a small amount of schema and infrastructure (status field, webhook route) that needs to exist before the first SMS ships, not retrofitted after CSAH asks why nobody knows the real delivery rate.
+
+**Open Questions**
+- Does an `undelivered`/`failed` status trigger any automated action (retry via a second channel), or is it visibility/reporting only for MVP? Leaning visibility-only, since ADR-012 already makes the database row the durable source of truth regardless of SMS outcome.
+- Where does aggregate delivery-rate reporting surface — a Supabase view feeding the Mgmt Dashboard (F6), alongside the referral/encounter views from ADR-005?
+
+---
+
+## ADR-014 — Push Notification Architecture: Web Push API Direct
+
+**Date:** 2026-08-04
+**Status:** Accepted
+
+**Context**
+The partner app needs push notifications for crisis coordination (F1) — alerts must reach a phone even when the app isn't open on screen (locked, backgrounded, in a pocket). This is architecturally distinct from in-app queue updates like ADR-012's kiosk request queue, which use Supabase Realtime — already in the stack, no new dependency, but only works while the app is actually open on screen. Out-of-app push is a different mechanism entirely: the Web Push API, a service worker, and VAPID — genuinely new infrastructure, not an extension of Realtime. Three vendor approaches were evaluated: (A) direct Web Push using a self-generated VAPID keypair and the `web-push` library in a Supabase Edge Function; (B) Firebase Cloud Messaging (FCM) for web; (C) a managed push vendor (e.g., OneSignal-style).
+
+**Decision**
+Build push notifications as direct Web Push (Option A): CSAH/ARC generates its own VAPID keypair, `web-push` runs in a Supabase Edge Function, and subscriptions are stored in Postgres (RLS-scoped). No third-party push vendor. Delivery path: browser → Apple/Google/Mozilla's own push service → device.
+
+**The stack, and why only one layer actually varies**
+Push notifications break into ten layers. Nine are identical no matter which vendor option is chosen:
+
+| # | Layer | What it is | Varies by option? |
+|---|---|---|---|
+| 1 | Service worker registration | Client registers `sw.js`; required before any push subscription exists | No — universal |
+| 2 | Subscription | `PushManager.subscribe()` with the VAPID public key; returns endpoint + auth keys | No |
+| 3 | Subscription storage | `push_subscriptions` table, RLS-scoped | No |
+| 4 | Trigger | Postgres trigger → database webhook or `pg_net` → Edge Function | No |
+| 5 | Recipient resolution | Who gets this? Hand-written logic | No |
+| 6 | Encryption + VAPID signing | RFC 8291 payload encryption, RFC 8292 JWT signed with the VAPID private key | Partially |
+| 7 | Delivery | Push service hands off to the device | **Yes — the only layer the options differ on** |
+| 8 | Receipt | Service worker `push` event fires | No |
+| 9 | Display | `showNotification()` in the service worker | No |
+| 10 | Click handling | `notificationclick` → focus or open the app at the queue | No |
+
+Layers 1–5 and 8–10 are the same build regardless of vendor choice — that's most of the work. Vendor choice (A/B/C) only really changes layer 7, and partially layer 6.
+
+**Service worker is universal, not option-specific**
+A service worker is required for every option, not just Option A — FCM's web SDK requires shipping `firebase-messaging-sw.js`; OneSignal injects its own. There's no push-without-service-worker path, because the service worker is what stays alive when the app is closed and receives the push event. One exception: Safari 18.4 introduced Declarative Web Push, which doesn't require a service worker — but it's Safari-only, so the service worker path is still needed for Android and desktop regardless. Not a plan, just worth knowing it exists if iOS install friction becomes a real problem later.
+
+This creates a real sequencing dependency: push requires a registered service worker, and service worker / offline / PWA update strategy is explicitly parked for its own dedicated session. Push scope is downstream of that session — layer 1 shouldn't be built in isolation. That session needs to happen before push gets committed to a sprint.
+
+**VAPID is identity, not encryption — and it's where the options actually differ**
+VAPID is how a push service knows who sent the message: one keypair, public half goes to the client at subscribe time, private half signs a JWT on every send.
+
+| Option | VAPID keypair |
+|---|---|
+| A — Direct | Generated by CSAH/ARC, private key stored in Supabase secrets. CSAH owns it. |
+| B — FCM | Still generated/configured for web push, but held inside Google's Firebase project. |
+| C — Managed vendor | Vendor generates and holds it; CSAH may never see the private key. |
+
+Rotating or losing the VAPID keypair invalidates every subscription and forces all ~50 users back through "Add to Home Screen" and re-permission. On Option C, the vendor controls whether that ever happens. On Option A, CSAH controls it — the right property for a system CSAH inherits and maintains long after this engagement ends.
+
+**Options Considered**
+1. **Option A — Web Push direct** (chosen) — self-generated VAPID keys, `web-push` in a Supabase Edge Function, subscriptions in Postgres. No vendor, no cost, no account to hand off.
+2. **Option B — Firebase Cloud Messaging (FCM)** — Google holds the VAPID key inside a Firebase project; adds a vendor account CSAH doesn't otherwise need.
+3. **Option C — Managed push vendor** (e.g., OneSignal) — vendor generates and holds the VAPID key entirely; CSAH has no direct control over the one credential that can invalidate every subscription.
+
+**Consequences**
+- No new vendor account, subscription, or dependency to hand off to CSAH at the end of the engagement
+- The credential capable of invalidating all ~50 users' subscriptions (the VAPID private key) lives in CSAH's own Supabase secrets — not a vendor's infrastructure
+- Push work is explicitly sequenced behind the (already-parked) service worker/offline/PWA update strategy session — can't be scheduled independently of it
+- Nine of ten architectural layers are unaffected by this decision and would need to be built identically under Option B or C — this decision has a narrower blast radius than "push notifications" as a whole might suggest
+
+**Risks**
+- CSAH (or ARC on CSAH's behalf) is now responsible for VAPID key custody and rotation discipline — there's no vendor safety net if the key is lost or mishandled, though that's also exactly the point of this decision
+- `web-push` running in a Supabase Edge Function means ARC owns the encryption/signing implementation (RFC 8291/8292) rather than delegating it to an SDK — more surface area to get right, though these are well-documented, stable specs
+- Safari's Declarative Web Push (no service worker required) is not used in this design; if iOS-specific install/permission friction becomes a real adoption blocker later, that's a possible future mitigation, not something this ADR builds toward now
+
+**Open Questions**
+- Resolves and replaces the earlier open item "Push notification provider: Expo Push vs FCM direct" (`open.md`) — that framing predates this analysis and doesn't reflect the options actually considered here.
+- Exact sequencing: which session addresses service worker / offline / PWA update strategy, and when, relative to when push work gets scheduled?
+- Recipient resolution logic (layer 5) — who receives a given alert — still needs to be specced out; this ADR fixes the delivery mechanism, not the routing rules.
 
 ---
 
