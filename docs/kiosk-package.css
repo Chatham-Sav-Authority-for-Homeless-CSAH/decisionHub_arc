@@ -1,0 +1,54 @@
+/* Shared styles — Kiosk MVP Signoff Package (Objectives & Experience / Experience Flow / Requirements / Back Office Flow) */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f5f5f3;
+  color: #1a1a18;
+  line-height: 1.65;
+}
+
+.back-bar { background: #0e1428; padding: 0.6rem 2rem; }
+.back-link { color:#9ca3af; font-size:0.8rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem; letter-spacing:0.04em; }
+.back-link:hover { color: #d1d5db; }
+
+/* ── PACKAGE NAV ── */
+.pkg-nav-bar { background: #0e2a5c; padding: 0.75rem 2rem; overflow-x: auto; }
+.pkg-nav { display: flex; gap: 0.5rem; max-width: 1123px; margin: 0 auto; flex-wrap: wrap; }
+.pkg-nav a {
+  font-size: 0.78rem; font-weight: 600; color: #93afd4; text-decoration: none;
+  padding: 0.4rem 0.85rem; border-radius: 999px; white-space: nowrap;
+}
+.pkg-nav a:hover { color: white; }
+.pkg-nav a.current { background: #f2c030; color: #07142e; }
+
+header { background: #0e2a5c; color: white; border-top: 1px solid rgba(255,255,255,0.08); }
+.doc-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #f2c030; margin-bottom: 0.5rem; }
+header h1 { font-size: 1.9rem; font-weight: 700; margin-bottom: 0.5rem; }
+header p { color: #93afd4; font-size: 0.95rem; }
+
+/* Unlike .container, .header-inner has no max-width — it spans the full header
+   so the right-side box(es) sit at the true right edge, not a centered column's edge. */
+.header-inner {
+  padding: 2.25rem 2rem 2rem;
+  display: flex; align-items: center; justify-content: flex-start; gap: 2.5rem; flex-wrap: wrap;
+}
+.header-text { flex: 1; min-width: 0; }
+
+.container { max-width: 1123px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+/* ── SECTION HEADER PATTERN ── */
+.doc-section { margin-bottom: 2.75rem; }
+.section-headline { font-size: 1.7rem; font-weight: 700; color: #0e2a5c; letter-spacing: -0.01em; margin: 0.4rem 0 0.9rem; }
+.doc-section h2 {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: #b45309; margin-bottom: 0.4rem;
+}
+.doc-section > p.lede { font-size: 0.95rem; color: #374151; margin-bottom: 1.25rem; }
+
+footer {
+  background: #0e2a5c; color: #6b89b0; text-align: center; padding: 2rem; font-size: 0.8rem;
+}
+footer strong { color: #93afd4; }
+footer .arc { color: #f2c030; font-weight: 700; }

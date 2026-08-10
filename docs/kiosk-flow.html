@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Experience Flow — Kiosk MVP Package</title>
+<link rel="stylesheet" href="kiosk-package.css">
+<style>
+  .persist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.85rem; }
+  .persist-item { background: white; border: 1px solid #e8e6df; border-radius: 10px; padding: 0.9rem 1.1rem; font-size: 0.85rem; color: #374151; }
+  .persist-item strong { color: #0e2a5c; }
+
+  .step-list { display: flex; flex-direction: column; gap: 0.4rem; }
+  .step-arrow { text-align: center; color: #9ca3af; font-size: 1.1rem; line-height: 1; }
+  .step-card {
+    display: flex; align-items: flex-start; gap: 1.1rem;
+    background: white; border-radius: 16px;
+    padding: 0.5rem 1.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .step-num {
+    flex-shrink: 0; margin-top: 0.1rem; width: 26px; height: 26px; border-radius: 50%;
+    background: #0e2a5c; color: white; display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem; font-weight: 700; box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  }
+  .step-num.gold { background: #f2c030; color: #3a2a06; }
+  .step-body { flex: 1; min-width: 0; }
+  .step-body h3 { font-size: 0.98rem; color: #0e2a5c; margin-bottom: 0.35rem; }
+  .step-body p { font-size: 0.86rem; color: #374151; }
+  .step-body ul { list-style: none; margin-top: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.4rem 0.9rem; }
+  .step-body li { font-size: 0.8rem; color: #5f5e5a; padding-left: 0.9rem; position: relative; }
+  .step-body li::before { content: "\2022"; position: absolute; left: 0; color: #1a4d8f; font-weight: 700; }
+
+  .acts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem; }
+  @media (max-width: 640px) { .acts-grid { grid-template-columns: 1fr; } }
+  .act { background: white; border: 1px solid #e8e6df; border-left: 4px solid #1a4d8f; border-radius: 10px; padding: 1rem 1.1rem; }
+  .act.gold { border-left-color: #f2c030; }
+  .act .cap { display: block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #1a4d8f; margin-bottom: 0.35rem; }
+  .act.gold .cap { color: #b45309; }
+  .act h4 { font-size: 0.92rem; font-weight: 700; color: #111827; margin-bottom: 0.35rem; }
+  .act p { font-size: 0.8rem; color: #6b7280; margin: 0; }
+
+  .id-note { background: #eef1f5; border-radius: 10px; padding: 0.9rem 1.1rem; font-size: 0.85rem; color: #374151; margin-top: 1rem; }
+  .id-note strong { color: #111827; }
+
+  .designed-against {
+    background: #fbf0d6; border: 1px solid #ecd8a6; border-radius: 12px; padding: 1.25rem 1.5rem;
+    font-size: 0.85rem; color: #374151; margin-top: 1.5rem;
+  }
+  .designed-against strong { color: #17202e; }
+
+  .branch-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  @media (max-width: 640px) { .branch-grid { grid-template-columns: 1fr; } }
+  .branch-card { background: white; border: 1px solid #e8e6df; border-top: 4px solid #1a4d8f; border-radius: 14px; padding: 1.5rem 1.75rem; }
+  .branch-card.red { border-top-color: #b23b3b; }
+  .branch-card.gold { border-top-color: #d9a441; }
+  .branch-card h3 { font-size: 1rem; font-weight: 700; color: #17202e; margin-bottom: 0.9rem; }
+  .branch-chain {
+    display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.9rem;
+  }
+  .branch-chain .seg { background: #eef1f5; color: #374151; font-size: 0.78rem; font-weight: 500; padding: 0.4rem 0.8rem; border-radius: 8px; }
+  .branch-chain .sep { color: #9ca3af; font-size: 0.9rem; }
+  .branch-card p { font-size: 0.86rem; color: #374151; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a class="back-link" href="index.html">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="#9ca3af" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Decision Hub
+  </a>
+</div>
+
+<div class="pkg-nav-bar">
+  <div class="pkg-nav">
+    <a href="kiosk.html">Overview</a>
+    <a href="kiosk-experience.html">Objectives &amp; Experience</a>
+    <a href="kiosk-flow.html" class="current">Experience Flow</a>
+    <a href="kiosk-requirements.html">Requirements</a>
+    <a href="kiosk-back-office.html">Back Office Flow</a>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-text">
+      <div class="doc-eyebrow">Document 02 · Kiosk MVP Signoff Package</div>
+      <h1 style="display:inline-flex; align-items:center; gap:0.5rem;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><circle cx="12" cy="12" r="10" stroke="#f2c030" stroke-width="1.6"/><path d="M12 4.5 L13.7 10.3 L19.5 12 L13.7 13.7 L12 19.5 L10.3 13.7 L4.5 12 L10.3 10.3 Z" fill="#f2c030"/></svg>Experience Flow</h1>
+      <p>The path a person takes at the kiosk, end to end — plus the moments that branch off it.</p>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="doc-section">
+    <h2>On Every Screen</h2>
+    <div class="section-headline">Always present, at any hour</div>
+    <div class="persist-grid">
+      <div class="persist-item"><strong>Get Help Now</strong> — crisis help from any screen</div>
+      <div class="persist-item"><strong>Accessibility</strong> — contrast · large text · light/dark · volume</div>
+      <div class="persist-item"><strong>Audio</strong> — any keypad press or the audio-assist button starts the screen reader; operate by keypad + audio</div>
+      <div class="persist-item"><strong>Weather</strong> — conditions now; CSAH-published critical alerts take over</div>
+      <div class="persist-item"><strong>Back · Home · Done</strong> — Done clears the screen</div>
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <h2>The Main Path</h2>
+    <div class="section-headline">Welcome <span style="color:#b45309;">&rarr;</span> done</div>
+    <div class="step-list">
+      <div class="step-card">
+        <div class="step-num gold">1</div>
+        <div class="step-body">
+          <h3>Welcome — unengaged mode</h3>
+          <p>The kiosk always shows the welcome screen — its unengaged mode (the screensaver). It is never dark. It shows what this is, how to use it, live weather, and a "you are here" map, and doubles as the branding surface. A vision-impaired user can start audio from here with any keypad press or the audio-assist button.</p>
+        </div>
+      </div>
+      <div class="step-arrow">&darr;</div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>Touch to start</h3>
+          <p>A touch switches the kiosk to engaged mode and offers a "Get Started" button through to the Home Screen. Each session starts clean — no information left from the person before.</p>
+        </div>
+      </div>
+      <div class="step-arrow">&darr;</div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Home Screen</h3>
+          <p>One simple grid of needs, icon-first with a clear text label on each tile, plus the greeting and live weather and time. No typing. Redesigned for the 55-inch display — more tiles, easier navigation.</p>
+          <ul>
+            <li>Food + Showers</li><li>Shelters</li><li>Day Centers</li><li>Medical + Mental Health</li>
+            <li>Rent + Utilities</li><li>Veterans Services</li><li>Free Transportation</li><li>Pets</li>
+            <li>Public Camping</li><li>Find a Caseworker</li><li>ID Cards</li><li>Get Help Now</li><li>CSAH</li>
+          </ul>
+          <p style="margin-top:0.5rem;">Built for the 55-inch display in CSAH's brand (blue &amp; yellow, lighthouse/compass), with the CSAH logo. The interactive zone sits within ADA reach.</p>
+        </div>
+      </div>
+      <div class="step-arrow">&darr;</div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Browse a category</h3>
+          <p>Tap a tile to see the closest options first. Filter by tapping chips, with a "clear all" reset — no search, no keyboard. Distance shown; eligibility up front.</p>
+        </div>
+      </div>
+      <div class="step-arrow">&darr;</div>
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Resource page</h3>
+          <p>One place shows everything it offers — photo, who it's for, hours, address, phone, distance.</p>
+        </div>
+      </div>
+      <div class="step-arrow">&darr;</div>
+      <div class="step-card">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h3>Act — a resource shows only what it supports</h3>
+          <div class="acts-grid">
+            <div class="act">
+              <span class="cap">Go here</span>
+              <h4>A place</h4>
+              <p>Map directions from "you are here" (bus by default for distant sites), plus send the address to your phone.</p>
+            </div>
+            <div class="act">
+              <span class="cap">Call</span>
+              <h4>A phone line</h4>
+              <p>The number, big, to dial from your own phone — or send it to yourself.</p>
+            </div>
+            <div class="act gold">
+              <span class="cap">Reach CSAH</span>
+              <h4>A request</h4>
+              <p>Send a request to CSAH — a caseworker or a general question. Give a phone for a callback, or details so outreach can find you. Works with or without a phone.</p>
+            </div>
+          </div>
+          <div class="id-note"><strong>ID Cards</strong> goes only to CSAH: how to apply for or replace an ID and what you need, then directions, text, or call to CSAH — no resource list.</div>
+        </div>
+      </div>
+      <div class="step-arrow">&darr;</div>
+      <div class="step-card">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <h3>Take it with you</h3>
+          <p>Send it to your phone with a QR code or a keypad — nothing stored. Everything also stays readable on-screen for anyone without a phone. No printer.</p>
+        </div>
+      </div>
+      <div class="step-arrow">&darr;</div>
+      <div class="step-card">
+        <div class="step-num gold">8</div>
+        <div class="step-body">
+          <h3>Done</h3>
+          <p>Tap Done, or walk away — after a short timeout (with a "still there?" warning first) the screen clears and returns to the welcome (unengaged) screen.</p>
+        </div>
+      </div>
+    </div>
+    <div class="designed-against">
+      <strong>Designed against:</strong> we designed against the failure modes that make a kiosk useless — a no-phone dead-end at take-away; showing a resource someone isn't eligible for; showing a closed resource as open; a browse or filter that finds nothing with nowhere to go; and any interactive element placed out of ADA reach on the tall unit.
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <h2>Moments That Branch Off the Main Path</h2>
+    <div class="section-headline">The side flows</div>
+    <div class="branch-grid">
+      <div class="branch-card red">
+        <h3>Get Help Now — crisis &amp; urgent</h3>
+        <div class="branch-chain"><span class="seg">Any screen</span><span class="sep">→</span><span class="seg">Crisis options</span><span class="sep">→</span><span class="seg">Call / text · or request a ride</span></div>
+        <p>Always one tap away. The kiosk shows the numbers to call from your own phone — it can't place calls itself: 211, 988, 911, the SPD Hope Unit, and CSAH. CSAH can also be texted from the kiosk, and emergency transportation lives here. Off-hours, it shows the lines that are staffed 24/7.</p>
+      </div>
+      <div class="branch-card gold">
+        <h3>Find a Caseworker</h3>
+        <div class="branch-chain"><span class="seg">Request</span><span class="sep">→</span><span class="seg">Confirm it's received</span><span class="sep">→</span><span class="seg">Outreach team (via the app)</span></div>
+        <p>You choose a callback (give a phone number) or, with no phone, share details that help an outreach worker find you at the kiosk — after a short consent note. "Sent" shows only once CSAH actually receives it; if it can't be confirmed, the kiosk shows a number to call plus Get Help Now. After hours, the request holds for the team to resolve first thing next morning. 211 and the 24/7 options show on every request screen.</p>
+      </div>
+      <div class="branch-card">
+        <h3>Audio assistance (vision-impaired)</h3>
+        <div class="branch-chain"><span class="seg">Press any key / audio-assist button</span><span class="sep">→</span><span class="seg">Screen reader starts + points to the jack</span><span class="sep">→</span><span class="seg">Move by keypad, listening</span></div>
+        <p>Any keypad press, or the on-screen audio-assist button, starts the ARC-built screen reader — no always-on voice, nothing announced aloud. From there you operate the entire kiosk by keypad and audio, plug in headphones for privacy, and can complete a request the same way.</p>
+      </div>
+      <div class="branch-card red">
+        <h3>Weather / emergency alert</h3>
+        <div class="branch-chain"><span class="seg">CSAH publishes</span><span class="sep">→</span><span class="seg">Takes over welcome screen</span><span class="sep">→</span><span class="seg">Banner on Home Screen in use</span></div>
+        <p>A CSAH-published alert propagates to all live units near-instantly (via Mission Control), takes over the welcome screen at wake, and shows as a dismissible banner while in use. Automatically generated weather-alerts are on the roadmap.</p>
+      </div>
+      <div class="branch-card">
+        <h3>See it on the map</h3>
+        <div class="branch-chain"><span class="seg">A resource · Free Transport · "where am I"</span><span class="sep">→</span><span class="seg">Map: services + CAT routes + pins</span><span class="sep">→</span><span class="seg">Directions · send to phone</span></div>
+        <p>One shared map view shows every service, the CAT bus routes, and resource-category listings with pins. Viewable on-screen and sent to your phone.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>
+    <span class="arc">ARC</span> &nbsp;—&nbsp;
+    <strong>Alan Robinson &amp; Allyson Short</strong>
+    &nbsp;&nbsp;·&nbsp;&nbsp;
+    Prepared for <strong>Chatham Savannah Authority for the Homeless</strong>
+    &nbsp;&nbsp;·&nbsp;&nbsp;
+    Compass Project · 2026
+  </p>
+</footer>
+
+</body>
+</html>

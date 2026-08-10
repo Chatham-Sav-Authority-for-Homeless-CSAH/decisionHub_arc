@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Back Office Flow — Kiosk MVP Package</title>
+<link rel="stylesheet" href="kiosk-package.css">
+<style>
+  .header-text { max-width: 50%; }
+
+  .tabs-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 0.5rem; }
+  .tab-pill {
+    background: white; border: 1px solid #e8e6df; border-radius: 999px; padding: 0.45rem 1.1rem;
+    font-size: 0.82rem; font-weight: 600; color: #0e2a5c;
+  }
+  .tab-pill.future { color: #888780; border-style: dashed; }
+
+  .flow-step { background: white; border: 1px solid #e8e6df; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .flow-step:last-child { margin-bottom: 0; }
+  .flow-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+  @media (max-width: 640px) { .flow-grid { grid-template-columns: 1fr; } }
+  .flow-grid .flow-step { margin-bottom: 0; }
+  .flow-step h3 { font-size: 0.98rem; color: #0e2a5c; margin-bottom: 0.4rem; }
+  .flow-step p { font-size: 0.86rem; color: #374151; }
+  .flow-kicker { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #1a4d8f; margin-bottom: 0.75rem; }
+
+  .flow-arrow-down { text-align: center; color: #9ca3af; font-size: 1.3rem; margin: 0.5rem 0; }
+
+  .dataset-banner {
+    background: #0e2a5c; color: white; border-radius: 12px; padding: 1.5rem 1.75rem; text-align: center;
+    margin-top: 1.5rem; margin-bottom: 2.75rem;
+  }
+  .dataset-banner .headline { font-size: 1.05rem; font-weight: 700; color: #f2c030; margin-bottom: 0.75rem; }
+  .unit-row { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+  .unit-chip { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 0.4rem 1rem; font-size: 0.8rem; }
+
+  .governance-note {
+    background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 1.1rem 1.4rem;
+    font-size: 0.72rem; color: #6b7280; margin-top: 1.5rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a class="back-link" href="index.html">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="#9ca3af" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Decision Hub
+  </a>
+</div>
+
+<div class="pkg-nav-bar">
+  <div class="pkg-nav">
+    <a href="kiosk.html">Overview</a>
+    <a href="kiosk-experience.html">Objectives &amp; Experience</a>
+    <a href="kiosk-flow.html">Experience Flow</a>
+    <a href="kiosk-requirements.html">Requirements</a>
+    <a href="kiosk-back-office.html" class="current">Back Office Flow</a>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-text">
+      <div class="doc-eyebrow">Document 04 · Kiosk MVP Signoff Package</div>
+      <h1 style="display:inline-flex; align-items:center; gap:0.5rem;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><circle cx="12" cy="12" r="10" stroke="#f2c030" stroke-width="1.6"/><path d="M12 4.5 L13.7 10.3 L19.5 12 L13.7 13.7 L12 19.5 L10.3 13.7 L4.5 12 L10.3 10.3 Z" fill="#f2c030"/></svg>Back Office Flow</h1>
+      <p>How CSAH runs the kiosk once it's live — in Mission Control, one dashboard, one shared dataset, pushed to every unit.</p>
+    </div>
+    <div style="background:white; border-radius:10px; padding:1.25rem 1.5rem; max-width:320px; flex:0 0 auto; margin-left:5rem;">
+      <p style="color:#374151; font-size:0.85rem; margin:0;">All management of this area lives inside the Companion App. It's documented here since there is overlap between the Kiosk and the App.</p>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="doc-section">
+    <h2>Mission Control</h2>
+    <p class="lede">The shared content dashboard CSAH uses to run the kiosk and app. It has tabs for the kiosk, the app, and future PIT, plus a separate Reporting tab which houses both Kiosk useage data & App operations data. The launch version is deliberately simple; its roadmap is broader operations (including provider-submitted content with CSAH approval)</p>
+    <p style="font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#b45309; margin-bottom:0.6rem;">Mission Control — the tabs</p>
+    <div class="tabs-row">
+      <span class="tab-pill">Kiosk content</span>
+      <span class="tab-pill">App content <span style="font-weight:400;color:#888780;">(App Package)</span></span>
+      <span class="tab-pill future">PIT (future)</span>
+      <span class="tab-pill">Reporting<span style="font-weight:400;color:#888780;">(App Package)</span></span>
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <h2>Set Up — Once, at Build</h2>
+    <div class="flow-step">
+      <h3>1. Load and tag the dataset; stand up the accounts</h3>
+      <p>ARC imports the resource list and tags every resource with categories, services, eligibility, hours, contact, and supported actions, and sets each unit's location. This is the launch dataset CSAH inherits.</p>
+    </div>
+    <div class="flow-arrow-down">&darr; handed to CSAH</div>
+  </div>
+
+   <div class="dataset-banner">
+      <div class="headline">One shared dataset → all three kiosks + the Companion App</div>
+      <div class="unit-row">
+        <span class="unit-chip">Kiosk 1- Union Mission</span>
+        <span class="unit-chip">Kiosk 2- tbd location</span>
+        <span class="unit-chip">Kiosk 3- tbd location</span>
+          <span class="unit-chip">Companion App</span>
+      </div>
+    </div>
+
+  <div class="doc-section">
+    <h2>Run It — Ongoing, CSAH in Mission Control</h2>
+    <div class="flow-grid">
+      <div class="flow-step">
+        <h3>Edit content, page by page</h3>
+        <p>Edit resources and copy on a simple page-based screen; saving updates the units automatically.</p>
+      </div>
+      <div class="flow-step">
+        <h3>Publish alerts</h3>
+        <p>Publish a weather or emergency alert — title, message, effective time, recommended actions, shelter/service locations and hours, transport info, emergency numbers. It reaches every live unit near-instantly and shows on the Home Screen until it expires or you remove it.</p>
+      </div>
+      <div class="flow-step">
+        <h3>Manage &amp; maintain resources</h3>
+        <p>Add, edit, or retire a resource and its hours, eligibility, phone, address, and tags — and keep it current: a named owner and cadence, with "hours may change — call ahead" as the safeguard.</p>
+      </div>
+      <div class="flow-step">
+        <h3>Set crisis routing &amp; copy</h3>
+        <p>The Get Help Now numbers (211 / 988 / 911 / Hope Unit / CSAH) and the honest after-hours message shown when the outreach team is off.</p>
+      </div>
+      <div class="flow-step">
+        <h3>Resolve the morning queue</h3>
+        <p>Requests made after hours are held in a queue; the outreach team resolves them first thing each morning, setting a status and notes on each.</p>
+      </div>
+      <div class="flow-step">
+        <h3>Reporting tab</h3>
+        <p>A light view for funders and admin — CSV export, filtered by date, location, or service category. It surfaces the measures we track (see <a href="kiosk-experience.html#measuring" style="color:#1a4d8f;">Objectives &amp; Experience → How we'll know it's working</a>).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <h2>How It Connects to the App</h2>
+    <div class="flow-step">
+      <h3 style="font-size:1.7rem; font-weight:700; color:#0e2a5c; letter-spacing:-0.01em; margin:0 0 0.5rem;">A kiosk request becomes a claim</h3>
+      <p>When someone requests a caseworker or a general inquiry at a kiosk, it lands in the Companion App's claim queue — routed to the outreach team's shift lead or outreach director, with a backup text to a monitored inbox. Staff work the queue, setting a status and notes on each. The request carries the type, kiosk, location, and time, plus the name/phone or identifying details the person chose to share — held in the queue, not in the alert. One open request per unit until resolved; after hours it holds for the team to resolve first thing next morning. (Emergency transport is handled immediately under Get Help Now. Defined in the Companion App work; shown here as the boundary.)</p>
+    </div>
+    <div class="governance-note">
+      <strong>Data governance.</strong> Role-based access; all content and session data lives on CSAH-controlled infrastructure; device monitoring is limited to unit health — no user-activity data leaves CSAH. Request contact details (name/phone or identifying info) are stored on CSAH-controlled infrastructure with role-based access and a retention policy aligned to CSAH records retention and HUD / State of Georgia / local requirements; the kiosk itself stores nothing.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>
+    <span class="arc">ARC</span> &nbsp;—&nbsp;
+    <strong>Alan Robinson &amp; Allyson Short</strong>
+    &nbsp;&nbsp;·&nbsp;&nbsp;
+    Prepared for <strong>Chatham Savannah Authority for the Homeless</strong>
+    &nbsp;&nbsp;·&nbsp;&nbsp;
+    Compass Project · 2026
+  </p>
+</footer>
+
+</body>
+</html>

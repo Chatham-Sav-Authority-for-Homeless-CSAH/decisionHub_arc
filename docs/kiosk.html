@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiosk — CSAH Compass Project</title>
+<link rel="stylesheet" href="kiosk-package.css">
+<style>
+  .header-text { max-width: 50%; }
+
+  .metric-grid.header-metrics {
+    flex: 0 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 0;
+    margin-left: 5rem;
+  }
+  .header-metrics .metric-box { background: white; }
+  .header-metrics .metric-value { color: #0e2a5c; }
+  .header-metrics .metric-label { color: #5f5e5a; }
+
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem;
+    background: #f2c030; color: #07142e; padding: 0.35rem 0.85rem; border-radius: 999px;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  .section-block { margin-bottom: 3rem; }
+
+  .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+
+  .section-label {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #888780;
+  }
+
+  .section-desc { font-size: 0.85rem; color: #5f5e5a; }
+
+  /* ── DOC CARDS ── */
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+
+  .tech-doc-grid .doc-card {
+    background: #ddecf8;
+  }
+
+  .doc-card {
+    background: #FDFBD4;
+    border: 1px solid #e8e6df;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .doc-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: #f2c030;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  .doc-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    border-color: #c7c5bc;
+    transform: translateY(-2px);
+  }
+
+  .doc-card:hover::before { opacity: 1; }
+
+  .doc-card-leading { font-size: 1.35rem; font-weight: 700; color: #1a4d8f; letter-spacing: -0.02em; }
+  .doc-card-title { font-size: 0.82rem; color: #5f5e5a; line-height: 1.45; }
+
+  .doc-card-arrow {
+    margin-top: auto; padding-top: 0.75rem; font-size: 0.75rem; font-weight: 600;
+    color: #1a4d8f; letter-spacing: 0.04em; display: flex; align-items: center; gap: 0.3rem;
+  }
+
+  .doc-card-arrow svg { transition: transform 0.15s; }
+  .doc-card:hover .doc-card-arrow svg { transform: translateX(3px); }
+
+  /* ── PLACEHOLDER ── */
+  .placeholder-card {
+    background: white;
+    border: 1.5px dashed #c7c5bc;
+    border-radius: 12px;
+    padding: 2.5rem 1.75rem;
+    text-align: center;
+    color: #888780;
+  }
+
+  .placeholder-card p { font-size: 0.88rem; max-width: 440px; margin: 0 auto; }
+
+  /* ── MVP PACKAGE ── */
+  .package-intro { font-size: 0.92rem; color: #374151; max-width: 680px; margin-bottom: 1.5rem; }
+
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .metric-box {
+    background: #0e2a5c;
+    color: white;
+    border-radius: 10px;
+    padding: 1.1rem 1rem;
+    text-align: center;
+  }
+
+  .metric-value { font-size: 1.4rem; font-weight: 700; color: #f2c030; }
+  .metric-label { font-size: 0.7rem; color: #93afd4; margin-top: 0.2rem; }
+
+  .doc-card-num {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #888780;
+    letter-spacing: 0.1em;
+  }
+
+
+</style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a class="back-link" href="index.html">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="#9ca3af" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Decision Hub
+  </a>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-text">
+      <h1 style="display:inline-flex; align-items:center; gap:0.5rem;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><circle cx="12" cy="12" r="10" stroke="#f2c030" stroke-width="1.6"/><path d="M12 4.5 L13.7 10.3 L19.5 12 L13.7 13.7 L12 19.5 L10.3 13.7 L4.5 12 L10.3 10.3 Z" fill="#f2c030"/></svg>Kiosk</h1>
+      <p>A public, always-on touchscreen that gives unsheltered individuals in Savannah 24/7, self-serve access to the full resource landscape — with no caseworker, referral, or staff required</p>
+      <div class="status-pill">Active</div>
+    </div>
+    <div class="metric-grid header-metrics">
+      <div class="metric-box"><div class="metric-value">3 units</div><div class="metric-label">large outdoor touchscreens</div></div>
+      <div class="metric-box"><div class="metric-value">24/7</div><div class="metric-label">self-serve, unstaffed</div></div>
+      <div class="metric-box"><div class="metric-value">One dataset</div><div class="metric-label">shared with Companion App</div></div>
+      <div class="metric-box"><div class="metric-value">Dec 2026</div><div class="metric-label">installed and live</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="section-block" id="package">
+    <div class="section-head">
+      <div class="section-label">Kiosk MVP Signoff Package</div>
+    </div>
+
+    <p class="package-intro">This package sets out what the kiosk does, who it serves, the experience end to end, how CSAH runs it, and the full requirements list, for CSAH's review and sign-off.</p>
+
+    <div class="section-head" style="margin-top: 0.5rem;">
+      <div class="section-label" style="text-transform:none; letter-spacing:normal; font-size:0.95rem; font-weight:700; color:#f2c030; display:flex; align-items:center; gap:0.6rem;">
+        Four documents to review
+        <svg width="70" height="14" viewBox="0 0 70 14" fill="none" style="flex-shrink:0;">
+          <line x1="0" y1="7" x2="56" y2="7" stroke="#f2c030" stroke-width="2"/>
+          <path d="M56 1L70 7L56 13Z" fill="#f2c030"/>
+        </svg>
+      </div>
+    <div class="doc-grid" style="margin-bottom: 2rem;">
+
+      <a class="doc-card" href="kiosk-experience.html">
+        <div class="doc-card-num">01</div>
+        <div class="doc-card-leading">Objectives &amp; Experience</div>
+        <div class="doc-card-title">Why the kiosk exists, how it works around the clock, who it serves, what's in and out of scope, and how success is measured.</div>
+        <div class="doc-card-arrow">
+          Read
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a class="doc-card" href="kiosk-flow.html">
+        <div class="doc-card-num">02</div>
+        <div class="doc-card-leading">Experience Flow</div>
+        <div class="doc-card-title">The path a person takes at the kiosk, end to end — plus the moments that branch off it, like crisis help and audio assistance.</div>
+        <div class="doc-card-arrow">
+          Read
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a class="doc-card" href="kiosk-requirements.html">
+        <div class="doc-card-num">03</div>
+        <div class="doc-card-leading">Requirements &amp; User Stories</div>
+        <div class="doc-card-title">The full set of requirements, grouped by area, each marked for the launch build (MVP) or the roadmap.</div>
+        <div class="doc-card-arrow">
+          Read
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a class="doc-card" href="kiosk-back-office.html">
+        <div class="doc-card-num">04</div>
+        <div class="doc-card-leading">Back Office Flow</div>
+        <div class="doc-card-title">How CSAH runs the kiosk once it's live — in Mission Control, one shared dataset pushed to every unit, and how it connects to the Companion App.</div>
+        <div class="doc-card-arrow">
+          Read
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="section-block" style="margin-top: 2rem;">
+    <div class="section-head" style="flex-direction: column; align-items: flex-start; gap: 0.4rem;">
+      <div class="section-label">Technical Decision Docs</div>
+      <div class="section-desc">Vendor evaluations, architecture, and cost research</div>
+    </div>
+    <div class="doc-grid tech-doc-grid">
+
+      <a class="doc-card" href="pwa-vs-mobile.html">
+        <div class="doc-card-leading">PWA vs Native</div>
+        <div class="doc-card-title">vs. Native Mobile App — Partner App platform decision</div>
+        <div class="doc-card-arrow">
+          Read
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a class="doc-card" href="app-architecture.html">
+        <div class="doc-card-leading">CMS vs Custom</div>
+        <div class="doc-card-title">Custom web app vs. kiosk content platform, and how to structure the two app surfaces (kiosk + partner app)</div>
+        <div class="doc-card-arrow">
+          Read
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a class="doc-card" href="kiosk-connectivity.html">
+        <div class="doc-card-leading">Kiosk Connectivity</div>
+        <div class="doc-card-title">Cellular vs. WiFi vs. Wired — IoT plan comparison for outdoor kiosks across Savannah</div>
+        <div class="doc-card-arrow">
+          Read
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a class="doc-card" href="kioskHardware-comparison.html">
+        <div class="doc-card-leading">Kiosk Hardware</div>
+        <div class="doc-card-title">Hardware Comparison — MetroClick, Meridian, Advanced Kiosks &amp; Olea. Approved: MetroClick, ~$16–17K/unit all-in</div>
+        <div class="doc-card-arrow">
+          Read
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a class="doc-card" href="kiosk_software_comparison.html">
+        <div class="doc-card-leading">Kiosk Software</div>
+        <div class="doc-card-title">Software Comparison — MetroClick's bundled platform vs. KioWare, SiteKiosk, Scalefusion (hardware-only confirmed)</div>
+        <div class="doc-card-arrow">
+          Read
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a class="doc-card" href="hosting-comparison.html">
+        <div class="doc-card-leading">Hosting</div>
+        <div class="doc-card-title">Platform &amp; Hosting Comparison — 8 platforms scored on cost, uptime, Twilio, and PWA support. Approved: Lovable → GitHub → Netlify</div>
+        <div class="doc-card-arrow">
+          Read
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a class="doc-card" href="architecture-diagram.html">
+        <div class="doc-card-leading">App Architecture</div>
+        <div class="doc-card-title">Plain-English system diagram — Kiosk Compass + CSAH App, GitHub, Netlify, Supabase, and alert flows (living doc)</div>
+        <div class="doc-card-arrow">
+          Read
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+      <a class="doc-card" href="recurring-monthly-costs.html">
+        <div class="doc-card-leading">Monthly Costs</div>
+        <div class="doc-card-title">Recurring Monthly Costs — SMS, cellular, kiosk monitoring, hosting, Supabase, maps, and domain, with a monthly total (draft)</div>
+        <div class="doc-card-arrow">
+          Read
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="section-head">
+      <div class="section-label">Product Roadmap</div>
+    </div>
+    <div class="placeholder-card">
+      <p>TBD Alan</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>
+    <span class="arc">ARC</span> &nbsp;—&nbsp;
+    <strong>Alan Robinson &amp; Allyson Short</strong>
+    &nbsp;&nbsp;·&nbsp;&nbsp;
+    Prepared for <strong>Chatham Savannah Authority for the Homeless</strong>
+    &nbsp;&nbsp;·&nbsp;&nbsp;
+    Compass Project · 2026
+  </p>
+</footer>
+
+</body>
+</html>

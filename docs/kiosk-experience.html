@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Objectives &amp; Experience — Kiosk MVP Package</title>
+<link rel="stylesheet" href="kiosk-package.css">
+<style>
+  .subsection { margin-bottom: 1.5rem; }
+  .subsection:last-child { margin-bottom: 0; }
+  .subsection h3 { font-size: 1.05rem; font-weight: 700; color: #0e2a5c; margin-bottom: 0.4rem; }
+  .subsection .kicker { font-size: 0.95rem; font-weight: 600; color: #1a4d8f; margin-bottom: 0.5rem; }
+  .subsection p { font-size: 0.9rem; color: #374151; }
+
+  .profile-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  @media (max-width: 640px) { .profile-grid { grid-template-columns: 1fr; } }
+  .profile-card {
+    background: white; border: 1px solid #e8e6df; border-top: 4px solid #d9a441; border-radius: 14px;
+    padding: 1.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  .profile-card h4 { font-size: 1.05rem; font-weight: 700; color: #0e2a5c; margin-bottom: 0.6rem; }
+  .profile-card .kicker { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #b45309; margin-bottom: 0.6rem; }
+  .profile-card p { font-size: 0.86rem; color: #5f5e5a; line-height: 1.55; }
+
+  .scope-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+  @media (max-width: 640px) { .scope-columns { grid-template-columns: 1fr; } }
+  .scope-right { display: flex; flex-direction: column; gap: 1.5rem; }
+  .scope-col { border-radius: 14px; padding: 1.5rem 1.75rem; }
+  .scope-col.in { background: #e0ebf5; border: 1px solid #cfe0ee; }
+  .scope-col.roadmap { background: #fbf0d6; border: 1px solid #ecd8a6; }
+  .scope-col.out { background: #e2e4e8; border: 1px solid #cdd1d7; }
+  .scope-col h4 { font-size: 0.95rem; font-weight: 700; color: #17202e; margin-bottom: 0.9rem; }
+  .scope-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+  .scope-col li { font-size: 0.86rem; color: #374151; padding-left: 1.1rem; position: relative; }
+  .scope-col li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 6px; height: 6px; border-radius: 50%; background: #d9a441; }
+
+  .dataset-card {
+    background: #e9f1f8;
+    border: 1px solid #c9dcec;
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+  }
+
+  .dataset-card h3 { color: #123f63; }
+
+  .callout-note {
+    background: #fbf0d6; border: 1px solid #ecd8a6; border-radius: 10px;
+    padding: 1rem 1.25rem; font-size: 0.85rem; color: #7c5712; margin-top: 1.25rem;
+  }
+
+  .metric-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+  .metric-item { background: white; border: 1px solid #e8e6df; border-radius: 10px; padding: 1rem 1.25rem; }
+  .metric-item h4 { font-size: 0.85rem; color: #0e2a5c; margin-bottom: 0.3rem; }
+  .metric-item p { font-size: 0.8rem; color: #5f5e5a; }
+</style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a class="back-link" href="index.html">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="#9ca3af" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Decision Hub
+  </a>
+</div>
+
+<div class="pkg-nav-bar">
+  <div class="pkg-nav">
+    <a href="kiosk.html">Overview</a>
+    <a href="kiosk-experience.html" class="current">Objectives &amp; Experience</a>
+    <a href="kiosk-flow.html">Experience Flow</a>
+    <a href="kiosk-requirements.html">Requirements</a>
+    <a href="kiosk-back-office.html">Back Office Flow</a>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-text">
+      <div class="doc-eyebrow">Document 01 · Kiosk MVP Signoff Package</div>
+      <h1 style="display:inline-flex; align-items:center; gap:0.5rem;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><circle cx="12" cy="12" r="10" stroke="#f2c030" stroke-width="1.6"/><path d="M12 4.5 L13.7 10.3 L19.5 12 L13.7 13.7 L12 19.5 L10.3 13.7 L4.5 12 L10.3 10.3 Z" fill="#f2c030"/></svg>Objectives &amp; Experience</h1>
+      <p>What the kiosk is for, how it works around the clock, the people it serves, what's in and out of scope, and how we'll know it's working.</p>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <div class="doc-section">
+    <h2>Objective</h2>
+    <div class="section-headline">Access, not availability</div>
+    <div class="subsection">
+      <p>Savannah's hardest gap has never been a shortage of community services — it's that the people who need them can't always find or reach them. The resources exist; access is the challenge.</p>
+      <p style="margin-top:0.6rem;">The kiosk gives unsheltered individuals 24/7, self-serve access to Savannah's full resource landscape — a public touchscreen that works at any hour, with no caseworker, referral, or staff required. It is the digital, always-on version of the CSAH resource trifold: the same trusted content, made navigable, current, and actionable. It does the two things paper can't — let someone take a resource with them (by QR code or a text to their phone), and reach the CSAH outreach team directly.</p>
+    </div>
+    <div class="subsection dataset-card">
+      <h3>How reaching a person works</h3>
+      <p>From the kiosk, a person can send a request to CSAH — for a <strong>caseworker</strong> or a <strong>general inquiry</strong> (emergency transport is handled immediately under Get Help Now). They give a <strong>phone number for a callback</strong>, or, with no phone, <strong>details that help an outreach worker find them</strong> — after a short consent note. The request reaches the outreach team through the Companion App's claim flow, routed to the shift lead or outreach director. The kiosk itself stores nothing; the details go to the CSAH database. It's the means to actually get an outreach worker, not just a phone number.</p>
+    </div>
+    <div class="subsection">
+      <h3>The model</h3>
+      <p>One flat grid of needs — Food + Showers, Shelters, Day Centers, Medical + Mental Health, Rent + Utilities, Veterans Services, Free Transportation, plus Find a Caseworker, ID Cards, Get Help Now, and a CSAH card, with Pets and Public Camping (info) as smaller entries. Shelters and Day Centers stay distinct; "emergency" is a separate flag that also feeds Get Help Now. Get Help Now is global — one tap from any screen to crisis routing and emergency transportation. The tiles are the public face of a larger shared dataset: every resource is tagged against CSAH's full service list, so the same data serves the kiosk and the app.</p>
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <h2>Around the Clock</h2>
+    <div class="section-headline">Available at any hour — and honest about it</div>
+    <div class="subsection">
+      <p>The kiosk is available 24/7; CSAH staffs outreach during set hours (the resource trifold runs Mon–Sat, 8:30am–9:00pm). We designed for that gap rather than around it, and what happens after someone asks for help depends on the hour and whether they have a phone.</p>
+    </div>
+    <div class="subsection" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem;">
+      <div>
+        <div class="kicker">During staffed hours</div>
+        <p><strong>With a phone:</strong> the request goes to the outreach team, who call back to coordinate. <strong>No phone:</strong> they share details that help outreach find them, and the screen says an outreach worker will come to the kiosk — stay nearby.</p>
+      </div>
+      <div>
+        <div class="kicker">After hours</div>
+        <p><strong>With a phone:</strong> the request holds for the team to call back first thing next business day. <strong>No phone:</strong> the screen shows CSAH's hours and asks them to return to the kiosk during business hours.</p>
+      </div>
+    </div>
+    <p style="font-size:0.78rem; color:#374151; margin-top:1rem;">Every request screen also shows <strong>211</strong> and the 24/7 emergency options, and "Get Help Now" is always one tap away for anything urgent. Wording stays honest — the kiosk never promises a time it can't keep.</p>
+    <div class="subsection" style="margin-top:1.5rem;">
+      <h3>Hardware</h3>
+      <p>The unit is a 55-inch outdoor touchscreen (the MetroClick unit) — weather-durable, with a 3-year warranty, installed by December 2026. Its size drives the redesigned layout and one accessibility rule: because the tall unit has no auto-lower, the interactive zone must sit within the ADA forward-reach limit. English at launch, with Spanish on the roadmap. Everything is designed for low-literacy, low-friction use.</p>
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <h2>User Profiles</h2>
+    <div class="section-headline">Who the kiosk is for</div>
+    <p class="lede">The kiosk is built for unsheltered individuals across Savannah. Their circumstances differ widely — and one person may move between these profiles over time — so we designed to five of them, to make sure no one is left at a dead end.</p>
+    <div class="profile-grid">
+      <div class="profile-card">
+        <div class="kicker">Has a phone, wants to move fast</div>
+        <h4>The phone-enabled self-server</h4>
+        <p>About 70% of users have a phone. They browse or filter to a resource page, then take it with them by QR code or dialpad text.</p>
+      </div>
+      <div class="profile-card">
+        <div class="kicker">The most serious gap</div>
+        <h4>The no-phone / dead-phone user</h4>
+        <p>About 30% of users. Every screen stays complete on-screen, and a request to CSAH needs no phone — they share details that help outreach find them at the kiosk. No printed take-away, so nothing depends on a device.</p>
+      </div>
+      <div class="profile-card">
+        <div class="kicker">Named by CSAH as core</div>
+        <h4>The tech-hesitant / low-literacy user</h4>
+        <p>Served by the icon-first grid with a clear text label on every tile, plain copy, the accessibility rail, and content read aloud. We measure success for this person directly — taps and seconds to a first resource.</p>
+      </div>
+      <div class="profile-card">
+        <div class="kicker">Needs to know "is this for me?"</div>
+        <h4>The eligibility-constrained user</h4>
+        <p>A woman with children, a veteran, someone fleeing domestic violence. Eligibility is a first-class, prominent badge on every resource card — shown up front, not used to filter people out.</p>
+      </div>
+      <div class="profile-card">
+        <div class="kicker">Cannot read the screen</div>
+        <h4>The vision-impaired / non-reading user</h4>
+        <p>Screen reading is in the launch build for accessibility compliance, delivered by a screen reader built by ARC. Audio starts from any keypad press or an on-screen audio-assist button (which points to the headphone jack), and the whole kiosk can be operated by keypad and audio — with volume control on the accessibility rail. Because the 55-inch unit has no auto-lower, the interactive zone is designed within ADA reach.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="doc-section">
+    <h2>Scope</h2>
+    <div class="section-headline">What's in, what's next, what's not</div>
+    <div class="scope-columns">
+      <div class="scope-col in">
+        <h4>In scope — launch build</h4>
+        <ul>
+          <li>Flat-grid directory of needs, icon-first with text labels, no typing to navigate</li>
+          <li>A resource page that shows everything a resource offers, with tap-to-filter</li>
+          <li>"You are here" and nearest-first directions on the map (bus by default for distant sites)</li>
+          <li>Phone handoff by on-screen dialpad or QR code — nothing stored</li>
+          <li>A short request to CSAH (caseworker or general inquiry) with a consent note; works with or without a phone</li>
+          <li>An on-screen keyboard used only in the request form (navigation and search stay keyboard-free)</li>
+          <li>Three actions on a resource: go here, call, or reach CSAH; "Get Help Now" on every screen</li>
+          <li>Always-on welcome screen (unengaged mode); touch to start; automatic session reset with a timeout warning</li>
+          <li>Routine weather display and CSAH-published emergency alerts to every unit</li>
+          <li>Accessibility to WCAG 2.1 AA: rail (contrast, large text, light/dark), screen reader (built by ARC) with audio assist, keypad navigation, and volume control</li>
+          <li>Mission Control content dashboard; CSAH-branded design for the 55-inch display</li>
+        </ul>
+      </div>
+      <div class="scope-right">
+        <div class="scope-col roadmap">
+          <h4>On the roadmap</h4>
+          <ul>
+            <li>Spanish</li>
+            <li>An "open now" indicator based on each resource's hours</li>
+            <li>A first-time onboarding tour</li>
+            <li>Automatically generated weather-alerts (heat / freeze days)</li>
+            <li>Wheelchair / barrier-aware map routing</li>
+          </ul>
+        </div>
+        <div class="scope-col out">
+          <h4>Not included</h4>
+          <ul>
+            <li>Typed / keyword search (the kiosk uses browse + tap-to-filter, no search box)</li>
+            <li>HMIS / ClientTrack integration</li>
+            <li>A client-facing app for individuals</li>
+            <li>Physical printer, emergency button, or free WiFi</li>
+            <li>Ratings, reviews, pricing, or advertising</li>
+            <li>Live 911 calling from the kiosk</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="callout-note"><strong>A note on PIT.</strong> A Point-in-Time survey capability is being scoped in a separate lane and is not part of the kiosk launch build.</div>
+  </div>
+
+  <div class="doc-section" id="measuring">
+    <h2>Measuring Success</h2>
+    <div class="section-headline">How we'll know it's working</div>
+    <p class="lede">Usage measurement — taps only, no personal data. Proposed by ARC for CSAH to confirm.</p>
+    <div class="metric-list">
+      <div class="metric-item"><h4>Sessions per kiosk</h4><p>Total and daily/weekly/monthly, peak times, most-used locations.</p></div>
+      <div class="metric-item"><h4>Top resources &amp; services viewed</h4><p>Which resource pages are reached, ranked, per location.</p></div>
+      <div class="metric-item"><h4>Taps &amp; seconds to first resource</h4><p>The test of the low-literacy promise.</p></div>
+      <div class="metric-item"><h4>Tile-level taps, per location</h4><p>Aggregate tap counts by tile.</p></div>
+      <div class="metric-item"><h4>Resources sent to a phone</h4><p>QR versus text.</p></div>
+      <div class="metric-item"><h4>Requests sent &amp; abandonment</h4><p>Requests dispatched to CSAH; sessions that start but stop before a resource.</p></div>
+    </div>
+    <p style="font-size:0.75rem; color:#6b7280; margin-top:1.25rem;">The Mission Control reporting view surfaces these plus operational detail (average session duration, directions selected, accessibility features used), with CSV export and filters by date, location, and category. Unit uptime is monitored in the MetroClick dashboard.</p>
+  </div>
+
+</div>
+
+<footer>
+  <p>
+    <span class="arc">ARC</span> &nbsp;—&nbsp;
+    <strong>Alan Robinson &amp; Allyson Short</strong>
+    &nbsp;&nbsp;·&nbsp;&nbsp;
+    Prepared for <strong>Chatham Savannah Authority for the Homeless</strong>
+    &nbsp;&nbsp;·&nbsp;&nbsp;
+    Compass Project · 2026
+  </p>
+</footer>
+
+</body>
+</html>
