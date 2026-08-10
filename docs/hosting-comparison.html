@@ -340,17 +340,17 @@
       <span class="rank r1">1</span>
       <span class="plat-name">Netlify</span>
     </div>
-    <div class="plat-tag">Free commercial hosting, serverless Twilio, native PWA, branch preview demos</div>
+    <div class="plat-tag">Serverless Twilio, native PWA, branch preview demos — Pro required (see cost note)</div>
     <div class="pills">
       <span class="pill pill-blue">Host</span>
-      <span class="pill pill-green">$0/mo viable</span>
+      <span class="pill pill-amber">$19/mo — Pro required</span>
       <span class="pill pill-gold">🏆 Recommended</span>
     </div>
   </div>
   <!-- Cost -->
   <div class="score-cell">
-    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span></div>
-    <div class="score-note">$0 commercial OK</div>
+    <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
+    <div class="score-note">$19/mo — Pro required</div>
   </div>
   <!-- Uptime -->
   <div class="score-cell">
@@ -398,15 +398,15 @@
     <div class="score-note">Native SW support</div>
   </div>
   <div class="chips-row">
-    <span class="ch ch-good">$0/mo — no commercial restriction</span>
+    <span class="ch ch-bad">Free tier won't work — blocks deploy from a GitHub Org's private repo</span>
     <span class="ch ch-good">Branch preview URLs = instant client demos</span>
     <span class="ch ch-good">Netlify Functions → Twilio (Node.js, no separate backend)</span>
     <span class="ch ch-good">Native PWA + service worker tooling</span>
     <span class="ch ch-good">Auto HTTPS, audit logs, WAF on Pro</span>
-    <span class="ch ch-ok">100GB/mo bandwidth on free (plenty for CSAH scale)</span>
+    <span class="ch ch-ok">1TB/mo bandwidth on Pro (plenty for CSAH scale)</span>
     <span class="ch ch-ok">No contractual SLA below Enterprise</span>
   </div>
-  <div class="cost-row"><strong>~$0/mo</strong> at CSAH scale. Pro is $19/mo flat for unlimited members if needed. Custom domain free. Free SSL auto-provisioned.</div>
+  <div class="cost-row"><strong>$19/mo (Pro), required from day one</strong> — not an optional upgrade. Netlify's free tier does not support deploying from a private repository owned by a GitHub Organization, which CSAH's app repo will be. Custom domain free. Free SSL auto-provisioned.</div>
 </div>
 
 <!-- #2 Cloudflare Pages -->
@@ -471,7 +471,7 @@
     <span class="ch ch-ok">Twilio via Workers works — V8 runtime, not full Node.js (use REST API directly, ~1hr extra setup)</span>
     <span class="ch ch-ok">Community support only on free; documentation excellent</span>
   </div>
-  <div class="cost-row"><strong>$0/mo</strong> with no bandwidth ceiling. If hosting on Cloudflare Pages, buy domain via <strong>Cloudflare Registrar</strong> — at-cost pricing, DNS auto-configured. Twilio note: Workers uses V8 isolates — call Twilio REST API directly rather than using the Node SDK. Not a blocker, just slightly more setup.</div>
+  <div class="cost-row"><strong>$0/mo</strong> with no bandwidth ceiling — <strong>not yet confirmed</strong> whether Cloudflare Pages' free tier has the same restriction Netlify's does on deploying from a GitHub Organization's private repo. If it doesn't, this becomes the clear cost winner outright, not just the runner-up. Worth checking before finalizing Netlify. If hosting on Cloudflare Pages, buy domain via <strong>Cloudflare Registrar</strong> — at-cost pricing, DNS auto-configured. Twilio note: Workers uses V8 isolates — call Twilio REST API directly rather than using the Node SDK. Not a blocker, just slightly more setup.</div>
 </div>
 
 <!-- #3 Vercel -->
@@ -481,7 +481,7 @@
       <span class="rank r3">3</span>
       <span class="plat-name">Vercel</span>
     </div>
-    <div class="plat-tag">Technically matches Netlify on every feature — only drops because free tier bars commercial use</div>
+    <div class="plat-tag">Technically matches Netlify on every feature — drops because its Pro pricing is per-seat, not flat</div>
     <div class="pills">
       <span class="pill pill-amber">No free commercial</span>
       <span class="pill pill-blue">Host</span>
@@ -535,7 +535,7 @@
     <span class="ch ch-bad">$20/user/mo Pro — per-seat pricing compounds with team growth</span>
     <span class="ch ch-ok">Custom domain requires Pro plan</span>
   </div>
-  <div class="cost-row"><strong>$20/mo minimum</strong> for any production commercial use. Identical to Netlify on every technical dimension — PWA, Twilio, demo URLs. Budget is the only reason it's #3.</div>
+  <div class="cost-row"><strong>$20/user/mo minimum.</strong> Identical to Netlify on every technical dimension — PWA, Twilio, demo URLs — and both now require a paid plan (Netlify for the private-org-repo issue, Vercel for its commercial-use restriction). The gap is pricing structure: Netlify Pro is $19/mo flat for the whole team; Vercel is $20/mo per seat and compounds as the team grows. That's why it's #3, not the presence of a paid plan itself.</div>
 </div>
 
 <!-- #4 Render -->
@@ -878,12 +878,12 @@
   <strong>Domain considerations:</strong> No urgent decisions required. Options: (1) <strong>Subdomain of homelessauthority.org</strong> — e.g. compass.homelessauthority.org — zero registrar cost, requires Aaron to add a DNS record. Best path if branding allows it. (2) <strong>New domain</strong> — .org is appropriate for a nonprofit. If hosting on Cloudflare Pages, buy via <strong>Cloudflare Registrar</strong> (at-cost, DNS auto-configured). Otherwise any major registrar works. SSL/HTTPS auto-provisioned at no cost on all platforms listed. Vercel requires Pro plan for custom domains on commercial projects — one more reason it sits at #3.
 </div>
 
-<!-- NETLIFY FREE TIER DEEP DIVE -->
+<!-- NETLIFY PRICING DEEP DIVE -->
 <div class="deep-dive">
-  <h2>Netlify Free Tier — Is It Actually Enough?</h2>
-  <p class="deep-intro">Netlify was picked as the winner on cost, but "free" is only the right call if the limits actually hold at CSAH's real usage. Here's the reasoning behind staying on free tier for now.</p>
+  <h2>Netlify Pricing — Why Pro, Not Free</h2>
+  <p class="deep-intro">Netlify was picked as the cost winner, but the original plan to start on the free tier doesn't hold up: <strong>Netlify's free tier does not support deploying from a private repository owned by a GitHub Organization</strong>, and CSAH's app repo will be exactly that (CSAH GitHub Org, private repo). That's not a usage-driven upgrade decision — it's a hard blocker from day one, regardless of how little bandwidth or how few builds CSAH actually uses. The usage numbers below are still worth keeping — they show Pro's headroom is nowhere close to being tested, so cost won't grow with usage even though the base $19/mo is now unavoidable.</p>
 
-  <h3>Bandwidth — 100GB/mo free</h3>
+  <h3>Bandwidth — 1TB/mo on Pro</h3>
   <p>We'd have to be serving enormous assets to approach that. A typical React PWA with a cached service worker is a 1–5MB initial load, then minimal traffic on repeat visits.</p>
 
   <h3>Map tile traffic</h3>
@@ -897,8 +897,8 @@
   </ul>
   <p>With lazy caching, repeat visits serve almost entirely from the service worker cache. First load per user per device is the only real Netlify bandwidth hit — and that's still just the app bundle, not map tiles.</p>
 
-  <h3>Build minutes — 300/mo free</h3>
-  <p>Each GitHub push triggers a build. At normal development velocity (say, 1–5 deploys a day) we'll burn maybe 150/mo. During heavy sprints you could get close. Not a blocker once live.</p>
+  <h3>Build minutes — 400/mo on Pro</h3>
+  <p>Each GitHub push triggers a build. At normal development velocity (say, 1–5 deploys a day) we'll burn maybe 150/mo. Comfortable headroom even during heavy sprints.</p>
 
   <h3>Estimated monthly traffic</h3>
   <table>
@@ -910,24 +910,24 @@
     <tr><td>Total estimate</td><td>~2GB/mo</td></tr>
   </table>
 
-  <h3>Support — community only on free</h3>
-  <p>Paid (<strong>$19/mo Pro</strong>) gets priority email support.</p>
+  <h3>Support — priority email included on Pro</h3>
+  <p>Free tier is community-only; Pro includes priority email support. Since Pro is required regardless, CSAH gets this by default rather than as something to weigh separately.</p>
 
-  <h3>SLA — none on free</h3>
-  <p>Netlify's measured uptime is excellent (&gt;99.9% per independent monitoring), but there's no contractual guarantee or service credits below Enterprise.</p>
+  <h3>SLA — still none below Enterprise</h3>
+  <p>Netlify's measured uptime is excellent (&gt;99.9% per independent monitoring), but there's no contractual guarantee or service credits on Pro — only on Enterprise. Being on Pro doesn't change this.</p>
 
-  <h3>What Pro ($19/mo) actually gets you</h3>
+  <h3>What $19/mo Pro gets CSAH, on top of solving the repo-access blocker</h3>
   <ul>
     <li>Priority email support</li>
-    <li>400 build minutes (vs. 300)</li>
-    <li>1TB bandwidth (vs. 100GB)</li>
+    <li>400 build minutes (vs. 300 on free)</li>
+    <li>1TB bandwidth (vs. 100GB on free)</li>
     <li>Password protection on deploy previews</li>
     <li>Larger serverless function limits</li>
   </ul>
 </div>
 
 <div class="rec-box pop">
-  <strong>Recommendation:</strong> Start on free. Set a Netlify usage alert (available in the dashboard) so CSAH gets an email if you approach limits. Revisit at launch with real traffic data. If support response time is something Jen or stakeholders would flag as a concern, $19/mo flat is an easy yes — it's cheaper than one hour of troubleshooting time. If/when this grows to the partner app, upgrade to Pro then.
+  <strong>Recommendation:</strong> Budget $19/mo for Netlify Pro from launch — it's not optional given the private GitHub Org repo, so there's no "start on free and revisit" path here. The usage headroom (1TB bandwidth, 400 build minutes) is generous relative to CSAH's actual traffic, so cost won't grow as the project scales; this is a flat, predictable line item. Worth confirming whether Cloudflare Pages has the same restriction — if it doesn't, it's worth a second look as a genuinely free alternative.
 </div>
 
 <footer>

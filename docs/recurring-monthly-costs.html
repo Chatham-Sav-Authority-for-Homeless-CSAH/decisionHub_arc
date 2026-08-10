@@ -213,9 +213,11 @@ Decision Hub
 <strong>What's assumed here</strong>
 <ul style="margin: 6px 0 0 1.1rem; padding: 0;">
 <li>All figures are annual.</li>
-<li>Three categories scale directly with kiosk count: Kiosk Hardware Monitoring, Screen Reader Tech, &amp; Cellular Connectivity.</li>
-<li>The remaining categories (SMS, Database, Domain, Maps) are shared platform costs that stay the same whether CSAH runs 1 kiosk or 3.</li>
-<li>Hosting should scale based on a larger threshold than 3 kiosks- re-eval once traffic is known and more kiosks are added. So cost assumes free hosting (Netlify free tier).</li>
+<li>Two categories scale directly with kiosk count: Kiosk Software License (HW Monitoring) &amp; Cellular Connectivity.</li>
+<li>The remaining categories (Screen Reader Tech, SMS, Database, Domain, Maps) are shared/fleet-wide costs that stay the same whether CSAH runs 1 kiosk or 3 — Screen Reader Tech (JAWS) in particular is a one-time license across the fleet, not a per-unit cost.</li>
+<li>Hosting assumes Netlify Pro ($19/mo = $228/yr), not the free tier
+  <div style="margin-left: 1.1rem; margin-top: 3px;">— Netlify's free tier does not support deploying from a private repository owned by a GitHub Organization, which is what CSAH's app repo will be. This isn't a later-stage upgrade; it's required from day one. Hosting cost should still scale based on a larger threshold than 3 kiosks — re-eval once traffic is known and more kiosks are added.</div>
+</li>
 <li>Assumes a subdomain of homelessauthority.org is used instead of purchasing a new domain name.</li>
 </ul>
 </div>
@@ -234,8 +236,8 @@ Decision Hub
 </thead>
 <tbody>
 <tr>
-<td>Kiosk HW Monitoring</td>
-<td>$250</td>
+<td>Kiosk Software License (HW Monitoring)</td>
+<td>$478</td>
 <td>$700</td>
 <td>$700</td>
 </tr>
@@ -264,10 +266,10 @@ Decision Hub
 <td>$300</td>
 </tr>
 <tr>
-<td>Hosting</td>
-<td>$0</td>
-<td>$0</td>
-<td>$0</td>
+<td>Hosting <span style="font-size:10px; color:#f2c030; font-weight:700;">(Pro req'd)</span></td>
+<td>$228</td>
+<td>$228</td>
+<td>$228</td>
 </tr>
 <tr>
 <td>Domain</td>
@@ -283,20 +285,20 @@ Decision Hub
 </tr>
 <tr class="total-row-1">
 <td>Annual Total (1 kiosk)</td>
-<td>$990</td>
-<td>$1,650</td>
-<td>$5,150</td>
+<td>$1,446</td>
+<td>$1,878</td>
+<td>$5,378</td>
 </tr>
 <tr class="total-row-3">
 <td>Total (3 kiosks)</td>
-<td>$1,970</td>
-<td>$3,950</td>
-<td>$14,450</td>
+<td>$2,882</td>
+<td>$4,178</td>
+<td>$7,678</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="scenario-note">SMS, Database, Hosting, Domain, and Map/Tiles are shared platform costs, so they're identical across all three scenarios — Kiosk HW Monitoring, Screen Reader Tech, and Cellular vary by which kiosk software/screen-reader path is chosen. Domain assumes a subdomain of homelessauthority.org is used instead of purchasing a new domain (see Hosting doc). "Annual Total (1 kiosk)" = Kiosk HW Monitoring + Screen Reader Tech + Cellular + all shared categories. "Total (3 kiosks)" = (Kiosk HW Monitoring + Screen Reader Tech + Cellular) &times; 3 + shared categories once.</div>
+<div class="scenario-note">SMS, Database, Hosting, Domain, and Map/Tiles are shared platform costs, so they're identical across all three scenarios. Screen Reader Tech (JAWS) is <strong>also shared, not per-kiosk</strong> — it's a single license across the fleet, so it's only counted once in the 3-kiosk total, not multiplied. Only Kiosk Software License (HW Monitoring) and Cellular scale directly with kiosk count. Domain assumes a subdomain of homelessauthority.org is used instead of purchasing a new domain (see Hosting doc). Hosting is Netlify <strong>Pro</strong> ($228/yr), not free tier — Netlify's free tier doesn't support deploying from a private repo owned by a GitHub Organization, which CSAH's will be. "Annual Total (1 kiosk)" = Kiosk Software License (HW Monitoring) + Screen Reader Tech + Cellular + all shared categories. "Total (3 kiosks)" = (Kiosk Software License (HW Monitoring) + Cellular) &times; 3 + Screen Reader Tech + all other shared categories, once.</div>
 </div>
 
 
@@ -304,15 +306,15 @@ Decision Hub
 <div class="chart-title">The math for all 3 kiosks — same formula, any scenario</div>
 <div class="math-row">
   <div class="m-label">Per-kiosk costs &times; 3 <span>Scales with kiosk count</span></div>
-  <div class="m-value">(HW + Screen Reader + Cellular) &times; 3</div>
+  <div class="m-value">(HW + Cellular) &times; 3</div>
 </div>
 <div class="math-row" style="border-bottom: none;">
-  <div class="m-label">Shared platform costs, once <span>Unchanged regardless of kiosk count</span></div>
-  <div class="m-value">SMS + DB + Hosting + Domain + Maps</div>
+  <div class="m-label">Shared platform costs, once <span>Unchanged regardless of kiosk count — Screen Reader (JAWS) is one license across the fleet, not per-unit</span></div>
+  <div class="m-value">Screen Reader + SMS + DB + Hosting + Domain + Maps</div>
 </div>
 <div class="math-total">
   <div class="m-label">Total, 3 kiosks</div>
-  <div class="m-value">[(HW + Screen Reader + Cellular) &times; 3] + SMS + DB + Hosting + Domain + Maps</div>
+  <div class="m-value">[(HW + Cellular) &times; 3] + Screen Reader + SMS + DB + Hosting + Domain + Maps</div>
 </div>
 </div>
 
@@ -323,16 +325,16 @@ Decision Hub
 </thead>
 <tbody>
 <tr>
-<td>Kiosk Hardware Monitoring</td>
+<td>Kiosk Software License (HW Monitoring)</td>
 <td><span class="cat-tag tag-perkiosk">Per Kiosk</span></td>
 <td class="num">$700 flat</td>
-<td class="note">Updated per-kiosk figure: <strong>$700/unit/yr.</strong> Scales directly with kiosk count — 3 kiosks = $2,100/yr. <em>Note: this differs from the $1,152/yr figure derived from MetroClick's Jul 23, 2026 formal quote (Yearly Data Fee $450 + Yearly SaaS fee $702 net) cited in the Kiosk Hardware comparison doc and ADR-011 — reconcile which figure is current before finalizing.</em></td>
+<td class="note">Updated per-kiosk figure: <strong>$700/unit/yr.</strong> Scales directly with kiosk count — 3 kiosks = $2,100/yr. Costs include: heartbeat, health alerts, remote reboot, automatic OS and software updates, remote troubleshooting of hardware.</td>
 </tr>
 <tr>
 <td>Cellular Connectivity</td>
 <td><span class="cat-tag tag-perkiosk">Per Kiosk</span></td>
 <td class="num">$450 flat</td>
-<td class="note">Updated per-kiosk figure: <strong>$450/unit/yr.</strong> Managed IoT SIM (multi-carrier, e.g. Hologram-style) — the recommended lean approach per the Kiosk Connectivity comparison doc. Independent of kiosk hardware vendor. Scales directly with kiosk count — 3 kiosks = $1,350/yr.</td>
+<td class="note">Updated per-kiosk figure: <strong>$450/unit/yr.</strong> Managed IoT SIM (multi-carrier, e.g. Hologram-style) — the recommended lean approach per the Kiosk Connectivity comparison doc. Independent of kiosk hardware vendor. Scales directly with kiosk count — 3 kiosks = $1,350/yr. Includes remote troubleshooting of modem.</td>
 </tr>
 <tr>
 <td>SMS (Twilio)</td>
@@ -349,8 +351,8 @@ Decision Hub
 <tr>
 <td>Hosting</td>
 <td><span class="cat-tag tag-shared">Shared</span></td>
-<td class="num">$0 – $228</td>
-<td class="note">Netlify free tier covers MVP traffic comfortably (see Hosting comparison doc). $228/yr ($19/mo) ceiling reflects Netlify Pro — priority support, 1TB bandwidth, 400 build minutes — as an upgrade path, not a default cost. One deployment serves all kiosks and the staff app.</td>
+<td class="num">$228 flat</td>
+<td class="note"><strong>Netlify Pro required, not free tier</strong> — Netlify's free tier does not support deploying from a private repository owned by a GitHub Organization, which CSAH's app repo will be. $228/yr ($19/mo) also happens to include priority support, 1TB bandwidth, and 400 build minutes, but those aren't why it's needed. One deployment serves all kiosks and the staff app. <em>Flagging: this Netlify policy hasn't been independently re-verified against their current docs — confirm before treating as final.</em></td>
 </tr>
 <tr>
 <td>Domain Name</td>

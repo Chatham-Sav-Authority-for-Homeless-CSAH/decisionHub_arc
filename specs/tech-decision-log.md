@@ -530,33 +530,34 @@ The residual risk is a temporarily awkward-looking button, caught on the next vi
 ## ADR-011 — Hosting Platform: Netlify
 
 **Date:** 2026-08-03
+**Amended:** 2026-08-05 — cost basis corrected (Pro required, not free tier; see Consequences/Risks)
 **Status:** Accepted
 
 **Context**
 ADR-006 established a Git-based CI/CD pipeline on "Netlify or Vercel" without picking between them, and ADR-007 established a single codebase serving both the kiosk (`/kiosk/*`) and partner app (`/app/*`) from one deployment. The project needed a production host for that deployment: one that serves a React PWA at low/no recurring cost for a nonprofit budget, supports serverless functions for Twilio SMS (ADR-002) without standing up a separate backend, and gives Alan/Jen a shareable preview URL for review before production release.
 
 **Decision**
-Use Netlify as the production hosting platform for both the kiosk and partner app surfaces.
+Use Netlify as the production hosting platform for both the kiosk and partner app surfaces, on the **Pro plan** ($19/mo).
 
 **Options Considered**
 Eight platforms were scored across cost, uptime, security, deploy ease, scale, support, monitoring, demo capability, Twilio integration, and PWA support — full breakdown in `docs/hosting-comparison.html`.
-1. **Netlify** (chosen) — free tier covers CSAH's expected traffic with no commercial-use restriction (~100GB/mo bandwidth), native PWA/service-worker support, Netlify Functions handle Twilio server-side with no separate backend, branch preview URLs for demos
-2. **Cloudflare Pages** — closest runner-up; unlimited free bandwidth beats Netlify outright, but Functions run on Workers' V8 isolates rather than full Node.js, so Twilio requires calling the REST API directly instead of using the Node SDK (~1hr extra setup, not a blocker)
-3. **Vercel** — technically at parity with Netlify on every other dimension, but its free tier prohibits commercial use (nonprofits included), forcing a $20/mo minimum
+1. **Netlify** (chosen) — native PWA/service-worker support, Netlify Functions handle Twilio server-side with no separate backend, branch preview URLs for demos. Originally scored on free-tier cost (~100GB/mo bandwidth, no commercial-use restriction); that basis was wrong — see Consequences.
+2. **Cloudflare Pages** — closest runner-up; unlimited free bandwidth beats Netlify outright, but Functions run on Workers' V8 isolates rather than full Node.js, so Twilio requires calling the REST API directly instead of using the Node SDK (~1hr extra setup, not a blocker). **Not yet confirmed whether its free tier has the same private-org-repo restriction Netlify's does** — if it doesn't, this option deserves a second look on cost grounds.
+3. **Vercel** — technically at parity with Netlify on every other dimension, but its free tier prohibits commercial use (nonprofits included), forcing a $20/user/mo minimum that compounds with team size (vs. Netlify Pro's flat $19/mo for the whole team)
 4. **Render** — kept as the fallback if two-way inbound Twilio SMS ever requires a persistent Node process instead of serverless functions ($7+/mo)
 5. **Railway, Replit** — ruled out (Railway: two platform-wide outages in the prior 8 months; Replit: highest cost of any option evaluated for the least capability)
 
 **Consequences**
-- $0/mo at current expected traffic; a Netlify usage alert will be set to flag approaching the free-tier bandwidth/build-minute limits before they're hit
-- $19/mo Pro is the defined upgrade path if priority support or headroom is needed later — not a default cost
+- **Corrected 2026-08-05:** Netlify's free tier does not support deploying from a private repository owned by a GitHub Organization, which CSAH's app repo will be (CSAH GitHub Org, private repo). This was missed in the original analysis, which assumed $0/mo was viable and Pro was an optional later upgrade. It isn't — **Pro ($19/mo) is required from day one**, independent of traffic or usage.
+- At Pro, usage headroom (1TB bandwidth, 400 build minutes) is well beyond CSAH's projected traffic — cost won't grow with usage, it's a flat $19/mo line item, not a bandwidth-triggered one
 - Resolves ADR-006's open Netlify-vs-Vercel question; the staging/production branch-deploy strategy in ADR-006 now has a confirmed platform
 - Netlify Functions is the execution environment for Twilio SMS (ADR-002) — full Node.js, no separate backend service required for the MVP
 - HTTPS is auto-provisioned, satisfying the hard HTTPS dependency for geolocation capture (ADR-009)
 - Same Netlify deployment serves both `/kiosk/*` and `/app/*` per the monorepo structure (ADR-007) — no per-surface hosting decision needed
 
 **Risks**
-- No contractual SLA or service credits below Netlify's Enterprise tier — accepted given Netlify's independently measured >99.9% uptime and the low cost of brief downtime relative to Enterprise pricing
-- Free-tier bandwidth (~100GB/mo) is finite; mitigated by the planned usage alert, with Pro ($19/mo) or a swap to Cloudflare Pages (unlimited bandwidth, same architecture) both available without a rebuild if traffic grows past projections
+- No contractual SLA or service credits below Netlify's Enterprise tier — accepted given Netlify's independently measured >99.9% uptime and the low cost of brief downtime relative to Enterprise pricing. Being on Pro doesn't change this.
+- **Cloudflare Pages may or may not have the same restriction** — not yet checked. If its free tier permits org-owned private repos, it becomes the clear cost winner outright rather than the runner-up, and this decision should be revisited.
 - If two-way inbound SMS becomes a hard requirement, Netlify Functions (serverless, stateless) are not the ideal execution model for that — Render is the identified fallback path, not yet built
 
 ---

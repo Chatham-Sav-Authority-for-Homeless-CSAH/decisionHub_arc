@@ -113,7 +113,7 @@ Alan is not a software developer. He is a visual/UI person. Decision documents a
 - Netlify publish directory is set to `docs/` — every push to main auto-deploys
 - Netlify URL: `csahcompassapp.netlify.app` — e.g. `csahcompassapp.netlify.app/kiosk_software_comparison.html`
 - A `docs/index.html` landing page listing all docs is the intended navigation surface for Alan
-- Repo is **private** on GitHub — Netlify free tier handles deployment from private repos
+- Repo is **private** on GitHub — Netlify free tier handles deployment from a private repo on a personal account. **Caveat:** Netlify's free tier does not support deploying from a private repo owned by a GitHub Organization — if this repo (or the future app repo) moves to a CSAH GitHub Org, this deployment would need Pro. See docs/hosting-comparison.html and ADR-011 (specs/tech-decision-log.md).
 
 ### Honesty & Confidence Levels
 - **Never hallucinate.** If the answer isn't known, say so directly.
@@ -401,7 +401,8 @@ Two distinct reporting surfaces, two different tools. The line between them: **P
 | 2026-06-24 | Scope narrowed to CSAH-only for MVP test run | Partner agencies (HOPE, CCPD, etc.) are a future expansion; CSAH must prove the tool works internally before expanding to other agencies |
 | 2026-06-24 | Survey tool added to app scope | Point-in-Time count survey embedded in CSAH staff app; administered during the annual 10-day count window; Kishia driving question scope |
 | 2026-06-24 | Greyhound station added as potential kiosk location | Jen pursuing city manager approval; high PR value as proof-of-concept launch site; Union Mission is Plan B |
-| 2026-08-03 | Netlify selected for hosting | Free tier covers CSAH's expected traffic with no commercial-use restriction; $19/mo Pro upgrade path if support/bandwidth needs grow; see docs/hosting-comparison.html for full vendor comparison |
+| 2026-08-03 | Netlify selected for hosting | Chosen on cost/feature fit; see docs/hosting-comparison.html for full vendor comparison |
+| 2026-08-05 | Corrected: Netlify Pro ($19/mo) required from day one, not an optional upgrade | Netlify's free tier doesn't support deploying from a private repo owned by a GitHub Org, which CSAH's will be — not usage-driven; see ADR-011, specs/tech-decision-log.md |
 | 2026-08-04 | Twilio selected for SMS | Only provider with a documented A2P 10DLC nonprofit registration path; campaign rejection/suspension is the dominant failure mode at this scale, not raw deliverability — see ADR-002, specs/tech-decision-log.md |
 
 ---

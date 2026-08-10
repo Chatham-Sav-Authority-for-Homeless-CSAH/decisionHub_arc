@@ -81,9 +81,9 @@
 
 | Layer | Choice | Status | Notes |
 |---|---|---|---|
-| App hosting | TBD | ❓ | Netlify, Vercel, Loveable, and others under consideration; low recurring cost is a hard constraint |
+| App hosting | Netlify (Pro) | ✅ | See ADR-011; Pro required from day one, not a growth-triggered upgrade — see note below |
 | Doc hosting (internal) | Netlify (docs/ folder) | ✅ | Auto-deploys from GitHub on push to main; serves decision docs to Alan |
-| Repo | GitHub (private) | ✅ | Netlify free tier handles private repo deploys |
+| Repo | GitHub (private) | ✅ | Netlify free tier handles a private repo on a personal account, but **not** one owned by a GitHub Organization — CSAH's app repo will be exactly that. Pro required as a result. See ADR-011. |
 
 ---
 
