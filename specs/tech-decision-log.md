@@ -703,4 +703,52 @@ Rotating or losing the VAPID keypair invalidates every subscription and forces a
 
 ---
 
+## ADR-015 — Linting & Formatting: ESLint + Prettier
+
+**Date:** 2026-08-11
+**Status:** Accepted
+
+**Context**
+The monorepo (ADR-007) is a React + TypeScript codebase with two UI surfaces built and maintained by a small team — ARC during the engagement, with contributors who are new to AI-assisted coding. Two things make code-quality tooling more than a style preference here:
+
+1. **Accessibility is a functional requirement, not a polish item.** The kiosk serves people experiencing homelessness at unattended outdoor stations, with screen narration in scope (ADR-010) and JAWS compatibility inherited from the existing Compass Project kiosks. Contrast, keyboard/touch navigation, and correct semantic markup are load-bearing for whether the kiosk works at all for some users.
+2. **The tooling has to be non-optional.** Guidance a contributor can skip doesn't protect the codebase. Enforcement runs in a pre-commit hook and in CI (ADR-006), so unformatted or lint-failing code can't reach `staging` or `main`.
+
+Two toolchains were evaluated: the conventional ESLint + Prettier pairing, and Biome as a single all-in-one replacement.
+
+**Decision**
+Use **ESLint for linting and Prettier for formatting**, with Prettier owning all stylistic concerns and ESLint deferring on them (`eslint-config-prettier` disabling conflicting rules). ESLint runs on flat config. Both are enforced by a pre-commit hook and re-checked in CI — CI is the authority, since hooks can be bypassed locally with `--no-verify`.
+
+Expected plugin set:
+- `typescript-eslint` — TypeScript rules
+- `eslint-plugin-react-hooks` — dependency-array and rules-of-hooks violations, which produce real runtime bugs rather than style noise
+- `eslint-plugin-jsx-a11y` — static accessibility rules on JSX
+
+**Options Considered**
+1. **ESLint + Prettier** (chosen) — two tools, two configs, the stack the large majority of production React codebases run. Every React-specific rule set exists as a plugin, and troubleshooting answers on the internet assume this setup.
+2. **Biome** — single Rust binary doing both jobs, one config file, dramatically faster, Prettier-compatible formatting. Rejected here, not on quality: its React-specific rule coverage — particularly the depth of the `jsx-a11y` rule set — does not fully match ESLint's. *(Rule-parity gap is as of mid-2026 and moves fast; verify against Biome's current rule list before treating this as settled if the decision is revisited.)*
+3. **No enforced tooling / editor defaults only** — ruled out. Nothing that can be skipped protects a codebase maintained by contributors at mixed experience levels.
+
+**Why not Biome, specifically**
+Biome's wins are speed and setup simplicity. At this codebase's size the speed difference is imperceptible — this isn't a million-line repo where a Rust linter's advantage is felt. So choosing Biome would mean trading away accessibility-rule maturity to solve a performance problem this project doesn't have. Two secondary factors point the same direction: this is ARC's first client engagement for CSAH, where the universally-documented choice lowers risk when something breaks; and contributors new to AI-assisted coding get unstuck faster on tooling with abundant answers everywhere.
+
+Biome is a defensible modern choice generally — this is a context-specific call, not a verdict on the tool.
+
+**Consequences**
+- Accessibility violations that are statically detectable in JSX (missing `alt`, non-interactive elements with click handlers, bad ARIA roles) fail the build rather than shipping to a kiosk
+- Two dependencies and two configs to keep in sync, versus one under Biome
+- Contributors hit a consistent, mechanically-applied format — no formatting debates in review, no diffs that are 90% whitespace
+- Enforcement lives with the CI/CD pipeline (ADR-006); a lint/format check becomes part of what gates a merge to `staging` and `main`
+
+**Risks**
+- `eslint-plugin-jsx-a11y` only catches *statically analyzable* JSX problems. It cannot verify contrast ratios, focus order, screen-reader behavior on real hardware, or touch-target sizing. It raises the floor; it does not substitute for manual accessibility testing on the kiosks, and shouldn't be reported to CSAH as if it does.
+- ESLint flat config is a departure from the older `.eslintrc` format most existing tutorials still use — a small one-time learning cost, and a source of confusion when copy-pasting older config snippets.
+- Lint rules that are noisy or wrong for this codebase create pressure to add `eslint-disable` comments; without periodic review, suppressions accumulate and the signal decays.
+
+**Open Questions**
+- Which pre-commit hook runner (Husky + lint-staged vs. a lighter alternative), and whether it runs on staged files only — decided alongside the repo scaffolding, not blocking this ADR.
+- Whether lint failures block a CI build outright or report as warnings during initial development, and when that tightens.
+
+---
+
 
