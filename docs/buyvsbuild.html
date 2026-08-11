@@ -478,7 +478,7 @@
 <body>
 
 <div style="background:#0e1428; padding:0.6rem 2rem;">
-  <a href="index.html" style="color:#9ca3af; font-size:0.8rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem; letter-spacing:0.04em;">
+  <a href="kiosk.html" style="color:#9ca3af; font-size:0.8rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem; letter-spacing:0.04em;">
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="#9ca3af" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
     Decision Hub
   </a>
@@ -487,6 +487,9 @@
 <header>
   <h1 style="display:inline-flex; align-items:center; gap:0.5rem;"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><circle cx="12" cy="12" r="10" stroke="#f2c030" stroke-width="1.6"/><path d="M12 4.5 L13.7 10.3 L19.5 12 L13.7 13.7 L12 19.5 L10.3 13.7 L4.5 12 L10.3 10.3 Z" fill="#f2c030"/></svg>CMS vs Custom: Approach &amp; Structure</h1>
   <p>CSAH Compass Project — Internal Decision Document &nbsp;·&nbsp; June 2026</p>
+  <div style="display:inline-flex; align-items:center; gap:0.5rem; margin-top:1rem; background:#16a34a; color:white; padding:0.35rem 0.85rem; border-radius:999px; font-size:0.78rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;">
+    ✓ Decision Approved — Pattern 1 &nbsp;·&nbsp; 7/15/26
+  </div>
 </header>
 
 <div class="container">
@@ -534,8 +537,8 @@
 
   <div class="intro" style="border-left-color: #6b7280; margin-bottom: 1.5rem;">
     <h2 style="color: #6b7280;">Two patterns in the industry</h2>
-    <p><strong>Pattern 1 — Custom web app:</strong> You build a web application (PWA or SPA) and the kiosk hardware runs it inside a locked-down browser. The kiosk software (Scalefusion, KioWare, etc.) is purely a container — it restricts the device to your URL and handles remote management. Your app makes API calls to the database exactly the same way it would on any browser.</p>
-    <p style="margin-top: 0.6rem;"><strong>Pattern 2 — Kiosk content platform:</strong> A platform like Intuiface provides a visual layout builder and template system. Non-developers design screens by configuring templates, and the platform can pull data from external APIs to populate them. The platform IS the app layer — you're not writing code, you're configuring a CMS-style tool.</p>
+    <p><strong>Pattern 1 — Custom web app:</strong> You build a web application (PWA or SPA) and the kiosk hardware runs it inside a locked-down browser. The kiosk MDM software (Scalefusion, KioWare, Hardware provider, etc.) is purely a container — it restricts the device to your URL and handles remote management. The app makes API calls to the database exactly the same way it would on any browser.</p>
+    <p style="margin-top: 0.6rem;"><strong>Pattern 2 — Kiosk content platform:</strong> A platform like Intuiface provides a visual layout builder and template system. Non-developers design screens by configuring templates, and the platform can pull data from external APIs to populate them. The platform IS the kiosk app layer — we're configuring a CMS-style tool. This platform would also need to support custom fucntionality for the Companion app needs or we could build this piece seperately.</p>
   </div>
 
   <!-- Factor cards -->
@@ -556,7 +559,7 @@
     </div>
     <div class="csah-context">
       <strong>CSAH Impact</strong>
-      The kiosk audience — people experiencing homelessness — may have limited technology experience, literacy challenges, or be in a stressed state. The UI needs to be purpose-designed for them: large text, minimal choices, clear hierarchy, culturally appropriate. A template builder doesn't give us that.
+      The kiosk audience — people experiencing homelessness — may have limited technology experience, literacy challenges, or be in a stressed state. The UI needs to be purpose-designed for them: large text, minimal choices, clear hierarchy, culturally appropriate. Template builders aren't designed for this target audience.
     </div>
     </details>
   </div>
@@ -613,7 +616,7 @@
     <div class="comparison-row">
       <div class="col col-p1">
         <div class="col-label">Pattern 1 — Custom Web App</div>
-        The kiosk surface can evolve as the project grows. Future integrations — a kiosk-to-app referral flow, a check-in system, a multilingual interface — are all buildable features in a custom codebase. You are not bounded by what a template platform supports.
+        The kiosk surface can evolve as the project grows. Future integrations — a kiosk-to-app referral flow, directions with wheelchair routes in mind — are all buildable features in a custom codebase. You are not bounded by what a template platform supports.
       </div>
       <div class="col col-p2">
         <div class="col-label">Pattern 2 — Kiosk Content Platform</div>
@@ -642,10 +645,6 @@
         Non-developers can configure and update content using the platform's visual tools. Lower initial build effort for a simple resource directory. The ceiling is low — the moment you need anything custom, you're back to developer time, except now it has to live outside the platform.
       </div>
     </div>
-    <div class="csah-context">
-      <strong>CSAH Impact</strong>
-      ARC (Allyson + Alan) is doing all technical work. The team already has the skills for Pattern 1. The initial complexity advantage of Pattern 2 disappears the moment the kiosk needs anything the template platform doesn't support — which will happen.
-    </div>
     </details>
   </div>
 
@@ -653,12 +652,12 @@
   <h2 class="section-title" style="margin-top: 2rem;">Summary</h2>
 
   <div class="summary-card summary-p1">
-    <h3>Pattern 1 — Custom Web App &nbsp;<span style="font-size:0.75rem; background:#dbeafe; color:#1d4ed8; padding:0.15rem 0.5rem; border-radius:999px; font-weight:700; letter-spacing:0.04em;">Leaning this way</span></h3>
+    <h3>Pattern 1 — Custom Web App &nbsp;<span style="font-size:0.75rem; background:#dbeafe; color:#1d4ed8; padding:0.15rem 0.5rem; border-radius:999px; font-weight:700; letter-spacing:0.04em;">Decided</span></h3>
     <ul>
       <li>Full UI control — designed specifically for the kiosk's audience and use case</li>
       <li>Resource directory is built once, shared across kiosk and partner app</li>
       <li>All session data stays in CSAH-controlled Supabase infrastructure</li>
-      <li>Same developer skillset as the partner app — no new tooling required</li>
+      <li>Need to build companion app side anyways, no software supports those needs, so economies of scale (2 for 1)</li>
       <li>Extensible: future kiosk features are buildable, not blocked by platform limitations</li>
     </ul>
   </div>
@@ -674,11 +673,6 @@
     </ul>
   </div>
 
-  <div class="recommendation">
-    <h2>Our Lean — Part 1</h2>
-    <p>Pattern 1. The kiosk content platform approach trades short-term convenience for long-term constraint — and creates a structural problem on data privacy that can't be fully resolved with a vendor whose revenue depends on session analytics. Pattern 1 is the right call for a project that needs a custom UX, shared code between two surfaces, and clean data ownership.</p>
-    <p><strong>The kiosk software (Scalefusion, KioWare, or equivalent) is a container, not a content platform.</strong> It locks the browser to the kiosk URL and handles remote device management. It does not touch the data layer, does not define the UI, and does not replace what we're building.</p>
-  </div>
 
 
   <!-- ── PART 2 ── -->
@@ -712,7 +706,7 @@
     </div>
 
     <div class="option-card lean">
-      <div class="option-label">Option B &nbsp;·&nbsp; Lean</div>
+      <div class="option-label">Option B &nbsp;·&nbsp; Decided</div>
       <h3>Single App, Two Entry Points</h3>
       <p style="font-size:0.82rem; color:#3b82f6; margin-bottom:0.25rem;">One codebase, kiosk and partner routes as separate UI shells</p>
       <div class="pros-label">Pros</div>
@@ -757,7 +751,7 @@
       One React app. Two route namespaces: <code style="background:#f3f4f6; padding:0.1rem 0.35rem; border-radius:4px; font-size:0.88rem;">/kiosk/*</code> and <code style="background:#f3f4f6; padding:0.1rem 0.35rem; border-radius:4px; font-size:0.88rem;">/app/*</code>. Each has its own layout shell — the kiosk shell is full-screen, large-type, touch-optimized, with no navigation to partner views. The partner shell has the full app chrome. Shared components — <code style="background:#f3f4f6; padding:0.1rem 0.35rem; border-radius:4px; font-size:0.88rem;">ResourceDirectory</code>, Supabase data hooks, alert subscription logic, type definitions — live in a shared folder and are imported by both shells.
     </p>
     <p style="font-size: 0.92rem; color: #374151; line-height: 1.7; margin-top: 0.75rem;">
-      The kiosk lockdown software points to <code style="background:#f3f4f6; padding:0.1rem 0.35rem; border-radius:4px; font-size:0.88rem;">yourapp.com/kiosk</code>. Route guards at the kiosk shell level ensure that even if a user somehow finds a link, they cannot navigate to <code style="background:#f3f4f6; padding:0.1rem 0.35rem; border-radius:4px; font-size:0.88rem;">/app</code>. Authentication middleware on the <code style="background:#f3f4f6; padding:0.1rem 0.35rem; border-radius:4px; font-size:0.88rem;">/app</code> routes provides a second layer of protection — the partner app requires login, which the kiosk never provides.
+      The kiosk lockdown software points to <code style="background:#f3f4f6; padding:0.1rem 0.35rem; border-radius:4px; font-size:0.88rem;">/kiosk/domainwhatever.com/</code>. Route guards at the kiosk shell level ensure that even if a user somehow finds a link, they cannot navigate to <code style="background:#f3f4f6; padding:0.1rem 0.35rem; border-radius:4px; font-size:0.88rem;">/app</code>. Authentication middleware on the <code style="background:#f3f4f6; padding:0.1rem 0.35rem; border-radius:4px; font-size:0.88rem;">/app</code> routes provides a second layer of protection — the partner app requires login, which the kiosk never provides.
     </p>
     <div class="csah-context" style="margin-top: 1rem;">
       <strong>CSAH Impact</strong>
@@ -765,16 +759,6 @@
     </div>
   </div>
 
-  <div class="recommendation">
-    <h2>Our Lean — Part 2</h2>
-    <p>Option B: single app, two entry points. The resource directory is the shared core of this project, and writing it once is clearly the right call. Option C (monorepo) is the more architecturally "correct" answer for a large team building long-term — it's the right answer for a different project. For a two-person team on a December deadline building two tightly related surfaces, the monorepo tooling adds friction without proportional benefit.</p>
-    <p><strong>Option A is the only option we'd rule out now.</strong> Two codebases with a shared core is a maintenance debt that compounds. We'd spend more time keeping them in sync than building features.</p>
-    <div class="open-note">
-      <strong>No conflict with ADR-006 (Staging Strategy)</strong>
-      <p>ADR-006 operates at the environment layer — which Supabase instance the build points at, controlled by environment variables set at deploy time. Option B operates at the routing layer — two URL namespaces within the same app. These are orthogonal. A single app with <code style="background:rgba(255,255,255,0.12); padding:0.1rem 0.3rem; border-radius:3px;">/kiosk/*</code> and <code style="background:rgba(255,255,255,0.12); padding:0.1rem 0.3rem; border-radius:3px;">/app/*</code> routes deploys to Netlify/Vercel as one unit, the same as any single-route app would. The environment variable swap is blind to how many routes exist.</p>
-      <p style="margin-top:0.6rem;"><strong style="color:#fde68a;">One practical config check:</strong> Netlify/Vercel SPA redirect rules (<code style="background:rgba(255,255,255,0.12); padding:0.1rem 0.3rem; border-radius:3px;">/* → index.html</code>) must be confirmed so that deep links to <code style="background:rgba(255,255,255,0.12); padding:0.1rem 0.3rem; border-radius:3px;">/kiosk</code> and <code style="background:rgba(255,255,255,0.12); padding:0.1rem 0.3rem; border-radius:3px;">/app</code> resolve correctly in both staging and production. On Netlify this is a one-line <code style="background:rgba(255,255,255,0.12); padding:0.1rem 0.3rem; border-radius:3px;">_redirects</code> file — low risk, just needs to be in place before testing.</p>
-    </div>
-  </div>
 
   <!-- Open Questions -->
   <div class="open-questions-list">

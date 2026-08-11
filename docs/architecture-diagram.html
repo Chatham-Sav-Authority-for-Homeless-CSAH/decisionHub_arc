@@ -144,9 +144,9 @@
     <div class="flow-row">
       <div class="node node-code"><div class="node-title">GitHub</div><div class="node-sub">Code storage</div></div>
       <div class="flow-col"><div class="arrow-right">&rarr;</div><div class="arrow-label">Deploy</div></div>
-      <div class="node node-host"><div class="node-title">Netlify</div><div class="node-sub">Live hosting</div></div>
+      <div class="node node-code"><div class="node-title">Netlify</div><div class="node-sub">Live hosting</div></div>
       <div class="flow-col"><div class="arrow-right">&larr;</div><div class="arrow-label">DNS</div></div>
-      <div class="node node-tbd"><div class="node-title">SiteGround</div><div class="node-sub">Domain Name</div></div>
+      <div class="node node-code"><div class="node-title">SiteGround</div><div class="node-sub">Domain Name</div></div>
     </div>
 
     <div class="arrow-down">&darr;</div>
@@ -155,9 +155,9 @@
     <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 0.75rem;">
       <div class="flow-row" style="justify-content: flex-start; flex-wrap: nowrap; gap: 0.75rem;">
         <div class="flow-col" style="gap: 0.6rem;">
-          <div class="node node-entry"><div class="node-title">MetroClick</div><div class="node-sub">MDM / kiosk lockdown</div></div>
-          <div class="node node-entry"><div class="node-title">MetroClick</div><div class="node-sub">Cellular connectivity</div></div>
-          <div class="node node-entry"><div class="node-title">Twilio</div><div class="node-sub">SMS provider</div></div>
+          <div class="node node-entry" style="border-color:#93c5fd; color:#1d4ed8;"><div class="node-title">MetroClick</div><div class="node-sub">MDM / kiosk lockdown</div></div>
+          <div class="node node-entry" style="border-color:#93c5fd; color:#1d4ed8;"><div class="node-title">MetroClick</div><div class="node-sub">Cellular connectivity</div></div>
+          <div class="node node-entry" style="border-color:#93c5fd; color:#1d4ed8;"><div class="node-title">Twilio</div><div class="node-sub">SMS provider</div></div>
         </div>
         <div class="arrow-right">&rarr;</div>
       </div>
@@ -179,7 +179,7 @@
         <div class="arrow-right">&larr;</div>
         <div class="flow-col" style="gap: 0.6rem;">
           <div class="node node-tbd"><div class="node-title">Analytics</div><div class="node-sub">Provider TBD</div></div>
-          <div class="node node-tbd"><div class="node-title">Maps Provider</div><div class="node-sub">Provider TBD</div></div>
+          <div class="node node-entry" style="border-color:#93c5fd; color:#1d4ed8;"><div class="node-title">Google Maps</div><div class="node-sub">Maps &amp; Directions</div></div>
         </div>
       </div>
     </div>
@@ -263,8 +263,8 @@
   </div>
 
   <div class="leg-card">
-    <div class="leg-title"><span class="leg-dot" style="background:#92400e;"></span>Maps Provider :: TBD <span class="tbd-tag">Open Items</span></div>
-    <p>Powers the maps embedded in the app — showing shelter, meal, and service locations, and giving directions. This is a separate service the app pulls map data from; it hasn't been decided yet whether that's a paid option like Google Maps or a free alternative like OpenStreetMap. See the <a href="recurring-monthly-costs.html">Monthly Costs doc</a> for the cost tradeoffs.</p>
+    <div class="leg-title"><span class="leg-dot" style="background:#7c3aed;"></span>Maps Provider :: Google Maps <span class="decided-tag">Decided</span></div>
+    <p>Powers the maps embedded in the app — showing shelter, meal, and service locations, and giving directions. This is a separate service the app pulls map data from. See the <a href="recurring-monthly-costs.html">Annual Costs doc</a> for the cost tradeoffs.</p>
   </div>
 
   <div class="intro" style="border-left-color: #9ca3af; margin-top: 2rem;">
@@ -272,7 +272,6 @@
     <ul class="opens-list" style="padding-left: 1.5rem;">
       <li>Analytics- tbd Plausable or other for telemetry vs ops.</li>
       <li>Domain/DNS — subdomain of homelessauthority.org vs. a new domain, still open per the <a href="hosting-comparison.html">Hosting doc</a></li>
-      <li>Maps Provider — three options under consideration: MapLibre + OpenStreetMap-derived routing, Google Maps Platform (JS API + Directions), or Mapbox GL JS + Mapbox Directions</li>
       <li>Translation Architecture- If added to mvp, leaning towards I18N self define to keep costs down and it's simple nature</li>
   </ul>
   </div>
