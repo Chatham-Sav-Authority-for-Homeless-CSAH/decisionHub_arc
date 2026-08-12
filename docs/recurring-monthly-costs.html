@@ -167,6 +167,29 @@
   .scenario-placeholder { color: #6b87ad; font-style: italic; }
   .scenario-note { font-size: 11.5px; color: #93afd4; margin-top: 0.9rem; line-height: 1.6; }
 
+  /* ── SELECTED SCENARIO COLUMN ── */
+  .scenario-table .sel {
+    background: rgba(242,192,48,0.10);
+    border-left: 2px solid #f2c030;
+    border-right: 2px solid #f2c030;
+  }
+  .scenario-table th.sel { border-top: 2px solid #f2c030; color: #f2c030; }
+  .scenario-table tr.total-row-1 td.sel { background: rgba(242,192,48,0.18); }
+  .scenario-table tr.total-row-3 td.sel { background: rgba(242,192,48,0.24); }
+  .scenario-table tbody tr:last-child td.sel { border-bottom: 2px solid #f2c030; }
+  .sel-badge {
+    display: inline-block; margin-top: 6px; padding: 2px 8px; border-radius: 999px;
+    background: #f2c030; color: #0e2a5c; font-size: 9px; font-weight: 800;
+    letter-spacing: 0.09em; text-transform: uppercase;
+  }
+  .sel-callout {
+    display: flex; align-items: flex-start; gap: 0.6rem;
+    background: rgba(242,192,48,0.12); border: 1px solid rgba(242,192,48,0.45);
+    border-radius: 8px; padding: 0.7rem 0.9rem; margin-top: 1.1rem;
+    font-size: 12.5px; line-height: 1.6; color: #fbe9bd;
+  }
+  .sel-callout strong { color: #f2c030; }
+
   /* ── TABLE ── */
   table { width: 100%; border-collapse: collapse; border: 1px solid #d3d1c7; border-radius: 12px; overflow: hidden; font-size: 13px; margin-bottom: 1.75rem; background: #fff; }
   th, td { border-bottom: 0.5px solid #d3d1c7; padding: 10px 14px; vertical-align: top; text-align: left; }
@@ -230,73 +253,77 @@ Decision Hub
 <tr>
 <th>Category</th>
 <th>All vendors<br/>independent</th>
-<th>Metro + build<br/>Screen Reader</th>
-<th>Metro + </th>
+<th class="sel">Metro + build<br/>Screen Reader<span class="sel-badge">Selected</span></th>
+<th>Metro + JAWS</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Kiosk Software License (HW Monitoring)</td>
 <td>$425</td>
-<td>$700</td>
+<td class="sel">$700</td>
 <td>$700</td>
 </tr>
 <tr>
 <td>Screen Reader Tech</td>
 <td>$0</td>
-<td>$0</td>
+<td class="sel">$0</td>
 <td>$3,600</td>
 </tr>
 <tr>
 <td>Cellular</td>
 <td>$240</td>
-<td>$450</td>
+<td class="sel">$450</td>
 <td>$450</td>
 </tr>
 <tr>
 <td>SMS</td>
 <td>$200</td>
-<td>$200</td>
+<td class="sel">$200</td>
 <td>$200</td>
 </tr>
 <tr>
 <td>Database</td>
 <td>$300</td>
-<td>$300</td>
+<td class="sel">$300</td>
 <td>$300</td>
 </tr>
 <tr>
 <td>Hosting <span style="font-size:10px; color:#f2c030; font-weight:700;">(Pro req'd)</span></td>
 <td>$240</td>
-<td>$240</td>
+<td class="sel">$240</td>
 <td>$240</td>
 </tr>
 <tr>
 <td>Domain</td>
 <td>$0</td>
-<td>$0</td>
+<td class="sel">$0</td>
 <td>$0</td>
 </tr>
 <tr>
 <td>Map/Tiles</td>
 <td>$0</td>
-<td>$0</td>
+<td class="sel">$0</td>
 <td>$0</td>
 </tr>
 <tr class="total-row-1">
 <td>Annual Total (1 kiosk)</td>
 <td>$1,405</td>
-<td>$1,890</td>
-<td>$5,390</td>
+<td class="sel">$1,890</td>
+<td>$5,490</td>
 </tr>
 <tr class="total-row-3">
 <td>Total (3 kiosks)</td>
 <td>$2,735</td>
-<td>$4,190</td>
+<td class="sel">$4,190</td>
 <td>$7,790</td>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="sel-callout">
+<span aria-hidden="true">★</span>
+<div><strong>Selected scenario: Metro + build Screen Reader.</strong> Metro handles kiosk hardware, lockdown, and connectivity as a bundle, and the screen reader is built into the app rather than licensed — avoiding the JAWS $3,600 + fees line entirely. Lands at <strong>$4,190/yr for 3 kiosks</strong>, roughly $1,450 more than fully unbundled vendors and about $3,600 less than the JAWS path.</div>
 </div>
 <div class="scenario-note"><strong>"All vendors independent" Kiosk Software License ($425/kiosk/yr)</strong> = KioWare Enterprise license ($195/device/yr) + KioCloud remote management ($230/device/yr) — see Kiosk Software comparison doc. SMS, Database, Hosting, Domain, and Map/Tiles are shared platform costs, so they're identical across all three scenarios. Screen Reader Tech (JAWS) is <strong>also shared, not per-kiosk</strong> — it's a single license across the fleet fpr every 3 year cadence, so it's only counted once in the 3-kiosk total, not multiplied. Only Kiosk Software License (HW Monitoring) and Cellular scale directly with kiosk count. Domain assumes a subdomain of homelessauthority.org is used instead of purchasing a new domain (see Hosting doc). Hosting is Netlify <strong>Pro</strong> ($240/yr), not free tier — Netlify's free tier doesn't support deploying from a private repo owned by a GitHub Organization, which CSAH's will be. "Annual Total (1 kiosk)" = Kiosk Software License (HW Monitoring) + Screen Reader Tech + Cellular + all shared categories. "Total (3 kiosks)" = (Kiosk Software License (HW Monitoring) + Cellular) &times; 3 + Screen Reader Tech + all other shared categories, once.</div>
 </div>
@@ -318,7 +345,7 @@ Decision Hub
 </div>
 </div>
 
-<div class="section-label">Line-Item Detail — Per Kiosk Basis</div>
+<div class="section-label">Line-Item Detail — Per Kiosk Basis <span style="color:#ba7517;">· reflects the selected scenario (Metro + build Screen Reader)</span></div>
 <table>
 <thead>
 <tr><th>Category</th><th>Scope</th><th>Annual Range</th><th>Basis</th></tr>
@@ -329,6 +356,12 @@ Decision Hub
 <td><span class="cat-tag tag-perkiosk">Per Kiosk</span></td>
 <td class="num">$700 flat</td>
 <td class="note">Updated per-kiosk figure: <strong>$700/unit/yr.</strong> Scales directly with kiosk count — 3 kiosks = $2,100/yr. Costs include: heartbeat, health alerts, remote reboot, automatic OS and software updates, remote troubleshooting of hardware.</td>
+</tr>
+<tr>
+<td>Screen Reader Tech</td>
+<td><span class="cat-tag tag-shared">Shared</span></td>
+<td class="num">$0 flat</td>
+<td class="note"><strong>$0 recurring under the selected scenario</strong> — the screen reader is built into the app by ARC rather than licensed, using the browser's built-in Web Speech API. There is no per-device or per-year license to renew, and no vendor to depend on for accessibility.<br/><br/><strong>The alternative is JAWS — is the $3,600/yr line in the third scenario column.</strong> That's a fleet-wide license, not per-kiosk, and carries additional implementation fees on top that were quoted at over $6K. License cost ever 3 years would be an additional $3,600. <em>Flagging: the $3,600 figure is a planning estimate carried over from earlier budgeting — it is not tied to a Freedom Scientific quote and the implementation fees are unquantified. Get a written quote before treating that scenario's total as real.</em><br/><br/><strong>The real cost here is build effort, not recurring spend.</strong> Choosing to build shifts the expense into the development Phase — and screen-reader behavior on real hardware can't be verified by automated tooling, so manual accessibility testing on the kiosks is required either way. Paid for as part of contract consulting fees.</td>
 </tr>
 <tr>
 <td>Cellular Connectivity</td>
