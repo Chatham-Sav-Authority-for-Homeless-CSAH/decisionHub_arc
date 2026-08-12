@@ -343,14 +343,14 @@
     <div class="plat-tag">Serverless Twilio, native PWA, branch preview demos — Pro required (see cost note)</div>
     <div class="pills">
       <span class="pill pill-blue">Host</span>
-      <span class="pill pill-amber">$19/mo — Pro required</span>
+      <span class="pill pill-amber">$20/mo — Pro required</span>
       <span class="pill pill-gold">🏆 Recommended</span>
     </div>
   </div>
   <!-- Cost -->
   <div class="score-cell">
     <div class="dots-row"><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-good"></span><span class="dot dot-na"></span></div>
-    <div class="score-note">$19/mo — Pro required</div>
+    <div class="score-note">$20/mo — Pro required</div>
   </div>
   <!-- Uptime -->
   <div class="score-cell">
@@ -406,7 +406,7 @@
     <span class="ch ch-ok">1TB/mo bandwidth on Pro (plenty for CSAH scale)</span>
     <span class="ch ch-ok">No contractual SLA below Enterprise</span>
   </div>
-  <div class="cost-row"><strong>$19/mo (Pro), required from day one</strong> — not an optional upgrade. Netlify's free tier does not support deploying from a private repository owned by a GitHub Organization, which CSAH's app repo will be. Custom domain free. Free SSL auto-provisioned.</div>
+  <div class="cost-row"><strong>$20/mo ($240/yr) (Pro), required from day one</strong> — not an optional upgrade. Netlify's free tier does not support deploying from a private repository owned by a GitHub Organization, which CSAH's app repo will be. Custom domain free. Free SSL auto-provisioned.</div>
 </div>
 
 <!-- #2 Cloudflare Pages -->
@@ -535,7 +535,7 @@
     <span class="ch ch-bad">$20/user/mo Pro — per-seat pricing compounds with team growth</span>
     <span class="ch ch-ok">Custom domain requires Pro plan</span>
   </div>
-  <div class="cost-row"><strong>$20/user/mo minimum.</strong> Identical to Netlify on every technical dimension — PWA, Twilio, demo URLs — and both now require a paid plan (Netlify for the private-org-repo issue, Vercel for its commercial-use restriction). The gap is pricing structure: Netlify Pro is $19/mo flat for the whole team; Vercel is $20/mo per seat and compounds as the team grows. That's why it's #3, not the presence of a paid plan itself.</div>
+  <div class="cost-row"><strong>$20/user/mo minimum.</strong> Identical to Netlify on every technical dimension — PWA, Twilio, demo URLs — and both now require a paid plan (Netlify for the private-org-repo issue, Vercel for its commercial-use restriction). The gap is pricing structure: Netlify Pro is $20/mo flat for the whole team; Vercel is $20/mo per seat and compounds as the team grows. That's why it's #3, not the presence of a paid plan itself.</div>
 </div>
 
 <!-- #4 Render -->
@@ -881,7 +881,7 @@
 <!-- NETLIFY PRICING DEEP DIVE -->
 <div class="deep-dive">
   <h2>Netlify Pricing — Why Pro, Not Free</h2>
-  <p class="deep-intro">Netlify was picked as the cost winner, but the original plan to start on the free tier doesn't hold up: <strong>Netlify's free tier does not support deploying from a private repository owned by a GitHub Organization</strong>, and CSAH's app repo will be exactly that (CSAH GitHub Org, private repo). That's not a usage-driven upgrade decision — it's a hard blocker from day one, regardless of how little bandwidth or how few builds CSAH actually uses. The usage numbers below are still worth keeping — they show Pro's headroom is nowhere close to being tested, so cost won't grow with usage even though the base $19/mo is now unavoidable.</p>
+  <p class="deep-intro">Netlify was picked as the cost winner, but the original plan to start on the free tier doesn't hold up: <strong>Netlify's free tier does not support deploying from a private repository owned by a GitHub Organization</strong>, and CSAH's app repo will be exactly that (CSAH GitHub Org, private repo). That's not a usage-driven upgrade decision — it's a hard blocker from day one, regardless of how little bandwidth or how few builds CSAH actually uses. The usage numbers below are still worth keeping — they show Pro's headroom is nowhere close to being tested, so cost won't grow with usage even though the base $20/mo is now unavoidable.</p>
 
   <h3>Bandwidth — 1TB/mo on Pro</h3>
   <p>We'd have to be serving enormous assets to approach that. A typical React PWA with a cached service worker is a 1–5MB initial load, then minimal traffic on repeat visits.</p>
@@ -916,7 +916,7 @@
   <h3>SLA — still none below Enterprise</h3>
   <p>Netlify's measured uptime is excellent (&gt;99.9% per independent monitoring), but there's no contractual guarantee or service credits on Pro — only on Enterprise. Being on Pro doesn't change this.</p>
 
-  <h3>What $19/mo Pro gets CSAH, on top of solving the repo-access blocker</h3>
+  <h3>What $20/mo Pro gets CSAH, on top of solving the repo-access blocker</h3>
   <ul>
     <li>Priority email support</li>
     <li>400 build minutes (vs. 300 on free)</li>
@@ -927,7 +927,7 @@
 </div>
 
 <div class="rec-box pop">
-  <strong>Recommendation:</strong> Budget $19/mo for Netlify Pro from launch — it's not optional given the private GitHub Org repo, so there's no "start on free and revisit" path here. The usage headroom (1TB bandwidth, 400 build minutes) is generous relative to CSAH's actual traffic, so cost won't grow as the project scales; this is a flat, predictable line item. Worth confirming whether Cloudflare Pages has the same restriction — if it doesn't, it's worth a second look as a genuinely free alternative.
+  <strong>Recommendation:</strong> Budget $20/mo ($240/yr) for Netlify Pro from launch — it's not optional given the private GitHub Org repo, so there's no "start on free and revisit" path here. The usage headroom (1TB bandwidth, 400 build minutes) is generous relative to CSAH's actual traffic, so cost won't grow as the project scales; this is a flat, predictable line item. Worth confirming whether Cloudflare Pages has the same restriction — if it doesn't, it's worth a second look as a genuinely free alternative.
 </div>
 
 <footer>

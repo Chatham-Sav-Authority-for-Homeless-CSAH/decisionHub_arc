@@ -214,8 +214,8 @@ Decision Hub
 <ul style="margin: 6px 0 0 1.1rem; padding: 0;">
 <li>All figures are annual.</li>
 <li>Two categories scale directly with kiosk count: Kiosk Software License (HW Monitoring) &amp; Cellular Connectivity.</li>
-<li>The remaining categories (Screen Reader Tech, SMS, Database, Domain, Maps) are shared/fleet-wide costs that stay the same whether CSAH runs 1 kiosk or 3 — Screen Reader Tech (JAWS) in particular is a one-time license across the fleet, not a per-unit cost.</li>
-<li>Hosting assumes Netlify Pro ($19/mo = $228/yr), not the free tier
+<li>The remaining categories (Screen Reader Tech, SMS, Database, Domain, Maps) are shared/fleet-wide costs that stay the same whether CSAH runs 1 kiosk or 3 — Screen Reader Tech (JAWS) is a license across the fleet and also has additional implementation fees, not a per-unit cost.</li>
+<li>Hosting assumes Netlify Pro ($20/mo = $240/yr), not the free tier
   <div style="margin-left: 1.1rem; margin-top: 3px;">— Netlify's free tier does not support deploying from a private repository owned by a GitHub Organization, which is what CSAH's app repo will be. This isn't a later-stage upgrade; it's required from day one. Hosting cost should still scale based on a larger threshold than 3 kiosks — re-eval once traffic is known and more kiosks are added.</div>
 </li>
 <li>Assumes a subdomain of homelessauthority.org is used instead of purchasing a new domain name.</li>
@@ -231,7 +231,7 @@ Decision Hub
 <th>Category</th>
 <th>All vendors<br/>independent</th>
 <th>Metro + build<br/>Screen Reader</th>
-<th>Metro + JAWS</th>
+<th>Metro + </th>
 </tr>
 </thead>
 <tbody>
@@ -242,10 +242,10 @@ Decision Hub
 <td>$700</td>
 </tr>
 <tr>
-<td>Screen Reader Tech (JAWS)</td>
+<td>Screen Reader Tech</td>
 <td>$0</td>
 <td>$0</td>
-<td>$3,500</td>
+<td>$3,600</td>
 </tr>
 <tr>
 <td>Cellular</td>
@@ -267,9 +267,9 @@ Decision Hub
 </tr>
 <tr>
 <td>Hosting <span style="font-size:10px; color:#f2c030; font-weight:700;">(Pro req'd)</span></td>
-<td>$228</td>
-<td>$228</td>
-<td>$228</td>
+<td>$240</td>
+<td>$240</td>
+<td>$240</td>
 </tr>
 <tr>
 <td>Domain</td>
@@ -285,20 +285,20 @@ Decision Hub
 </tr>
 <tr class="total-row-1">
 <td>Annual Total (1 kiosk)</td>
-<td>$1,393</td>
-<td>$1,878</td>
-<td>$5,378</td>
+<td>$1,405</td>
+<td>$1,890</td>
+<td>$5,390</td>
 </tr>
 <tr class="total-row-3">
 <td>Total (3 kiosks)</td>
-<td>$2,723</td>
-<td>$4,178</td>
-<td>$7,678</td>
+<td>$2,735</td>
+<td>$4,190</td>
+<td>$7,790</td>
 </tr>
 </tbody>
 </table>
 </div>
-<div class="scenario-note"><strong>"All vendors independent" Kiosk Software License ($425/kiosk/yr)</strong> = KioWare Enterprise license ($195/device/yr) + KioCloud remote management ($230/device/yr) — see Kiosk Software comparison doc. SMS, Database, Hosting, Domain, and Map/Tiles are shared platform costs, so they're identical across all three scenarios. Screen Reader Tech (JAWS) is <strong>also shared, not per-kiosk</strong> — it's a single license across the fleet, so it's only counted once in the 3-kiosk total, not multiplied. Only Kiosk Software License (HW Monitoring) and Cellular scale directly with kiosk count. Domain assumes a subdomain of homelessauthority.org is used instead of purchasing a new domain (see Hosting doc). Hosting is Netlify <strong>Pro</strong> ($228/yr), not free tier — Netlify's free tier doesn't support deploying from a private repo owned by a GitHub Organization, which CSAH's will be. "Annual Total (1 kiosk)" = Kiosk Software License (HW Monitoring) + Screen Reader Tech + Cellular + all shared categories. "Total (3 kiosks)" = (Kiosk Software License (HW Monitoring) + Cellular) &times; 3 + Screen Reader Tech + all other shared categories, once.</div>
+<div class="scenario-note"><strong>"All vendors independent" Kiosk Software License ($425/kiosk/yr)</strong> = KioWare Enterprise license ($195/device/yr) + KioCloud remote management ($230/device/yr) — see Kiosk Software comparison doc. SMS, Database, Hosting, Domain, and Map/Tiles are shared platform costs, so they're identical across all three scenarios. Screen Reader Tech (JAWS) is <strong>also shared, not per-kiosk</strong> — it's a single license across the fleet fpr every 3 year cadence, so it's only counted once in the 3-kiosk total, not multiplied. Only Kiosk Software License (HW Monitoring) and Cellular scale directly with kiosk count. Domain assumes a subdomain of homelessauthority.org is used instead of purchasing a new domain (see Hosting doc). Hosting is Netlify <strong>Pro</strong> ($240/yr), not free tier — Netlify's free tier doesn't support deploying from a private repo owned by a GitHub Organization, which CSAH's will be. "Annual Total (1 kiosk)" = Kiosk Software License (HW Monitoring) + Screen Reader Tech + Cellular + all shared categories. "Total (3 kiosks)" = (Kiosk Software License (HW Monitoring) + Cellular) &times; 3 + Screen Reader Tech + all other shared categories, once.</div>
 </div>
 
 
@@ -351,8 +351,8 @@ Decision Hub
 <tr>
 <td>Hosting</td>
 <td><span class="cat-tag tag-shared">Shared</span></td>
-<td class="num">$228 flat</td>
-<td class="note"><strong>Netlify Pro required, not free tier</strong> — Netlify's free tier does not support deploying from a private repository owned by a GitHub Organization, which CSAH's app repo will be. $228/yr ($19/mo) also happens to include priority support, 1TB bandwidth, and 400 build minutes, but those aren't why it's needed. One deployment serves all kiosks and the staff app. <em>Flagging: this Netlify policy hasn't been independently re-verified against their current docs — confirm before treating as final.</em></td>
+<td class="num">$240 flat</td>
+<td class="note"><strong>Netlify Pro required, not free tier</strong> — Netlify's free tier does not support deploying from a private repository owned by a GitHub Organization, which CSAH's app repo will be. $240/yr ($20/mo) also happens to include priority support, 1TB bandwidth, and 400 build minutes, but those aren't why it's needed. One deployment serves all kiosks and the staff app. <em>Flagging: this Netlify policy hasn't been independently re-verified against their current docs — confirm before treating as final.</em></td>
 </tr>
 <tr>
 <td>Domain Name</td>
