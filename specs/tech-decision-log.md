@@ -531,25 +531,26 @@ The residual risk is a temporarily awkward-looking button, caught on the next vi
 
 **Date:** 2026-08-03
 **Amended:** 2026-08-05 — cost basis corrected (Pro required, not free tier; see Consequences/Risks)
+**Amended:** 2026-08-12 — Pro cost basis updated to $20/mo ($240/yr)
 **Status:** Accepted
 
 **Context**
 ADR-006 established a Git-based CI/CD pipeline on "Netlify or Vercel" without picking between them, and ADR-007 established a single codebase serving both the kiosk (`/kiosk/*`) and partner app (`/app/*`) from one deployment. The project needed a production host for that deployment: one that serves a React PWA at low/no recurring cost for a nonprofit budget, supports serverless functions for Twilio SMS (ADR-002) without standing up a separate backend, and gives Alan/Jen a shareable preview URL for review before production release.
 
 **Decision**
-Use Netlify as the production hosting platform for both the kiosk and partner app surfaces, on the **Pro plan** ($19/mo).
+Use Netlify as the production hosting platform for both the kiosk and partner app surfaces, on the **Pro plan** ($20/mo, $240/yr).
 
 **Options Considered**
 Eight platforms were scored across cost, uptime, security, deploy ease, scale, support, monitoring, demo capability, Twilio integration, and PWA support — full breakdown in `docs/hosting-comparison.html`.
 1. **Netlify** (chosen) — native PWA/service-worker support, Netlify Functions handle Twilio server-side with no separate backend, branch preview URLs for demos. Originally scored on free-tier cost (~100GB/mo bandwidth, no commercial-use restriction); that basis was wrong — see Consequences.
 2. **Cloudflare Pages** — closest runner-up; unlimited free bandwidth beats Netlify outright, but Functions run on Workers' V8 isolates rather than full Node.js, so Twilio requires calling the REST API directly instead of using the Node SDK (~1hr extra setup, not a blocker). **Not yet confirmed whether its free tier has the same private-org-repo restriction Netlify's does** — if it doesn't, this option deserves a second look on cost grounds.
-3. **Vercel** — technically at parity with Netlify on every other dimension, but its free tier prohibits commercial use (nonprofits included), forcing a $20/user/mo minimum that compounds with team size (vs. Netlify Pro's flat $19/mo for the whole team)
+3. **Vercel** — technically at parity with Netlify on every other dimension, but its free tier prohibits commercial use (nonprofits included), forcing a $20/user/mo minimum that compounds with team size (vs. Netlify Pro's flat $20/mo for the whole team)
 4. **Render** — kept as the fallback if two-way inbound Twilio SMS ever requires a persistent Node process instead of serverless functions ($7+/mo)
 5. **Railway, Replit** — ruled out (Railway: two platform-wide outages in the prior 8 months; Replit: highest cost of any option evaluated for the least capability)
 
 **Consequences**
-- **Corrected 2026-08-05:** Netlify's free tier does not support deploying from a private repository owned by a GitHub Organization, which CSAH's app repo will be (CSAH GitHub Org, private repo). This was missed in the original analysis, which assumed $0/mo was viable and Pro was an optional later upgrade. It isn't — **Pro ($19/mo) is required from day one**, independent of traffic or usage.
-- At Pro, usage headroom (1TB bandwidth, 400 build minutes) is well beyond CSAH's projected traffic — cost won't grow with usage, it's a flat $19/mo line item, not a bandwidth-triggered one
+- **Corrected 2026-08-05:** Netlify's free tier does not support deploying from a private repository owned by a GitHub Organization, which CSAH's app repo will be (CSAH GitHub Org, private repo). This was missed in the original analysis, which assumed $0/mo was viable and Pro was an optional later upgrade. It isn't — **Pro ($20/mo, $240/yr) is required from day one**, independent of traffic or usage.
+- At Pro, usage headroom (1TB bandwidth, 400 build minutes) is well beyond CSAH's projected traffic — cost won't grow with usage, it's a flat $20/mo ($240/yr) line item, not a bandwidth-triggered one
 - Resolves ADR-006's open Netlify-vs-Vercel question; the staging/production branch-deploy strategy in ADR-006 now has a confirmed platform
 - Netlify Functions is the execution environment for Twilio SMS (ADR-002) — full Node.js, no separate backend service required for the MVP
 - HTTPS is auto-provisioned, satisfying the hard HTTPS dependency for geolocation capture (ADR-009)
@@ -700,6 +701,54 @@ Rotating or losing the VAPID keypair invalidates every subscription and forces a
 - Resolves and replaces the earlier open item "Push notification provider: Expo Push vs FCM direct" (`open.md`) — that framing predates this analysis and doesn't reflect the options actually considered here.
 - Exact sequencing: which session addresses service worker / offline / PWA update strategy, and when, relative to when push work gets scheduled?
 - Recipient resolution logic (layer 5) — who receives a given alert — still needs to be specced out; this ADR fixes the delivery mechanism, not the routing rules.
+
+---
+
+## ADR-015 — Linting & Formatting: ESLint + Prettier
+
+**Date:** 2026-08-11
+**Status:** Accepted
+
+**Context**
+The monorepo (ADR-007) is a React + TypeScript codebase with two UI surfaces built and maintained by a small team — ARC during the engagement, with contributors who are new to AI-assisted coding. Two things make code-quality tooling more than a style preference here:
+
+1. **Accessibility is a functional requirement, not a polish item.** The kiosk serves people experiencing homelessness at unattended outdoor stations, with screen narration in scope (ADR-010) and JAWS compatibility inherited from the existing Compass Project kiosks. Contrast, keyboard/touch navigation, and correct semantic markup are load-bearing for whether the kiosk works at all for some users.
+2. **The tooling has to be non-optional.** Guidance a contributor can skip doesn't protect the codebase. Enforcement runs in a pre-commit hook and in CI (ADR-006), so unformatted or lint-failing code can't reach `staging` or `main`.
+
+Two toolchains were evaluated: the conventional ESLint + Prettier pairing, and Biome as a single all-in-one replacement.
+
+**Decision**
+Use **ESLint for linting and Prettier for formatting**, with Prettier owning all stylistic concerns and ESLint deferring on them (`eslint-config-prettier` disabling conflicting rules). ESLint runs on flat config. Both are enforced by a pre-commit hook and re-checked in CI — CI is the authority, since hooks can be bypassed locally with `--no-verify`.
+
+Expected plugin set:
+- `typescript-eslint` — TypeScript rules
+- `eslint-plugin-react-hooks` — dependency-array and rules-of-hooks violations, which produce real runtime bugs rather than style noise
+- `eslint-plugin-jsx-a11y` — static accessibility rules on JSX
+
+**Options Considered**
+1. **ESLint + Prettier** (chosen) — two tools, two configs, the stack the large majority of production React codebases run. Every React-specific rule set exists as a plugin, and troubleshooting answers on the internet assume this setup.
+2. **Biome** — single Rust binary doing both jobs, one config file, dramatically faster, Prettier-compatible formatting. Rejected here, not on quality: its React-specific rule coverage — particularly the depth of the `jsx-a11y` rule set — does not fully match ESLint's. *(Rule-parity gap is as of mid-2026 and moves fast; verify against Biome's current rule list before treating this as settled if the decision is revisited.)*
+3. **No enforced tooling / editor defaults only** — ruled out. Nothing that can be skipped protects a codebase maintained by contributors at mixed experience levels.
+
+**Why not Biome, specifically**
+Biome's wins are speed and setup simplicity. At this codebase's size the speed difference is imperceptible — this isn't a million-line repo where a Rust linter's advantage is felt. So choosing Biome would mean trading away accessibility-rule maturity to solve a performance problem this project doesn't have. Two secondary factors point the same direction: this is ARC's first client engagement for CSAH, where the universally-documented choice lowers risk when something breaks; and contributors new to AI-assisted coding get unstuck faster on tooling with abundant answers everywhere.
+
+Biome is a defensible modern choice generally — this is a context-specific call, not a verdict on the tool.
+
+**Consequences**
+- Accessibility violations that are statically detectable in JSX (missing `alt`, non-interactive elements with click handlers, bad ARIA roles) fail the build rather than shipping to a kiosk
+- Two dependencies and two configs to keep in sync, versus one under Biome
+- Contributors hit a consistent, mechanically-applied format — no formatting debates in review, no diffs that are 90% whitespace
+- Enforcement lives with the CI/CD pipeline (ADR-006); a lint/format check becomes part of what gates a merge to `staging` and `main`
+
+**Risks**
+- `eslint-plugin-jsx-a11y` only catches *statically analyzable* JSX problems. It cannot verify contrast ratios, focus order, screen-reader behavior on real hardware, or touch-target sizing. It raises the floor; it does not substitute for manual accessibility testing on the kiosks, and shouldn't be reported to CSAH as if it does.
+- ESLint flat config is a departure from the older `.eslintrc` format most existing tutorials still use — a small one-time learning cost, and a source of confusion when copy-pasting older config snippets.
+- Lint rules that are noisy or wrong for this codebase create pressure to add `eslint-disable` comments; without periodic review, suppressions accumulate and the signal decays.
+
+**Open Questions**
+- Which pre-commit hook runner (Husky + lint-staged vs. a lighter alternative), and whether it runs on staged files only — decided alongside the repo scaffolding, not blocking this ADR.
+- Whether lint failures block a CI build outright or report as warnings during initial development, and when that tightens.
 
 ---
 

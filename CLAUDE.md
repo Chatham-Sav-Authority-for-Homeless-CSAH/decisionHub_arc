@@ -402,7 +402,8 @@ Two distinct reporting surfaces, two different tools. The line between them: **P
 | 2026-06-24 | Survey tool added to app scope | Point-in-Time count survey embedded in CSAH staff app; administered during the annual 10-day count window; Kishia driving question scope |
 | 2026-06-24 | Greyhound station added as potential kiosk location | Jen pursuing city manager approval; high PR value as proof-of-concept launch site; Union Mission is Plan B |
 | 2026-08-03 | Netlify selected for hosting | Chosen on cost/feature fit; see docs/hosting-comparison.html for full vendor comparison |
-| 2026-08-05 | Corrected: Netlify Pro ($19/mo) required from day one, not an optional upgrade | Netlify's free tier doesn't support deploying from a private repo owned by a GitHub Org, which CSAH's will be — not usage-driven; see ADR-011, specs/tech-decision-log.md |
+| 2026-08-05 | Corrected: Netlify Pro ($20/mo = $240/yr) required from day one, not an optional upgrade | Netlify's free tier doesn't support deploying from a private repo owned by a GitHub Org, which CSAH's will be — not usage-driven; see ADR-011, specs/tech-decision-log.md |
+| 2026-08-11 | ESLint + Prettier for linting/formatting (not Biome) | Accessibility is a functional requirement on the kiosk and ESLint's jsx-a11y/react-hooks plugin ecosystem is deeper than Biome's; Biome's speed advantage is imperceptible at this codebase size. Enforced via pre-commit hook + CI — see ADR-015, specs/tech-decision-log.md |
 | 2026-08-04 | Twilio selected for SMS | Only provider with a documented A2P 10DLC nonprofit registration path; campaign rejection/suspension is the dominant failure mode at this scale, not raw deliverability — see ADR-002, specs/tech-decision-log.md |
 
 ---
