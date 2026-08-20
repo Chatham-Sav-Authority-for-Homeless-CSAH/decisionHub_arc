@@ -358,13 +358,14 @@
       font-size: 0.65rem;
       font-weight: 700;
       color: #888780;
+      transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .phase-step.active .phase-circle {
-      background: white;
-      border-color: #1a4d8f;
-      color: #1a4d8f;
-      box-shadow: 0 0 0 3px rgba(26, 77, 143, 0.12);
+      background: #f2c030;
+      border-color: #e5b420;
+      color: #1a1a18;
+      box-shadow: 0 0 0 4px rgba(242, 192, 48, 0.28);
     }
 
     .phase-name {
@@ -376,15 +377,15 @@
 
     .phase-step.active .phase-name {
       color: #1a1a18;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     /* ── PHASE BUBBLE ── */
     .phase-bubble {
       --bubble-left: 12.5%;
       position: relative;
-      background: #f0f4ff;
-      border: 1.5px solid #c7d2fe;
+      background: #fdf8e8;
+      border: 1.5px solid #e8c96b;
       border-radius: 12px;
       padding: 1rem 1.25rem;
       margin-top: 1.5rem;
@@ -398,7 +399,7 @@
       transform: translateX(-50%);
       border-left: 10px solid transparent;
       border-right: 10px solid transparent;
-      border-bottom: 10px solid #c7d2fe;
+      border-bottom: 10px solid #e8c96b;
       transition: left 0.25s ease;
     }
 
@@ -410,7 +411,7 @@
       transform: translateX(-50%);
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
-      border-bottom: 8px solid #f0f4ff;
+      border-bottom: 8px solid #fdf8e8;
       transition: left 0.25s ease;
     }
 
@@ -437,7 +438,7 @@
       content: "·";
       position: absolute;
       left: 0;
-      color: #1a4d8f;
+      color: #b8890c;
       font-weight: 700;
     }
 
@@ -655,7 +656,7 @@
     <div class="phase-card">
       <div class="section-label">Project Phase</div>
       <div class="phase-track">
-        <div class="phase-step active">
+        <div class="phase-step">
           <div class="phase-circle">1</div>
           <div class="phase-name">Discovery &amp;<br>Strategy</div>
         </div>
@@ -807,11 +808,14 @@
     if (!sessionStorage.getItem('authed')) input.focus();
 
     // Phase bubble interaction
+    // Which phase the project is currently in (1-4). Change this as the project advances.
+    const CURRENT_PHASE = 2;
+
     const phaseBullets = [
-      ['Partner engagement kickoff. Meet and begin creating excitement', 'User story creation', 'Requirements gathering >> map to features >> lock scope', 'Evaluate UX designs', 'Finalize timelines'],
-      ['TBD', 'TBD', 'TBD', 'TBD', 'TBD'],
-      ['TBD', 'TBD', 'TBD', 'TBD', 'TBD'],
-      ['TBD', 'TBD', 'TBD', 'TBD', 'TBD'],
+      ['Understand how CSAH operates day to day outreach','Requirements gathering >> map to features >> lock scope', 'User story creation', 'Evaluate UX designs', 'Finalize timelines'],
+      ['Kiosks ordered','Kiosk sites finalized', 'UI / UX design finalized', 'Build Code Infastructure'],
+      ['Finalize app build', 'Reporting development', 'Kiosks installed', 'Staff testing (UAT)'],
+      ['Staff Training', 'Go Live + Ribbon Cutting', '3 kiosks live; additional in 2027', 'App, PIT roadmap + future kiosk rollout'],
     ];
     const tailPositions = ['12.5%', '37.5%', '62.5%', '87.5%'];
 
@@ -830,7 +834,7 @@
       step.addEventListener('click', () => activatePhase(i));
     });
 
-    activatePhase(0);
+    activatePhase(CURRENT_PHASE - 1);
   </script>
 </body>
 </html>

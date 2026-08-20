@@ -282,7 +282,7 @@
     /* Today marker sits above the bar */
     .today-marker {
       position: absolute;
-      left: 25%;
+      left: 36%;
       top: -26px;
       transform: translateX(-50%);
       display: flex;
@@ -307,7 +307,7 @@
 
     .today-line {
       position: absolute;
-      left: 25%;
+      left: 36%;
       top: 0;
       width: 2px;
       height: 52px;
@@ -360,7 +360,7 @@
 
     .phase-details {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: 2.5fr 3.5fr 2.5fr 2fr;
       gap: 0.85rem;
       margin-top: 1.5rem;
     }
@@ -671,12 +671,13 @@
       <span class="cap-pill pill-core">Core App Feature</span>
     </div>
 
+    <!-- POINT-IN-TIME COUNT SURVEY — hidden, not removed
     <div class="cap-card">
       <div class="cap-icon">📊</div>
       <h3>Point-in-Time Count Survey</h3>
       <p>An embedded survey tool for CSAH's annual 10-day Point-in-Time count — and for regular interval data collection throughout the year. Survey responses feed directly into CSAH's data layer, replacing paper forms with structured, reportable data.</p>
       <span class="cap-pill pill-yellow">Scope Under Review</span>
-    </div>
+    </div>-->
 
   </div>
 
@@ -705,10 +706,10 @@
       <div class="today-line"></div>
 
       <div class="phase-bar">
-        <div class="ph ph-1" style="flex: 2;">Discovery &amp;<br>Strategy</div>
-        <div class="ph ph-2" style="flex: 2;">Core App<br>Development</div>
-        <div class="ph ph-3" style="flex: 2;">Kiosk<br>Integration</div>
-        <div class="ph ph-4" style="flex: 1;">Pilot &amp;<br>Launch</div>
+        <div class="ph ph-1" style="flex: 3;">Discovery &amp;<br>Strategy</div>
+        <div class="ph ph-2" style="flex: 6;">Core App<br>Development</div>
+        <div class="ph ph-3" style="flex: 3;">Kiosk<br>Integration</div>
+        <div class="ph ph-4" style="flex: 2;">Pilot &amp;<br>Launch</div>
       </div>
     </div>
 
@@ -724,7 +725,7 @@
 
     <div class="phase-details">
       <div class="phase-detail pd-1">
-        <h4>Phase 1 · Jun – Mid Jul <span class="now-badge">Now</span></h4>
+        <h4>Phase 1 · Jun – Mid Jul</h4>
         <ul>
           <li>Kiosk vendor + site selection</li>
           <li>CSAH App + kiosk features defined</li>
@@ -733,13 +734,12 @@
         </ul>
       </div>
       <div class="phase-detail pd-2">
-        <h4>Phase 2 · Mid Jul–Sep</h4>
+        <h4>Phase 2 · Mid Jul–Oct <span class="now-badge">Now</span></h4>
         <ul>
           <li>Kiosk sites finalized</li>
-          <li>Kiosks ordered (Aug 1st)</li>
+          <li>Kiosks ordered- 1st week of August</li>
           <li>UI / UX design finalized</li>
           <li>App build begins</li>
-          <li>PIT build direction chosen</li>
         </ul>
       </div>
       <div class="phase-detail pd-3">
