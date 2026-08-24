@@ -256,7 +256,7 @@ table.doc-table.matrix td.no { color: #b0aea6; }
 
     <div class="subsection" style="margin-top:1.5rem;">
       <h3>Signing in</h3>
-      <p>Every worker signs in to their own account, and the role they hold determines what they can see and do. A session ends automatically after nine hours on duty, and a worker can sign out at any time.</p>
+      <p>Every worker signs in to their own account, and the role they hold determines what they can see and do. A worker will select on duty and a session ends automatically after nine hours on duty, and a worker can sign out at any time.</p>
       <p>How accounts are issued and the sign-in experience itself are defined in design.</p>
     </div>
   </div>
@@ -344,19 +344,12 @@ table.doc-table.matrix td.no { color: #b0aea6; }
 
     <!-- 5 -->
     <div class="req-category">
-      <div class="req-cat-head"><h3>Engagement Documentation</h3><div class="req-cat-count">12 Capabilities</div></div>
+      <div class="req-cat-head"><h3>Engagement Documentation</h3><div class="req-cat-count">5 Capabilities</div></div>
       <div class="req-list">
         <div class="req-item"><span class="req-id">5.1</span><div class="req-text">Every engagement is closed with a single recorded outcome.</div></div>
         <div class="req-item"><span class="req-id">5.2</span><div class="req-text">The outcome is chosen from a fixed list, each with a defined meaning.</div></div>
-        <div class="req-item"><span class="req-id">5.3</span><div class="req-text">An outcome of "Reached" leads to recording what was provided. All other outcomes either close the record or hold it open.</div></div>
-        <div class="req-item"><span class="req-id">5.4</span><div class="req-text">Outcomes representing an unsuccessful contact attempt keep the engagement open so the worker can try again. Every attempt is kept with its own timestamp, so the full history is available.</div></div>
-        <div class="req-item"><span class="req-id">5.5</span><div class="req-text">Goods provided are recorded from a checklist.</div></div>
-        <div class="req-item"><span class="req-id">5.6</span><div class="req-text">Services provided are recorded from a checklist, each with its own status.</div></div>
-        <div class="req-item"><span class="req-id">5.7</span><div class="req-text">For each service, the worker selects the specific provider or location. One destination is recorded per service type.</div></div>
-        <div class="req-item"><span class="req-id">5.8</span><div class="req-text">Goods and services are both optional — an engagement can close with neither recorded.</div></div>
-        <div class="req-item"><span class="req-id">5.9</span><div class="req-text">A referral records both the type of referral and the specific provider. A provider is required whenever a referral is recorded.</div></div>
+        <div class="req-item"><span class="req-id">5.4</span><div class="req-text">Outcomes representing an unsuccessful contact attempt keep the engagement open so the worker can try again. Every attempt is kept with its own timestamp, so the full history is available.</div></div>>
         <div class="req-item"><span class="req-id">5.10</span><div class="req-text">Everything recorded is tied to the person it was provided to, with the time and the worker who recorded it.</div></div>
-        <div class="req-item"><span class="req-id">5.11</span><div class="req-text">A referral to a resource such as shelter or housing carries forward to reconciliation, where the placement is either confirmed as verified or recorded as declined.</div></div>
         <div class="req-item"><span class="req-id">5.12</span><div class="req-text">A field encounter closes as "Reached" — the worker is present with the person.</div></div>
       </div>
     </div>
@@ -378,51 +371,6 @@ table.doc-table.matrix td.no { color: #b0aea6; }
           <tr><td class="term">Contact not possible</td><td>No contact provided, and outside working hours</td><td>Closed</td></tr>
           <tr><td class="term">No returned phone call</td><td>Multiple attempts by phone, no return by the individual; no more attempts</td><td>Closed</td></tr>
           <tr><td class="term">Cancelled</td><td>Called off before response</td><td>Cancelled</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="subsection" style="margin-top:2rem;">
-      <h3>Goods</h3>
-    </div>
-    <div class="scope-col in two-up" style="margin-bottom:1.25rem;">
-      <ul>
-        <li>Blanket</li>
-        <li>Clothing</li>
-        <li>Eyeglasses</li>
-        <li>Food</li>
-        <li>Hygiene kit</li>
-        <li>Medication</li>
-        <li>Shoes</li>
-        <li>Water</li>
-        <li>Other (free text)</li>
-      </ul>
-    </div>
-
-    <div class="subsection" style="margin-top:2rem;">
-      <h3>Services</h3>
-    </div>
-    <div class="doc-table-wrap">
-      <table class="doc-table">
-        <thead>
-          <tr><th>Service</th><th>Status recorded</th></tr>
-        </thead>
-        <tbody>
-          <tr><td class="term">Behavioral health or substance use</td><td>Referred</td></tr>
-          <tr><td class="term">Client declined services</td><td>—</td></tr>
-          <tr><td class="term">Contact information provided</td><td>—</td></tr>
-          <tr><td class="term">Coordinated Entry assessment</td><td>Completed</td></tr>
-          <tr><td class="term">Crisis intervention</td><td>Completed</td></tr>
-          <tr><td class="term">Emergency services (EMS)</td><td>Contacted</td></tr>
-          <tr><td class="term">Follow-up scheduled</td><td>—</td></tr>
-          <tr><td class="term">Housing navigation</td><td>Initiated</td></tr>
-          <tr><td class="term">Information provided</td><td>—</td></tr>
-          <tr><td class="term">Law enforcement</td><td>Requested</td></tr>
-          <tr><td class="term">Medical</td><td>Requested / Referred</td></tr>
-          <tr><td class="term">Shelter</td><td>Referred / Handed off to triage</td></tr>
-          <tr><td class="term">Transportation</td><td>Offered / Accepted / Declined</td></tr>
-          <tr><td class="term">Veteran services</td><td>Referred</td></tr>
-          <tr><td class="term">Other</td><td>Free text</td></tr>
         </tbody>
       </table>
     </div>
@@ -457,7 +405,7 @@ table.doc-table.matrix td.no { color: #b0aea6; }
         <div class="req-item"><span class="req-id">7.7</span><div class="req-text">From a resource, a worker can send map directions from the worker's current location to the person's phone - by text, or by a QR code the person scans.</div></div>
         <div class="req-item"><span class="req-id">7.8</span><div class="req-text">Texts are sent to a phone number the worker enters at the time.</div></div>
         <div class="req-item"><span class="req-id">7.9</span><div class="req-text">A worker can display a resource's phone number and dial it from their own phone.</div></div>
-        <div class="req-item"><span class="req-id">7.10</span><div class="req-text">The directory is available on its own and from inside an engagement, where it is used to record a referral.</div></div>
+        <div class="req-item"><span class="req-id">7.10</span><div class="req-text">The directory is available on its own and from inside an engagement..</div></div>
         <div class="req-item"><span class="req-id">7.11</span><div class="req-text">Resource entries display a photo of the building.</div></div>
       </div>
     </div>
@@ -505,7 +453,7 @@ table.doc-table.matrix td.no { color: #b0aea6; }
         <div class="req-item"><span class="req-id">10.7</span><div class="req-text">Supervisors and administrators see a live admin view of the queue across the team, showing status, owner, elapsed time, and origin, with items that have no phone number shown distinctly.</div></div>
         <div class="req-item"><span class="req-id">10.8</span><div class="req-text">Supervisors and administrators can claim, reassign, and reopen work.</div></div>
         <div class="req-item"><span class="req-id">10.9</span><div class="req-text">Supervisors and administrators can see who is on duty.</div></div>
-        <div class="req-item"><span class="req-id">10.10</span><div class="req-text">Supervisors and administrators can see open items with their age — engagements not yet closed, and referrals still open.</div></div>
+        <div class="req-item"><span class="req-id">10.10</span><div class="req-text">Supervisors and administrators can see open items with their age — engagements not yet closed.</div></div>
         <div class="req-item"><span class="req-id">10.11</span><div class="req-text">Access to each area is controlled by role.</div></div>
       </div>
     </div>
@@ -526,9 +474,9 @@ table.doc-table.matrix td.no { color: #b0aea6; }
         <div class="req-item"><span class="req-id">11.2</span><div class="req-text">Data is stored at daily granularity and rolled up daily, monthly, and yearly.</div></div>
         <div class="req-item"><span class="req-id">11.3</span><div class="req-text">An operations report shows per-worker quantities.</div></div>
         <div class="req-item"><span class="req-id">11.4</span><div class="req-text">Team totals add requests left unclaimed, requests submitted after hours, and requests that arrived with no one on duty.</div></div>
-        <div class="req-item"><span class="req-id">11.5</span><div class="req-text">An impact rollup shows engagements logged, goods by category, service referrals by provider, kiosk-to-engagement conversion, and a map of encounters shown as pins.</div></div>
+        <div class="req-item"><span class="req-id">11.5</span><div class="req-text">An impact rollup shows engagements logged, kiosk-to-engagement conversion, and a map of encounters shown as pins.</div></div>
         <div class="req-item"><span class="req-id">11.6</span><div class="req-text">Reports export to CSV and Excel.</div></div>
-        <div class="req-item"><span class="req-id">11.7</span><div class="req-text">Exports can be filtered by date range, location, service category, and worker.</div></div>
+        <div class="req-item"><span class="req-id">11.7</span><div class="req-text">Exports can be filtered by date range, location, and worker.</div></div>
         <div class="req-item"><span class="req-id">11.8</span><div class="req-text">Export field names align to HUD vocabulary.</div></div>
         <div class="req-item"><span class="req-id">11.9</span><div class="req-text">Reports are available to system administrators, program administrators, and supervisors.</div></div>
       </div>
@@ -538,7 +486,7 @@ table.doc-table.matrix td.no { color: #b0aea6; }
       <h3>Per-worker measures in the operations report</h3>
     </div>
     <div class="scope-col in" style="margin-bottom:2rem;">
-      <p class="inline-list">Engagements logged by origin (kiosk, phone, field) · requests claimed · goods by type · services by type · referrals by provider · handoffs to triage · counts by hour of day · claimed response time · claim to start of engagement · claimed to closed · closed to resolved</p>
+      <p class="inline-list">Engagements logged by origin (kiosk, phone, field) · requests claimed  · counts by hour of day · claimed response time · claim to start of engagement · claimed to closed · closed to resolved</p>
     </div>
 
     <!-- 12 -->
