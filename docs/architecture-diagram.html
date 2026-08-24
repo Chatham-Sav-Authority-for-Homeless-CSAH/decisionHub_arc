@@ -172,7 +172,7 @@
             <div class="arrow-down" style="font-size: 1.1rem;">&uarr;</div>
             <div class="node node-entry"><div class="node-title">Web Speech API</div><div class="node-sub">Browser narration — reads content aloud on the kiosk</div></div>
           </div>
-          <div class="node node-entry"><div class="node-title">CSAH App</div><div class="node-sub">For CSAH outreach staff &amp; case managers</div></div>
+          <div class="node node-entry"><div class="node-title">Companion App</div><div class="node-sub">For CSAH outreach staff &amp; case managers</div></div>
         </div>
       </div>
       <div class="flow-row" style="justify-content: flex-end; flex-wrap: nowrap; gap: 0.75rem;">
@@ -204,7 +204,7 @@
       <div class="node node-worker"><div class="node-title">CSAH Worker's Phone</div></div>
     </div>
     <div class="flow-row">
-      <div class="node node-entry"><div class="node-title">CSAH App</div></div>
+      <div class="node node-entry"><div class="node-title">Companion App</div></div>
       <div class="flow-col"><div class="arrow-right">&rarr;</div><div class="arrow-label">Push notification</div></div>
       <div class="node node-worker"><div class="node-title">CSAH Worker's Phone</div></div>
     </div>
@@ -229,7 +229,7 @@
 
   <div class="leg-card">
     <div class="leg-title"><span class="leg-dot" style="background:#0891b2;"></span>Frontend <span class="decided-tag">Decided</span></div>
-    <p>The framework used to build Kiosk Compass and the CSAH App is React — a widely used, well-supported toolkit for building fast, interactive web apps. Both surfaces are built with it, which is part of why they can share code and components.</p>
+    <p>The framework used to build Kiosk Compass and the Companion App is React — a widely used, well-supported toolkit for building fast, interactive web apps. Both surfaces are built with it, which is part of why they can share code and components.</p>
   </div>
 
   <div class="leg-card">
@@ -239,17 +239,17 @@
 
   <div class="leg-card">
     <div class="leg-title"><span class="leg-dot" style="background:#7c3aed;"></span>Cellular Connectivity :: MetroClick <span class="decided-tag">Decided</span></div>
-    <p>The kiosks are outdoor, standalone units — they need their own internet connection to reach Netlify and Supabase, so each one needs a cellular data plan (like a SIM card in a phone). MetroClick provides this as part of its kiosk hardware/software bundle. This is separate from the CSAH App, which runs on staff devices that already have their own connectivity. See the <a href="kiosk-connectivity.html">Kiosk Connectivity doc</a> for detail.</p>
+    <p>The kiosks are outdoor, standalone units — they need their own internet connection to reach Netlify and Supabase, so each one needs a cellular data plan (like a SIM card in a phone). MetroClick provides this as part of its kiosk hardware/software bundle. This is separate from the Companion App, which runs on staff devices that already have their own connectivity. See the <a href="kiosk-connectivity.html">Kiosk Connectivity doc</a> for detail.</p>
   </div>
 
   <div class="leg-card">
     <div class="leg-title"><span class="leg-dot" style="background:#7c3aed;"></span>Database:: Supabase <span class="decided-tag">Decided</span></div>
-    <p>The shared database behind both Kiosk Compass and the CSAH App. One source of data means a shelter's hours only ever need to be updated in one place, and both surfaces stay in sync automatically. It also handles staff login for the CSAH App — see Auth below.</p>
+    <p>The shared database behind both Kiosk Compass and the Companion App. One source of data means a shelter's hours only ever need to be updated in one place, and both surfaces stay in sync automatically. It also handles staff login for the Companion App — see Auth below.</p>
   </div>
 
   <div class="leg-card">
     <div class="leg-title"><span class="leg-dot" style="background:#7c3aed;"></span>Auth (Login) :: Supabase <span class="decided-tag">Decided</span></div>
-    <p>Staff login for the CSAH App is handled by Supabase Auth — it's built into the same Supabase system that runs the database, not a separate service. Kiosk Compass doesn't need this at all; it's public, no login required.</p>
+    <p>Staff login for the Companion App is handled by Supabase Auth — it's built into the same Supabase system that runs the database, not a separate service. Kiosk Compass doesn't need this at all; it's public, no login required.</p>
   </div>
 
   <div class="leg-card">
@@ -259,7 +259,7 @@
 
   <div class="leg-card">
     <div class="leg-title"><span class="leg-dot" style="background:#92400e;"></span>Push Notifications <span class="decided-tag">Decided</span></div>
-    <p>Inside the CSAH App, staff get real-time push notifications for crisis coordination and case updates — the same way a texting app pings you, but built into the CSAH App itself. Delivered via the Web Push API, implemented directly rather than through a managed vendor — a Supabase Edge Function sends the push, with subscriptions stored in Supabase's database. This requires a <strong>service worker</strong> (a small background script the browser runs to receive pushes even when the app isn't open).</p>
+    <p>Inside the Companion App, staff get real-time push notifications for crisis coordination and case updates — the same way a texting app pings you, but built into the Companion App itself. Delivered via the Web Push API, implemented directly rather than through a managed vendor — a Supabase Edge Function sends the push, with subscriptions stored in Supabase's database. This requires a <strong>service worker</strong> (a small background script the browser runs to receive pushes even when the app isn't open).</p>
   </div>
 
   <div class="leg-card">

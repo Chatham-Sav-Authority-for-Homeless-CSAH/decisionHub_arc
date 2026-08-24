@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Objectives, Users &amp; Requirements — Companion App MVP Package</title>
+<style>
+/* ── Shared styles — mirrored from kiosk-package.css ── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: #f5f5f3;
+  color: #1a1a18;
+  line-height: 1.65;
+}
+
+.back-bar { background: #0e1428; padding: 0.6rem 2rem; }
+.back-link { color:#9ca3af; font-size:0.8rem; font-weight:600; text-decoration:none; display:inline-flex; align-items:center; gap:0.4rem; letter-spacing:0.04em; }
+.back-link:hover { color: #d1d5db; }
+
+/* ── PACKAGE NAV ── */
+.pkg-nav-bar { background: #0e2a5c; padding: 0.75rem 2rem; overflow-x: auto; }
+.pkg-nav { display: flex; gap: 0.5rem; max-width: 1123px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+.pkg-nav a {
+  font-size: 0.78rem; font-weight: 600; color: #93afd4; text-decoration: none;
+  padding: 0.4rem 0.85rem; border-radius: 999px; white-space: nowrap;
+}
+.pkg-nav a:hover { color: white; }
+.pkg-nav a.current { background: #f2c030; color: #07142e; }
+
+header { background: #0e2a5c; color: white; border-top: 1px solid rgba(255,255,255,0.08); }
+.doc-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #f2c030; margin-bottom: 0.5rem; }
+header h1 { font-size: 1.9rem; font-weight: 700; margin-bottom: 0.5rem; }
+header p { color: #93afd4; font-size: 0.95rem; }
+
+.header-inner {
+  padding: 2.25rem 2rem 2rem;
+  display: flex; align-items: center; justify-content: flex-start; gap: 2.5rem; flex-wrap: wrap;
+}
+.header-text { flex: 1; min-width: 0; max-width: 50%; }
+
+.container { max-width: 1123px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+/* ── SECTION HEADER PATTERN ── */
+.doc-section { margin-bottom: 2.75rem; }
+.section-headline { font-size: 1.7rem; font-weight: 700; color: #0e2a5c; letter-spacing: -0.01em; margin: 0.4rem 0 0.9rem; }
+.doc-section h2 {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: #b45309; margin-bottom: 0.4rem;
+}
+.doc-section > p.lede { font-size: 0.95rem; color: #374151; margin-bottom: 1.25rem; }
+
+footer {
+  background: #0e2a5c; color: #6b89b0; text-align: center; padding: 2rem; font-size: 0.8rem;
+}
+footer strong { color: #93afd4; }
+footer .arc { color: #f2c030; font-weight: 700; }
+
+/* ── OBJECTIVES / USERS PAGE PATTERNS ── */
+.subsection { margin-bottom: 1.5rem; }
+.subsection:last-child { margin-bottom: 0; }
+.subsection h3 { font-size: 1.05rem; font-weight: 700; color: #0e2a5c; margin-bottom: 0.4rem; }
+.subsection .kicker { font-size: 0.95rem; font-weight: 600; color: #1a4d8f; margin-bottom: 0.5rem; }
+.subsection p { font-size: 0.9rem; color: #374151; margin-bottom: 0.75rem; }
+.subsection p:last-child { margin-bottom: 0; }
+
+.dataset-card {
+  background: #e9f1f8;
+  border: 1px solid #c9dcec;
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+}
+.dataset-card h3 { color: #123f63; }
+
+.callout-note {
+  background: #fbf0d6; border: 1px solid #ecd8a6; border-radius: 10px;
+  padding: 1rem 1.25rem; font-size: 0.85rem; color: #7c5712; margin-top: 1.25rem;
+}
+.callout-note p { font-size: 0.85rem; color: #7c5712; margin-bottom: 0.6rem; }
+.callout-note p:last-child { margin-bottom: 0; }
+
+.scope-col { border-radius: 14px; padding: 1.5rem 1.75rem; }
+.scope-col.in { background: #e0ebf5; border: 1px solid #cfe0ee; }
+.scope-col.roadmap { background: #fbf0d6; border: 1px solid #ecd8a6; }
+.scope-col.out { background: #e2e4e8; border: 1px solid #cdd1d7; }
+.scope-col h4 { font-size: 0.95rem; font-weight: 700; color: #17202e; margin-bottom: 0.9rem; }
+.scope-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+.scope-col li { font-size: 0.86rem; color: #374151; padding-left: 1.1rem; position: relative; }
+.scope-col li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 6px; height: 6px; border-radius: 50%; background: #d9a441; }
+.scope-col.two-up ul { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem 2rem; }
+@media (max-width: 640px) { .scope-col.two-up ul { grid-template-columns: 1fr; } }
+
+/* ── METRICS ── */
+.metric-grid.header-metrics {
+  flex: 0 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(110px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 0;
+  margin-left: 5rem;
+}
+.header-metrics .metric-box { background: white; }
+.header-metrics .metric-value { color: #0e2a5c; }
+.header-metrics .metric-label { color: #5f5e5a; }
+.metric-box { background: white; border: 1px solid #e8e6df; border-radius: 10px; padding: 1.1rem 1rem; text-align: center; }
+.metric-value { font-size: 1.4rem; font-weight: 700; color: #0e2a5c; }
+.metric-label { font-size: 0.7rem; color: #888780; margin-top: 0.2rem; }
+@media (max-width: 900px) {
+  .header-text { max-width: 100%; }
+  .metric-grid.header-metrics { margin-left: 0; }
+}
+
+/* ── REQUIREMENTS / CAPABILITY PATTERN ── */
+.req-category { margin-bottom: 2rem; background: white; border: 1px solid #e8e6df; border-radius: 12px; overflow: hidden; }
+.req-cat-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1rem 1.4rem; background: #f9f8f4; border-bottom: 1px solid #e8e6df;
+}
+.req-cat-head h3 { font-size: 1rem; color: #0e2a5c; }
+.req-cat-count { font-size: 0.72rem; font-weight: 700; color: #888780; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+
+.req-list { padding: 0.4rem 1.4rem; }
+.req-item {
+  display: flex; align-items: baseline; gap: 1rem;
+  padding: 0.65rem 0; border-bottom: 1px solid #f0efe9;
+}
+.req-item:last-child { border-bottom: none; }
+.req-text { font-size: 0.85rem; color: #374151; flex: 1; }
+
+.req-id {
+  flex-shrink: 0; width: 3.1rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.03em;
+  color: #0e2a5c; background: #e9f1f8; border: 1px solid #c9dcec;
+  border-radius: 999px; padding: 2px 0; text-align: center;
+}
+
+.boundary-note {
+  background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 12px; padding: 1.5rem 1.75rem; margin-top: 2.5rem;
+}
+.boundary-note h3 { font-size: 0.85rem; color: #3730a3; margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.boundary-note p { font-size: 0.85rem; color: #374151; margin-bottom: 0.75rem; }
+.boundary-note p:last-child { margin-bottom: 0; }
+
+/* ── TABLES ── */
+.doc-table-wrap { background: white; border: 1px solid #e8e6df; border-radius: 12px; overflow: hidden; margin-bottom: 1.25rem; }
+.doc-table-wrap.scroll { overflow-x: auto; }
+table.doc-table { width: 100%; border-collapse: collapse; }
+table.doc-table th {
+  text-align: left; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  color: #0e2a5c; background: #f9f8f4; padding: 0.75rem 1.4rem; border-bottom: 1px solid #e8e6df; white-space: nowrap;
+}
+table.doc-table td {
+  font-size: 0.85rem; color: #374151; padding: 0.7rem 1.4rem; border-bottom: 1px solid #f0efe9; vertical-align: top;
+}
+table.doc-table tr:last-child td { border-bottom: none; }
+table.doc-table td.rolename, table.doc-table td.term { font-weight: 700; color: #0e2a5c; white-space: nowrap; }
+table.doc-table.matrix th, table.doc-table.matrix td { text-align: center; padding: 0.6rem 0.9rem; }
+table.doc-table.matrix th:first-child, table.doc-table.matrix td:first-child { text-align: left; }
+table.doc-table.matrix td.yes { color: #15803d; font-weight: 700; }
+table.doc-table.matrix td.no { color: #b0aea6; }
+.table-note { font-size: 0.8rem; color: #5f5e5a; margin-bottom: 1.25rem; }
+
+.inline-list { font-size: 0.86rem; color: #374151; }
+</style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a class="back-link" href="/">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="#9ca3af" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Decision Hub
+  </a>
+</div>
+
+<div class="pkg-nav-bar">
+  <div class="pkg-nav">
+    <a class="current" href="app-objectives-users-requirements.html">Objectives and Requirements</a>
+    <a href="app-the-flow.html">The Flow</a>
+    <a href="app-the-record.html">The Record</a>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-text">
+      <div class="doc-eyebrow">Document 01 · Companion App MVP Signoff Package</div>
+      <h1 style="display:inline-flex; align-items:center; gap:0.5rem;">
+        <svg viewBox="0 0 24 24" width="28" fill="none" style="flex-shrink:0;">
+          <circle cx="12" cy="12" r="10" stroke="#f2c030" stroke-width="1.6"/>
+          <path d="M12 4.5 L13.7 10.3 L19.5 12 L13.7 13.7 L12 19.5 L10.3 13.7 L4.5 12 L10.3 10.3 Z" fill="#f2c030"/>
+        </svg>
+        Objectives, Users &amp; Requirements
+      </h1>
+      <p>What the kiosk companion app is for, how it holds up in the field and offline, the team it serves, what's in and out of scope, and the record it has to produce.</p>
+    </div>
+    <div class="metric-grid header-metrics">
+      <div class="metric-box"><div class="metric-value">120</div><div class="metric-label">Capabilities</div></div>
+      <div class="metric-box"><div class="metric-value">12</div><div class="metric-label">Functional areas</div></div>
+      <div class="metric-box"><div class="metric-value">6</div><div class="metric-label">Roles</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ══ EXECUTIVE SUMMARY ══ -->
+  <div class="doc-section">
+    <h2>Section 01</h2>
+    <div class="section-headline">Executive Summary</div>
+
+    <div class="subsection">
+      <p>Compass comprises two products built on one shared dataset. The kiosk network is the public-facing product; outdoor touchscreens where unsheltered people can find resources without a caseworker, a referral, or staff present. The Companion App is an outreach and support services team tool.</p>
+      <p>The Companion App is a mobile-first web app used by CSAH staff to receive, claim, and document engagements with unsheltered individuals, and to produce a defensible record that each engagement happened.</p>
+    </div>
+
+    <div class="subsection dataset-card">
+      <p>Work reaches an outreach worker three ways: a request submitted at a Compass kiosk, a phone call taken by staff, or a direct encounter in the field. All three converge on one engagement record carrying location, time, worker identity, and outcome.</p>
+    </div>
+
+    <div class="subsection" style="margin-top:1.5rem;">
+      <p>Today that coordination runs on phone calls, texts, and memory. The app supports that coordination at launch and can replace it over time.</p>
+      <p>ClientTrack remains the system of record for the client. The app is the system of record for the engagement. At launch the two are connected manually during reconciliation rather than by integration.</p>
+      <p>Resource content and alerts are managed in one place and published to both the kiosk and the app.</p>
+    </div>
+
+    <div class="callout-note">
+      <p><strong>Naming.</strong> "Companion App" is the descriptor in the executed Agreement and remains the contractual term. "Engage" is a proposed product name.</p>
+    </div>
+  </div>
+
+  <!-- ══ WHO USES IT ══ -->
+  <div class="doc-section">
+    <h2>Section 02</h2>
+    <div class="section-headline">Who uses it, and how they work</div>
+
+    <div class="subsection">
+      <h3>The Users</h3>
+      <p>The Companion App is used by CSAH's street outreach team - at launch, roughly 11-15 people covering outreach, transportation, case management, housing, and administration.</p>
+      <p>They are one team wearing different hats rather than five kinds of users with five sets of needs.</p>
+      <p>An outreach worker who holds a client's active HMIS enrollment is that client's case manager; it is a hat, not a separate account. What differs between them is what each is permitted to do, which is set out in the roles and permissions section.</p>
+      <p>Transport is the one genuinely distinct role. A transport worker does not claim help requests and does not run engagements. They claim transport tasks raised by others.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>How they work</h3>
+      <p>Outreach work happens in the field. A worker is walking, driving between locations, or standing with someone. Most engagements begin as a field encounter, a worker canvassing meets someone, which is the highest-volume path.</p>
+      <p>Work is shift-based. A worker turns duty on to begin receiving notifications, and is signed out automatically after nine hours.</p>
+      <p>Connectivity is not guaranteed in the field. The app works offline and syncs when a connection returns, and documentation is often completed after the encounter rather than during it.</p>
+      <p>Not all of the work is mobile. Reconciliation, resource content, alerts, team oversight, and reports may be done at a desk. The app runs in a browser - on a phone in the field, on a computer in the office - and the same record is worked from either.</p>
+      <p>These conditions are why the app is built mobile-first, why it works offline, and why the accessibility baseline is written for one-handed outdoor use.</p>
+    </div>
+  </div>
+
+  <!-- ══ SCOPE BOUNDARY ══ -->
+  <div class="doc-section">
+    <h2>Section 03</h2>
+    <div class="section-headline">Scope Boundary</div>
+
+    <div class="scope-col in">
+      <ul>
+        <li>The Companion App is used by CSAH staff. It is not a public or client-facing app.</li>
+        <li>ClientTrack remains the system of record for the client. The app is the system of record for the engagement. The two are connected manually during reconciliation, not by a live integration.</li>
+        <li>The app records what happens in the field. Ongoing case management stays in HMIS.</li>
+        <li>At launch the app serves CSAH's own outreach team as a single organization.</li>
+        <li>Access for partner agencies is a later expansion.</li>
+        <li>Transport is the only support service at launch.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══ ROLES & PERMISSIONS ══ -->
+  <div class="doc-section">
+    <h2>Section 04</h2>
+    <div class="section-headline">Roles &amp; Permissions</div>
+
+    <div class="subsection">
+      <h3>The six roles</h3>
+    </div>
+
+    <div class="doc-table-wrap">
+      <table class="doc-table">
+        <thead>
+          <tr><th>Role</th><th>What it does</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="rolename">Outreach Worker</td><td>Sees and claims work in the queue, and records engagements in the field.</td></tr>
+          <tr><td class="rolename">Outreach Supervisor</td><td>Everything an outreach worker does, plus reassigning and reopening work, seeing who is on duty, and access to reports. Receives escalations.</td></tr>
+          <tr><td class="rolename">Program Admin</td><td>Manages resource content and alerts, oversees the queue, and has access to reports.</td></tr>
+          <tr><td class="rolename">System Admin</td><td>Full access, including user management and configuration.</td></tr>
+          <tr><td class="rolename">Reconciliation</td><td>Adjusts the HMIS resolution status and sets placement verified. Modeled as a separate role so it can split off cleanly as CSAH grows.</td></tr>
+          <tr><td class="rolename">Transport / support-service</td><td>Claims transport tasks.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="table-note">*A case manager is an outreach worker who holds a client's active HMIS enrollment, not a separate app role.</p>
+
+    <div class="subsection">
+      <p>Ongoing case management stays in HMIS.</p>
+    </div>
+
+    <div class="subsection">
+      <h3>Access by role</h3>
+    </div>
+
+    <div class="doc-table-wrap scroll">
+      <table class="doc-table matrix">
+        <thead>
+          <tr><th>Area</th><th>Sys Ad</th><th>Prog Ad</th><th>Sup</th><th>Worker</th><th>Recon</th><th>Transport</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Users and configuration</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+          <tr><td>Content</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+          <tr><td>Alerts</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+          <tr><td>Queue — view and claim</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="yes">✓ (tasks)</td></tr>
+          <tr><td>Queue — reassign/reopen</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+          <tr><td>Reconciliation</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td><td class="no">—</td></tr>
+          <tr><td>Reports</td><td class="yes">✓</td><td class="yes">✓</td><td class="yes">✓</td><td class="no">—</td><td class="no">—</td><td class="no">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subsection" style="margin-top:1.5rem;">
+      <h3>Signing in</h3>
+      <p>Every worker signs in to their own account, and the role they hold determines what they can see and do. A session ends automatically after nine hours on duty, and a worker can sign out at any time.</p>
+      <p>How accounts are issued and the sign-in experience itself are defined in design.</p>
+    </div>
+  </div>
+
+  <!-- ══ FUNCTIONAL CAPABILITIES ══ -->
+  <div class="doc-section">
+    <h2>Section 05</h2>
+    <div class="section-headline">Functional Capabilities</div>
+    <p class="lede">Each capability is a requirement, written as something the system does. Its number is what CSAH approves and what the build is tracked against, so the agreed scope and the delivered product stay the same thing. Capabilities are grouped by area and numbered. Each number is the unit of approval and is carried into our build backlog.</p>
+
+    <!-- 1 -->
+    <div class="req-category">
+      <div class="req-cat-head"><h3>Help Requests &amp; Intake</h3><div class="req-cat-count">12 Capabilities</div></div>
+      <div class="req-list">
+        <div class="req-item"><span class="req-id">1.1</span><div class="req-text">A person can submit a help request at a Compass kiosk. The kiosk retains no information — the request is created directly in the shared database.</div></div>
+        <div class="req-item"><span class="req-id">1.2</span><div class="req-text">Requests are submitted for one of four needs: Caseworker, Get an ID, Transport, or General Inquiry.</div></div>
+        <div class="req-item"><span class="req-id">1.3</span><div class="req-text">The intake form captures name, alias, phone, date of birth, CSAH Client ID, a self-description, additional detail about the help needed, party size, and whether an animal is present. The CSAH Client ID is optional and entered by hand from the person's ID card; when provided, it supports looking the person up in HMIS.</div></div>
+        <div class="req-item"><span class="req-id">1.4</span><div class="req-text">Date of birth and either a name or an alias are required. A "prefers not to answer" option is available, and if a person declines all identifying information, a physical description becomes required.</div></div>
+        <div class="req-item"><span class="req-id">1.5</span><div class="req-text">Location is recorded with every request — the kiosk tags its own location automatically; phone intake takes a location as free text.</div></div>
+        <div class="req-item"><span class="req-id">1.6</span><div class="req-text">Each request records that consent was given and which version of the consent language was shown.</div></div>
+        <div class="req-item"><span class="req-id">1.7</span><div class="req-text">The confirmation screen sets expectations on the request and displays 911, 211, and 988.</div></div>
+        <div class="req-item"><span class="req-id">1.8</span><div class="req-text">The system limits repeat submissions to prevent misuse. Blocked attempts are counted; no record is created and no personal detail is stored.</div></div>
+        <div class="req-item"><span class="req-id">1.9</span><div class="req-text">Requests submitted outside working hours are accepted and held in the queue, to be worked first thing the following morning.</div></div>
+        <div class="req-item"><span class="req-id">1.10</span><div class="req-text">A worker taking a phone call can create a help request from the app using the same intake form, entering the location as free text.</div></div>
+        <div class="req-item"><span class="req-id">1.11</span><div class="req-text">Every request carries a Request ID, which is how the record is identified throughout the system.</div></div>
+        <div class="req-item"><span class="req-id">1.12</span><div class="req-text">Every request records where it came from — kiosk, phone call, or field encounter.</div></div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="req-category">
+      <div class="req-cat-head"><h3>Notification, Duty &amp; Escalation</h3><div class="req-cat-count">11 Capabilities</div></div>
+      <div class="req-list">
+        <div class="req-item"><span class="req-id">2.1</span><div class="req-text">When a request is created, on-duty workers receive an in-app notification.</div></div>
+        <div class="req-item"><span class="req-id">2.2</span><div class="req-text">Notifications carry no personal or identifying information — only the Request ID, request type, location, time, and a prompt to open the app.</div></div>
+        <div class="req-item"><span class="req-id">2.3</span><div class="req-text">Each request also sends a text notification to the supervisor or on-call lead, as a backup to the in-app notification.</div></div>
+        <div class="req-item"><span class="req-id">2.4</span><div class="req-text">Notifications are routed by role and reach only workers who are on duty.</div></div>
+        <div class="req-item"><span class="req-id">2.5</span><div class="req-text">A worker turns duty on to begin receiving notifications. Duty is off by default and is separate from logging in.</div></div>
+        <div class="req-item"><span class="req-id">2.6</span><div class="req-text">A worker is automatically signed out after nine hours on duty.</div></div>
+        <div class="req-item"><span class="req-id">2.7</span><div class="req-text">A supervisor can see who is on duty but cannot change another worker's duty status.</div></div>
+        <div class="req-item"><span class="req-id">2.8</span><div class="req-text">The queue is visible to a worker whenever they are logged in.</div></div>
+        <div class="req-item"><span class="req-id">2.9</span><div class="req-text">If a request goes unclaimed for 30 minutes while workers are on duty, the supervisor or on-call lead is notified.</div></div>
+        <div class="req-item"><span class="req-id">2.10</span><div class="req-text">If no worker is on duty when a request is submitted, the supervisor is texted immediately without waiting the 30 minutes.</div></div>
+        <div class="req-item"><span class="req-id">2.11</span><div class="req-text">Escalation timing is measured from the moment the record was created.</div></div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="req-category">
+      <div class="req-cat-head"><h3>The Queue &amp; Claiming</h3><div class="req-cat-count">12 Capabilities</div></div>
+      <div class="req-list">
+        <div class="req-item"><span class="req-id">3.1</span><div class="req-text">Work appears in one queue with three zones: unclaimed work available to anyone, work this worker has claimed or started, and work claimed by teammates.</div></div>
+        <div class="req-item"><span class="req-id">3.2</span><div class="req-text">The queue is sorted by age. Each row shows the type of request, where it came from, the location, how long it has been waiting, and who owns it. Requests carry no priority ranking; urgency is conveyed in the description of the need.</div></div>
+        <div class="req-item"><span class="req-id">3.3</span><div class="req-text">Any on-duty worker can claim an unclaimed request.</div></div>
+        <div class="req-item"><span class="req-id">3.4</span><div class="req-text">The Transport / support-service role can claim tasks only, not requests.</div></div>
+        <div class="req-item"><span class="req-id">3.5</span><div class="req-text">Claiming is instant — no form to complete and no HMIS step.</div></div>
+        <div class="req-item"><span class="req-id">3.6</span><div class="req-text">The first claim wins. A worker who taps a moment later is told the request has already been claimed and by whom, and the row moves to their team view.</div></div>
+        <div class="req-item"><span class="req-id">3.7</span><div class="req-text">A worker can release a claim. A reason is recorded, the request returns to the queue, and on-duty workers are notified again.</div></div>
+        <div class="req-item"><span class="req-id">3.8</span><div class="req-text">The worker who claims a request sees the full intake record. Teammates see only the type, location, elapsed time, and owner.</div></div>
+        <div class="req-item"><span class="req-id">3.9</span><div class="req-text">Every claim records the time and the worker's identity, and the full history of claims and releases is retained.</div></div>
+        <div class="req-item"><span class="req-id">3.10</span><div class="req-text">A worker creating a request from a phone call can take it themselves or send it to the team. A self-claimed request still appears in the queue, tagged with that worker's name.</div></div>
+        <div class="req-item"><span class="req-id">3.11</span><div class="req-text">Claiming a request from the queue requires a connection.</div></div>
+        <div class="req-item"><span class="req-id">3.12</span><div class="req-text">The home screen is role-aware: it shows the count of unclaimed requests and the worker's own open items, and for the Transport / support-service role it shows transport tasks in place of requests.</div></div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="req-category">
+      <div class="req-cat-head"><h3>Engagements</h3><div class="req-cat-count">12 Capabilities</div></div>
+      <div class="req-list">
+        <div class="req-item"><span class="req-id">4.1</span><div class="req-text">An engagement is a face-to-face encounter with one or more people, and is the record of what happened.</div></div>
+        <div class="req-item"><span class="req-id">4.2</span><div class="req-text">Starting an engagement records the time and the worker's identity.</div></div>
+        <div class="req-item"><span class="req-id">4.3</span><div class="req-text">Every engagement records the worker's location at the moment it starts.</div></div>
+        <div class="req-item"><span class="req-id">4.4</span><div class="req-text">Intake information from the request is carried into the engagement and shown to the worker.</div></div>
+        <div class="req-item"><span class="req-id">4.5</span><div class="req-text">Every engagement is typed. The type defaults to Initial contact and the worker can change it to Follow-up, Wellness Check, Coordinated Outreach, or Encampment visit.</div></div>
+        <div class="req-item"><span class="req-id">4.6</span><div class="req-text">The types available depend on where the work came from — an encampment visit cannot originate from a kiosk request.</div></div>
+        <div class="req-item"><span class="req-id">4.7</span><div class="req-text">Additional people can be added to an engagement. Each person added gets their own record attached to that engagement, and party size is captured.</div></div>
+        <div class="req-item"><span class="req-id">4.8</span><div class="req-text">One request produces at most one engagement; a single engagement can cover several people.</div></div>
+        <div class="req-item"><span class="req-id">4.9</span><div class="req-text">A worker in the field can start an engagement without a help request. The app records their location and identity and assigns the work to them; details are entered afterward.</div></div>
+        <div class="req-item"><span class="req-id">4.10</span><div class="req-text">A worker in the field can instead create a help request using the full intake form.</div></div>
+        <div class="req-item"><span class="req-id">4.11</span><div class="req-text">When a worker goes to meet someone from a kiosk or phone request and the person is not there, the engagement is still recorded — time, type, and the outcome "Not found."</div></div>
+        <div class="req-item"><span class="req-id">4.12</span><div class="req-text">A phone contact is recorded as a contact attempt on the way to an engagement, not as the engagement itself.</div></div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="req-category">
+      <div class="req-cat-head"><h3>Engagement Documentation</h3><div class="req-cat-count">12 Capabilities</div></div>
+      <div class="req-list">
+        <div class="req-item"><span class="req-id">5.1</span><div class="req-text">Every engagement is closed with a single recorded outcome.</div></div>
+        <div class="req-item"><span class="req-id">5.2</span><div class="req-text">The outcome is chosen from a fixed list, each with a defined meaning.</div></div>
+        <div class="req-item"><span class="req-id">5.3</span><div class="req-text">An outcome of "Reached" leads to recording what was provided. All other outcomes either close the record or hold it open.</div></div>
+        <div class="req-item"><span class="req-id">5.4</span><div class="req-text">Outcomes representing an unsuccessful contact attempt keep the engagement open so the worker can try again. Every attempt is kept with its own timestamp, so the full history is available.</div></div>
+        <div class="req-item"><span class="req-id">5.5</span><div class="req-text">Goods provided are recorded from a checklist.</div></div>
+        <div class="req-item"><span class="req-id">5.6</span><div class="req-text">Services provided are recorded from a checklist, each with its own status.</div></div>
+        <div class="req-item"><span class="req-id">5.7</span><div class="req-text">For each service, the worker selects the specific provider or location. One destination is recorded per service type.</div></div>
+        <div class="req-item"><span class="req-id">5.8</span><div class="req-text">Goods and services are both optional — an engagement can close with neither recorded.</div></div>
+        <div class="req-item"><span class="req-id">5.9</span><div class="req-text">A referral records both the type of referral and the specific provider. A provider is required whenever a referral is recorded.</div></div>
+        <div class="req-item"><span class="req-id">5.10</span><div class="req-text">Everything recorded is tied to the person it was provided to, with the time and the worker who recorded it.</div></div>
+        <div class="req-item"><span class="req-id">5.11</span><div class="req-text">A referral to a resource such as shelter or housing carries forward to reconciliation, where the placement is either confirmed as verified or recorded as declined.</div></div>
+        <div class="req-item"><span class="req-id">5.12</span><div class="req-text">A field encounter closes as "Reached" — the worker is present with the person.</div></div>
+      </div>
+    </div>
+
+    <div class="subsection" style="margin-top:2rem;">
+      <h3>Outcomes</h3>
+    </div>
+    <div class="doc-table-wrap scroll">
+      <table class="doc-table">
+        <thead>
+          <tr><th>Outcome</th><th>Meaning</th><th>Effect</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="term">Reached</td><td>Found and/or spoke with the person</td><td>Pending — needs resource logging to complete</td></tr>
+          <tr><td class="term">No answer</td><td>Called, no pickup</td><td>Pending — keeps the engagement open to try again</td></tr>
+          <tr><td class="term">Voicemail</td><td>Left a message</td><td>Pending — keeps the engagement open to try again</td></tr>
+          <tr><td class="term">Bad number</td><td>Invalid or disconnected</td><td>Closed</td></tr>
+          <tr><td class="term">Not found</td><td>Went to the kiosk or location, person not found</td><td>Closed</td></tr>
+          <tr><td class="term">Contact not possible</td><td>No contact provided, and outside working hours</td><td>Closed</td></tr>
+          <tr><td class="term">No returned phone call</td><td>Multiple attempts by phone, no return by the individual; no more attempts</td><td>Closed</td></tr>
+          <tr><td class="term">Cancelled</td><td>Called off before response</td><td>Cancelled</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subsection" style="margin-top:2rem;">
+      <h3>Goods</h3>
+    </div>
+    <div class="scope-col in two-up" style="margin-bottom:1.25rem;">
+      <ul>
+        <li>Blanket</li>
+        <li>Clothing</li>
+        <li>Eyeglasses</li>
+        <li>Food</li>
+        <li>Hygiene kit</li>
+        <li>Medication</li>
+        <li>Shoes</li>
+        <li>Water</li>
+        <li>Other (free text)</li>
+      </ul>
+    </div>
+
+    <div class="subsection" style="margin-top:2rem;">
+      <h3>Services</h3>
+    </div>
+    <div class="doc-table-wrap">
+      <table class="doc-table">
+        <thead>
+          <tr><th>Service</th><th>Status recorded</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="term">Behavioral health or substance use</td><td>Referred</td></tr>
+          <tr><td class="term">Client declined services</td><td>—</td></tr>
+          <tr><td class="term">Contact information provided</td><td>—</td></tr>
+          <tr><td class="term">Coordinated Entry assessment</td><td>Completed</td></tr>
+          <tr><td class="term">Crisis intervention</td><td>Completed</td></tr>
+          <tr><td class="term">Emergency services (EMS)</td><td>Contacted</td></tr>
+          <tr><td class="term">Follow-up scheduled</td><td>—</td></tr>
+          <tr><td class="term">Housing navigation</td><td>Initiated</td></tr>
+          <tr><td class="term">Information provided</td><td>—</td></tr>
+          <tr><td class="term">Law enforcement</td><td>Requested</td></tr>
+          <tr><td class="term">Medical</td><td>Requested / Referred</td></tr>
+          <tr><td class="term">Shelter</td><td>Referred / Handed off to triage</td></tr>
+          <tr><td class="term">Transportation</td><td>Offered / Accepted / Declined</td></tr>
+          <tr><td class="term">Veteran services</td><td>Referred</td></tr>
+          <tr><td class="term">Other</td><td>Free text</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 6 -->
+    <div class="req-category" style="margin-top:2rem;">
+      <div class="req-cat-head"><h3>Tasks &amp; Team Support</h3><div class="req-cat-count">10 Capabilities</div></div>
+      <div class="req-list">
+        <div class="req-item"><span class="req-id">6.1</span><div class="req-text">From inside an engagement, a worker can raise a transport task to the team on that existing engagement. Transport is the only support service at launch.</div></div>
+        <div class="req-item"><span class="req-id">6.2</span><div class="req-text">A task creates its own record, linked to both the request and the engagement it came from.</div></div>
+        <div class="req-item"><span class="req-id">6.3</span><div class="req-text">Tasks are sent to on-duty workers using the same notification routing as requests.</div></div>
+        <div class="req-item"><span class="req-id">6.4</span><div class="req-text">Only the Transport / support-service role can claim a task.</div></div>
+        <div class="req-item"><span class="req-id">6.5</span><div class="req-text">Tasks appear in the unclaimed zone of the queue alongside requests.</div></div>
+        <div class="req-item"><span class="req-id">6.6</span><div class="req-text">For the Transport / support-service role, the app surfaces its tasks in place of requests.</div></div>
+        <div class="req-item"><span class="req-id">6.7</span><div class="req-text">A task can be released. A reason is recorded, the task returns to the queue, and on-duty workers are notified again.</div></div>
+        <div class="req-item"><span class="req-id">6.8</span><div class="req-text">If a task goes unclaimed for 30 minutes while the Transport / support-service role is on duty, the supervisor or on-call lead is notified.</div></div>
+        <div class="req-item"><span class="req-id">6.9</span><div class="req-text">If no one in the Transport / support-service role is on duty when a task is raised, the supervisor is texted immediately without waiting the 30 minutes.</div></div>
+        <div class="req-item"><span class="req-id">6.10</span><div class="req-text">Escalation timing for tasks is measured from when the task was created.</div></div>
+      </div>
+    </div>
+
+    <!-- 7 -->
+    <div class="req-category">
+      <div class="req-cat-head"><h3>Resource Directory</h3><div class="req-cat-count">11 Capabilities</div></div>
+      <div class="req-list">
+        <div class="req-item"><span class="req-id">7.1</span><div class="req-text">Workers browse the same live resource directory the kiosks use.</div></div>
+        <div class="req-item"><span class="req-id">7.2</span><div class="req-text">The directory is navigated by category tiles.</div></div>
+        <div class="req-item"><span class="req-id">7.3</span><div class="req-text">Resources can be filtered by category. Eligibility is shown as a badge and is not used as a filter, matching the kiosk.</div></div>
+        <div class="req-item"><span class="req-id">7.4</span><div class="req-text">A resource shows its address, hours, phone number, eligibility, and service notes.</div></div>
+        <div class="req-item"><span class="req-id">7.5</span><div class="req-text">Resources are sorted by distance where the resource has a fixed location, and alphabetically otherwise.</div></div>
+        <div class="req-item"><span class="req-id">7.6</span><div class="req-text">From a resource, a worker can send that resource's details to the person's phone - by text, or by a QR code the person scans.</div></div>
+        <div class="req-item"><span class="req-id">7.7</span><div class="req-text">From a resource, a worker can send map directions from the worker's current location to the person's phone - by text, or by a QR code the person scans.</div></div>
+        <div class="req-item"><span class="req-id">7.8</span><div class="req-text">Texts are sent to a phone number the worker enters at the time.</div></div>
+        <div class="req-item"><span class="req-id">7.9</span><div class="req-text">A worker can display a resource's phone number and dial it from their own phone.</div></div>
+        <div class="req-item"><span class="req-id">7.10</span><div class="req-text">The directory is available on its own and from inside an engagement, where it is used to record a referral.</div></div>
+        <div class="req-item"><span class="req-id">7.11</span><div class="req-text">Resource entries display a photo of the building.</div></div>
+      </div>
+    </div>
+
+    <!-- 8 -->
+    <div class="req-category">
+      <div class="req-cat-head"><h3>Alerts</h3><div class="req-cat-count">7 Capabilities</div></div>
+      <div class="req-list">
+        <div class="req-item"><span class="req-id">8.1</span><div class="req-text">An active alert appears as a persistent banner at the top of the home screen.</div></div>
+        <div class="req-item"><span class="req-id">8.2</span><div class="req-text">An alert is sent as a push notification only if it is enabled for that alert.</div></div>
+        <div class="req-item"><span class="req-id">8.3</span><div class="req-text">A worker can open the full list of active alerts from the banner.</div></div>
+        <div class="req-item"><span class="req-id">8.4</span><div class="req-text">An alert carries a title, description, effective window, recommended actions, shelter and service locations with hours, transportation information, and emergency numbers.</div></div>
+        <div class="req-item"><span class="req-id">8.5</span><div class="req-text">Locations named in an alert link into the resource directory, or to one-time standup locations.</div></div>
+        <div class="req-item"><span class="req-id">8.6</span><div class="req-text">A worker can dismiss an alert, which clears the banner for that session.</div></div>
+        <div class="req-item"><span class="req-id">8.7</span><div class="req-text">An alert does not create an engagement or a task.</div></div>
+      </div>
+    </div>
+
+    <!-- 9 -->
+    <div class="req-category">
+      <div class="req-cat-head"><h3>Reconciliation</h3><div class="req-cat-count">9 Capabilities</div></div>
+      <div class="req-list">
+        <div class="req-item"><span class="req-id">9.1</span><div class="req-text">A record moves through three states: in process, closed once the worker is done in the app, and resolved once HMIS reconciliation is done.</div></div>
+        <div class="req-item"><span class="req-id">9.2</span><div class="req-text">Closed records awaiting reconciliation are collected in a dedicated reconciliation view, separate from the queue.</div></div>
+        <div class="req-item"><span class="req-id">9.3</span><div class="req-text">Each record carries one HMIS status - entered, not applicable, or pending - and a status must be selected before the record can be resolved.</div></div>
+        <div class="req-item"><span class="req-id">9.4</span><div class="req-text">The HMIS person ID is entered manually via free text.</div></div>
+        <div class="req-item"><span class="req-id">9.5</span><div class="req-text">Placement is confirmed as verified or recorded as declined during reconciliation.</div></div>
+        <div class="req-item"><span class="req-id">9.6</span><div class="req-text">Resolving a record captures the HMIS status, the HMIS person and case IDs, the consent version, the time of closing, and the worker who closed it.</div></div>
+        <div class="req-item"><span class="req-id">9.7</span><div class="req-text">The CSAH Client ID captured at intake supports looking the person up in HMIS.</div></div>
+        <div class="req-item"><span class="req-id">9.8</span><div class="req-text">Reconciliation is performed by a dedicated Reconciliation role. System administrators retain access.</div></div>
+        <div class="req-item"><span class="req-id">9.9</span><div class="req-text">Reconciliation is manual - the app does not connect to ClientTrack at launch.</div></div>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="req-category">
+      <div class="req-cat-head"><h3>Admin</h3><div class="req-cat-count">11 Capabilities</div></div>
+      <div class="req-list">
+        <div class="req-item"><span class="req-id">10.1</span><div class="req-text">Staff can create or edit a resource. Saving publishes to the shared dataset, and both the kiosk and the app show the change.</div></div>
+        <div class="req-item"><span class="req-id">10.2</span><div class="req-text">A resource record carries name, categories, address, phone, hours including per-day and per-service variation, eligibility, service notes, website, coordinates, owner, and the date it was last reviewed.</div></div>
+        <div class="req-item"><span class="req-id">10.3</span><div class="req-text">A resource can belong to more than one category, and categories are aligned with HMIS.</div></div>
+        <div class="req-item"><span class="req-id">10.4</span><div class="req-text">Staff can add a new resource provider without a code change.</div></div>
+        <div class="req-item"><span class="req-id">10.5</span><div class="req-text">Staff can create, publish, and expire alerts to both the kiosk and the app.</div></div>
+        <div class="req-item"><span class="req-id">10.6</span><div class="req-text">Alerts are published manually, with push to app users set per alert.</div></div>
+        <div class="req-item"><span class="req-id">10.7</span><div class="req-text">Supervisors and administrators see a live admin view of the queue across the team, showing status, owner, elapsed time, and origin, with items that have no phone number shown distinctly.</div></div>
+        <div class="req-item"><span class="req-id">10.8</span><div class="req-text">Supervisors and administrators can claim, reassign, and reopen work.</div></div>
+        <div class="req-item"><span class="req-id">10.9</span><div class="req-text">Supervisors and administrators can see who is on duty.</div></div>
+        <div class="req-item"><span class="req-id">10.10</span><div class="req-text">Supervisors and administrators can see open items with their age — engagements not yet closed, and referrals still open.</div></div>
+        <div class="req-item"><span class="req-id">10.11</span><div class="req-text">Access to each area is controlled by role.</div></div>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="subsection" style="margin-top:2rem;">
+      <h3>Reporting &amp; Exports</h3>
+      <p>Reports present counts. They do not contain names or identifying details about the people served.</p>
+      <p>Two reports can be produced.</p>
+      <p><strong>The operations report</strong> is for supervisors and administrators running the team day to day.</p>
+      <p><strong>The impact rollup</strong> is for reporting at an executive level — to the city, the county, the state, and donors.</p>
+    </div>
+
+    <div class="req-category">
+      <div class="req-cat-head"><h3>Reporting &amp; Exports</h3><div class="req-cat-count">9 Capabilities</div></div>
+      <div class="req-list">
+        <div class="req-item"><span class="req-id">11.1</span><div class="req-text">Reports present counts of requests and engagements.</div></div>
+        <div class="req-item"><span class="req-id">11.2</span><div class="req-text">Data is stored at daily granularity and rolled up daily, monthly, and yearly.</div></div>
+        <div class="req-item"><span class="req-id">11.3</span><div class="req-text">An operations report shows per-worker quantities.</div></div>
+        <div class="req-item"><span class="req-id">11.4</span><div class="req-text">Team totals add requests left unclaimed, requests submitted after hours, and requests that arrived with no one on duty.</div></div>
+        <div class="req-item"><span class="req-id">11.5</span><div class="req-text">An impact rollup shows engagements logged, goods by category, service referrals by provider, kiosk-to-engagement conversion, and a map of encounters shown as pins.</div></div>
+        <div class="req-item"><span class="req-id">11.6</span><div class="req-text">Reports export to CSV and Excel.</div></div>
+        <div class="req-item"><span class="req-id">11.7</span><div class="req-text">Exports can be filtered by date range, location, service category, and worker.</div></div>
+        <div class="req-item"><span class="req-id">11.8</span><div class="req-text">Export field names align to HUD vocabulary.</div></div>
+        <div class="req-item"><span class="req-id">11.9</span><div class="req-text">Reports are available to system administrators, program administrators, and supervisors.</div></div>
+      </div>
+    </div>
+
+    <div class="subsection" style="margin-top:2rem; margin-bottom:1.25rem;">
+      <h3>Per-worker measures in the operations report</h3>
+    </div>
+    <div class="scope-col in" style="margin-bottom:2rem;">
+      <p class="inline-list">Engagements logged by origin (kiosk, phone, field) · requests claimed · goods by type · services by type · referrals by provider · handoffs to triage · counts by hour of day · claimed response time · claim to start of engagement · claimed to closed · closed to resolved</p>
+    </div>
+
+    <!-- 12 -->
+    <div class="req-category">
+      <div class="req-cat-head"><h3>Platform Behavior</h3><div class="req-cat-count">4 Capabilities</div></div>
+      <div class="req-list">
+        <div class="req-item"><span class="req-id">12.1</span><div class="req-text">The app works offline and syncs when a connection returns. Claiming a request that another worker may also be claiming requires a connection.</div></div>
+        <div class="req-item"><span class="req-id">12.2</span><div class="req-text">A worker can view their account and profile details, including the role they hold.</div></div>
+        <div class="req-item"><span class="req-id">12.3</span><div class="req-text">A worker can log out manually.</div></div>
+        <div class="req-item"><span class="req-id">12.4</span><div class="req-text">Records are retained for seven years and then deleted automatically on a scheduled purge, with no manual review.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ASSUMPTIONS ══ -->
+  <div class="doc-section">
+    <h2>Section 06</h2>
+    <div class="section-headline">Assumptions</div>
+    <p class="lede">The following are assumed to be true. Where one is not, the scope or the schedule changes.</p>
+
+    <div class="doc-table-wrap">
+      <table class="doc-table">
+        <thead>
+          <tr><th>Assumption</th><th>If it is not true</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Outreach workers have smartphones capable of running the app</td><td>Devices have to be provisioned; cost and timeline change</td></tr>
+          <tr><td>Workers have usable mobile connectivity where they work</td><td>More work happens offline, and claiming from the queue is unavailable in those areas</td></tr>
+          <tr><td>CSAH performs reconciliation on closed records</td><td>Records never reach resolved, and the connection to HMIS does not happen</td></tr>
+          <tr><td>CSAH maintains the shared resource dataset after launch</td><td>Content goes stale, and both the kiosk and the app degrade together</td></tr>
+          <tr><td>ClientTrack remains CSAH's HMIS through the build</td><td>Reconciliation fields and the future integration change</td></tr>
+          <tr><td>Carrier approval for business text messaging is in place before launch, which depends on CSAH's public privacy and terms page being live</td><td>Send-to-phone and text notifications are unavailable at launch</td></tr>
+          <tr><td>Push notifications are supported on CSAH staff devices</td><td>Workers rely on the queue rather than notifications; delivery to partner-agency managed devices is not assumed at launch</td></tr>
+          <tr><td>CSAH provides and approves resource content and consent language</td><td>Launch content is incomplete</td></tr>
+          <tr><td>Workers turn duty on when they begin work</td><td>Nobody is notified, and requests sit until escalation</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ BACKLOG ══ -->
+  <div class="doc-section">
+    <h2>Section 07</h2>
+    <div class="section-headline">Backlog</div>
+    <p class="lede">Everything below has been added to the backlog and needs scope and sequencing after launch to be added to the Roadmap. They are not a part of the MVP product.</p>
+
+    <div class="scope-col out two-up">
+      <ul>
+        <li>HMIS / ClientTrack integration</li>
+        <li>Person history, search, and identity matching</li>
+        <li>Automated weather alerts from a live feed</li>
+        <li>Partner-agency access and referral submission</li>
+        <li>In-app messaging between workers</li>
+        <li>Spanish and additional languages</li>
+        <li>Photos on engagements</li>
+        <li>Heat-map view of encounters</li>
+        <li>Provider-submitted resource content with approval</li>
+        <li>PDF export</li>
+        <li>Correlation of engagements with citations and arrests</li>
+        <li>Confirming a placement held over time</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>
+    <span class="arc">ARC</span> —
+    <strong>Alan Robinson &amp; Allyson Short</strong>
+    ·
+    Prepared for <strong>Chatham Savannah Authority for the Homeless</strong>
+    ·
+    Compass Project · 2026
+  </p>
+</footer>
+
+</body>
+</html>

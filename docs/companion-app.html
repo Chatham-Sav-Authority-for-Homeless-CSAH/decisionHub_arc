@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kiosk — CSAH Compass Project</title>
+<title>Companion App — CSAH Compass Project</title>
 <link rel="stylesheet" href="kiosk-package.css">
 <style>
   .header-text { max-width: 50%; }
@@ -39,6 +39,25 @@
   }
 
   .section-desc { font-size: 0.85rem; color: #5f5e5a; }
+
+  /* Executive Summary blocks — moved here from the Objectives doc. */
+  .subsection { margin-bottom: 1.5rem; }
+  .subsection h3 { font-size: 1.05rem; font-weight: 700; color: #0e2a5c; margin-bottom: 0.4rem; }
+  .subsection p { font-size: 0.9rem; color: #374151; margin-bottom: 0.75rem; }
+
+  .dataset-card {
+    background: #e9f1f8;
+    border: 1px solid #c9dcec;
+    border-radius: 12px;
+    padding: 1.5rem 1.75rem;
+  }
+  .dataset-card h3 { color: #123f63; }
+
+  .callout-note {
+    background: #fbf0d6; border: 1px solid #ecd8a6; border-radius: 10px;
+    padding: 1rem 1.25rem; font-size: 0.85rem; color: #7c5712; margin-top: 1.25rem;
+  }
+  .callout-note p { font-size: 0.85rem; color: #7c5712; margin-bottom: 0.6rem; }
 
   /* Status chip beside a section label. Sized to match .lane-badge on the hub.
      Sits inside .section-label, so it resets the inherited display type. */
@@ -109,6 +128,22 @@
   .doc-card-arrow svg { transition: transform 0.15s; }
   .doc-card:hover .doc-card-arrow svg { transform: translateX(3px); }
 
+  /* Unnamed slots in the signoff package — same footprint as a doc card,
+     but inert and visibly unfinished so they don't read as shippable. */
+  .doc-card.tbd {
+    background: white;
+    border: 1.5px dashed #c7c5bc;
+    cursor: default;
+  }
+  .doc-card.tbd:hover {
+    box-shadow: none;
+    border-color: #c7c5bc;
+    transform: none;
+  }
+  .doc-card.tbd:hover::before { opacity: 0; }
+  .doc-card.tbd .doc-card-leading { color: #888780; }
+  .doc-card.tbd .doc-card-arrow { color: #a3a29c; }
+
   /* ── PLACEHOLDER ── */
   .placeholder-card {
     background: white;
@@ -148,8 +183,6 @@
     color: #888780;
     letter-spacing: 0.1em;
   }
-
-
 </style>
 </head>
 <body>
@@ -164,42 +197,69 @@
 <header>
   <div class="header-inner">
     <div class="header-text">
-      <h1 style="display:inline-flex; align-items:center; gap:0.5rem;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><circle cx="12" cy="12" r="10" stroke="#f2c030" stroke-width="1.6"/><path d="M12 4.5 L13.7 10.3 L19.5 12 L13.7 13.7 L12 19.5 L10.3 13.7 L4.5 12 L10.3 10.3 Z" fill="#f2c030"/></svg>Kiosk</h1>
-      <p>A public, always-on touchscreen that gives unsheltered individuals in Savannah 24/7, self-serve access to the full resource landscape — with no caseworker, referral, or staff required</p>
-      <div class="status-pill">Active</div>
+      <h1 style="display:inline-flex; align-items:center; gap:0.5rem;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><circle cx="12" cy="12" r="10" stroke="#f2c030" stroke-width="1.6"/><path d="M12 4.5 L13.7 10.3 L19.5 12 L13.7 13.7 L12 19.5 L10.3 13.7 L4.5 12 L10.3 10.3 Z" fill="#f2c030"/></svg>Companion App</h1>
+      <p>The internal staff app for CSAH's outreach team — case tracking, crisis coordination, team messaging, the resource directory in the field, and the management dashboard.</p>
+      <div class="status-pill">In Progress</div>
     </div>
     <div class="metric-grid header-metrics">
-      <div class="metric-box"><div class="metric-value">3 units</div><div class="metric-label">large outdoor touchscreens</div></div>
-      <div class="metric-box"><div class="metric-value">24/7</div><div class="metric-label">self-serve, unstaffed</div></div>
-      <div class="metric-box"><div class="metric-value">One dataset</div><div class="metric-label">shared with Companion App</div></div>
-      <div class="metric-box"><div class="metric-value">Dec 2026</div><div class="metric-label">installed and live</div></div>
+      <div class="metric-box"><div class="metric-value">CSAH staff</div><div class="metric-label">~11 outreach team members</div></div>
+      <div class="metric-box"><div class="metric-value">PWA</div><div class="metric-label">No app store</div></div>
+      <div class="metric-box"><div class="metric-value">Content MGMT</div><div class="metric-label">shared with the Kiosk</div></div>
+      <div class="metric-box"><div class="metric-value">Dec 2026</div><div class="metric-label">live and in staff hands</div></div>
     </div>
   </div>
 </header>
 
 <div class="container">
 
-  <div class="section-block" id="package">
+  <div class="section-block">
     <div class="section-head">
-      <div class="section-label">Kiosk MVP Signoff Package</div>
+      <div class="section-label">Executive Summary</div>
     </div>
 
-    <p class="package-intro">This package sets out what the kiosk does, who it serves, the experience end to end, how CSAH runs it, and the full requirements list, for CSAH's review and sign-off.</p>
+    <div class="subsection">
+      <p>Compass comprises two products built on one shared dataset. The kiosk network is the public-facing product; outdoor touchscreens where unsheltered people can find resources without a caseworker, a referral, or staff present. The Companion App is an outreach and support services team tool.</p>
+      <p>The Companion App is a mobile-first web app used by CSAH staff to receive, claim, and document engagements with unsheltered individuals, and to produce a defensible record that each engagement happened.</p>
+    </div>
+
+    <div class="subsection dataset-card">
+      <p>Work reaches an outreach worker three ways: a request submitted at a Compass kiosk, a phone call taken by staff, or a direct encounter in the field. All three converge on one engagement record carrying location, time, worker identity, and outcome.</p>
+    </div>
+
+    <div class="subsection" style="margin-top:1.5rem;">
+      <p>Today that coordination runs on phone calls, texts, and memory. The app supports that coordination at launch and can replace it over time.</p>
+      <p>ClientTrack remains the system of record for the client. The app is the system of record for the engagement. At launch the two are connected manually during reconciliation rather than by integration.</p>
+      <p>Resource content and alerts are managed in one place and published to both the kiosk and the app.</p>
+    </div>
+
+    <div class="callout-note">
+      <p><strong>Naming.</strong> "Companion App" is the descriptor in the executed Agreement and remains the contractual term. "Engage" is a proposed product name.</p>
+    </div>
+  </div>
+
+  <div class="section-block" id="package">
+    <div class="section-head">
+      <div class="section-label">Companion App MVP Signoff Package</div>
+    </div>
+
+    <p class="package-intro">This package sets out what the app does, who on the CSAH team uses it, how the work flows day to day, and the full requirements list, for CSAH's review and sign-off.</p>
 
     <div class="section-head" style="margin-top: 0.5rem;">
       <div class="section-label" style="text-transform:none; letter-spacing:normal; font-size:0.95rem; font-weight:700; color:#f2c030; display:flex; align-items:center; gap:0.6rem;">
-        Four documents to review
+        Three documents to review
         <svg width="70" height="14" viewBox="0 0 70 14" fill="none" style="flex-shrink:0;">
           <line x1="0" y1="7" x2="56" y2="7" stroke="#f2c030" stroke-width="2"/>
           <path d="M56 1L70 7L56 13Z" fill="#f2c030"/>
         </svg>
       </div>
+    </div>
+
     <div class="doc-grid" style="margin-bottom: 2rem;">
 
-      <a class="doc-card" href="kiosk-experience.html">
+      <a class="doc-card" href="app-objectives-users-requirements.html">
         <div class="doc-card-num">01</div>
-        <div class="doc-card-leading">Objectives &amp; Experience</div>
-        <div class="doc-card-title">Why the kiosk exists, how it works around the clock, who it serves, what's in and out of scope, and how success is measured.</div>
+        <div class="doc-card-leading">Objectives, Users &amp; Requirements</div>
+        <div class="doc-card-title">What the app is for, how it holds up in the field and offline, the team it serves, what's in and out of scope, and the record it has to produce.</div>
         <div class="doc-card-arrow">
           Read
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -208,10 +268,10 @@
         </div>
       </a>
 
-      <a class="doc-card" href="kiosk-flow.html">
+      <a class="doc-card" href="companion-app-the-flow.html">
         <div class="doc-card-num">02</div>
-        <div class="doc-card-leading">Experience Flow</div>
-        <div class="doc-card-title">The path a person takes at the kiosk, end to end — plus the moments that branch off it, like crisis help and audio assistance.</div>
+        <div class="doc-card-leading">The Flow</div>
+        <div class="doc-card-title">The path a help request takes, from the moment it arrives to the moment it's resolved — across more than one day and more than one person.</div>
         <div class="doc-card-arrow">
           Read
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -220,22 +280,10 @@
         </div>
       </a>
 
-      <a class="doc-card" href="kiosk-requirements.html">
+      <a class="doc-card" href="companion-app-the-record.html">
         <div class="doc-card-num">03</div>
-        <div class="doc-card-leading">Requirements &amp; User Stories</div>
-        <div class="doc-card-title">The full set of requirements, grouped by area, each marked for the launch build (MVP) or the roadmap.</div>
-        <div class="doc-card-arrow">
-          Read
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </a>
-
-      <a class="doc-card" href="kiosk-back-office.html">
-        <div class="doc-card-num">04</div>
-        <div class="doc-card-leading">Back Office Flow</div>
-        <div class="doc-card-title">How CSAH runs the kiosk once it's live — in Mission Control, one shared dataset pushed to every unit, and how it connects to the Companion App.</div>
+        <div class="doc-card-leading">The Record</div>
+        <div class="doc-card-title">Every request, contact attempt, and outcome — timestamped, geolocated, and exportable.</div>
         <div class="doc-card-arrow">
           Read
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -250,7 +298,7 @@
   <div class="section-block" style="margin-top: 2rem;">
     <div class="section-head" style="flex-direction: column; align-items: flex-start; gap: 0.4rem;">
       <div class="section-label">Technical Decision Docs</div>
-      <div class="section-desc">Vendor evaluations, architecture, and cost research</div>
+      <div class="section-desc">Vendor evaluations, architecture, and research related to the Companion App</div>
     </div>
     <div class="doc-grid tech-doc-grid">
 
@@ -276,31 +324,9 @@
         </div>
       </a>
 
-      <a class="doc-card" href="kiosk-connectivity.html">
-        <div class="doc-card-leading">Kiosk Connectivity</div>
-        <div class="doc-card-title">Cellular vs. WiFi vs. Wired — IoT plan comparison for outdoor kiosks across Savannah</div>
-        <div class="doc-card-arrow">
-          Read
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </a>
-
-      <a class="doc-card" href="kioskHardware-comparison.html">
-        <div class="doc-card-leading">Kiosk Hardware</div>
-        <div class="doc-card-title">Hardware Comparison — MetroClick, Meridian, Advanced Kiosks &amp; Olea. Approved: MetroClick, ~$16–17K/unit all-in</div>
-        <div class="doc-card-arrow">
-          Read
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path d="M2 6h8M6 2l4 4-4 4" stroke="#1a4d8f" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-      </a>
-
-      <a class="doc-card" href="kiosk_software_comparison.html">
-        <div class="doc-card-leading">Kiosk Software</div>
-        <div class="doc-card-title">Software Comparison — MetroClick's bundled platform vs. KioWare, SiteKiosk, Scalefusion (hardware-only confirmed)</div>
+      <a class="doc-card" href="architecture-diagram.html">
+        <div class="doc-card-leading">App Architecture</div>
+        <div class="doc-card-title">How the two surfaces sit over one shared Supabase data layer</div>
         <div class="doc-card-arrow">
           Read
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -319,7 +345,6 @@
           </svg>
         </div>
       </a>
-
 
     </div>
   </div>

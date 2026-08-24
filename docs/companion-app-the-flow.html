@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Flow — Companion App MVP Package</title>
+<link rel="stylesheet" href="kiosk-package.css">
+<style>
+/* ── Shared styles — mirrored from kiosk-package.css ── */
+
+.doc-lede { font-size: 0.98rem; color: #374151; margin-bottom: 2.5rem; }
+
+/* ── FLOW PAGE PATTERNS ── */
+.sub-headline { font-size: 1.05rem; font-weight: 700; color: #0e2a5c; margin-bottom: 0.5rem; }
+.persist-note { font-size: 0.9rem; color: #374151; margin-bottom: 0.7rem; }
+.persist-lead-in { font-size: 0.9rem; color: #374151; margin-top: 1.5rem; }
+
+.step-list { display: flex; flex-direction: column; gap: 0.4rem; }
+.step-arrow { text-align: center; color: #9ca3af; font-size: 1.1rem; line-height: 1; }
+.step-card {
+  display: flex; align-items: flex-start; gap: 1.1rem;
+  background: white; border-radius: 16px;
+  padding: 1.1rem 1.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+.step-num {
+  flex-shrink: 0; margin-top: 0.1rem; width: 26px; height: 26px; border-radius: 50%;
+  background: #0e2a5c; color: white; display: flex; align-items: center; justify-content: center;
+  font-size: 0.8rem; font-weight: 700; box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+}
+.step-num.gold { background: #f2c030; color: #3a2a06; }
+.step-body { flex: 1; min-width: 0; }
+.step-body h3 { font-size: 0.98rem; color: #0e2a5c; margin-bottom: 0.15rem; }
+.step-actor {
+  font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  color: #1a4d8f; margin-bottom: 0.5rem;
+}
+.step-body p { font-size: 0.86rem; color: #374151; margin-bottom: 0.6rem; }
+.step-body p:last-child { margin-bottom: 0; }
+
+.acts-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem; }
+@media (max-width: 900px) { .acts-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .acts-grid { grid-template-columns: 1fr; } }
+.act { background: white; border: 1px solid #e8e6df; border-left: 4px solid #1a4d8f; border-radius: 10px; padding: 1rem 1.1rem; }
+.act.gold { border-left-color: #f2c030; }
+.act .cap { display: block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #1a4d8f; margin-bottom: 0.35rem; }
+.act p { font-size: 0.8rem; color: #6b7280; margin: 0; }
+
+.id-note { background: #eef1f5; border-radius: 10px; padding: 0.9rem 1.1rem; font-size: 0.85rem; color: #374151; margin-top: 1rem; }
+.id-note strong { color: #111827; }
+
+.designed-against {
+  background: #fbf0d6; border: 1px solid #ecd8a6; border-radius: 12px; padding: 1.25rem 1.5rem;
+  font-size: 0.85rem; color: #374151; margin-top: 1.5rem;
+}
+.designed-against strong { color: #17202e; }
+
+.branch-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+@media (max-width: 640px) { .branch-grid { grid-template-columns: 1fr; } }
+.branch-card { background: white; border: 1px solid #e8e6df; border-top: 4px solid #1a4d8f; border-radius: 14px; padding: 1.5rem 1.75rem; }
+.branch-card.red { border-top-color: #b23b3b; }
+.branch-card.gold { border-top-color: #d9a441; }
+.branch-card h3 { font-size: 1rem; font-weight: 700; color: #17202e; margin-bottom: 0.9rem; }
+.branch-card p { font-size: 0.86rem; color: #374151; line-height: 1.6; margin-bottom: 0.7rem; }
+.branch-card p:last-child { margin-bottom: 0; }
+
+/* ── PATH CARDS (additional paths) ── */
+.path-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+@media (max-width: 640px) { .path-grid { grid-template-columns: 1fr; } }
+.path-card { background: white; border: 1px solid #e8e6df; border-top: 4px solid #f2c030; border-radius: 14px; padding: 1.5rem 1.75rem; }
+.path-card h3 { font-size: 1.05rem; font-weight: 700; color: #0e2a5c; margin-bottom: 0.7rem; }
+.path-card p { font-size: 0.86rem; color: #374151; line-height: 1.6; margin-bottom: 0.7rem; }
+.path-card p:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a class="back-link" href="/">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="#9ca3af" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Decision Hub
+  </a>
+</div>
+
+<div class="pkg-nav-bar">
+  <div class="pkg-nav">
+    <a href="companion-app.html">Overview</a>
+    <a href="app-objectives-users-requirements.html">Objectives and Requirements</a>
+    <a href="companion-app-the-flow.html" class="current">The Flow</a>
+    <a href="companion-app-the-record.html">The Record</a>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-text">
+      <div class="doc-eyebrow">Document 02 · Companion App MVP Signoff Package</div>
+      <h1 style="display:inline-flex; align-items:center; gap:0.5rem;">
+        <svg viewBox="0 0 24 24" width="28" fill="none" style="flex-shrink:0;">
+          <circle cx="12" cy="12" r="10" stroke="#f2c030" stroke-width="1.6"/>
+          <path d="M12 4.5 L13.7 10.3 L19.5 12 L13.7 13.7 L12 19.5 L10.3 13.7 L4.5 12 L10.3 10.3 Z" fill="#f2c030"/>
+        </svg>
+        The Flow
+      </h1>
+      <p>This is the path a help request takes, from the moment it arrives to the moment it is resolved. It can span more than one day and more than one person.</p>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ══ PERSISTENT ON HOME ══ -->
+  <div class="doc-section">
+    <h2>Section 01</h2>
+    <div class="section-headline">The Home State</div>
+
+    <p class="persist-note">The duty toggle sits on Home. An outreach team worker turns it on to receive notifications; after nine hours on duty the worker is signed out automatically.</p>
+    <p class="persist-note">When an alert is active, a banner appears at the top of Home. A worker can dismiss it.</p>
+    <p class="persist-note">The queue is visible whenever a worker is logged in.</p>
+
+    <p class="persist-lead-in">Similarly, the worker can see the following actions they can take depending on role and situation.</p>
+
+    <div class="acts-grid">
+      <div class="act">
+        <span class="cap">Requests (number of new unclaimed)</span>
+        <p>The Queue - Needs Someone zone</p>
+      </div>
+      <div class="act">
+        <span class="cap">Create a Help Request</span>
+        <p>The Intake form</p>
+      </div>
+      <div class="act">
+        <span class="cap">My Work (Workers open items)</span>
+        <p>The Queue - Yours zone</p>
+      </div>
+      <div class="act">
+        <span class="cap">Resource Directory</span>
+        <p>The directory</p>
+      </div>
+      <div class="act gold">
+        <span class="cap">Start Engagement (Encounter)</span>
+        <p>New field engagement - skips the queue</p>
+      </div>
+      <div class="act">
+        <span class="cap">Admin (role-gated)</span>
+        <p>The Admin area - Supervisor · Program Admin · System Admin · Reconciliation</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ THE FULL PATH ══ -->
+  <div class="doc-section">
+    <h2>Section 02</h2>
+    <div class="section-headline">The Full Path</div>
+    <p class="lede">A request submitted at a kiosk travels the longest path, as it is the only one that includes every step. The other two ways work reaches a worker are shorter versions of it.</p>
+
+    <div class="step-list">
+
+      <div class="step-card">
+        <div class="step-num gold">1</div>
+        <div class="step-body">
+          <h3>A help request is created</h3>
+          <div class="step-actor">The person at the kiosk</div>
+          <p>A person submits at a kiosk. The intake form takes a name or alias and date of birth, a phone number, a CSAH Client ID if they have one, a description of themselves and of the help they need, party size, and whether an animal is with them. Date of birth and either a name or an alias are required. A person can decline to answer; if they decline everything, a physical description becomes required.</p>
+          <p>The kiosk tags its own location and keeps nothing - the request is created directly in the shared database and carries a Request ID.</p>
+          <p>The confirmation screen sets expectations on the request and shows 911, 211, and 988.</p>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>The team is notified</h3>
+          <div class="step-actor">The system</div>
+          <p>On-duty workers receive an in-app notification. The supervisor or on-call lead also receives a text, as a backup to the in-app notification.</p>
+          <p>The notification carries the Request ID, the type of request, the location, and the time. Nothing about the person leaves the system.</p>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>Claims Request</h3>
+          <div class="step-actor">Outreach Team Worker</div>
+          <p>The request appears unclaimed in the queue, sorted by age alongside everything else waiting. Any on-duty worker can take it.</p>
+          <p>The first claim wins. A worker who taps a moment later is told the request has already been claimed and by whom, and the row moves to their team view. Claiming requires a connection.</p>
+          <p>The worker who claims it sees the full intake record. Teammates see only the type, location, elapsed time, and owner.</p>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>Starts engagement</h3>
+          <div class="step-actor">Outreach Team Worker</div>
+          <p>The worker finds the person and taps Start Engagement. The app records the time, the worker, and the worker's location. The intake information is carried in and displayed.</p>
+          <p>The engagement type defaults to Initial Contact. The worker can change it to Follow-up, Wellness Check, or Coordinated Outreach.</p>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Multi-Person or Family Engagements</h3>
+          <div class="step-actor">Outreach Team Worker</div>
+          <p>If more than one person is present, the worker adds each of them. Each person added gets their own record attached to the engagement, and party size is captured.</p>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <div class="step-card">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h3>Outcome</h3>
+          <div class="step-actor">Outreach Team Worker</div>
+          <p>One outcome closes or holds the record. Only "Reached" leads to recording what was provided. The others either close the record or keep it open so the worker can try again.</p>
+          <p>Every attempt is kept as its own timestamped record, so the full history is available.</p>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <div class="step-card">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <h3>What was provided</h3>
+          <div class="step-actor">Outreach Team Worker</div>
+          <p>The worker records goods handed over and services provided. Each service carries its own status and the specific provider or location - one destination per service type. A referral records both the type of referral and the provider, and a provider is required whenever a referral is recorded.</p>
+          <p>The worker can open the resource directory from inside the engagement and send a resource's details or map directions to the person, by text or by a QR code the person scans.</p>
+          <p>Goods and services are both optional.</p>
+          <p>An engagement can close with neither recorded.</p>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <div class="step-card">
+        <div class="step-num">8</div>
+        <div class="step-body">
+          <h3>Closed</h3>
+          <div class="step-actor">Outreach Team Worker</div>
+          <p>When the worker is done in the app, the record is closed.</p>
+        </div>
+      </div>
+
+      <div class="step-arrow">↓</div>
+
+      <div class="step-card">
+        <div class="step-num gold">9</div>
+        <div class="step-body">
+          <h3>Reconciliation</h3>
+          <div class="step-actor">The Reconciliation role</div>
+          <p>The closed record moves to the reconciliation view, separate from the queue. There, the client is entered in ClientTrack, HMIS person/case ID is recorded, the HMIS status is set, placement is confirmed or declined and/or status is verified,the record moves to resolved.</p>
+          <p>This work is manual. The app does not connect to ClientTrack at launch.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ ADDITIONAL PATHS ══ -->
+  <div class="doc-section">
+    <h2>Section 03</h2>
+    <div class="section-headline">Additional Paths</div>
+
+    <div class="path-grid">
+      <div class="path-card">
+        <h3>A phone call</h3>
+        <p>A call comes in and the worker creates the help request from the app, using the same intake form and entering the location as free text.</p>
+        <p>Then the worker chooses. Taking it self-assigns the request, which still appears in the queue tagged with their name - the path continues from step 4. Sending it to the team puts it in the queue unclaimed and notifies on-duty workers - the path continues from step 3.</p>
+        <p>The engagement that follows can be of any type, including an encampment visit when the encounter happens at one.</p>
+        <p>A phone contact is a contact attempt on the way to an engagement, not the engagement itself.</p>
+      </div>
+
+      <div class="path-card">
+        <h3>A field encounter</h3>
+        <p>A worker canvassing meets someone.</p>
+        <p>The worker taps Start Engagement. The app records their location and identity and assigns the work to them; the details can be entered afterward. This creates an engagement directly - there is no help request behind it. It is the shortest path and the most common one.</p>
+        <p>The only outcome is Reached, because the worker is there in person.</p>
+        <p>A worker who wants the full intake can instead create a Help Request.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ MOMENTS THAT BRANCH OFF ══ -->
+  <div class="doc-section">
+    <h2>Section 04</h2>
+    <div class="section-headline">Moments That Branch Off</div>
+
+    <div class="branch-grid">
+      <div class="branch-card red">
+        <h3>The person isn't there</h3>
+        <p>The worker goes to meet someone and cannot find them. The engagement is still recorded - time, type, and the outcome "Not Found" - and the record closes.</p>
+      </div>
+
+      <div class="branch-card red">
+        <h3>Nobody claims it</h3>
+        <p>If a request goes unclaimed for 30 minutes while workers are on duty, the supervisor or on-call lead is notified. If nobody was on duty when it arrived, the supervisor is texted immediately without waiting the 30 minutes. Escalation timing runs from the moment the record was created.</p>
+        <p>Requests submitted outside working hours are accepted and held in the queue, to be worked first thing the following morning.</p>
+      </div>
+
+      <div class="branch-card">
+        <h3>The worker can't take it after all</h3>
+        <p>A claim can be released. A reason is recorded, the request returns to the queue, and on-duty workers are notified again.</p>
+      </div>
+
+      <div class="branch-card gold">
+        <h3>The person needs transport</h3>
+        <p>From inside the engagement, the worker raises a transport task on that engagement. The task creates its own record, linked to both the request and the engagement, and goes out to on-duty workers using the same routing as requests. Only the Transport / support-service role can claim it.</p>
+        <p>If it goes unclaimed for 30 minutes, or if nobody in that role is on duty when it is raised, the supervisor is notified on the same terms as a request.</p>
+      </div>
+
+      <div class="branch-card red">
+        <h3>The call doesn't reach the person</h3>
+        <p>No answer and Voicemail keep the record open so the worker can try again. Bad number, Contact not possible, and No returned phone call close it. Each attempt is kept with its own timestamp.</p>
+      </div>
+
+      <div class="branch-card gold">
+        <h3>An alert is active</h3>
+        <p>A banner appears at the top of Home carrying the alert's title, description, effective window, recommended actions, shelter and service locations with hours, transportation information, and emergency numbers. It is sent as a push notification only if that was enabled for the alert.</p>
+        <p>A worker can open the full list of active alerts from the banner.</p>
+        <p>Locations named in an alert link into the resource directory, or to one-time standup locations.</p>
+        <p>An alert does not create an engagement or a task.</p>
+      </div>
+
+      <div class="branch-card">
+        <h3>The directory on its own</h3>
+        <p>A worker can open the resource directory without an engagement. It is the same live dataset the kiosks use, navigated by category tiles and filtered by category, with eligibility shown as a badge. Resources are sorted by distance where the resource has a fixed location, and alphabetically otherwise.</p>
+        <p>From a resource the worker can send its details or map directions to the person by text or QR code, or display the number and dial it from their own phone.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>
+    <span class="arc">ARC</span> —
+    <strong>Alan Robinson &amp; Allyson Short</strong>
+    ·
+    Prepared for <strong>Chatham Savannah Authority for the Homeless</strong>
+    ·
+    Compass Project · 2026
+  </p>
+</footer>
+
+</body>
+</html>

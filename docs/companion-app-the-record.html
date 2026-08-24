@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Engagement Record — Companion App MVP Package</title>
+<link rel="stylesheet" href="kiosk-package.css">
+<style>
+/* ── Shared styles — mirrored from kiosk-package.css ── */
+
+/* ── OBJECTIVES / EXPERIENCE PAGE PATTERNS ── */
+.subsection { margin-bottom: 1.5rem; }
+.subsection:last-child { margin-bottom: 0; }
+.subsection h3 { font-size: 1.05rem; font-weight: 700; color: #0e2a5c; margin-bottom: 0.4rem; }
+.subsection .kicker { font-size: 0.95rem; font-weight: 600; color: #1a4d8f; margin-bottom: 0.5rem; }
+.subsection p { font-size: 0.9rem; color: #374151; margin-bottom: 0.75rem; }
+.subsection p:last-child { margin-bottom: 0; }
+.subsection p strong { color: #0e2a5c; }
+
+.dataset-card {
+  background: #e9f1f8;
+  border: 1px solid #c9dcec;
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem;
+}
+.dataset-card h3 { color: #123f63; }
+.dataset-card p strong { color: #123f63; }
+
+.callout-note {
+  background: #fbf0d6; border: 1px solid #ecd8a6; border-radius: 10px;
+  padding: 1rem 1.25rem; font-size: 0.85rem; color: #7c5712; margin-top: 1.25rem;
+}
+.callout-note p { font-size: 0.85rem; color: #7c5712; margin-bottom: 0.6rem; }
+.callout-note p:last-child { margin-bottom: 0; }
+.callout-note strong { color: #5c400c; }
+
+.scope-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+@media (max-width: 760px) { .scope-columns { grid-template-columns: 1fr; } }
+.scope-col { border-radius: 14px; padding: 1.5rem 1.75rem; }
+.scope-col.in { background: #e0ebf5; border: 1px solid #cfe0ee; }
+.scope-col.roadmap { background: #fbf0d6; border: 1px solid #ecd8a6; }
+.scope-col.out { background: #e2e4e8; border: 1px solid #cdd1d7; }
+.scope-col h4 { font-size: 0.95rem; font-weight: 700; color: #17202e; margin-bottom: 0.9rem; }
+.scope-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
+.scope-col li { font-size: 0.86rem; color: #374151; padding-left: 1.1rem; position: relative; }
+.scope-col li::before { content: ""; position: absolute; left: 0; top: 0.5em; width: 6px; height: 6px; border-radius: 50%; background: #d9a441; }
+.scope-col li strong { color: #17202e; }
+
+.profile-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+@media (max-width: 640px) { .profile-grid { grid-template-columns: 1fr; } }
+.profile-card {
+  background: white; border: 1px solid #e8e6df; border-top: 4px solid #d9a441; border-radius: 14px;
+  padding: 1.75rem; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+.profile-card h4 { font-size: 1.05rem; font-weight: 700; color: #0e2a5c; margin-bottom: 0.6rem; }
+.profile-card p { font-size: 0.86rem; color: #5f5e5a; line-height: 1.55; }
+.profile-card p strong { color: #0e2a5c; }
+
+/* ── TABLES ── */
+.doc-table-wrap { background: white; border: 1px solid #e8e6df; border-radius: 12px; overflow: hidden; margin-bottom: 1.25rem; }
+.doc-table-wrap.scroll { overflow-x: auto; }
+table.doc-table { width: 100%; border-collapse: collapse; }
+table.doc-table th {
+  text-align: left; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  color: #0e2a5c; background: #f9f8f4; padding: 0.75rem 1.4rem; border-bottom: 1px solid #e8e6df; white-space: nowrap;
+}
+table.doc-table td {
+  font-size: 0.85rem; color: #374151; padding: 0.7rem 1.4rem; border-bottom: 1px solid #f0efe9; vertical-align: top;
+}
+table.doc-table tr:last-child td { border-bottom: none; }
+table.doc-table td.term { font-weight: 700; color: #0e2a5c; white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<div class="back-bar">
+  <a class="back-link" href="/">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7l5 5" stroke="#9ca3af" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Decision Hub
+  </a>
+</div>
+
+<div class="pkg-nav-bar">
+  <div class="pkg-nav">
+    <a href="companion-app.html">Overview</a>
+    <a href="app-objectives-users-requirements.html">Objectives and Requirements</a>
+    <a href="companion-app-the-flow.html">The Flow</a>
+    <a href="companion-app-the-record.html" class="current">The Record</a>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <div class="header-text">
+      <div class="doc-eyebrow">Document 03 · Companion App MVP Signoff Package</div>
+      <h1 style="display:inline-flex; align-items:center; gap:0.5rem;">
+        <svg viewBox="0 0 24 24" width="28" fill="none" style="flex-shrink:0;">
+          <circle cx="12" cy="12" r="10" stroke="#f2c030" stroke-width="1.6"/>
+          <path d="M12 4.5 L13.7 10.3 L19.5 12 L13.7 13.7 L12 19.5 L10.3 13.7 L4.5 12 L10.3 10.3 Z" fill="#f2c030"/>
+        </svg>
+        The Engagement Record
+      </h1>
+      <p>Every request, contact attempt, and outcome — timestamped, geolocated, and exportable.</p>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ══ WHAT THE RECORD IS ══ -->
+  <div class="doc-section">
+    <h2>Section 01</h2>
+    <div class="section-headline">What the record is</div>
+
+    <div class="subsection">
+      <p>An engagement is a documented encounter between outreach staff and one or more people. Whether the work began at a kiosk, on the phone, or in the field, it produces one engagement record.</p>
+      <p>The record carries where the encounter happened, when, which worker was there, who was present, what was provided, and how it ended.</p>
+      <p>One request produces at most one engagement. A single engagement can cover several people, each with their own record attached to it, and can carry more than one set of outcomes.</p>
+    </div>
+
+    <div class="subsection dataset-card">
+      <p>ClientTrack remains the system of record for the client.</p>
+      <p>This is the system of record for the engagement.</p>
+    </div>
+  </div>
+
+  <!-- ══ WHAT IS CAPTURED, AND WHEN ══ -->
+  <div class="doc-section">
+    <h2>Section 02</h2>
+    <div class="section-headline">What is captured, and when</div>
+
+    <div class="doc-table-wrap scroll">
+      <table class="doc-table">
+        <thead>
+          <tr><th>Point</th><th>What is recorded</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="term">Request created</td><td>Request ID · type · origin · location · intake information · consent given and the version of the consent language shown · time</td></tr>
+          <tr><td class="term">Team notified</td><td>Nothing identifying leaves the system, as the notification carries the Request ID, type, location, and time</td></tr>
+          <tr><td class="term">Claimed</td><td>Claim time · worker identity · every prior claim and release, with reasons</td></tr>
+          <tr><td class="term">Engagement started</td><td>Time · worker identity · location · engagement type</td></tr>
+          <tr><td class="term">People present</td><td>A record for each person, attached to the engagement · party size</td></tr>
+          <tr><td class="term">What was provided</td><td>Goods · services with status and named provider · referrals with named provider · person · time · worker</td></tr>
+          <tr><td class="term">Outcome</td><td>One outcome closes or holds the record; each attempt is kept as its own timestamped record</td></tr>
+          <tr><td class="term">Closed</td><td>Close time · closing worker</td></tr>
+          <tr><td class="term">Resolved</td><td>HMIS status · HMIS person and case IDs · consent version · placement verified or declined</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ══ WHAT MAKES IT DEFENSIBLE ══ -->
+  <div class="doc-section">
+    <h2>Section 03</h2>
+    <div class="section-headline">What makes it defensible</div>
+
+    <div class="subsection">
+      <p><strong>Location is stamped by the system at the moment an engagement begins</strong>, which is the worker's location, wherever the encounter happens. Separately, each request carries where it came from: a kiosk tags its own location, and a phone call takes a location as text.</p>
+      <p><strong>Time and identity are stamped at each step</strong> - when a request arrives, when it is claimed, when the engagement starts, when resources are recorded, when the record is closed, and when it is resolved.</p>
+      <p><strong>The history is kept, not replaced.</strong> Every claim and release is retained with its reason. Every contact attempt is kept as its own timestamped record, so a record that took four tries shows four tries.</p>
+      <p><strong>Consent is versioned.</strong> Each record stores that consent was given and the consent language the person was shown.</p>
+    </div>
+
+    <div class="callout-note">
+      <p><strong>One note on timing:</strong> the app stamps location, time, and worker identity at the moment an engagement begins. A worker in the field may complete the remaining detail afterward. What is stamped at the moment is the encounter itself.</p>
+    </div>
+  </div>
+
+  <!-- ══ WHAT IT SUPPORTS, AND WHAT IT DOESN'T ══ -->
+  <div class="doc-section">
+    <h2>Section 04</h2>
+    <div class="section-headline">What it supports, and what it doesn't</div>
+
+    <div class="scope-columns">
+      <div class="scope-col in">
+        <h4>What it supports</h4>
+        <ul>
+          <li>That an engagement happened - where, when, and by whom</li>
+          <li>That the encounter was stamped when it happened</li>
+          <li>Who was present, and what was provided to them</li>
+          <li>Where people were referred, and to which provider</li>
+          <li>How the team performed, including how quickly requests were claimed, how long records took to close, what went unclaimed, and what arrived when no one was on duty</li>
+          <li>Volume and pattern over time, by origin, by service, by provider, and by hour of day</li>
+        </ul>
+      </div>
+
+      <div class="scope-col out">
+        <h4>What it does not support on its own</h4>
+        <ul>
+          <li><strong>Citations or arrests.</strong> Showing that documented outreach changes enforcement outcomes requires enforcement data the app does not hold. Bringing the two together sits in the backlog.</li>
+          <li><strong>Counts of distinct people, directly.</strong> The app counts engagements. Distinct-person counts come from the HMIS person IDs recorded during reconciliation, for records entered in ClientTrack - worked outside the app until integration.</li>
+          <li><strong>Whether a placement held over time.</strong> Placement is verified once, during reconciliation.</li>
+          <li><strong>A complete client history.</strong> That lives in ClientTrack.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ WHO CAN SEE WHAT ══ -->
+  <div class="doc-section">
+    <h2>Section 05</h2>
+    <div class="section-headline">Who can see what</div>
+
+    <div class="profile-grid">
+      <div class="profile-card">
+        <p><strong>The kiosk keeps nothing.</strong> A request submitted at a kiosk is written to the shared database; the unit itself retains no copy.</p>
+      </div>
+      <div class="profile-card">
+        <p><strong>Notifications carry no identifying detail.</strong> A worker is told the Request ID, the type of request, the location, and the time; nothing about the person.</p>
+      </div>
+      <div class="profile-card">
+        <p><strong>Full detail is visible to the worker who claims the record</strong>, and to the Reconciliation role when the record reaches them. Teammates see only the type, location, elapsed time, and owner.</p>
+      </div>
+      <div class="profile-card">
+        <p><strong>Changing a record is restricted.</strong> Reassigning or reopening work is limited to supervisors and administrators. Setting the HMIS status and confirming placement is limited to the Reconciliation role, with system administrators retaining access.</p>
+      </div>
+      <div class="profile-card">
+        <p><strong>Reports carry counts, not identities.</strong> The impact rollup that goes to the city, the county, the state, and donors contains no names or identifying details.</p>
+      </div>
+      <div class="profile-card">
+        <p><strong>Access follows role.</strong> Resource content, alerts, reconciliation, and reports are each restricted to the roles that need them.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ RETENTION ══ -->
+  <div class="doc-section">
+    <h2>Section 06</h2>
+    <div class="section-headline">How long it is data kept</div>
+
+    <div class="subsection dataset-card">
+      <p>Records are kept for seven years, matching CSAH's retention period for paper records. A scheduled purge deletes them automatically once they pass that point, with no manual review by CSAH beforehand.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>
+    <span class="arc">ARC</span> —
+    <strong>Alan Robinson &amp; Allyson Short</strong>
+    ·
+    Prepared for <strong>Chatham Savannah Authority for the Homeless</strong>
+    ·
+    Compass Project · 2026
+  </p>
+</footer>
+
+</body>
+</html>
